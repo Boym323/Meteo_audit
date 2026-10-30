@@ -15,7 +15,7 @@
 
 | Období | Co je skutečně doloženo | Doporučené zacházení |
 |---|---|---|
-| 2009–2020 | `weewx_WH1080` má `radiation`, `UV`, `soilMoist1–4` vyplněné na každém archivním řádku, ale **všechny hodnoty jsou 0**. `old_weewx` má jen 222 nenulových? **Ne:** 222 vyplněných záznamů roku 2014 jsou také **všechny 0**, mimo to NULL. | Placeholder, **nikoli historické skutečné měření**. Nesmí se použít ke zpětnému doplnění NULL do produkce. |
+| 2009–2020 | `weewx_WH1080` má `radiation`, `UV`, `soilMoist1–4` vyplněné na každém archivním řádku, ale **všechny hodnoty jsou 0**. `old_weewx` má v roce 2014 jen 222 vyplněných hodnot a **všechny jsou 0**; v ostatních letech sledované kanály obsahují NULL. | Placeholder, **nikoli historické skutečné měření**. Nesmí se použít ke zpětnému doplnění NULL do produkce. |
 | 2009–26 | `maxSolarRad` je v produkci vyplněno u každého archivního řádku (včetně období bez `radiation`); maximum cca 942,74. | Odvozená geometrická/modelová veličina; nenahrazuje fyzické sluneční čidlo. |
 | 2020–2022-08 | V produkci existují např. pozdější stavové/WS80 položky, ale `radiation`, `UV`, PM2.5, blesky a `soilMoist1` jsou stále NULL. | Neindikovat jejich výpadek; před instalací/aktivací není záznam. |
 | **2022-08-27 09:40 UTC** | První nenulově proměnlivé `radiation`, `UV`, `pm25_1`, `soilMoist1`, první záznam `lightning_strike_count` i řady stavových polí; u bleskové vzdálenosti první záznam **2022-09-08 15:45 UTC**. | Začátek nové měřicí epochy; datum *prvního záznamu*, nikoli ověřená montáž. |
