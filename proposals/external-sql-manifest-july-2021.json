@@ -1,0 +1,68 @@
+{
+  "operation_id": "reported-july-2021-chmi-v1",
+  "status": "reported_not_independently_reproduced",
+  "operation_type": "external_sql_reconstruction",
+  "reported_actor": "Navicat operator; identity not retained in repository",
+  "prepared_at_utc": null,
+  "applied_at_utc": null,
+  "verified_at_utc": "2026-10-30",
+  "repository_commit": null,
+  "original_sql_path": null,
+  "original_sql_sha256": null,
+  "target": {
+    "database": "loucka_reconstruction",
+    "table": "archive",
+    "variables": ["rain", "rainRate"],
+    "local_period": "2021-07-01T00:00:00+02:00 through 2021-08-01T00:00:00+02:00",
+    "timezone": "Europe/Prague",
+    "archive_interval_semantics": "(start, end]",
+    "start_epoch_exclusive": 1625090400,
+    "end_epoch_inclusive": 1627768800
+  },
+  "reported_result": {
+    "planned_reconstruction_rows": 8928,
+    "archive_rows_in_legacy_window_start_inclusive_end_exclusive": 8921,
+    "archive_rows_in_weewx_window_start_exclusive_end_inclusive": 8921,
+    "planned_timestamps_missing_from_archive": 7,
+    "exact_archive_reconstruction_matches_in_legacy_window": 8921,
+    "exact_archive_reconstruction_matches_in_weewx_window": 8920,
+    "additional_weewx_end_boundary_archive_row": {
+      "dateTime": 1627768800,
+      "rain": 0,
+      "rainRate": 0,
+      "present_in_reconstruction_table": false
+    },
+    "archive_rain_sum_cm": 4.25672658,
+    "reconstruction_table_rain_sum_cm": 4.25672658
+  },
+  "backup": {
+    "table": "rain_backup_202107_before_chmi_v1",
+    "rows": 8921,
+    "rain_sum_cm": 58.64606,
+    "rain_null_rows": 146,
+    "rainRate_null_rows": 243,
+    "matches_original_except_nullified_values": true,
+    "pristine_pre_operation_backup_proven": false
+  },
+  "history_links": {
+    "reconstruction_changes_batches": [
+      "rain-jul2021-quarantine-v1",
+      "rain-jul2021-dryday-22-24-v1"
+    ],
+    "related_pending_candidate_batches": [
+      "loucka-rain-jul2021-chmi-dualrh-20261029-v1",
+      "loucka-july2021-rain-divergence-review-v1"
+    ],
+    "pending_candidates_in_period": 74
+  },
+  "evidence_limits": [
+    "The original Navicat SQL file and its hash were not found.",
+    "The external execution timestamp, operator identity, exact statements, and affected-row count were not retained.",
+    "The reconstruction table/working archive comparison is reproduced read-only; it does not prove how the external SQL was issued.",
+    "The backup contains 146 NULL rain and 243 NULL rainRate values relative to the original snapshot, so it is not a pristine original backup."
+  ],
+  "before_export_sha256": null,
+  "after_export_sha256": null,
+  "validation_sql_path": "sql/readonly/july_2021_review.sql",
+  "database_mutated_by_this_audit": false
+}

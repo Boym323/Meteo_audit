@@ -1,0 +1,24 @@
+{
+  "created_utc": "2026-10-30T09:30:10+00:00",
+  "period_local": [
+    "2009-01-01",
+    "2026-01-01"
+  ],
+  "timezone": "Europe/Prague",
+  "units": "stored database values; no unit conversion",
+  "source_tables": [
+    "pocasi-loucka.eu.archive",
+    "loucka_reconstruction.archive",
+    "pocasi-loucka.eu_GW1000.archive",
+    "pocasi-loucka.eu_old.archive",
+    "old_weewx.archive",
+    "weewx_WH1080.archive"
+  ],
+  "filter": "dateTime >= local-year start epoch and dateTime < next local-year start epoch",
+  "rows_in_csv": 102,
+  "data_records_aggregated": 8331557,
+  "method": "read-only transaction; per-year aggregate SELECTs; existing local DB credentials were used only with START TRANSACTION READ ONLY; account grants were not changed",
+  "limitations": "rainRate historical source/driver semantics and equivalence of legacy rain fields are unverified",
+  "analysis_code_version": "94e8616-dirty; values aggregated with equivalent read-only SQL, not via the new CLI",
+  "execution_context": "Bulk database queries issued from the root shell in read-only transactions; key counts rechecked as meteo-audit."
+}

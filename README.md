@@ -7,7 +7,7 @@ Prověřit historická měření přibližně od roku 2009 do roku 2026, odliši
 - Auditní prostředí: Debian LXC `zl-dev-AuditMeteo`, projekt `/opt/meteo-audit`.
 - Zdroj: MariaDB, předchozí známá verze 11.8.6 (aktuální ověřit).
 - Připojení bylo ověřeno 2026-10-30 na MariaDB 11.8.6; aktuální host a port jsou pouze v lokálním `.env` a do dokumentace se nekopírují.
-- Používaný účet `loucka_audit` má SELECT na produkční databázi, ale také zápisová oprávnění v `loucka_reconstruction`. Analytické nástroje v tomto projektu používají read-only transakce; pro další automatizaci se doporučuje samostatný účet pouze pro SELECT.
+- Předchozí diagnostika používala účet `loucka_audit`, který má také zápisová oprávnění v `loucka_reconstruction`. Nový analytický klient ho odmítá a vyžaduje samostatný `meteo_audit_ro`; účet a granty musí založit správce podle read-only runbooku.
 - Tajné údaje jsou výhradně v lokálním `.env` s oprávněním 600; nikdy v dokumentaci ani Gitu.
 - **DB:** názvy databází obsahují tečku a pomlčku — v SQL je uzavírej do zpětných apostrofů, např. `` `pocasi-loucka.eu`.`archive` ``.
 
@@ -15,13 +15,11 @@ Prověřit historická měření přibližně od roku 2009 do roku 2026, odliši
 ```dotenv
 DB_HOST=VYPLNIT
 DB_PORT=3306
-DB_USER=loucka_audit
-DB_PASSWORD=VYPLNIT
-DB_SOURCE=pocasi-loucka.eu
-DB_RECONSTRUCTION=loucka_reconstruction
+DB_READONLY_USER=meteo_audit_ro
+DB_READONLY_PASSWORD=SET_OUT_OF_BAND
 TZ=Europe/Prague
 ```
-Použij `.gitignore` obsahující `.env`, `.env.*` kromě bezpečných vzorů (`!.env.example`); nastav `chmod 600 .env`.
+Použij .gitignore obsahující .env a .env.* kromě .env.example; nastav chmod 600 .env. DB_READONLY_USER musí být přesně dedikovaný účet meteo_audit_ro; klient odmítá historický zápisový účet.
 
 ## Ověřené databáze (Weather MCP, 30. 10. 2026)
 `pocasi-loucka.eu`, `loucka_reconstruction`, `old_weewx`, `pocasi-loucka.eu_GW1000`, `pocasi-loucka.eu_old`, `weewx_WH1080`. Přítomna je také systémová `information_schema`.
@@ -71,8 +69,55 @@ ORDER BY TABLE_NAME;
 ```
 Pozor: `FROM_UNIXTIME` používá časovou zónu připojení; pro přesné časové porovnání nastav relaci na UTC nebo pracuj s číselným `dateTime`.
 
-## Provoz
-Dodržuj `AGENTS.md`. Žádné automatické UPDATE, DELETE, DROP, TRUNCATE ani zápisy do původních archivů. SQL dotazy limituj a pro větší analýzy postupuj po měsících/letech; odhadni dopad na produkční databázi. Výstupy ukládej pod `reports/` a návrhy oprav pod `proposals/`.
+## Provoz a použití CLI
+
+Měsíční audit čte archiv po jednom místním měsíci, používá allowlist šesti známých databází a ukládá výstup do adresáře daného schématu. Pro rekonstrukční dataset:
+
+```bash
+PYTHONPATH=src python3 -m meteo_audit.monthly \
+  --database loucka_reconstruction \
+  --start-year 2009 \
+  --end-year 2026
+```
+
+Produkční zdroj vyber explicitně:
+
+```bash
+PYTHONPATH=src python3 -m meteo_audit.monthly \
+  --database pocasi-loucka.eu \
+  --start-year 2009 \
+  --end-year 2026
+```
+
+Výstupy budou v reports/loucka_reconstruction/ a reports/pocasi-loucka.eu/; každá databáze má vlastní měsíční CSV, roční CSV a metadata JSON. Metadata uvádějí schéma, UTC čas vytvoření, období, časovou zónu, jednotky, počet řádků a commit analytického kódu.
+
+Read-only srovnání uložených hodnot rain a rainRate po místních rocích pro všech šest archivních zdrojů:
+
+```bash
+PYTHONPATH=src python3 -m meteo_audit.rainrate \
+  --start-year 2009 \
+  --end-year 2025
+```
+
+Každý zdroj dostane vlastní adresář pod reports/rainrate/; report uvádí NULL, nulu i kladnou hodnotu zvlášť a nepřepočítává intenzitu ze srážky.
+
+WeeWX ukládá čas na konci archivního intervalu. Pro místní hranice je proto filtr dateTime > start AND dateTime <= end. Místní půlnoc patří právě skončenému občanskému dni a měsíci. Časy vytvářej v Europe/Prague, aby se správně promítl CET/CEST. Podrobná pravidla jsou v [časové metodice](docs/time-intervals.md) a [metodice auditu srážek](docs/rain-audit-methodology.md).
+
+Přístup k DB je chráněn single-statement SELECT/SHOW kontrolou, allowlistem schémat, read-only transakcí, timeoutem a souborem přihlašovacích voleb 0600. Transakce nejsou náhradou za SELECT-only grant. Před prvním použitím založí účet správce podle [runbooku](sql/admin/create_meteo_audit_ro.sql) a ověří jeho oprávnění; tato změna se z repozitáře nespouští. Bez účtu s ověřenými SELECT-only oprávněními CLI odmítne pracovat. Úplná pravidla jsou v [bezpečnostní dokumentaci](docs/security.md).
+
+## Testy a CI
+
+Bez MariaDB spusť deterministickou sadu unit a mockovaných integračních testů:
+
+```bash
+PYTHONPATH=src python3 -m unittest discover -s tests -v
+python3 -m compileall -q src tests scripts
+python3 scripts/check_repo_secrets.py
+```
+
+GitHub Actions používá Python 3.13, provádí syntaktickou kontrolu, testy a kontrolu sledovaných souborů na tajemství. Nepřipojuje se k databázi a nevytváří artefakty.
+
+Dodržuj AGENTS.md. Žádné automatické UPDATE, DELETE, DROP, TRUNCATE ani zápisy do původních archivů nebo auditních tabulek. Výstupy ukládej pod reports/ a návrhy oprav pod proposals/.
 
 ## Auditní výstup
 
@@ -81,17 +126,17 @@ První aktuální diagnostika a Fáze A jsou zaznamenány v [reports/2026-10-30-
 ## Projektové adresáře
 
 - `src/meteo_audit/` — lehké standard-library komponenty pro screening.
-- `tests/` — testy klasifikace; běží bez DB.
+- `tests/` — deterministické unit a mockované integrační testy; běží bez DB.
 - `sql/readonly/` — kontrolní SELECTy; žádné zápisové příkazy.
 - `reports/` — běhy auditů a důkazy.
 - `proposals/` — návrhy bez automatické aplikace.
 
 ## GitHub a pravidelná synchronizace
 
-Repozitář `https://github.com/Boym323/Meteo_audit` je připojen jako `origin`; pracovní větev je `main`. Po každém dokončeném úkolu se aktualizují relevantní Markdown reporty a strojově čitelné CSV/JSON výstupy, zkontrolují staged změny a publikují commitem na GitHub. `.env` zůstává ignorovaný; nikdy se nepublikují tajné údaje.
+Repozitář `https://github.com/Boym323/Meteo_audit` je připojen jako `origin`; změny vznikají na pracovní větvi a předávají se pull requestem do `main`. Před commitem zkontroluj staged diff a spusť tajemství scanner. `.env` zůstává ignorovaný; nikdy se nepublikují tajné údaje.
 
 ### Automatické publikování commitů
 
-V tomto checkoutu je zapnutý Git hook `post-commit`: po každém commitu vytvořeném na větvi `main` provede `git push origin HEAD:main`. Na jiných větvích nic neposílá. Změny je stále nutné nejdříve výslovně commitnout; hook sám nic nestageuje ani nevytváří commit. Push vyžaduje funkční GitHub přístupové údaje v prostředí. Pokud push selže (například kvůli odlišné historii nebo chybějícím oprávněním), commit zůstane lokálně a Git zobrazí chybu.
+V některých pracovních checkoutech může být zapnutý lokální post-commit hook pro main; před commitem ověř aktuální větev a remote. Tento hook není součástí verzovaného projektu.
 
-Aktuální běh diagnostiky a Fáze A: [report](reports/2026-10-30-diagnostic-phase-a.md). Přehledová CSV a evidence ČHMÚ jsou v `reports/`. Tato data představují auditní souhrny a zdokumentované reference; kompletní produkční `archive` není v tomto pracovním stromu exportován.
+Aktuální diagnostika a Fáze A: [report](reports/2026-10-30-diagnostic-phase-a.md). Výsledky stabilizace a metodiky: [report](reports/2026-10-30-code-review-stabilization.md). Přehledová CSV a evidence ČHMÚ jsou v `reports/`. Tato data představují auditní souhrny a zdokumentované reference; kompletní produkční `archive` není v tomto pracovním stromu exportován.
