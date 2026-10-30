@@ -141,3 +141,42 @@ def march2022_luhamet_candidate(
     candidate = luhamet_rh_pct * saturation_factor(luhamet_temp_c) / saturation_factor(local_temp_c) - 2.0
     candidate = min(100.0, max(1.0, candidate))
     return float(Decimal(str(candidate)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP))
+
+
+def historical_luhamet_candidate(
+    local_temp_c: float,
+    reference_temp_c: float,
+    reference_rh_pct: float,
+    previous_reference_rh_pct: float,
+    next_reference_rh_pct: float,
+) -> float | None:
+    """2015–2019 LuhaMet vapor-pressure proxy, never a measured local RH.
+
+    Caller checks exact matching UTC timestamp, a genuine five-minute target
+    with old RH NULL, unmodified source references at +/-300 seconds, and no
+    already-applied correction. A reference-only proxy does not demonstrate
+    validity of the old Loucka sensor or the historical site offset.
+
+    The failed WH1080 humidity sensor was intentionally removed at migration;
+    WH1080 RH must not be used for candidate calculation or calibration.
+    """
+    from decimal import Decimal, ROUND_HALF_UP
+
+    temperatures = (local_temp_c, reference_temp_c)
+    humidity = (reference_rh_pct, previous_reference_rh_pct, next_reference_rh_pct)
+    if not all(math.isfinite(v) for v in temperatures + humidity):
+        return None
+    if not all(-40 <= t <= 45 for t in temperatures):
+        return None
+    if not all(30 <= h <= 98 for h in humidity):
+        return None
+    if abs(local_temp_c - reference_temp_c) > 1.5:
+        return None
+    if abs(previous_reference_rh_pct - reference_rh_pct) > 6:
+        return None
+    if abs(next_reference_rh_pct - reference_rh_pct) > 6:
+        return None
+    candidate = reference_humidity_candidate(
+        local_temp_c, reference_temp_c, reference_rh_pct
+    )
+    return float(Decimal(str(candidate)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP))
