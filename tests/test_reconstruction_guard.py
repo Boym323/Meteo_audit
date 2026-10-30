@@ -144,14 +144,14 @@ class ProposalTests(unittest.TestCase):
 
     def test_preexisting_cancelled_candidate_blocks_reuse_by_new_batch(self):
         self.db.prior_candidates = [
-            "1301295000\\train\\tloucka-rain-phaseA-confirmed-20261030-v1\\tcancelled"
+            "1301295000\train\tloucka-rain-phaseA-confirmed-20261030-v1\tcancelled"
         ]
         with self.assertRaisesRegex(GuardError, "historical candidate proposals"):
             inspect_proposal(proposal(), self.db, self.baseline)
 
     def test_preexisting_pending_candidate_blocks(self):
         self.db.prior_candidates = [
-            "1301295000\\train\\tfuture-pending-review\\tpending"
+            "1301295000\train\tfuture-pending-review\tpending"
         ]
         with self.assertRaisesRegex(GuardError, "historical candidate proposals"):
             inspect_proposal(proposal(), self.db, self.baseline)
