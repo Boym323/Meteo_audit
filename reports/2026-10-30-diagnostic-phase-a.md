@@ -1,5 +1,8 @@
 # Diagnostika LXC a audit srážkových případů — běh 2026-10-30
 
+> **Revizní upřesnění 30. 10. 2026 (bez nového SQL):** Tento report zachycuje historicky provedený read-only běh. Původní interpretace denních ČHMÚ `SRA` jako oken končících ve zdrojovém `DT=06:00 UTC` **není doložena**. ČHMÚ popisuje ranní 24hodinové měření připsané předchozímu dni; bez mapování `DT`/`TIMEFUNC` na přesná časová okna nelze denní řadu použít jako přímý důkaz pětiminutové události ([metodika SRA](../docs/chmi-daily-sra.md)). `HIGH_CONFIDENCE` pro chybný impuls není důkazem přesné náhrady `rain=0`. Starší statistiky používají původní hranice `[start,end)`; WeeWX hranice `(start,end]` popisuje [pozdější oprava](2026-10-30-code-review-stabilization.md). Původní data a CSV se nemění.
+
+
 ## Rozsah, metoda a bezpečnost
 
 - Časové rozmezí databázového inventáře: produkční `archive` od Unix času `1238345100` do `1793350200`; pracovní archiv do `1793286600`.
@@ -70,7 +73,7 @@ Zjištěné denní úhrny přesně odpovídají předchozímu kontextu. 39 zázn
 
 Všech 16 existuje v produkci, má `rainRate=0` a je stále totožných v raw archive `pocasi-loucka.eu_GW1000`. Hodnoty `old_weewx` a `weewx_WH1080` při stejných časech vykazují prudké skoky/resetové vzory; tyto raw hodnoty jsou čítače, nikoli intervalové mm. Stávající batch navrhuje `rain=0` u všech 16, ale zatím čeká.
 
-| Místní čas | Rain (cm) | Předloha CHMI |
+| Místní čas | Rain (cm) | Převod původního rain (mm) |
 |---|---:|---|
 | 2010-06-01 12:40 | 1.554 | 15.54 mm |
 | 2010-06-01 12:45 | 2.331 | 23.31 mm |
@@ -101,32 +104,32 @@ Oficiální denní řada `SRA`, `TIMEFUNC=06:00`, stanice Vizovice (`0-203-0-117
 | 2010-06-02 06:00Z | 3.9 mm | prázdný | 0.0 |
 | 2010-06-03 06:00Z | 2.0 mm | prázdný | 0.0 |
 
-Kladná‑Žilín (`0-203-0-11778`) má ve stejném typu denního záznamu 57.0, 3.1 a 4.6 mm. Okolí tedy mělo skutečné srážky; řady jsou měřeny za denní okno končící 06:00 UTC a nejsou totožné s občanským dnem Loučky. Celkový třídenní obraz nepotvrzuje 150.6 mm v jednotlivých pětiminutových skocích, ale ani nedovoluje mechanicky vymazat celou srážkovou epizodu. ČHMÚ distribuuje desetiminutové a hodinové soubory až od roku 2018, proto pro rok 2010 tato poddenní kontrola z daného veřejného archivu chybí.
+Kladná‑Žilín (`0-203-0-11778`) má ve stejném typu denního záznamu 57.0, 3.1 a 4.6 mm. Tyto denní řádky naznačují regionální srážky. **Původní tvrzení o 24hodinovém okně končícím v `DT=06:00 UTC` nebylo ověřeno**: ČHMÚ úhrny připisuje předchozímu dni a význam `DT`/`TIMEFUNC` je třeba doložit. Žádný zde uvedený SRA řádek proto nepotvrzuje ani nevylučuje konkrétní pětiminutový impuls a neopravňuje k plošnému dosazení nuly. ČHMÚ distribuuje desetiminutové a hodinové soubory až od roku 2018, proto pro rok 2010 tato poddenní kontrola z daného veřejného archivu chybí.
 
 ## 28. března 2011, 08:50 CEST
 
 - Produkce: `rain=3.072 cm` (30.72 mm), `rainRate=0`; sousední intervaly 08:45, 08:55 a 09:00 místního času mají `rain=0`.
 - `old_weewx.archive` a `weewx_WH1080.archive`: čítač skáče 0 → 307.2 → 384, rainRate zůstává 0. Hodnota 307.2 odpovídá 1 024 krokům po 0.3 mm, přesně jak uváděl předchozí audit.
-- ČHMÚ Vizovice má denní `SRA=0.0 mm`, kvalita 0.0; Kladná‑Žilín má denní `SRA=0.0 mm`, příznak `T` (stopové srážky). Index `API30` není denní srážkový úhrn a v hodnocení impulzu nebyl použit.
+- ČHMÚ: ve zdrojovém CSV pro `DT=2011-03-28T06:00Z` mají Vizovice `SRA=0.0 mm` a Kladná-Žilín `SRA=0.0 mm` s příznakem `T` (stopové srážky). **Bez ověření časového okna tyto hodnoty nedokazují počasí v 06:50 UTC**, kdy nastal posuzovaný impuls. `API30` nebylo v hodnocení použito.
 - V DB je pending kandidát `rain: 3.072 → 0` s metodou `suspected-anomaly`; žádná odpovídající aplikovaná změna nebyla nalezena. Produkce stále nese původní hodnotu.
 
-Hodnocení: **HIGH_CONFIDENCE** jako chyba kumulativního čítače na základě přesného skoku a nulových sousedů. Návrh odstranit pouze tento impulz z analytické kopie je podložený; produkce se nemění. Denní CHMI podpora je dobrá, ale sama o sobě nevylučuje lokální přeháňku.
+Revidované hodnocení: **HIGH_CONFIDENCE pro podezření na chybu čítače** (skok a nuloví sousedé), ale **NEOVĚŘENÁ náhrada `rain=0`**. Původní tvrzení o přímé časové podpoře denní ČHMÚ je pozastaveno. Změna se neaplikuje.
 
 ## 27. února 2025, 21:15 CET
 
 - Produkce: `rain=3.05 cm` (30.5 mm), `rainRate=0`, předchozí interval má `rain=NULL`, následující `rain=0`; během výpadku jsou venkovní teplota/vlhkost/vítr NULL.
 - Místní den produkce má 288 řádků, z toho 5 s `rain=NULL`; doslovný součet uložených hodnot je 3.89 cm = 38.9 mm. Bez impulzu by činil 8.4 mm.
 - Reference: ILOUKA4 poskytuje 288 bodů a denní kumulativní hodnota 8.81 mm; hodnota se opakuje, nesmí se sčítat. LuhaMet Sehradice poskytuje 288 bodů a běžící čítač roste od 0.03 do 8.45 mm; jeho rozdíly a denní reset je nutné respektovat. Hodnoty kolem času incidentu: LuhaMet 8.44 mm, ILOUKA4 8.81 mm.
-- ČHMÚ Vizovice denní `SRA=5.6 mm`, Kladná‑Žilín 7.4 mm. Tato denní časová agregace potvrzuje srážky řádu jednotek mm, ne lokální 30.5 mm navíc.
+- ČHMÚ: pro zdrojové `DT=2025-02-27T06:00Z` uvádí Vizovice `SRA=5.6 mm` a Kladná-Žilín `7.4 mm`. **Časová vazba těchto řádků na incident v 20:15 UTC není doložena**; při hodnocení konkrétního impulzu jsou bez ověřeného 24hodinového okna pouze kontextem. Místní výpadek a další souběžné stanice zůstávají oddělenými indikacemi.
 - Rekonstrukční batch navrhuje `rain=3.05 → 0` a `rainRate=0.005333… → 0`, čeká na vyhodnocení. Produkce má nyní `rainRate=0`; pracovní archiv má `rainRate=0.005333…` z dříve aplikovaného obnovení intenzity. Automatické přepsání tohoto dříve aplikovaného výsledku by bylo druhým a konfliktním zásahem.
 
-Hodnocení: **HIGH_CONFIDENCE** kandidát pro `rain=0` při budoucí schválené opravě analytické kopie. K `rainRate` je třeba samostatné rozhodnutí; historická sémantika není doložena a v pracovní DB existuje aplikovaná změna.
+Revidované hodnocení: **HIGH_CONFIDENCE pro podezření na chybný impuls 30.5 mm**, ale **NEOVĚŘENÁ přesná náhrada `rain=0`**. `rainRate` vyžaduje samostatné řešení, protože historická sémantika není doložena a v pracovní DB existuje konfliktní aplikovaná změna. Změna se neaplikuje.
 
 ## Návrhy a současný běh
 
 - Červen 2010: zachovat 16 kandidátů `rain → 0` jako `SUSPECTED/UNRESOLVED`; neaplikovat hromadně. Nejdřív ověřit původní datalogger/receiver logy a přesné časy stanice, pak posuzovat každý interval vůči okolním srážkám.
-- 2011-03-28: kandidát `rain → 0`, úroveň `HIGH_CONFIDENCE`, ale zatím jen návrh.
-- 2025-02-27: kandidát `rain → 0`, úroveň `HIGH_CONFIDENCE`; `rainRate` samostatně neřešit automaticky.
+- 2011-03-28: původní pending kandidát `rain → 0`; vysoká jistota *diagnózy anomálie*, náhrada nulou **není potvrzena**.
+- 2025-02-27: původní pending kandidát `rain → 0`; vysoká jistota *diagnózy anomálie*, náhrada nulou **není potvrzena**. `rainRate` samostatně neřešit automaticky.
 - Nebyla vytvořena duplikátní auditní tabulka, nebyly zapisovány databázové kandidáty ani historii.
 
 Dotazy pro reprodukci jsou uloženy v `sql/readonly/phase_a_cases.sql`; inventář v `sql/readonly/inventory.sql`. Měsíční čtený průchod používá `src/meteo_audit/monthly.py`, jeho souhrn je `reports/monthly_rain_coverage.csv` a agregace po letech `reports/yearly_rain_coverage.csv`. Rozdíl proti předchozímu běhu: rozšířen audit na kompletní dostupný měsíční rozsah; žádný zápis do databáze.
@@ -154,7 +157,7 @@ Přehled načetl lokální měsíce 2009-01 až 2026-10 po jednom dotazu na měs
 - Měsíční řádky: 214 (včetně 2 měsíců před začátkem historie); načteno 1 680 012 řádků. Výstupní CSV uvádí rozsah a odhad pokrytí samostatně. Roční agregace je v druhém CSV.
 - Prázdné měsíce uvnitř historického rozsahu: 2011-09 až 2012-02 (6 celých měsíců); nejsou vykazovány jako nuly.
 - Další kompletní měsíce pod 80% odhadovaným pokrytím jsou vypsány v CSV, zejména 2014-06, 2017-01/05/06 a 2018-02/03. Roční pokrytí odhadem klesá na 59.794% v 2011, 71.469% v 2012 a 73.077% v 2017. Významné výpadky jsou prioritou pro časovou rekonstrukci zdrojů.
-- Součet `rain` po převodu ×10 při `usUnits=16`: 11 585.028 mm přes dostupné období. Jde o aritmetický součet uložených intervalových hodnot; není to klimatologicky ověřený srážkový normál ani očištěný úhrn.
+- Součet `rain` po převodu ×10 při `usUnits=16`: 11 585.028 mm přes dostupné období. Jde o **historický výsledek původního běhu**, nikoli ověřený očištěný úhrn. Pozdější kontrola zjistila poškozený/neúplný původní měsíční CSV export; pro další analýzu použij čerstvý reprodukovatelný zdrojově označený export.
 - Rozpis `interval` při závěrečném čtení: 1 677 916 řádků po 5 min, 2 090 po 6 min a 7 řádků po 10–75 min. `rainRate` není NULL v žádném řádku, pouze 2 761 hodnot je nenulových (maximum 5.72 uložených jednotek); současně je 38 244 záznamů s `rain>0` a `rainRate=0`. Jde o výrazný časový/driverový signál k auditu, ale bez sémantiky `rainRate` není tato neshoda sama o sobě důkaz chyby. Archiv se během online čtení doplňoval: kompletní měsíční průchod čítal 1 680 012 řádků; poslední živý `COUNT(*)` poté 1 680 013. To ukazuje na nové archivní záznamy během čtení; kvůli minimálnímu dopadu nebyl držen dlouhý konzistentní snapshot.
 
 ## Dosavadní zásahy a rekonstrukce července 2021
