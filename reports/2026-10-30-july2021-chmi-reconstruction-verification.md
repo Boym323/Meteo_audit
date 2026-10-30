@@ -390,3 +390,8 @@ Nový SELECT přes Weather MCP znovu ověřil archiv a zároveň odhalil přesn�
 Pracovní měsíční součet 42,5672658 mm a citlivostní scénář, kdy by všech 71 původních lokálních impulzů bylo pravých (+27,94 mm; 70,5072658 mm celkem), jsou dvě porovnávané varianty, nikoli statistický interval ani prokázaná dolní/horní mez.
 
 Stále platí technické omezení zápisu: úplný inventář připojených Weather MCP funkcí obsahuje čtecí SQL a atomický writer pouze pro `archive`; žádný dostupný writer nemění `rain_qc_202107` ani `rain_qc_daily_202107`. Tabulky proto nebyly obcházeny přes read-only SQL. Záznamy původních pěti databází zůstaly nedotčené.
+
+
+## 14. Kontrola veřejného archivu radarových odhadů ČHMÚ
+
+Oficiální popis ČHMÚ uvádí produkt MERGE jako plošný hodinový úhrn kombinující radar a srážkoměry v gridu 1 × 1 km; soubory HDF5 jsou publikovány v [adresáři MERGE](https://opendata.chmi.cz/meteorology/weather/radar/composite/merge1h/hdf5/). Aktuální index tohoto veřejného adresáře obsahuje záznamy od 15. 10. 2026 a při hledání v indexu nebyl nalezen žádný soubor z července 2021. Historický radarový MERGE tedy z tohoto veřejného endpointu nelze pro tuto rekonstrukci ověřit a do srážkových oprav nebyl použit. Tento limit neznamená, že radarová data nemohou existovat v jiném archivu nebo na vyžádání; pouze nejsou v kontrolovaném veřejném indexu.
