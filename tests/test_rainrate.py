@@ -28,7 +28,7 @@ class RainRateAuditTests(unittest.TestCase):
         self.assertIn("dateTime >", query)
         self.assertIn("dateTime <=", query)
         self.assertNotIn("dateTime >=", query)
-        self.assertNotIn("dateTime <", query)
+        self.assertNotRegex(query, r"dateTime\s*<(?!=)")
         start, end = rainrate.year_bounds(2021)
         self.assertIn(f"dateTime > {start}", query)
         self.assertIn(f"dateTime <= {end}", query)
