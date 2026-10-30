@@ -1,10 +1,10 @@
 #!/bin/sh
 set -eu
 
-# Publish commits made on the primary branch. Never push work from other branches.
+# Safety default: publishing is an explicit action after review.
+# This hook may be activated locally via git config core.hooksPath .githooks.
 branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || true)
-if [ "$branch" != "main" ]; then
-    exit 0
+if [ "$branch" = "main" ]; then
+    printf '%s\n' 'Meteo_audit: commit on main; automatic push is disabled. Prefer a reviewed pull request.' >&2
 fi
-
-git push origin HEAD:main
+exit 0
