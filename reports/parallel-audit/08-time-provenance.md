@@ -291,7 +291,17 @@ Z **18 samostatných ročních, indexovanými hranicemi omezených SELECTů** (�
 
 ### Metoda SQL pro opakování sjednocení
 
-Každý rok zvlášť. Pro každý zdroj připojit `SELECT dateTime AS ts, FLOOR((dateTime+150)/300)*300 AS canonical FROM \`db\`.\`archive\` WHERE dateTime > :local_year_start_utc_minus_150 AND dateTime <= :next_local_year_start_utc_plus_150`; dílčí výsledky spojit přes `UNION ALL`; ve vnějších dotazech filtrovat `canonical > :local_year_start_utc AND canonical <= :next_local_year_start_utc` a agregovat `COUNT(*)`, `COUNT(DISTINCT ts)`, `COUNT(DISTINCT canonical)`. Parametry jsou číselné epochy UTC; jejich místní hranice vypočítat mimo DB podle pravidel Europe/Prague, přičemž samotné sloty zůstávají UTC. V DB nyní `CONVERT_TZ` pro pojmenovanou zónu nefunguje. Hlavní dotaz nikdy nespouštět jako nenaindexovanou agregaci 17 let naráz.
+Každý rok zvlášť. Každý zdroj poskytuje výstup podle níže uvedeného vzoru (obdobný SELECT se složí pro všech šest schémat):
+
+```sql
+SELECT dateTime AS ts,
+       FLOOR((dateTime + 150) / 300) * 300 AS canonical
+FROM `pocasi-loucka.eu_old`.`archive`
+WHERE dateTime > :year_start_minus_150
+  AND dateTime <= :next_year_start_plus_150;
+```
+
+Dílčí výsledky spojit přes `UNION ALL`; ve vnějším dotazu filtrovat `canonical > :year_start AND canonical <= :next_year_start` a agregovat `COUNT(*)`, `COUNT(DISTINCT ts)` a `COUNT(DISTINCT canonical)`. Parametry jsou číselné UTC epochy z explicitních lokálních hranic Europe/Prague. Výpočet vždy omezit jedním rokem; všechny dotazy jsou jen SELECT.
 
 ## Meziarchivní párování a chronologie časových anomálií
 
