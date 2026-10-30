@@ -395,3 +395,47 @@ Stále platí technické omezení zápisu: úplný inventář připojených Weat
 ## 14. Kontrola veřejného archivu radarových odhadů ČHMÚ
 
 Oficiální popis ČHMÚ uvádí produkt MERGE jako plošný hodinový úhrn kombinující radar a srážkoměry v gridu 1 × 1 km; soubory HDF5 jsou publikovány v [adresáři MERGE](https://opendata.chmi.cz/meteorology/weather/radar/composite/merge1h/hdf5/). Aktuální index tohoto veřejného adresáře obsahuje záznamy od 15. 10. 2026 a při hledání v indexu nebyl nalezen žádný soubor z července 2021. Historický radarový MERGE tedy z tohoto veřejného endpointu nelze pro tuto rekonstrukci ověřit a do srážkových oprav nebyl použit. Tento limit neznamená, že radarová data nemohou existovat v jiném archivu nebo na vyžádání; pouze nejsou v kontrolovaném veřejném indexu.
+
+
+## 15. Přímé CSV ČHMÚ a oprava denního přiřazení (2026-10-30)
+
+Oficiální soubory CSV ČHMÚ se podařilo stáhnout a zpracovat. Tato sekce nahrazuje denní srovnání stanic v §11, pokud se liší: hodnoty SRA10M jsou časovány koncem desetiminutového intervalu, nikoli začátkem.
+
+- Zdrojové adresáře: [10minutové srážky](https://opendata.chmi.cz/meteorology/climate/historical_csv/data/10min/precipitation/2021/) a [hodinové srážky](https://opendata.chmi.cz/meteorology/climate/historical_csv/data/1hour/precipitation/2021/); popis formátu: [Klimatologická data ČHMÚ](https://opendata.chmi.cz/meteorology/climate/Klimatologicka_data_popis.pdf).
+- Časové kotvení bylo nezávisle ověřeno na WSI 11777: ve všech 734 hodinových řádcích s QUALITY=0 odpovídá SRA1H přesně součtu šesti SRA10M záznamů s koncovými časy H−50, H−40, …, H. Rozdíl byl 0,0 mm ve všech 734/734 hodinách. Opačné posuny selhaly u 52–53 hodin a lišily se až o 6,6 mm.
+- Denní součet proto používá místní interval (půlnoc, následující půlnoc]. Záznam s DT přesně o půlnoci se přiřadí předchozímu dni. Pro správné hranice byly načteny i červnové a srpnové CSV.
+
+### Platné měsíční součty a kontrolní dny
+
+| WSI / stanice podle metadat ČHMÚ | Platných 10min řádků | Vyřazeno (FLAG nebo QUALITY≠0) | Místní červenec |
+|---|---:|---:|---:|
+| 11775 Zlín | 4 438 / 4 464 | 26 | 43,7 mm |
+| 11777 Vizovice | 4 420 / 4 464 | 44 | 40,6 mm |
+| 11778 Luhačovice–Kladná-Žilín | 4 464 / 4 464 | 0 | 47,7 mm |
+
+Místní denní kontrolní úhrny podle konce intervalu:
+
+| Datum | 11775 Zlín | 11777 Vizovice | 11778 Luhačovice–Kladná-Žilín | Archive IDW2 |
+|---|---:|---:|---:|---:|
+| 22. 7. | 0,0 | 0,0 | 0,0 | 0,000 |
+| 23. 7. | 0,0 | 0,0 | 0,0 | 0,000 |
+| 24. 7. | 0,0 | 0,0 | 0,0 | 0,000 |
+| 25. 7. | 14,5 | 9,5 | 15,7 | 11,273 |
+| 26. 7. | 0,3 | 0,4 | 0,3 | 0,370 |
+
+Všechny tři stanice mají pro 22.–26. 7. každý den 144/144 platných řádků. Nové hodnoty 25.–26. 7. opravují posun o záznamy přes půlnoc v předchozí tabulce §11; denní model v archivu zůstává v rozsahu okolních měření.
+
+### Identifikace stanic a otisky zdrojů
+
+Oficiální meta1.csv uvádí souřadnice a nadmořskou výšku: WSI 11775 (49,236667° N, 17,643333° E; 283 m), WSI 11777 (49,222970° N, 17,843610° E; 313 m; stejná poloha před i po změně provozního období 15. 7.) a WSI 11778 (49,084200° N, 17,792500° E; 329 m). Otisk SHA-256 metadatového souboru: f87d23be0cc845d36cfa3da91a4549e280a6871ffecbf1b7166c946810e25ee9.
+
+SHA-256 originálních červencových CSV:
+- 11775: 8ed881cbe468eb9bc3eb3e0bc99fcabc0d4f855e9c846743da7f3cb5dfcccb6b
+- 11777: d1577464b354cb57ed8d5ba87ddb56d24302dc4adcfe5de14147aa4ebc05900e
+- 11778: adb418e379541a60908bc069cd31a183962951d4ac7d06525d99fe743dbcf136
+
+Výpočet lze reprodukovat skriptem scripts/july2021_chmi_daily.py; hranice půlnoci, příznaky kvality a duplicitní časové značky pokrývají nové testy tests/test_july2021_chmi_daily.py. Nové dva testy prošly lokálně a skript nad všemi devíti zdrojovými soubory (červen, červenec, srpen pro tři WSI) reprodukoval 31 dnů × 144 záznamů u každé stanice a součty uvedené výše.
+
+### Dopad na konečný závěr
+
+Nezávislé CSV zpřesňují měsíční referenční hodnoty a potvrzují regionálně suché dny 22.–24. 7. Neposkytují přímé místní měření v Loučce, nedokazují správnost nul u jednotlivých lokálních impulsů a nedoplňují cílové souřadnice Loučky ani uložené IDW2 váhy. Měsíční pracovní archiv proto zůstává 42,5672658 mm jako hodnota uloženého modelu; scénář 70,5072658 mm při pravosti všech 71 sporných lokálních impulsů zůstává citlivostní variantou, nikoli intervalem nejistoty. QC tabulky zůstávají nesynchronizované: v aktuálním WeeWX rozsahu je 8 920 QC řádků a 8 archivních časů bez QC; všech 8 920 hodnot validated_rain_mm je NULL. Dostupný Weather MCP zapisuje pouze do archive, takže plné vědecké uzavření a číselnou nejistotu nelze zatím doložit.
