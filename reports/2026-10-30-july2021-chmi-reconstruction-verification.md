@@ -173,7 +173,7 @@ Tato sekce je novější než výše uvedený snapshot. Přepočty jsou řazeny 
 
 ### ČHMÚ 10min srážkoměry, 22.–26. 7.
 
-Přímo jsem načetl oficiální historické soubory ČHMÚ `10m-0-203-0-{WSI}-202107.json` pro WSI 11775, 11777 a 11778. Záznamy jsou v UTC; pro místní datum byl použit posun CEST +02:00. Každý den a stanice má 144 záznamů SRA10M, prázdný FLAG a QUALITY=0.
+Přímo jsem načetl oficiální historické soubory ČHMÚ `10m-0-203-0-{WSI}-202107.json` pro WSI 11775, 11777 a 11778. Záznamy jsou v UTC; pro místní datum byl použit posun CEST +02:00. Každý den a stanice má 144 záznamů SRA10M, prázdný FLAG a QUALITY=0. U WSI 11777 jsem navíc porovnal všech 744 hodinových SRA1H hodnot s odpovídajícími šesti SRA10M záznamy označenými H, H+10, …, H+50 minut: součet souhlasil přesně ve všech hodinách. To nezávisle potvrzuje přiřazení úhrnu k datovému času SRA10M; místní denní součet proto seskupuje `DT` po převodu UTC→Europe/Prague (bez odečítání 10 minut).
 
 | Místní den | WSI 11775 (mm) | WSI 11777 (mm) | WSI 11778 (mm) | Model v archive (mm) | Původní archive snapshot (mm) |
 |---|---:|---:|---:|---:|---:|
