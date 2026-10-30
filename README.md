@@ -90,4 +90,8 @@ První aktuální diagnostika a Fáze A jsou zaznamenány v [reports/2026-10-30-
 
 Repozitář `https://github.com/Boym323/Meteo_audit` je připojen jako `origin`; pracovní větev je `main`. Po každém dokončeném úkolu se aktualizují relevantní Markdown reporty a strojově čitelné CSV/JSON výstupy, zkontrolují staged změny a publikují commitem na GitHub. `.env` zůstává ignorovaný; nikdy se nepublikují tajné údaje.
 
+### Automatické publikování commitů
+
+V tomto checkoutu je zapnutý Git hook `post-commit`: po každém commitu vytvořeném na větvi `main` provede `git push origin HEAD:main`. Na jiných větvích nic neposílá. Změny je stále nutné nejdříve výslovně commitnout; hook sám nic nestageuje ani nevytváří commit. Push vyžaduje funkční GitHub přístupové údaje v prostředí. Pokud push selže (například kvůli odlišné historii nebo chybějícím oprávněním), commit zůstane lokálně a Git zobrazí chybu.
+
 Aktuální běh diagnostiky a Fáze A: [report](reports/2026-10-30-diagnostic-phase-a.md). Přehledová CSV a evidence ČHMÚ jsou v `reports/`. Tato data představují auditní souhrny a zdokumentované reference; kompletní produkční `archive` není v tomto pracovním stromu exportován.

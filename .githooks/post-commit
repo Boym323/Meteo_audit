@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+# Publish commits made on the primary branch. Never push work from other branches.
+branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || true)
+if [ "$branch" != "main" ]; then
+    exit 0
+fi
+
+git push origin HEAD:main
