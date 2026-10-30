@@ -202,7 +202,7 @@ def inspect_proposal(document: object, read: Reader, baseline: dict) -> dict:
         variable = item.get("variable")
         if isinstance(timestamp, bool) or not isinstance(timestamp, int) or not 0 < timestamp < 2147483647:
             raise GuardError("target_time must be a positive UTC integer epoch")
-        if variable not in SAFE_VARIABLES:
+        if not isinstance(variable, str) or variable not in SAFE_VARIABLES:
             raise GuardError("Only rain and rainRate are supported by this first guard")
         key = (timestamp, variable)
         if key in identities:
@@ -214,9 +214,10 @@ def inspect_proposal(document: object, read: Reader, baseline: dict) -> dict:
         new = _number_or_none(item["proposed_value"], "proposed_value")
         if _same(old, new):
             raise GuardError("No-op proposal must not be staged")
-        if item.get("source_database") not in ALLOWED_DATABASES:
+        if not isinstance(item.get("source_database"), str) or item["source_database"] not in ALLOWED_DATABASES:
             raise GuardError("source_database is not allowlisted")
-        if isinstance(item.get("source_time"), bool) or not isinstance(item.get("source_time"), int):
+        if (isinstance(item.get("source_time"), bool) or not isinstance(item.get("source_time"), int)
+                or not 0 < item["source_time"] < 2147483647):
             raise GuardError("source_time must be UTC integer epoch")
         if not isinstance(item.get("reason"), str) or len(item["reason"].strip()) < 12:
             raise GuardError("Candidate must have a concrete reason")
@@ -248,6 +249,22 @@ def inspect_proposal(document: object, read: Reader, baseline: dict) -> dict:
         raise GuardError(
             f"Target overlaps {len(collisions)} existing audit records; "
             "never restage applied/prepared/cancelled corrections"
+        )
+    prior_candidates = _parse(read(
+        "SELECT c.target_time,c.variable,c.batch_id,b.state "
+        "FROM reconstruction_candidates c "
+        "JOIN reconstruction_batches b ON b.batch_id=c.batch_id "
+        "WHERE c.target_time IN (" + times + ")"
+    ), 4, "prior candidate proposals")
+    candidate_collisions = [
+        (int(t), variable, batch, state)
+        for t, variable, batch, state in prior_candidates
+        if (int(t), variable) in identities
+    ]
+    if candidate_collisions:
+        raise GuardError(
+            f"Target overlaps {len(candidate_collisions)} historical candidate proposals; "
+            "cancelled/pending proposals may not be silently resurrected"
         )
     existing = _parse(read(
         "SELECT dateTime,rain,rainRate FROM archive WHERE dateTime IN (" + times + ")"
