@@ -120,3 +120,50 @@ GROUP BY batch_key,variable,state ORDER BY batch_key;
 6. Ověřit jednotlivé dny 22.–26. 7. na ČHMÚ a případném radarovém produktu MERGE. Až potom klasifikovat lokální hodnoty jako doložené / plausibilní / nevyřešené.
 
 **Verdikt:** Součet 42,567266 mm je v pracovní DB vypočtený a vkládaný modelový výsledek. Není dosud nezávisle reprodukovaný z originálních zdrojových CSV a nelze ho vydávat za ověřenou skutečnou srážku v Loučce. Další hromadný SQL UPDATE není bezpečně odůvodněný.
+
+
+## 7. Dodatek po zpřístupnění atomického zápisu Weather MCP (2026-10-30)
+
+Původní audit výše zůstává zachován jako časově označený read-only stav. Následná kontrola úplného seznamu funkcí Weather MCP odhalila samostatnou `reconstruction_apply_corrections`: zapisuje atomicky pouze do pracovního `archive` databáze `loucka_reconstruction`, vyžaduje optimistickou kontrolu původní hodnoty a zaznamenává každé pole do `reconstruction_changes`. Zápis byl autorizován uživatelem.
+
+### Provedená oprava `rainRate`
+
+Přímé porovnání předrekonstrukční zálohy `rain_backup_202107_before_chmi_v1` s archivem potvrdilo:
+
+- záloha pokrývá 8 921 červencových pozic a byla pořízena 2026-10-30 08:42:46;
+- všech 8 921 archivních párů `(rain, rainRate)` před opravou přesně odpovídalo návrhové tabulce ČHMÚ;
+- `rainRate` se lišil od předrekonstrukční zálohy u 2 784 pozic; u zbylých 6 137 se již rovnal;
+- všechny opravy prošly nejprve dry-runem, poté byly zapsány v 56 dávkách (55 × 50 a 1 × 34) s `expected_old_value` kontrolou. Každá dávka skončila stavem `applied`; kontrolní SELECT po zápisu zjistil 0 rozdílů vůči záloze na všech 8 921 pozicích a 0 NULL `rainRate`;
+- `rain` se tímto zásahem neměnil. Jeho měsíční součet v archivu proto zůstává 42,5672658 mm, stále však jde o nereprodukovaný prostorový model, nikoli ověřený místní úhrn.
+
+Název auditní dávky má prefix `jul2021-rate-restore-prechmi-v1-`. Změna pouze vrací hodnoty `rainRate` ze zálohy po tom, co byl do standardního pole zapsán modelový přepočet; nevydává hodnoty z této zálohy za nově nezávisle ověřené. Historické záznamy `reconstruction_changes` nebyly přepsány.
+
+### Kontrola srážkového archivu po zápisu
+
+```sql
+SELECT COUNT(*) n,
+       SUM(a.rainRate <> b.rainRate_before_cm_h) rate_differences,
+       SUM(a.rain <> b.rain_before_cm) rain_differences
+FROM loucka_reconstruction.archive a
+JOIN loucka_reconstruction.rain_backup_202107_before_chmi_v1 b USING(dateTime)
+WHERE a.dateTime >= 1625090400 AND a.dateTime < 1627768800;
+-- n=8921, rate_differences=0, rain_differences=1422
+
+SELECT COUNT(*) n, SUM(rain*10) monthly_model_mm
+FROM loucka_reconstruction.archive
+WHERE dateTime >= 1625090400 AND dateTime < 1627768800;
+-- n=8921, monthly_model_mm=42.5672658
+
+SELECT r.dateTime, r.rain_cm
+FROM loucka_reconstruction.rain_reconstruction_202107_chmi_v1 r
+LEFT JOIN loucka_reconstruction.archive a USING(dateTime)
+WHERE a.dateTime IS NULL ORDER BY r.dateTime;
+-- 7 chybějících záznamů; všechny modelové hodnoty jsou nula
+```
+
+Denní součty je nutné při WeeWX konvenci přiřadit podle konce intervalu: pro interval 5 minut seskupit podle `DATE(FROM_UNIXTIME(dateTime - interval*60))`, při měsíčním výběru použít `dateTime > start AND dateTime <= end`. Dne 3. 7. zůstává 281 z očekávaných 288 záznamů; sedm chybějících časů nebylo domyšleno ani vloženo jako nuly.
+
+### Co zůstává neověřeno
+
+Nebyly nalezeny identifikátory WSI, vzdálenosti, váhy ani originální vstupní CSV tří stanic pro IDW2. Sedm časových mezer, 23 počátečních nul a denní měření 22.–26. 7. stále vyžadují nezávislé zdroje a provenienci. Proto není vědecky obhajitelný jeden „finální“ lokální měsíční úhrn ani číselná nejistota. Pět původních databází nebylo tímto zápisem dotčeno.
+
