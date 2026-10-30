@@ -32,7 +32,7 @@ Známé veličiny zahrnují: `outTemp`, `inTemp`, `appTemp`, `dewpoint`, `windch
 
 ### Rekonstrukční databáze
 `loucka_reconstruction` obsahuje aktuálně zjištěné tabulky:
-- `archive`, `archive` pro pracovní rekonstrukce — **nepředpokládej identický obsah s produkční tabulkou**.
+- `archive` pro pracovní rekonstrukce — **nepředpokládej identický obsah s produkční tabulkou**.
 - Srážky červenec 2021: `rain_archive_original_202107`, `rain_audit_202107`, `rain_backup_202107_before_chmi_v1`, `rain_qc_202107`, `rain_qc_daily_202107`, `rain_reconstruction_202107_chmi_v1`.
 - Vlhkost duben 2022: `reconstruction_humidity_202204`.
 - Evidence změn/návrhů: `reconstruction_batches`, `reconstruction_candidates`, `reconstruction_changes`.
@@ -43,7 +43,7 @@ Pouze existence těchto tabulek je ověřena. Jejich obsah, aktuální kvalita a
 ## Externí referenční zdroje
 - LuhaMet: https://www.luhamet.cz/archiv/
 - Weather Underground — ILOUKA4: https://www.wunderground.com/dashboard/pws/ILOUKA4
-- ČHMÚ: oficiální staniční záznamy a případně archiv radarových odhadů, s rozlišením pozorování od modelovaného odhadu.
+- ČHMÚ: oficiální staniční záznamy a případně archiv radarových odhadů, s rozlišením pozorování od modelovaného odhadu. Denní `SRA` nelze bez ověření přiřazení dne a časového okna použít jako přímý důkaz pětiminutového impulsu; viz [metodika denních srážek ČHMÚ](docs/chmi-daily-sra.md).
 
 ## Pravidla vyhodnocování
 - Všechna data páruj primárně podle UTC. Pro denní úhrny používej výslovně uvedený místní meteorologický nebo občanský den a ošetři změnu času.
@@ -137,6 +137,6 @@ Repozitář `https://github.com/Boym323/Meteo_audit` je připojen jako `origin`;
 
 ### Automatické publikování commitů
 
-V některých pracovních checkoutech může být zapnutý lokální post-commit hook pro main; před commitem ověř aktuální větev a remote. Tento hook není součástí verzovaného projektu.
+Verzovaný soubor `.githooks/post-commit` je součástí repozitáře, ale běží jen pokud jej checkout aktivoval (např. přes `core.hooksPath`). Výchozí hook nyní **nic automaticky nepushuje** a pouze upozorní na commit na `main`. Před commitem ověř `git branch --show-current` a `git config --get core.hooksPath`; změny publikuj přes pracovní větev a PR. Staré lokální hooky v LXC mohou mít jiný obsah a mohou stále automaticky pushovat — ověř je samostatně.
 
 Aktuální diagnostika a Fáze A: [report](reports/2026-10-30-diagnostic-phase-a.md). Výsledky stabilizace a metodiky: [report](reports/2026-10-30-code-review-stabilization.md). Přehledová CSV a evidence ČHMÚ jsou v `reports/`. Tato data představují auditní souhrny a zdokumentované reference; kompletní produkční `archive` není v tomto pracovním stromu exportován.

@@ -13,6 +13,9 @@ Prováděj reprodukovatelný audit a návrhy rekonstrukcí meteorologických dat
 - Pracuj pod neprivilegovaným systémovým účtem; přístup do DB minimalizuj.
 - Pro analytické CLI používej existující `DB_USER=loucka_audit` a `DB_PASSWORD` z místního `.env`. Podle uživatele má tento účet **jen SELECT do produkčních/historických zdrojů** a zápis pouze do **pracovní `loucka_reconstruction`**. Zápisová práva v pracovní DB nezakládají souhlas se zápisem; veškeré analýzy musí zachovat jediný SELECT/SHOW v `START TRANSACTION READ ONLY`. Neměň granty ani nevyžaduj nový účet. Pro budoucí opravy platí předchozí výslovné schválení, záloha a rollback.
 - Pro archivní agregace používej WeeWX konec intervalu a hranice `(start, end]`; denní občanské součty výslovně odlišuj od meteorologického srážkoměrného dne.
+- U denních ČHMÚ `SRA` nejprve dolož význam `DT`, `TIMEFUNC`, přiřazený den a **24hodinové okno**; samotné `06:00 UTC` nebo shoda kalendářního dne nestačí. Bez mapování nedeklaruj denní ČHMÚ jako časové potvrzení jednotlivého intervalu; viz `docs/chmi-daily-sra.md`.
+- Odděluj jistotu **diagnózy chyby** od jistoty **konkrétní náhradní hodnoty**. `SUSPECTED` ani `HIGH_CONFIDENCE` automaticky neschvaluje `rain=0`; konfliktní aplikované změny nepoužívej v hromadném apply.
+- Historické reporty a kandidáty zachovej jako zdrojový důkaz; při opravě interpretace přidej revizní upozornění a důvod, bez přepisování starých dat a CSV.
 
 ## Známý kontext
 - Databázový server: MariaDB, dle dřívější dokumentace verze 11.8.x (ověř aktuální stav).

@@ -8,6 +8,12 @@
 - `pocasi-loucka.eu_old.archive`, `old_weewx.archive`, `weewx_WH1080.archive`: historické databáze s odlišným časovým pokrytím a možnou sémantikou čítače. Nezaměňovat jejich `rain` za intervalový déšť bez potvrzení driveru a konfigurace.
 - LuhaMet, ILOUKA4 a ČHMÚ: nezávislé srovnávací zdroje s různou vzdáleností, časovým rozlišením, agregací a kvalitou. Nejsou náhradou místního čidla bez vyhodnocení.
 
+## ČHMÚ: význam denního srážkového údaje
+
+Denní `SRA` není okamžité měření ani důkaz pětiminutového impulsu. ČHMÚ uvádí 24hodinový úhrn měřený ráno a připisovaný předchozímu dni. Pro historické CSV je nutné zvlášť ověřit vztah sloupců `DT` a `TIMEFUNC` k tomuto pravidlu a časové pásmo; nelze mechanicky přičíst či odečíst jeden den pouze podle textu `06:00`. Dokud není interval každého referenčního řádku jednoznačný, smí posloužit jen jako **nečasově zarovnaný kontext**, nikoli důkaz pro změnu konkrétního timestampu. Podrobně [docs/chmi-daily-sra.md](chmi-daily-sra.md).
+
+Pro náhradu srážky nulou požaduj samostatný důkaz, že v cílovém intervalu nepršelo. Závěr „uložený impuls je nejspíše chybný“ není automaticky závěr „skutečná srážka byla přesně 0 mm“. `NULL` a nula mají jiný význam.
+
 ## Jednotky a význam
 
 WeeWX označuje hodnotou `0x10` systém METRIC, kde je srážka v cm a intenzita v cm/h; `0x11` METRICWX používá mm a mm/h. Viz [oficiální tabulka jednotek WeeWX 5.4](https://www.weewx.com/docs/5.4/reference/units/). Proto lze `usUnits=16` převést na mm násobením 10, pokud všechny řádky daného souhrnu používají právě tento systém. To ověřuje kód systému jednotek, nikoliv historickou konfiguraci driveru pro konkrétní sloupec. Před produkční rekonstrukcí je nutné ověřit WeeWX `weewx.conf`, ovladač a historické přechody. V tomto checkoutu WeeWX konfigurace nalezena nebyla.
