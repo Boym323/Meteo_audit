@@ -99,6 +99,37 @@ class PeriodBoundaryTests(unittest.TestCase):
         self.assertEqual(result["missing_intervals_between_rows_estimated"], 1)
         self.assertEqual(result["rows"], 2)
 
+    def test_last_archive_month_coverage_clips_to_last_record(self):
+        start = datetime(2025, 2, 1, tzinfo=PRAGUE)
+        stop = datetime(2025, 3, 1, tzinfo=PRAGUE)
+        first = epoch("2025-02-27T21:00:00+01:00")
+        last = epoch("2025-02-27T21:10:00+01:00")
+        rows = [
+            row("2025-02-27T21:00:00+01:00"),
+            row("2025-02-27T21:05:00+01:00"),
+            row("2025-02-27T21:10:00+01:00"),
+        ]
+        result = monthly.summarize_rows(rows, start, stop, first, last, 5)
+        self.assertEqual(result["expected_grid_rows_estimated"], 3)
+        self.assertEqual(result["row_coverage_pct_estimated"], 100.0)
+        self.assertEqual(result["missing_rows_estimated"], 0)
+        self.assertTrue(result["first_archive_month_partial"])
+        self.assertTrue(result["last_archive_month_partial"])
+
+    def test_first_archive_row_counts_as_observed_grid_opportunity(self):
+        start = datetime(2009, 3, 1, tzinfo=PRAGUE)
+        stop = datetime(2009, 4, 1, tzinfo=PRAGUE)
+        first = epoch("2009-03-29T18:45:00+02:00")
+        last = epoch("2009-03-29T18:55:00+02:00")
+        rows = [
+            row("2009-03-29T18:45:00+02:00"),
+            row("2009-03-29T18:50:00+02:00"),
+            row("2009-03-29T18:55:00+02:00"),
+        ]
+        result = monthly.summarize_rows(rows, start, stop, first, last, 5)
+        self.assertEqual(result["expected_grid_rows_estimated"], 3)
+        self.assertEqual(result["missing_rows_estimated"], 0)
+
     def test_first_and_last_archive_months_are_marked_partial(self):
         start = datetime(2009, 3, 1, tzinfo=PRAGUE)
         stop = datetime(2009, 4, 1, tzinfo=PRAGUE)

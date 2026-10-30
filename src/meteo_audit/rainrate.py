@@ -8,16 +8,13 @@ from datetime import datetime
 from pathlib import Path
 
 from .db import ALLOWED_DATABASES, quote_database, query
-from .monthly import TZ, UTC, _code_version
+from .monthly import UTC, _code_version
+from .time_bounds import archive_period_predicate, local_year_bounds
 
 
 def year_bounds(year: int) -> tuple[int, int]:
-    """Return UTC epochs for the local Europe/Prague calendar year [start,end)."""
-    if not 1970 <= year < 2200:
-        raise ValueError("Year must satisfy 1970 <= year < 2200")
-    start = datetime(year, 1, 1, tzinfo=TZ)
-    stop = datetime(year + 1, 1, 1, tzinfo=TZ)
-    return int(start.timestamp()), int(stop.timestamp())
+    """Return UTC endpoints for the local WeeWX year (start, end]."""
+    return local_year_bounds(year)
 
 
 def audit_year(database: str, year: int) -> dict[str, object]:
@@ -27,7 +24,7 @@ def audit_year(database: str, year: int) -> dict[str, object]:
         "SELECT COUNT(*),SUM(rain IS NULL),SUM(rain=0),SUM(rain>0),"
         "SUM(rainRate IS NULL),SUM(rainRate=0),SUM(rainRate>0),"
         "SUM(rain>0 AND rainRate=0),SUM(rainRate>0 AND rain=0) "
-        f"FROM {schema}.archive WHERE dateTime >= {start} AND dateTime < {stop}"
+        f"FROM {schema}.archive WHERE {archive_period_predicate(start, stop)}"
     )
     values = query(sql, timeout=120)[0].split("\t")
 
@@ -44,8 +41,8 @@ def audit_year(database: str, year: int) -> dict[str, object]:
     if len(values) != len(names):
         raise ValueError("Unexpected MariaDB result shape for yearly rainRate audit")
     result: dict[str, object] = {"database": database, "local_year": year,
-                                 "start_utc_epoch_inclusive": start,
-                                 "stop_utc_epoch_exclusive": stop}
+                                 "start_utc_epoch_exclusive": start,
+                                 "stop_utc_epoch_inclusive": stop}
     result.update({name: number(value) for name, value in zip(names, values)})
     return result
 
@@ -83,10 +80,10 @@ def main() -> None:
         metadata = {
             **header,
             "analyzed_local_period": [args.start_year, args.end_year],
-            "start_utc_epoch_inclusive": year_bounds(args.start_year)[0],
-            "stop_utc_epoch_exclusive": year_bounds(args.end_year)[1],
+            "start_utc_epoch_exclusive": year_bounds(args.start_year)[0],
+            "stop_utc_epoch_inclusive": year_bounds(args.end_year)[1],
             "source_table": f"{database}.archive",
-            "filters": "dateTime >= local-year start and dateTime < next local-year start",
+            "filters": "WeeWX interval end: dateTime > local-year start and dateTime <= next local-year start",
             "measurements": "stored rain/rainRate fields; NULL, zero, and positive counts are separate",
             "output_csv": str(output),
         }

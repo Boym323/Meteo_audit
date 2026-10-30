@@ -25,8 +25,15 @@ class RainRateAuditTests(unittest.TestCase):
         query = mocked.call_args.args[0]
         quoted = chr(96) + "loucka_reconstruction" + chr(96) + ".archive"
         self.assertIn(quoted, query)
-        self.assertIn("dateTime >=", query)
-        self.assertIn("dateTime <", query)
+        self.assertIn("dateTime >", query)
+        self.assertIn("dateTime <=", query)
+        self.assertNotIn("dateTime >=", query)
+        self.assertNotIn("dateTime <", query)
+        start, end = rainrate.year_bounds(2021)
+        self.assertIn(f"dateTime > {start}", query)
+        self.assertIn(f"dateTime <= {end}", query)
+        self.assertEqual(result["start_utc_epoch_exclusive"], start)
+        self.assertEqual(result["stop_utc_epoch_inclusive"], end)
         self.assertEqual(result["archive_rows"], 3)
         self.assertEqual(result["rain_null_rows"], 1)
         self.assertEqual(result["rain_zero_rows"], 1)
@@ -55,6 +62,10 @@ class RainRateAuditTests(unittest.TestCase):
             metadata = json.loads(paths[1].with_name("annual_rainrate_divergence.metadata.json").read_text())
             self.assertEqual(metadata["processed_rows"], 2)
             self.assertEqual(metadata["analysis_code_version"], "test123")
+            self.assertIn("dateTime >", metadata["filters"])
+            self.assertIn("dateTime <=", metadata["filters"])
+            self.assertEqual(metadata["start_utc_epoch_exclusive"], rainrate.year_bounds(2021)[0])
+            self.assertEqual(metadata["stop_utc_epoch_inclusive"], rainrate.year_bounds(2021)[1])
 
 
 if __name__ == "__main__":

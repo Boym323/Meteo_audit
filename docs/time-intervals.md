@@ -18,6 +18,12 @@ Intervalový déšť se přiřazuje do bucketu podle konce záznamu. Pokud neobv
 
 Výstup odděluje počet archivních řádků, `rain=NULL`, skutečnou `rain=0` a kladný déšť. Chybějící celý řádek se odhaduje z mezer mezi časovými značkami a z intervalu předchozího záznamu; nesoulad s násobkem intervalu se eviduje jako nepravidelný krok. Samostatně se označují timestampy mimo pětiminutovou UTC mřížku.
 
-`expected_grid_rows_estimated` a `row_coverage_pct_estimated` jsou pouze odhadem příležitostí k archivaci na nejčastějším intervalu v měsíci (u prázdného měsíce na globálním nejčastějším intervalu). Neříkají, zda měření ověřil senzor ani zda jeho hodnota byla správná. První/poslední částečné období a celé měsíce bez řádku se nesmějí zaměnit s měřenou nulovou srážkou.
+`expected_grid_rows_estimated` a `row_coverage_pct_estimated` jsou pouze odhadem příležitostí k archivaci na nejčastějším intervalu v měsíci (u prázdného měsíce na globálním nejčastějším intervalu). Odhad je omezen prvním a posledním skutečně existujícím archivním záznamem; intervaly po konci dostupného archivu se nepočítají jako výpadek. První pozorovaný interval se do odhadu započítá. Neříkají, zda měření ověřil senzor ani zda jeho hodnota byla správná. První/poslední částečné období a celé měsíce bez řádku se nesmějí zaměnit s měřenou nulovou srážkou.
 
 V rozsahu reportu z 30. 10. 2026 bylo vygenerováno 214 kalendářních měsíců 2009-01 až 2026-10. V dřívějším výstupu mělo řádky 206 měsíců; zbývajících 8 tvořily dva měsíce před první historií a šest prázdných měsíců během výpadku 2011-09 až 2012-02. Jde o rozdílné a souběžně správné počty.
+
+## Sdílené hranice a historické reporty
+
+Oba moduly `monthly.py` a `rainrate.py` nyní používají `time_bounds.archive_period_predicate()` a společnou sémantiku WeeWX `(start, end]`. `rainrate.py` vytváří hranice roků prostřednictvím `time_bounds.local_year_bounds()`. Regresní testy kontrolují půlnoc, změnu roku a konec dostupného archivu.
+
+Původní `reports/2026-10-30-rainrate-2009-2025-by-source.csv` je **historický export se starým SQL filtrem `[start, end)`**; jeho data nejsou zpětně modifikována. Po zřízení a ověření účtu `meteo_audit_ro` je potřeba roční souhrny znovu exportovat a zaznamenat změny. Stejně tak původní `reports/monthly_rain_coverage.csv` je historicky poškozený soubor a nesmí sloužit jako zdroj ověřených maxim.

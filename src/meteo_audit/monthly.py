@@ -14,11 +14,8 @@ import subprocess
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from zoneinfo import ZoneInfo
-
 from .db import ALLOWED_DATABASES, quote_database, query
-
-TZ = ZoneInfo("Europe/Prague")
+from .time_bounds import PRAGUE as TZ, archive_period_predicate
 UTC = timezone.utc
 
 
@@ -112,16 +109,18 @@ def summarize_rows(
 
     count = len(rows)
     mode_interval = intervals.most_common(1)[0][0] if intervals else default_interval
-    # Number of positions on the nominal UTC grid in (begin, end]. This is an
-    # estimate of record opportunity, not measurement quality or verification.
+    # Nominal grid opportunity within the *observed archive span* only.
+    # Including the first observed end timestamp avoids excluding its interval.
+    # Clipping to last_epoch avoids treating future unrecorded slots as gaps.
     period_s = mode_interval * 60
-    expected = max(0, end // period_s - begin // period_s)
-    if begin >= last_epoch or end < first_epoch:
+    outside_range = begin >= last_epoch or end < first_epoch
+    if outside_range:
         expected = 0
     else:
-        clipped_begin = max(begin, first_epoch)
-        expected = max(0, end // period_s - clipped_begin // period_s)
-    status = "outside_archive_range" if begin >= last_epoch or end < first_epoch else (
+        earliest_grid_edge = max(begin, first_epoch - period_s)
+        latest_grid_edge = min(end, last_epoch)
+        expected = max(0, latest_grid_edge // period_s - earliest_grid_edge // period_s)
+    status = "outside_archive_range" if outside_range else (
         "no_rows_within_archive_range" if not count else "has_rows"
     )
     unit_summary = ";".join(f"{key}:{value}" for key, value in sorted(units.items()))
@@ -217,7 +216,7 @@ def audit_month(start: datetime, stop: datetime, first_epoch: int, last_epoch: i
     begin, end = int(start.timestamp()), int(stop.timestamp())
     sql = (
         "SELECT dateTime,`interval`,usUnits,rain,rainRate "
-        f"FROM {schema}.`archive` WHERE dateTime > {begin} AND dateTime <= {end} "
+        f"FROM {schema}.`archive` WHERE {archive_period_predicate(begin, end)} "
         "ORDER BY dateTime"
     )
     rows = query(sql, timeout=120)
