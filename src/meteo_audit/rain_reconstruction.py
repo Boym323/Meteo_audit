@@ -12,10 +12,12 @@ LOCAL_RAIN_FIELDS = ("production_rain", "gw1000_rain", "legacy_rain")
 
 
 def agreed_local_rain(row: Mapping[str, object]) -> Decimal | None:
-    """Return an exact three-source consensus, preserving measured zero.
+    """Return an exact value shared by the three archive copies.
 
-    Missing or conflicting sources deliberately return None. This function
-    identifies supported local values; it does not write to a database.
+    Missing or conflicting sources return None. Agreement is a source-integrity
+    check only: it does not prove three independent instruments or meteorological
+    plausibility. Callers must assess quality separately. This function never
+    writes to a database.
     """
     values: list[Decimal] = []
     for field in LOCAL_RAIN_FIELDS:
