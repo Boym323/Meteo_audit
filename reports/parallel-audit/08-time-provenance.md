@@ -257,6 +257,156 @@ Přípravná tabulka `loucka_reconstruction.wh1080_missing_5min_candidates_20261
 4. Přechody CET/CEST: vždy nejprve převést lokální datum na dvě explicitní UTC epochy při podzimním opakování hodiny; jarní neexistující lokální minuty nikdy nevytvářet.
 5. Zdroje s `usUnits=17` nemají automaticky shodnou numerickou sémantiku s `usUnits=16`; přesné kopie dat vyžadují validovaný převod jednotek, nezávislost a kontrolu hodnot, nikoli jen shodu epoch.
 
-## Omezení této fáze
+## Celkové sjednocení časových značek (skutečně změřené souhrny)
 
-Tabulka výše je přesný měsíční **počet archivních řádků** z databáze a pouze orientační odhad procent vůči pětiminutové kadenci. Nejedná se o dokončenou validaci unikátních fyzických měření ani o důkaz příčiny mezer. Vzorové dotazy jsou read-only; zdrojová metadata konfigurace jednotlivých historických senzorů musí být doložena zvlášť.
+Z **18 samostatných ročních, indexovanými hranicemi omezených SELECTů** (šest `archive` v každém roce; časové přesahy 150 sekund kolem hranic) je výsledkem následující tabulka. Výpočet odděluje identitu původní epochy od hypotetického 5min *kanonického slotu*. Použitá funkce zarovnání: `FLOOR((dateTime+150)/300)*300` (zaokrouhlení na nejbližších 300 sekund, při vazbě uprostřed směrem nahoru). **Nejde o fyzikální rekonstrukci data ani o důkaz pravosti**.
+
+| Rok | Všechny řádky ze 6 zdrojů | Různé původní UTC značky | Různé zarovnané sloty | Časově redundantní řádky |
+|---|---:|---:|---:|---:|
+| 2009 | 468 993 | 81 905 | 78 194 | 390 799 |
+| 2010 | 624 617 | 106 079 | 104 090 | 520 527 |
+| 2011 | 386 114 | 67 870 | 67 318 | 318 796 |
+| 2012 | 452 088 | 83 759 | 75 335 | 376 753 |
+| 2013 | 572 969 | 97 510 | 95 495 | 477 474 |
+| 2014 | 577 920 | 107 478 | 96 801 | 481 119 |
+| 2015 | 613 825 | 150 028 | 103 383 | 510 442 |
+| 2016 | 561 775 | 163 460 | 103 995 | 457 780 |
+| 2017 | 517 053 | 115 913 | 104 845 | 412 208 |
+| 2018 | 560 766 | 106 198 | 105 091 | 455 675 |
+| 2019 | 629 284 | 105 568 | 105 114 | 524 170 |
+| 2020 | 545 089 | 104 495 | 103 814 | 441 275 |
+| 2021 | 413 836 | 103 459 | 103 459 | 310 377 |
+| 2022 | 416 670 | 104 263 | 104 263 | 312 407 |
+| 2023 | 366 918 | 104 714 | 104 714 | 262 204 |
+| 2024 | 314 805 | 104 935 | 104 935 | 209 870 |
+| 2025 | 308 838 | 102 946 | 102 946 | 205 892 |
+| 2026 | 255 909 | 87 401 | 87 138 | 168 771 |
+| **Celkem** | **8 587 469** | **1 897 981** | **1 750 930** | **6 836 539** |
+
+- Po zarovnání se 8 587 469 archivních řádků promítá do **1 750 930 různých pětiminutových časových slotů**. Číslo **6 836 539** jsou *opakované výskyty slotů*, **nikoli potvrzené kopie meteorologických hodnot**. Zároveň různé hodnoty v témže slotu nesmějí být bez důkazu sloučeny.
+- Samotná pracovní rekonstrukce má **1 679 802 řádků**, ale po zarovnání jen **1 679 539 různých slotů**: v roce 2026 se 263 řádků časově slévá do jiných slotů. Rozdíl **71 391** slotů tvoří nové časové příležitosti z ostatních pěti databází; jiné jednotky, chyba nebo zamrzlá čidla mohou i tak znemožnit rekonstrukci hodnot.
+- Před výše uvedeným sjednocením bylo mezi zdroji mimo pracovní archiv identifikováno **142 494 řádků**, z nichž je **71 391** rozdílných slotů. Zbývající výskyty tvoří **70 832 opakování přesně stejné zdrojové epochy** a **271 kolizí odlišných epoch po zaokrouhlení**. Z 71 391 slotů se **70 460** vyskytuje ve více zdrojových řádcích.
+- Nejméně u dvojice WH1080 ↔ old_weewx se přesné časové značky 2009–2018 shodují **936 620 / 936 620**. Pětice hodnot `outTemp,outHumidity,windSpeed,windDir,barometer` je v **780 132** z těchto řádků přesně shodná při NULL-safe porovnání. Silný indikátor společného původu, nikoli automatický důkaz, který archiv byl původní nebo že zbývající řádky jsou nezávislá pozorování.
+- Live produkční `archive` mezi SELECTy roste. Součet početních inventářů a sjednocovací běh mohou vykázat jednotkové rozdíly u října 2026; tento audit není transakčně konzistentní historický snapshot.
+
+### Metoda SQL pro opakování sjednocení
+
+Každý rok zvlášť. Pro každý zdroj připojit `SELECT dateTime AS ts, FLOOR((dateTime+150)/300)*300 AS canonical FROM \`db\`.\`archive\` WHERE dateTime > :local_year_start_utc_minus_150 AND dateTime <= :next_local_year_start_utc_plus_150`; dílčí výsledky spojit přes `UNION ALL`; ve vnějších dotazech filtrovat `canonical > :local_year_start_utc AND canonical <= :next_local_year_start_utc` a agregovat `COUNT(*)`, `COUNT(DISTINCT ts)`, `COUNT(DISTINCT canonical)`. Parametry jsou číselné epochy UTC; jejich místní hranice vypočítat mimo DB podle pravidel Europe/Prague, přičemž samotné sloty zůstávají UTC. V DB nyní `CONVERT_TZ` pro pojmenovanou zónu nefunguje. Hlavní dotaz nikdy nespouštět jako nenaindexovanou agregaci 17 let naráz.
+
+## Meziarchivní párování a chronologie časových anomálií
+
+| Zdroj proti `loucka_reconstruction` | Přesná shoda epochy | Shoda až po přepočtu na 5min slot | Bez shody i po zarovnání |
+|---|---:|---:|---:|
+| `pocasi-loucka.eu` | 1 679 802 | 0 | 280 |
+| `pocasi-loucka.eu_GW1000` | 1 674 534 | 0 | 231 |
+| `pocasi-loucka.eu_old` | 1 189 955 | 145 736 | 504 |
+| `old_weewx` | 887 193 | 146 498 | 70 731 |
+| `weewx_WH1080` | 894 942 | 146 513 | **70 746** |
+
+Párování zahrnuje i různé délky `interval`, protože jde nejdříve o *časový screening*. Fyzikální identitu intervalů teprve potvrzuje druhá fáze podle startu, konce, zdrojového payloadu, časového offsetu a jednotek. U negridového timestampu může zaokrouhlení překrýt dva různé intervaly; z toho nikdy neplyne automatický import.
+
+**Chronologie:**
+
+1. **Březen 2009:** pracovní/produkční záznamy začínají na UTC epochě `1238345100`, archiv WH1080 a old_weewx na `1238345160` (o minutu později); nelze z toho vyvozovat fixní +60s posun celé historie.
+2. **15. 8. 2011 – 1. 3. 2012:** zásadní chybějící období; šest úplně prázdných občanských měsíců 2011-09 až 2012-02. Podrobnosti níže. Staré zdroje pokračují téměř o dva týdny déle než produkční/rekonstrukční archiv.
+3. **Duben 2013:** v pracovním archivu je doložena velká časová mezera v období 7.–12. 4. 2013 (viz tabulka mezer). Jednotková či srážkoměrná změna kolem 14.–19. 4. 2013 je kontext jiného auditu a nesmí se ztotožňovat s prokázanou chybou hodin; samotné `usUnits` neurčuje skutečný fyzikální převod.
+4. **2014–2019:** `interval=6` je v rekonstrukci **2 090×**, převážně 2015–2017 (736, 1 128, 137); tyto značky přesto leží na 5min mřížce. Ve WH1080 je 6min interval **2 338×** a značky jsou často o sekundy/minuty posunuté. Je nutné individuálně ověřit fyzickou šířku intervalu, ne předpokládat, že šest minut znamená obyčejnou 5min vzorkovací periodu.
+5. **2015–2018:** dramaticky roste počet historických syrových značek mimo 5min mřížku; například v roce 2016 má WH1080 módy `dateTime % 300` rovné 0 (34 970 řádků), 181 (13 065), 1 (11 065), 241 (9 585). Jde o více různých reziduí, tedy **ne o jediný konstantní hodinový/minutový posun**. Toto a velký počet shod po snapu jsou indicie přepočtu či importního zaokrouhlování, ale zdrojový algoritmus zatím nebyl dohledán.
+6. **2016–2018:** největší oblast chybějícího časového pokrytí i problémů s vlhkostí. WH1080 má bez zarovnané shody 16 293 (2016), 28 027 (2017) a 17 469 (2018) řádků. Není oprávněné označit je plošně za kompletní meteorologické měření.
+7. **Srpen–září 2020:** `old_weewx` končí na `1596716400` (2020-08-06), WH1080 na `1599055800` (2020-09-02). Tyto konce přesně vymezují rozsah původních zdrojů. Přechod zařízení je historický kontext, ale název databáze `_GW1000` **neznamená**, že veškeré její řádky od roku 2009 vznikly na GW1000; tento archiv obsahuje i starou historii.
+8. **Srpen 2022:** v pracovním archivu se poprvé objevují `radiation`, `UV`, `pm25_1`, blesky a další senzory; NULL před tímto datem není výpadkem těchto veličin.
+9. **Březen–říjen 2026:** produkce má 390 timestampů mimo 5min mřížku, především s rezidui 240 s (277 řádků), 60 s (43), 180 s (39), 120 s (31). Pouze **43** z 390 má i kanonickou 5min epochu jako další řádek stejné produkční tabulky, z toho jen **4** mají shodnou teplotu i vlhkost. Nejde tedy o 390 prokázaných kopií, ale o kandidáty k individuálnímu ověření zpoždění, přesunů intervalů a kolizí.
+
+### Změna přiřazení dne/měsíce při zarovnání
+
+Proti čistě uloženému `dateTime` mění hypotetické zaokrouhlení na pět minut občanský den u **270** řádků `pocasi-loucka.eu_old`, **299** `old_weewx` a **299** WH1080; pro každou z těchto tří DB mění občanský měsíc u **8** řádků. V pracovní rekonstrukci, produkci a GW1000 bylo takových překlasifikací **0**. Např. původní epoch `1451602860` v WH1080 spadá do ledna 2016, zatímco 5min zarovnání do prosince 2015. Pro audit kalendářních úhrnů je to přímý důvod zachovávat vedle původní epochy také transformovanou epochu, delta-sekundy a identifikátor pravidla. Změna bucketu je **dokázaná**, původní chyba hodin/migrace však **není dokázaná**. Původní měsíční tabulka v tomto dokumentu pracuje se zdrojovým `dateTime` bez snapu.
+
+## Mezery a detekce archivních výpadků
+
+Následující největší mezery pracovní rekonstrukce byly zjištěny čtecím `LEAD(dateTime) OVER (ORDER BY dateTime)` na indexovanými hranicemi omezených úsecích, s oddělenou kontrolou přes hranici roků. Jde o rozdíly koncových časových značek; vlastní počet chybějících 5min slotů se odvozuje teprve ze skutečné délky sousedních intervalů.
+
+| Období | Poslední konec před mezerou (UTC) | První konec po mezeře (UTC) | Rozdíl dní |
+|---|---|---|---:|
+| Mezi srpnem 2011 a březnem 2012 | 2011-08-15 20:05:00Z | 2012-03-01 09:25:00Z | 198.56 |
+| 2018 | 2018-02-21 13:45:00Z | 2018-03-24 16:00:00Z | 31.09 |
+| 2016 | 2016-01-18 22:35:00Z | 2016-02-06 13:10:00Z | 18.61 |
+| 2017 | 2017-05-12 04:50:00Z | 2017-05-28 21:45:00Z | 16.70 |
+| 2014 | 2014-06-20 22:50:00Z | 2014-07-03 17:00:00Z | 12.76 |
+| 2013 | 2013-04-06 22:20:00Z | 2013-04-12 17:45:00Z | 5.81 |
+| 2009 | 2009-07-21 15:15:00Z | 2009-07-24 12:00:00Z | 2.86 |
+
+- Ve zdrojích WH1080 a old_weewx pokračují záznamy až do **2011-08-28 21:15 UTC** a obnovují se **2012-03-01 09:23 UTC**. Jejich vlastní mezera činí cca **185,51 dne**, oproti cca **198,56 dne** v rekonstrukci. Rozdílný konec starých zdrojů potvrzuje, že část mezery v cílovém archivu neznamená fyzickou absenci měření.
+- U ostatních dlouhých mezer nejde bez dalšího zkoumání o prokázanou poruchu stanice: je nutné rozlišit výpadek přenosu, neimportovanou historii, chybné UTC při migraci a chybějící aktivní senzor.
+
+## Archivní časové intervaly a CET/CEST
+
+- `dateTime` je číselná UTC epocha; `interval` udává nominální **minuty reprezentovaného úseku**, nikoli záruku délky mezery od předchozího řádku. V pracovní rekonstrukci je 1 677 705 záznamů s `interval=5`, 2 090 se `interval=6`, tři `interval=30`, po jednom `interval=10,40,55,75`. Všechny pracovní záznamy mají `usUnits=16`; WH1080 je `usUnits=17`.
+- Časové hranice WeeWX jsou `(t-interval*60,t]`; pro lokální občanský den se kalendářní interval nejprve vytvoří v Europe/Prague, teprve poté převede na UTC. Půlnoc je vždy koncem **předchozího** občanského dne.
+- Správný jarní přechod má **276** pětiminutových časových slotů, podzimní **300**. V RECON je 2020-03-29 přesně 276 a 2020-10-25 přesně 300 řádků; v roce 2026 je 2026-03-29 rovněž 276 a 2026-10-25 300. Dny s menším počtem (např. 2013-10-27 212/300) jsou skutečné nedostatky archivních řádků, ne automaticky „hodina DST“.
+- Dvě podzimní lokální hodiny 02:00–02:59 jsou odlišné UTC epochy a **nesmějí se deduplikovat podle lokálního řetězce**. V MariaDB test `FROM_UNIXTIME` zobrazil obě lokální 02:30; `CONVERT_TZ` s `Europe/Prague` však při běhu vrací NULL, proto musí aplikace pracovat s číselnou epochou a explicitní časovou zónou (nikoli s převodem na SQL serveru bez ověření tz tabulek).
+- V přechodech se nenašel důkaz **plošné systémové chyby jedné hodiny**. Lokální podezření vyžadují primární logger timestamp a nezávislý fyzikální fingerprint, nikoli jen počet shod při posunu +3600 s (pravidelná mřížka dává spoustu falešných shod).
+
+## Historická aktivita senzorů: omezení denominatoru
+
+V `loucka_reconstruction.archive` byly po jednotlivých rocích spočítány nenulové (tj. `NOT NULL`, nikoli nenulová numerická hodnota) hodnoty vybraných veličin. Důkazní příklady:
+
+| Rok | Řádků celkem | outTemp přítomna | outHumidity přítomna | radiation přítomna | pm25_1 přítomna |
+|---|---:|---:|---:|---:|---:|
+| 2016 | 87 913 | 87 725 | 74 486 | 0 | 0 |
+| 2017 | 76 820 | 76 553 | 51 884 | 0 | 0 |
+| 2018 | 87 623 | 87 577 | 51 731 | 0 | 0 |
+| 2021 | 103 459 | 102 512 | 102 441 | 0 | 0 |
+| 2022 | 104 140 | 101 305 | 60 829 | 36 090 | 36 159 |
+| 2023 | 104 434 | 104 279 | 104 292 | 104 251 | 101 509 |
+| 2026 (část) | 86 888 | 86 887 | 86 886 | 86 368 | 86 868 |
+
+**První zaznamenaná nenulová přítomnost (UTC, nikoli prokázané datum montáže):**
+
+| Senzor / pole | První neprázdná UTC epocha |
+|---|---|
+| soilTemp1 a soilTemp2 | 2019-04-26 14:45:00Z |
+| radiation / UV / PM2.5 / lightning / soilMoist1 | 2022-08-27 09:40:00Z |
+| extraTemp1 | 2022-09-02 08:45:00Z |
+| wh26_rssi | 2026-03-08 12:25:00Z |
+| vpd | 2026-03-08 12:15:00Z |
+| sunshineDur | 2026-03-12 18:00:00Z |
+
+Před první zdokumentovanou aktivitou senzoru se v reportech používá stav **NOT_OBSERVED_BEFORE_FIRST_SEEN** (instalace bez konfigurace nesmí být vyloučena). Teprve instalační deník/config interval povýší na **NOT_INSTALLED**. Po prokázaném spuštění lze rozlišit **SENSOR_DATA_MISSING** (`NULL` v existujícím archivu), **ARCHIVE_RECORD_MISSING** (neexistuje řádek), **TRANSPORT_GAP**, **SENSOR_OFFLINE** (pokud potvrzeno diagnostikou). U `soilTemp*` a `extraTemp*` dodatečně nutná časově verzovaná mapa fyzických čidel; přeznačení se nesmí vyhodnotit jako ztráta senzoru.
+
+## Kandidáti WH1080 — forenzní kontrola, bez importu
+
+Kandidátová tabulka obsahuje 49 796 řádků: 1 301 `frozen_sensor_review` (100 v roce 2009, 1 201 v roce 2011), 47 737 `pressure_only_review` (5 729 v roce 2016, 24 542 v roce 2017, 17 466 v roce 2018) a 758 `needs_validation` (1 v roce 2018, 266 v roce 2019, 491 v roce 2020). Všech **49 796** má skutečný zdrojový řádek v `weewx_WH1080.archive` a postrádá záznam na kanonickém cílovém slotu v pracovní rekonstrukci. `time_offset_sec` je pro všechny 0 a původní `source_time` leží na 5min UTC mřížce. Tato množina je podmnožinou **70 746** WH1080 nezarovnatelných časů; **20 950** dalších časů není v přípravné kandidátní tabulce. **Nedoplňovat automaticky**, zejména 2016–2018 bez běžných senzorů.
+
+## Návrh normalizované evidence kvality a původu pro budoucí frontend
+
+Model eviduje *řádky zdrojů*, *fyzické intervaly*, *jednotlivé veličiny*, *jejich revize* a *kvalitu* odděleně. Jde o návrh schématu, **ne provedenou DDL/migraci**:
+
+| Entita | Podstatná pole | Účel |
+|---|---|---|
+| `source_registry` | `source_id`, schéma/tabulka, generace zařízení, archivní role, timezone konfigurace, časová platnost | Zdroj a lineage (GW1000 DB může obsahovat staré importy) |
+| `raw_archive_ref` | `source_id`, původní `dateTime`, `interval`, `usUnits`, digest raw payloadu, původní kolony, import/export run | Neměnný auditní odkaz, neklonovat řádky bez zdroje |
+| `canonical_interval` | `canonical_id`, `start_utc`, `end_utc`, `source_end_utc`, `alignment_delta_sec`, `rule_version`, `time_confidence` | Výslovné oddělení zdrojové a normalizované epochy |
+| `field_lineage` | `canonical_id`, veličina, `raw_archive_ref`, raw value/unit, normalized value/unit, metoda převodu, fingerprint, `independence_group` | Nevydávat převzatou hodnotu za nové měření |
+| `sensor_lifecycle` | fyzický senzor, veličina, platnost od/do, konfigurace/driver, evidence aktivace/deaktivace, mapování labelů | Jmenovatel úplnosti pouze během prokázané dostupnosti |
+| `quality_assessment` | `field_lineage`, flags, evidence IDs, `diagnosis_confidence`, `replacement_confidence`, revize, reviewer, rule version | Oddělit podezření od jistoty náhradní hodnoty |
+
+Doporučené stavové příznaky: `RAW_OBSERVED`, `TIME_ALIGNED_CANDIDATE`, `SOURCE_COPY_SUSPECTED`, `VALUE_CONFLICT`, `INTERVAL_NON_5MIN`, `DST_AMBIGUITY`, `SENSOR_FROZEN_SUSPECTED`, `SENSOR_DATA_MISSING`, `ARCHIVE_RECORD_MISSING`, `NOT_OBSERVED_BEFORE_FIRST_SEEN`, `NOT_INSTALLED_CONFIRMED`, `RECONSTRUCTED_VERIFIED` a `RECONSTRUCTED_UNCERTAIN`. Pro každé pole povinně vyznačit způsob měření (raw / přepočtené / importované / rekonstruované), zdroj a dvojici jistot. Frontend má zvlášť kreslit **časovou úplnost řádků**, **dostupnost konkrétního senzoru** a **důvěryhodnost hodnot**. Neznámou hodnotu či nedostupný senzor nikdy nevykreslovat jako nulu nebo zelených 100 %.
+
+### Doporučená pravidla deterministického párování intervalů
+
+1. **P0 – přesné:** shoda `(start_utc,end_utc,interval,variable)` a validovaných jednotek. Porovnat payload a nezávislost zdrojů.
+2. **P1 – přesná epocha, odlišná délka:** shodný konec `dateTime` ještě není shodný fyzický interval; jen *candidate*, rozhoduje míra překryvu a reprezentované období.
+3. **P2 – jemný drift:** pro původní `interval=5` navrhnout nearest-5min zarovnání pouze při `abs(delta)<=150 s`, zamezit kolizím v témže zdroji a měřit výskyt posunu v časově souvislých blocích. Hodnota ani epoch nesmí být přepsána bez důkazu.
+4. **P3 – jiná archivní perioda:** u `interval=6/10/30/40/55/75` chápat řádek jako interval s vlastní délkou a určit časový překryv. Bez legitimního agregátoru nepřevádět na 5min záznam či samostatně nepřerozdělovat srážky.
+5. **P4 – konflikt:** při dvou různých hodnotách ve stejném kanonickém slotu uložit obě reference, nezávislost a kvalitu; rozhodovat jednotlivou veličinu, ne celé řádky; auditní stopa je neměnná.
+6. **P5 – TZ/DST:** nápadný posun 3600/7200 s pouze jako hypotéza, ověřit jej na neperiodickém fyzikálním signálu nebo primárním logu. U podzimního opakování lokálního času preferovat explicitní UTC epochu a offset; u jarního skoku nevkládat imaginární hodiny.
+7. **P6 – aktivita senzoru:** hodnotit `NULL` jen v intervalech, kde existuje validovaná evidence aktivního senzoru; před ní zůstat `UNKNOWN_NOT_OBSERVED` nebo `CONFIRMED_NOT_INSTALLED`, nikdy automatický výpadek.
+
+## Ověřitelnost a omezení závěrů
+
+- Všechny číslice vycházejí z čtecích SELECT dotazů. Velké archivy byly rozděleny na **18 ročních úseků**, případně kratší rozsahy; žádný INSERT/UPDATE/DELETE/DDL ani import WH kandidátů.
+- Pracovní `loucka_reconstruction.archive` může mít změněné měřené hodnoty proti produkci; počet přesných epoch **není důkaz identických hodnot**. Neexistuje spolehlivá evidence fyzicky nezávislých senzorových snímků bez autentických logger ID/datalogů a verzovaných konfigurací.
+- Číslo **1 750 930** je unikátnost hypotetických **5min UTC slotů**, nikoli počet nezávislých fyzických měření. `8 587 469-1 750 930` označuje redundantní *přítomnosti* slotu, ne definitivně označené kopie. 5min zaokrouhlení není pro dlouhé intervaly věcně ekvivalentní a nepoužívat je k importu.
+- Původní měsíc v tabulce pokrytí je přiřazen podle `dateTime`, bez časového snapu; 8 hraničních přerozdělení v každém starém zdroji změní měsíc až při analytickém zarovnání.
+- U přítomnosti senzorů `NOT NULL` nevypovídá samo o správnosti fyzikálních hodnot ani o datu instalace. Instalační dokumentace, generace senzoru a WeeWX konfigurace jsou nutné pro definitivní klasifikaci.
+- Příští krok: vytvořit nezapisující diagnostický test fingerprintů a intervalového překryvu pro 70 746 WH časů po malých měsících, vyřešit 20 950 nepřipravených časů, dokumentovat schéma původu a uložit verifikované kalendářní přechody do samostatných regresních testů.
