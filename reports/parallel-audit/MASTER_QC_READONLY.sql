@@ -104,8 +104,9 @@ SELECT r.dateTime,FROM_UNIXTIME(r.dateTime) AS local_end_time,
  ROUND(g.rain*10,3) AS original_gw_mm
 FROM `loucka_reconstruction`.archive r
 JOIN `pocasi-loucka.eu_GW1000`.archive g USING(dateTime)
-WHERE r.dateTime IN (UNIX_TIMESTAMP('2026-05-12 06:35:00'),
-                     UNIX_TIMESTAMP('2026-05-16 23:15:00'));
+-- Pevné UTC epochy; zdrojové incidenty byly 06:35 a 23:15 Europe/Prague (CEST).
+-- Není závislé na @@session.time_zone ani na DB timezone tabulkách.
+WHERE r.dateTime IN (1778560500,1778966100);
 
 -- Q11 Párové tlakové rozdíly, srpen 2026 (UTC, report má i místní souhrny).
 SELECT COUNT(*) n,
