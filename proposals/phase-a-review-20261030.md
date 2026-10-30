@@ -2,9 +2,11 @@
 
 **Stav:** pouze evidenční návrhy. Nic nebylo aplikováno tímto během. Produkční databáze zůstává nedotčena.
 
-Návrhy jsou převzaty z existujících kandidátů `reconstruction_candidates`; jejich batch je `pending`. `rainRate` v roce 2025 má současně starší aplikovanou změnu v pracovní DB, proto jde o konflikt k posouzení, ne schválení. Časy jsou uvedeny v místním čase i UTC a epochě. Zdroj kandidáta je `pocasi-loucka.eu_GW1000`; raw čítačové vzorky 2010/2011 byly nezávisle porovnány s `old_weewx` a `weewx_WH1080`.
+> **Revizní omezení 30. 10. 2026:** Sloupec „Návrh“ zachycuje **historický obsah pending kandidátů v databázi**, nikoli schválenou náhradu. Ani `SUSPECTED`, ani `HIGH_CONFIDENCE` nedokazuje, že náhradní hodnota má být přesně `0`. Časové přiřazení denních ČHMÚ `SRA` nebylo v tomto auditu ověřeno; viz [metodika ČHMÚ](../docs/chmi-daily-sra.md). Žádný řádek v těchto tabulkách nesmí být automaticky aplikován.
 
-| ID / batch ordinal | Místní čas | UTC | `dateTime` s | Veličina | Původní | Návrh | Jistota | Důkaz / omezení |
+Návrhy jsou převzaty z existujících kandidátů `reconstruction_candidates`; jejich batch je `pending`. `rainRate` v roce 2025 má současně starší aplikovanou změnu v pracovní DB, proto jde o konflikt k posouzení, ne schválení. Časy jsou uvedeny v místním čase i UTC a epochě. Zdroj kandidáta je `pocasi-loucka.eu_GW1000`; raw čítačové vzorky 2010/2011 byly porovnány s historickými databázemi `old_weewx` a `weewx_WH1080`; jde o další záznamy, nikoli automaticky nezávislé fyzické senzory.
+
+| ID / batch ordinal | Místní čas | UTC | `dateTime` s | Veličina | Původní | Kandidát v DB (neschválený) | Jistota diagnózy | Důkaz / omezení |
 |---|---|---|---:|---|---:|---:|---|---|
 | `loucka-rain-phaseA-201006-review-20261030-v1/0` | 2010-06-01 12:40 | 2010-06-01T10:40:00Z | 1275388800 | rain | 1.554 | 0 | SUSPECTED | raw counter 174.9; CHMI confirms regional rain, not this impulse |
 | `loucka-rain-phaseA-201006-review-20261030-v1/1` | 2010-06-01 12:45 | 2010-06-01T10:45:00Z | 1275389100 | rain | 2.331 | 0 | SUSPECTED | raw counter 408; CHMI daily only |
@@ -26,9 +28,15 @@ Návrhy jsou převzaty z existujících kandidátů `reconstruction_candidates`;
 | `loucka-rain-phaseA-confirmed-20261030-v1/1` | 2025-02-27 21:15 | 2025-02-27T20:15:00Z | 1740687300 | rain | 3.05 | 0 | HIGH_CONFIDENCE | outdoor outage; references 8.81/8.45 mm; local daily sum 38.9→8.4 mm; CHMI SRA 5.6/7.4 mm |
 | `loucka-rain-phaseA-confirmed-20261030-v1/2` | 2025-02-27 21:15 | 2025-02-27T20:15:00Z | 1740687300 | rainRate | 0.005333… in reconstruction | 0 | UNRESOLVED | pending candidate conflicts with previously applied rainRate restoration; production remains 0 |
 
-| `loucka-high-rainrate-manual-review-1-20261029-v1` | 2010-06-03 12:10 | 2010-06-03T10:10:00Z | 1275559800 | rainRate | 0 (production) | NULL / unresolved | UNRESOLVED | GW1000 source candidate 9.216 cm/h; exact rainRate semantics are unknown. |
-| `loucka-high-rainrate-manual-review-1-20261029-v1` | 2010-06-03 12:15 | 2010-06-03T10:15:00Z | 1275560100 | rainRate | 0 (production) | NULL / unresolved | UNRESOLVED | GW1000 source candidate 13.808 cm/h; exact rainRate semantics are unknown. |
+### Oddělené manuální případy `rainRate`
+
+Následující položky nepatří do tabulky 19 kandidátů `rain`/`rainRate` výše. Hodnota `NULL / unresolved` označuje **neurčenou náhradu**, nikoli pokyn k zápisu SQL `NULL`. Původní sdílený název review zachováváme a pro rozlišení přidáváme pouze zobrazovací suffix epochy.
+
+| Evidenční ID @ epoch | Místní čas | UTC | `dateTime` s | Veličina | Původní | Stav náhrady | Jistota | Důkaz / omezení |
+|---|---|---|---:|---|---:|---|---|---|
+| `loucka-high-rainrate-manual-review-1-20261029-v1@1275559800` | 2010-06-03 12:10 | 2010-06-03T10:10:00Z | 1275559800 | rainRate | 0 (production) | NULL / unresolved | UNRESOLVED | GW1000 source candidate 9.216 cm/h; exact rainRate semantics are unknown. |
+| `loucka-high-rainrate-manual-review-1-20261029-v1@1275560100` | 2010-06-03 12:15 | 2010-06-03T10:15:00Z | 1275560100 | rainRate | 0 (production) | NULL / unresolved | UNRESOLVED | GW1000 source candidate 13.808 cm/h; exact rainRate semantics are unknown. |
 
 ## Apply/rollback contract (not executable)
 
-Před jakýmkoli zápisem je nutné schválení a samostatný SQL návrh. Kontrola aktuální hodnoty musí přesně odpovídat výše uvedené původní hodnotě; při neshodě se batch zastaví. Před aplikací uložit přesný `dateTime`, `rain`, `rainRate`, `usUnits`, `interval` do zálohy a doložit počet zasažených řádků. Změny aplikovat pouze do `loucka_reconstruction.archive`, v transakci a s počtem řádků přesně odpovídajícím schválenému návrhu. Po zápisu ověřit hodnoty, součty a záznam auditu. Rollback smí obnovit zálohované hodnoty pouze tehdy, pokud aktuální hodnoty stále odpovídají schváleným novým hodnotám. Produkční archiv zůstává mimo rozsah zásahů.
+Tento oddíl popisuje **podmínky případné budoucí operace**, nikoli povolení spustit uvedené pending kandidáty. Před jakýmkoli zápisem je nutné schválení **jednotlivých náhradních hodnot** a samostatný SQL návrh. Pokud není spolehlivě doložena konkrétní náhrada, neaplikovat ani `0`, ani `NULL`. Kontrola aktuální hodnoty musí přesně odpovídat výše uvedené původní hodnotě; při neshodě se batch zastaví. Před aplikací uložit přesný `dateTime`, `rain`, `rainRate`, `usUnits`, `interval` do zálohy a doložit počet zasažených řádků. Změny aplikovat pouze do `loucka_reconstruction.archive`, v transakci a s počtem řádků přesně odpovídajícím schválenému návrhu. Po zápisu ověřit hodnoty, součty a záznam auditu. Rollback smí obnovit zálohované hodnoty pouze tehdy, pokud aktuální hodnoty stále odpovídají schváleným novým hodnotám. Produkční archiv zůstává mimo rozsah zásahů.
