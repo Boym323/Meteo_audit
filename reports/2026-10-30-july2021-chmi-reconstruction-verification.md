@@ -281,3 +281,44 @@ Pro WeeWX měsíční hranice `dateTime > 1625090400 AND dateTime <= 1627768800`
 Pole `rainRate` nebylo odvozeno z obnovených `rain`; 250 NULL zůstává zachováno, protože srážkový úhrn intervalu neurčuje okamžitou nebo průměrnou intenzitu. QC tabulky `rain_qc_202107` a `rain_qc_daily_202107` zůstávají zastaralé: Weather MCP nabízí zapisovací korekci pouze pro `loucka_reconstruction.archive`, nikoli pro tyto QC tabulky, a `execute_sql` je výhradně read-only. Originální databáze nebyly upraveny.
 
 **Stav:** 93 chybných NULL bylo nahrazeno doloženými původními lokálními hodnotami. Mřížka je úplná, ale vědecké uzavření měsíčního úhrnu stále vyžaduje nezávislou reprodukci modelu, audit zbývajících modelových intervalů a synchronizaci QC provenance.
+
+
+## 11. Dodatečná kontrola ČHMÚ po místních dnech (2026-10-30)
+
+Znovu jsem přímo zpracoval oficiální 10minutové historické JSON soubory ČHMÚ pro tři stanice použité v nezávislé prostorové kontrole. Z každého souboru bylo vybráno všech 4 464 záznamů `SRA10M` (31 × 144); den je určen po převodu UTC na Europe/Prague. Hodnoty s neprázdným `FLAG` nebo `QUALITY != 0` nejsou zahrnuty do platného měsíčního součtu.
+
+| WSI / stanice | Platné 10min hodnoty | Vyřazené příznakované hodnoty | Platný součet za červenec |
+|---|---:|---:|---:|
+| 11775 Zlín | 4 438 | 26 | 43,7 mm |
+| 11777 Vizovice | 4 420 | 44 | 40,6 mm |
+| 11778 Luhačovice, Kladná-Žilín | 4 464 | 0 | 47,6 mm |
+
+Nezávislé denní srážky pro kritickou epizodu:
+
+| Místní datum | 11775 Zlín | 11777 Vizovice | 11778 Luhačovice, Kladná-Žilín |
+|---|---:|---:|---:|
+| 22. 7. | 0,0 mm | 0,0 mm | 0,0 mm |
+| 23. 7. | 0,0 mm | 0,0 mm | 0,0 mm |
+| 24. 7. | 0,0 mm | 0,0 mm | 0,0 mm |
+| 25. 7. | 14,5 mm | 8,8 mm | 14,4 mm |
+| 26. 7. | 0,3 mm | 1,1 mm | 1,6 mm |
+
+U všech tří stanic je na 22.–26. 7. k dispozici 144/144 záznamů za den bez FLAG a s QUALITY=0. Tato shoda potvrzuje regionálně suchý charakter 22.–24. 7. a déšť 25.–26. 7.; nevylučuje však lokální konvektivní rozdíly v Loučce. Stanice 11775 měla příznakované hodnoty 28.–29. 7. a 11777 4.–5. a 15. 7.; pro platné součty výše byly odečteny. Souřadnice stanic použité pouze pro geografickou orientaci: Zlín 49,2367° N, 17,6433° E; Vizovice 49,2230° N, 17,8436° E; Luhačovice, Kladná-Žilín 49,0842° N, 17,7925° E. Údaje jsou z [profilu Zlín](https://www.mpocasi.cz/stanice/zlin/), [profilu Vizovic](https://www.mpocasi.cz/stanice/vizovice/) a [profilu Luhačovic](https://www.mpocasi.cz/stanice/luhacovice-kladna-zilin/); oficiálním zdrojem naměřených řádků zůstává příslušný ČHMÚ JSON.
+
+Oficiální soubory: [11775](https://opendata.chmi.cz/meteorology/climate/historical/data/10min/2021/10m-0-203-0-11775-202107.json), [11777](https://opendata.chmi.cz/meteorology/climate/historical/data/10min/2021/10m-0-203-0-11777-202107.json), [11778](https://opendata.chmi.cz/meteorology/climate/historical/data/10min/2021/10m-0-203-0-11778-202107.json). Formát a seznam prvků včetně SRA10M popisuje [oficiální dokumentace klimatologických dat ČHMÚ](https://opendata.chmi.cz/meteorology/climate/Klimatologicka_data_popis.pdf).
+
+### Aktuální pracovní archiv — přímý SELECT
+
+Opakovaný SELECT pro WeeWX interval `dateTime > 1625090400 AND dateTime <= 1627768800` nyní vrátil:
+
+- 8 928 řádků; 0 `rain IS NULL`; 8 461 nul; 467 kladných hodnot.
+- `SUM(rain)*10 = 70.5072658 mm`; 250 řádků má `rainRate IS NULL`.
+- 8 856 hodnot `rain` souhlasí s návrhovou tabulkou IDW2 a 71 obnovených lokálních hodnot se od ní liší.
+- Sedm časů 3. 7. je v archive doplněno jako řídké řádky s nulovým prostorovým odhadem a `rainRate=NULL`; nevydávají se za skutečné lokální měření.
+- Pro kontrolu zdrojové nezávislosti platí, že zápisy byly omezeny na `loucka_reconstruction.archive`. Originálních databází se zápisové funkce nedotkly.
+
+Původní loučský snapshot dává 701.0146 mm; model IDW2 bez těchto 71 lokálních obnov dává 42.5672658 mm a aktuální archivní součet je jejich kombinací. Validní měsíční součty tří referenčních srážkoměrů jsou 40,6–47,6 mm. Tato čísla poskytují srovnávací scénáře, nikoli statistický interval spolehlivosti skutečného místního úhrnu.
+
+### Co tato kontrola nedoplňuje
+
+Modelová tabulka stále neobsahuje originální vstupní hodnoty, jednoznačnou vazbu každého intervalu na WSI, vzdálenosti ani váhy. Cílové přesné souřadnice srážkoměru Počasí Loučka nebyly v databázi ani v dostupné primární metadatové evidenci ověřeny. Proto nelze tvrdit, že 42.5672658 mm bylo nezávisle numericky reprodukováno ani odvodit obhajitelnou číselnou nejistotu pro místní měsíční úhrn. 70.5072658 mm je ověřený součet aktuálně uložených hodnot, nikoli potvrzený konečný skutečný úhrn. Denní QC tabulky nadále odrážejí starší klasifikační běh; zapisovací funkce Weather MCP má povolený cíl pouze `archive`, zatímco `execute_sql` je read-only. Tento stav se proto nesmí označit za plně vědecky uzavřený.
