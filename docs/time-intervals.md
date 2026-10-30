@@ -14,6 +14,10 @@ Denní maximum v `monthly.py` používá občanský den od místní půlnoci do 
 
 Intervalový déšť se přiřazuje do bucketu podle konce záznamu. Pokud neobvykle dlouhý interval překročí hranici bucketu, hodnota se nedělí poměrem ani nepřipisuje nule; zůstává celá u okamžiku konce a situace je určena k samostatnému posouzení.
 
+## Referenční srážkoměrné dny ČHMÚ
+
+Konvence WeeWX `(start, end]` platí pro vlastní archiv, **ne pro libovolné externí CSV**. U ČHMÚ `SRA` nelze z hodnoty `DT` ani z `TIMEFUNC=06:00` bez primární definice automaticky vyvozovat uzavření 24hodinového úhrnu ve stejný okamžik. ČHMÚ popisuje měření ráno s přiřazením úhrnu předchozímu dni. Nejdříve dokumentuj mapování zdrojového data na počátek a konec časového okna v UTC; až potom páruj s archivními intervaly. Viz [metodika SRA](chmi-daily-sra.md).
+
 ## Pokrytí a chybějící data
 
 Výstup odděluje počet archivních řádků, `rain=NULL`, skutečnou `rain=0` a kladný déšť. Chybějící celý řádek se odhaduje z mezer mezi časovými značkami a z intervalu předchozího záznamu; nesoulad s násobkem intervalu se eviduje jako nepravidelný krok. Samostatně se označují timestampy mimo pětiminutovou UTC mřížku.
