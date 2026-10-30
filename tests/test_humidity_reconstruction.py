@@ -47,5 +47,20 @@ class PhysicalModelTests(unittest.TestCase):
             saturation_factor(float("inf"))
 
 
+
+
+class DualReferenceJulyTests(unittest.TestCase):
+    def test_candidate_written_to_db(self):
+        from meteo_audit.humidity_reconstruction import july2022_dual_station_candidate
+        self.assertEqual(july2022_dual_station_candidate(23.75, 23.0, 69.3, 72.0), 66.3)
+        self.assertEqual(july2022_dual_station_candidate(24.125, 24.0, 70.3, 70.0), 66.7)
+
+    def test_exclude_unreliable_references(self):
+        from meteo_audit.humidity_reconstruction import july2022_dual_station_candidate
+        self.assertIsNone(july2022_dual_station_candidate(24, 24, 15, 72))
+        self.assertIsNone(july2022_dual_station_candidate(24, 28, 75, 76))
+        self.assertIsNone(july2022_dual_station_candidate(24, 24, 0, 76))
+        self.assertIsNone(july2022_dual_station_candidate(24, 24, float("nan"), 76))
+
 if __name__ == "__main__":
     unittest.main()
