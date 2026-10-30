@@ -322,3 +322,56 @@ Původní loučský snapshot dává 701.0146 mm; model IDW2 bez těchto 71 loká
 ### Co tato kontrola nedoplňuje
 
 Modelová tabulka stále neobsahuje originální vstupní hodnoty, jednoznačnou vazbu každého intervalu na WSI, vzdálenosti ani váhy. Cílové přesné souřadnice srážkoměru Počasí Loučka nebyly v databázi ani v dostupné primární metadatové evidenci ověřeny. Proto nelze tvrdit, že 42.5672658 mm bylo nezávisle numericky reprodukováno ani odvodit obhajitelnou číselnou nejistotu pro místní měsíční úhrn. 70.5072658 mm je ověřený součet aktuálně uložených hodnot, nikoli potvrzený konečný skutečný úhrn. Denní QC tabulky nadále odrážejí starší klasifikační běh; zapisovací funkce Weather MCP má povolený cíl pouze `archive`, zatímco `execute_sql` je read-only. Tento stav se proto nesmí označit za plně vědecky uzavřený.
+
+
+## 12. Aktuální selektivní vyřazení 71 podezřelých lokálních impulsů (2026-10-30)
+
+Tato část je novější než sekce 10–11 a **nahrazuje jejich hodnoty aktuálního archivu**. Při opětovném auditu 22.–24. 7. bylo zjištěno, že všech 21 obnovených lokálních impulzů v těchto dnech je současně označeno `strong_suspicion_both_dry`, obě RH řady jsou pod 60 % a všechny tři úplné, platné stanice ČHMÚ mají za místní den nulu. Přezkum ostatních lokálně obnovených impulsů našel dalších 50 hodnot na dnech, kdy návrhová tabulka IDW2 uvádí nulu a obě RH řady jsou pod 60 %.
+
+Tři lokální databáze mají u těchto 71 hodnot shodné kopie původního měření, ale nelze je považovat za tři nezávislé srážkoměry. Proto jsem změnil interpretaci: jejich původní kladné záznamy zůstávají zachovány v snapshotu a auditní historii, zatímco pracovní archiv ukládá **nulový prostorový odhad**, ne potvrzené místní měření. Rozhodnutí je založeno na kombinaci IDW2 nuly, nízké RH v Loučce i LuhaMetu a u 22.–24. 7. také tří platných ČHMÚ srážkoměrů. Nelze vyloučit velmi lokální přeháňku, kterou okolní síť nezachytila; tato možnost je součástí nevyřešené nejistoty, nikoli záminkou k zachování pravděpodobného falešného impulsu.
+
+### Zápis a následná kontrola
+
+Přes atomickou funkci Weather MCP jsem zapsal dvě nové dávky do `loucka_reconstruction.archive`:
+
+- `july2021_chmi_dry_days_local_pulses_v1`: 21 hodnot `rain` z nenulové lokální hodnoty na nulu; odebraný součet 8,1026 mm.
+- `july2021_dry_pulse_estimates_v1`: 50 hodnot `rain` z nenulové lokální hodnoty na nulu; odebraný součet 19,8374 mm.
+
+Obě dávky před zápisem prošly dry-runem, použily `expected_old_value` a writer po zápisu ověřil 21/21 a 50/50 změněných hodnot. `reconstruction_changes` zachovává staré i nové hodnoty; předrekonstrukční snapshot nebyl měněn. Žádné pole `rainRate` se těmito dávkami nezměnilo.
+
+Přímý kontrolní SELECT po zápisu pro WeeWX interval `dateTime > 1625090400 AND dateTime <= 1627768800` vrací:
+
+| Kontrola | Výsledek |
+|---|---:|
+| Řádky / úplné pozice | 8 928 / 8 928 |
+| `rain IS NULL` | 0 |
+| Nulové / kladné srážkové hodnoty | 8 532 / 396 |
+| `SUM(rain)*10` | 42,5672658 mm |
+| `rainRate IS NULL` | 250 |
+| Přesná shoda `rain` s modelem na společných intervalech | 8 927/8 927 |
+
+Porovnávací intervaly se liší hraničním bodem: návrhová tabulka obsahuje začátek 1. 7. 00:00 a končí 31. 7. 23:55; WeeWX výběr `(start,end]` vynechává první bod a zahrnuje 1. 8. 00:00. Obě krajní srážkové hodnoty jsou nulové. Proto se součty shodují i přes jeden modelový bod na začátku a jeden archive bod na konci mimo průnik.
+
+### Aktuální denní úhrny v pracovním archive
+
+Datum odpovídá začátku pětiminutového intervalu WeeWX. Každý den obsahuje 288 archivních intervalů.
+
+| Den | mm | Den | mm | Den | mm |
+|---|---:|---|---:|---|---:|
+| 1 | 0,504254 | 2 | 0,000000 | 3 | 0,046670 |
+| 4 | 0,008243 | 5 | 0,000000 | 6 | 0,000000 |
+| 7 | 0,000000 | 8 | 1,573173 | 9 | 1,665561 |
+| 10 | 0,000000 | 11 | 3,207369 | 12 | 6,599863 |
+| 13 | 0,000000 | 14 | 9,773180 | 15 | 0,000000 |
+| 16 | 0,000000 | 17 | 0,153596 | 18 | 0,000000 |
+| 19 | 0,000000 | 20 | 2,886011 | 21 | 0,008243 |
+| 22 | 0,000000 | 23 | 0,000000 | 24 | 0,000000 |
+| 25 | 11,272554 | 26 | 0,369815 | 27 | 1,354380 |
+| 28 | 2,878482 | 29 | 0,221988 | 30 | 0,000000 |
+| 31 | 0,043885 |  |  |  |  |
+
+### Meze závěru
+
+42,5672658 mm je nyní součet uložených hodnot, které na 8 927 společných časových bodech přesně odpovídají návrhové tabulce IDW2. **Není to nezávisle reprodukovaný ani definitivně ověřený místní úhrn.** Model stále postrádá dohledatelné vstupní CSV, vazby na konkrétní WSI, vzdálenosti a váhy; nelze tudíž vyčíslit vědecky obhajitelnou statistickou nejistotu. Nulové hodnoty u dnů s podezřelými původními impulzy jsou kvalifikované odhady, ne všechna nezávisle naměřená sucha.
+
+Tabulky `rain_qc_202107` a `rain_qc_daily_202107` jsou nadále zastaralé. Kompletní inventář dostupných Weather MCP nástrojů nabízí read-only SQL a zapisovací korekci výhradně pro `archive`; žádná autorizovaná zapisovací funkce pro QC tabulky zde není. Pokusy o synchronizaci přes read-only SQL nebyly provedeny. Pět původních databází zůstalo nedotčeno.
