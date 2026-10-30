@@ -1,0 +1,11 @@
+station_id,station_name,date_time_utc,element,time_function,value_mm,flag,quality,source_url
+0-203-0-11777,Vizovice,2010-06-01T06:00Z,SRA,06:00,48.6,,0.0,https://opendata.chmi.cz/meteorology/climate/historical_csv/data/daily/precipitation/dly-0-203-0-11777-SRA.csv
+0-203-0-11777,Vizovice,2010-06-02T06:00Z,SRA,06:00,3.9,,0.0,https://opendata.chmi.cz/meteorology/climate/historical_csv/data/daily/precipitation/dly-0-203-0-11777-SRA.csv
+0-203-0-11777,Vizovice,2010-06-03T06:00Z,SRA,06:00,2.0,,0.0,https://opendata.chmi.cz/meteorology/climate/historical_csv/data/daily/precipitation/dly-0-203-0-11777-SRA.csv
+0-203-0-11778,Kladná-Žilín,2010-06-01T06:00Z,SRA,06:00,57.0,,0.0,https://opendata.chmi.cz/meteorology/climate/historical_csv/data/daily/precipitation/dly-0-203-0-11778-SRA.csv
+0-203-0-11778,Kladná-Žilín,2010-06-02T06:00Z,SRA,06:00,3.1,,0.0,https://opendata.chmi.cz/meteorology/climate/historical_csv/data/daily/precipitation/dly-0-203-0-11778-SRA.csv
+0-203-0-11778,Kladná-Žilín,2010-06-03T06:00Z,SRA,06:00,4.6,,0.0,https://opendata.chmi.cz/meteorology/climate/historical_csv/data/daily/precipitation/dly-0-203-0-11778-SRA.csv
+0-203-0-11777,Vizovice,2011-03-28T06:00Z,SRA,06:00,0.0,,0.0,https://opendata.chmi.cz/meteorology/climate/historical_csv/data/daily/precipitation/dly-0-203-0-11777-SRA.csv
+0-203-0-11778,Kladná-Žilín,2011-03-28T06:00Z,SRA,06:00,0.0,T,0.0,https://opendata.chmi.cz/meteorology/climate/historical_csv/data/daily/precipitation/dly-0-203-0-11778-SRA.csv
+0-203-0-11777,Vizovice,2025-02-27T06:00Z,SRA,06:00,5.6,,0.0,https://opendata.chmi.cz/meteorology/climate/historical_csv/data/daily/precipitation/dly-0-203-0-11777-SRA.csv
+0-203-0-11778,Kladná-Žilín,2025-02-27T06:00Z,SRA,06:00,7.4,,0.0,https://opendata.chmi.cz/meteorology/climate/historical_csv/data/daily/precipitation/dly-0-203-0-11778-SRA.csv
