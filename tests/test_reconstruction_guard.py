@@ -22,6 +22,7 @@ class FakeDatabase:
                         for name, (n, mm) in BACKUPS.items()}
         self.archive_count = "1679802\t42.5673"
         self.prior_changes = []
+        self.prior_candidates = []
         self.batch_exists = []
         self.batch_changes_exist = []
         self.current_rows = ["1301295000\t0\t0", "1740687300\t0\t0"]
@@ -43,6 +44,8 @@ class FakeDatabase:
             return self.batch_changes_exist
         if "FROM reconstruction_changes WHERE target_time IN" in sql:
             return self.prior_changes
+        if "FROM reconstruction_candidates c" in sql:
+            return self.prior_candidates
         if "SELECT dateTime,rain,rainRate FROM archive" in sql:
             return self.current_rows
         raise AssertionError("Unexpected SQL read: " + sql)
@@ -138,6 +141,34 @@ class ProposalTests(unittest.TestCase):
         self.db.prior_changes = ["1301295000\train\tother-batch\tprepared"]
         with self.assertRaisesRegex(GuardError, "overlaps"):
             inspect_proposal(proposal(), self.db, self.baseline)
+
+    def test_preexisting_cancelled_candidate_blocks_reuse_by_new_batch(self):
+        self.db.prior_candidates = [
+            "1301295000\\train\\tloucka-rain-phaseA-confirmed-20261030-v1\\tcancelled"
+        ]
+        with self.assertRaisesRegex(GuardError, "historical candidate proposals"):
+            inspect_proposal(proposal(), self.db, self.baseline)
+
+    def test_preexisting_pending_candidate_blocks(self):
+        self.db.prior_candidates = [
+            "1301295000\\train\\tfuture-pending-review\\tpending"
+        ]
+        with self.assertRaisesRegex(GuardError, "historical candidate proposals"):
+            inspect_proposal(proposal(), self.db, self.baseline)
+
+    def test_malformed_json_variable_and_source_fail_closed(self):
+        for field, invalid in (("variable", []), ("source_database", {})):
+            with self.subTest(field=field):
+                doc = proposal()
+                doc["candidates"][0][field] = invalid
+                with self.assertRaises(GuardError):
+                    inspect_proposal(doc, self.db, self.baseline)
+
+    def test_bad_source_time_rejected(self):
+        doc = proposal()
+        doc["candidates"][0]["source_time"] = -1
+        with self.assertRaisesRegex(GuardError, "source_time"):
+            inspect_proposal(doc, self.db, self.baseline)
 
     def test_unrelated_variable_does_not_conflict(self):
         self.db.prior_changes = ["1301295000\twindSpeed\tother-batch\tapplied"]
