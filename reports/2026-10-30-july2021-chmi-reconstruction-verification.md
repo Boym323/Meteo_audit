@@ -167,3 +167,38 @@ Denní součty je nutné při WeeWX konvenci přiřadit podle konce intervalu: p
 
 Nebyly nalezeny identifikátory WSI, vzdálenosti, váhy ani originální vstupní CSV tří stanic pro IDW2. Sedm časových mezer, 23 počátečních nul a denní měření 22.–26. 7. stále vyžadují nezávislé zdroje a provenienci. Proto není vědecky obhajitelný jeden „finální“ lokální měsíční úhrn ani číselná nejistota. Pět původních databází nebylo tímto zápisem dotčeno.
 
+## 8. Dodatečná nezávislá kontrola a aktuální stav archivu (2026-10-30)
+
+Tato sekce je novější než výše uvedený snapshot. Přepočty jsou řazeny podle místního dne intervalu WeeWX: řádek s koncovým `dateTime` se započítá do dne podle `DATE(FROM_UNIXTIME(dateTime-interval*60))`. Tím se opravuje dřívější posun denních součtů podle samotného koncového timestampu.
+
+### ČHMÚ 10min srážkoměry, 22.–26. 7.
+
+Přímo jsem načetl oficiální historické soubory ČHMÚ `10m-0-203-0-{WSI}-202107.json` pro WSI 11775, 11777 a 11778. Záznamy jsou v UTC; pro místní datum byl použit posun CEST +02:00. Každý den a stanice má 144 záznamů SRA10M, prázdný FLAG a QUALITY=0.
+
+| Místní den | WSI 11775 (mm) | WSI 11777 (mm) | WSI 11778 (mm) | Model v archive (mm) | Původní archive snapshot (mm) |
+|---|---:|---:|---:|---:|---:|
+| 22. 7. | 0,0 | 0,0 | 0,0 | 0,000 | 54,762 |
+| 23. 7. | 0,0 | 0,0 | 0,0 | 0,000 | 91,084 |
+| 24. 7. | 0,0 | 0,0 | 0,0 | 0,000 | 56,718 |
+| 25. 7. | 14,5 | 8,8 | 14,4 | 11,273 | 107,848 |
+| 26. 7. | 0,3 | 1,1 | 1,6 | 0,370 | 53,365 |
+
+Odkazy na zdrojové soubory: [WSI 11775](https://opendata.chmi.cz/meteorology/climate/historical/data/10min/2021/10m-0-203-0-11775-202107.json), [WSI 11777](https://opendata.chmi.cz/meteorology/climate/historical/data/10min/2021/10m-0-203-0-11777-202107.json), [WSI 11778](https://opendata.chmi.cz/meteorology/climate/historical/data/10min/2021/10m-0-203-0-11778-202107.json).
+
+Tři nezávislé srážkoměry tedy silně podporují regionálně suchý charakter 22.–24. 7.; samy však neprokazují místní nulu v Loučce. Dne 25. a 26. 7. mají všechny tři stanice nenulovou srážku a IDW2 součty leží v jejich rozsahu. To podporuje denní meteorologickou věrohodnost modelu, ale **nereprodukuje** jeho konkrétní váhy ani desetiminutové rozdělení.
+
+### Aktuální pracovní archive
+
+Přímý SELECT přes Weather MCP po následných zápisech potvrdil pro WeeWX interval `dateTime > 1625090400 AND dateTime <= 1627768800`:
+
+- 8 928 řádků (288 za každý den), 22 hodnot `rain IS NULL`, 250 hodnot `rainRate IS NULL` a známý součet `SUM(rain)*10 = 42,5672658 mm`.
+- Dvacet dva neznámých úhrnů je 1. 7. 00:05–01:50. V záloze před rekonstrukcí mají tyto řádky samostatně zaznamenané `rainRate=0`; dávka `jul2021-start-rainrate-backup-restore-v1` obnovila všech 22 hodnot a append-only `reconstruction_changes` obsahuje 22 událostí. Po zápisu proběhl přímý SELECT: všech 22 se shoduje se zálohou, zatímco `rain` zůstává NULL.
+- Sedm časů 3. 7. (15:30 a 16:55–17:20) bylo od posledního reportu vloženo do archivu s `usUnits=16`, `interval=5`, odhadovaným `rain=0` a `rainRate=NULL`. Okolní SRA10M je suchá na všech třech stanicích. Jsou to řídké řádky: jiné veličiny zůstávají NULL a nuly představují prostorový odhad, nikoli lokální měření. Auditní historie zachovává původní vložení, přechod přes NULL i následný odhad nuly.
+- Číselné denní hodnoty známé části archive jsou: 1.7. 0,504; 2.7. 0; 3.7. 0,047; 4.7. 0,008; 5.–7.7. 0; 8.7. 1,573; 9.7. 1,666; 10.7. 0; 11.7. 3,207; 12.7. 6,600; 13.7. 0; 14.7. 9,773; 15.–16.7. 0; 17.7. 0,154; 18.–19.7. 0; 20.7. 2,886; 21.7. 0,008; 22.–24.7. 0; 25.7. 11,273; 26.7. 0,370; 27.7. 1,354; 28.7. 2,878; 29.7. 0,222; 30.7. 0; 31.7. 0,044 mm. Součet je známá/modelová část, ne potvrzený lokální měsíční úhrn.
+- Z původních 23 nul bez zdroje připadá jedna na hraniční bod 1.7. 00:00, který je mimo interval WeeWX (start,end]; 22 časů uvnitř července zůstává v archive NULL. SRA10M z přelomu měsíce ukazuje nuly na 11775 a 11777 a nulu na 11778 až do 23:10 UTC, 0,1 mm na 11778 v 23:20 UTC a pak opět nuly. Desetiminutový prostorový údaj nestačí k doložení místních pětiminutových úhrnů.
+- `rain_qc_202107` má 8 921 řádků a všechna pole `validated_rain_mm` jsou NULL; aktuální archive má 8 928 řádků. `rain_qc_daily_202107` je zastaralá (např. eviduje 281 místo současných 288 řádků 3.7.). Dostupný Weather MCP writer dovoluje měnit jen `loucka_reconstruction.archive`, ne QC tabulky; jejich aktualizace proto dosud nebyla provedena.
+- V stagingu zůstávají dvě červencové dávky pending: 3 kandidáty pro manuální přezkum a 71 podezřelých impulzů. Žádný z těchto kandidátů nebyl touto kontrolou automaticky aplikován ani zrušen.
+
+### Aktuální závěr
+
+Číslo 42,5672658 mm je potvrzeno jako známý součet hodnot uložených v pracovním archivu a je meteorologicky věrohodnější než původní čítač pro dny 22.–26. 7. Není to úplný ani nezávisle reprodukovaný lokální součet: 22 úhrnů zůstává NULL, IDW2 zdrojová provenience a váhy chybí, QC souhrny jsou zastaralé a kandidátní dávky nejsou uzavřené. Číselnou horní mez nejistoty nelze z dostupných dat určit.
