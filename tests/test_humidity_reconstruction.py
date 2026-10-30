@@ -94,5 +94,30 @@ class LuhaMetMarch2022Tests(unittest.TestCase):
         self.assertIsNone(march2022_luhamet_candidate(0, 4, 55, 0, 54))
         self.assertIsNone(march2022_luhamet_candidate(0, 0, 55, float("nan"), 54))
 
+
+class HistoricalLuhaMetTests(unittest.TestCase):
+    def test_real_archive_examples(self):
+        from meteo_audit.humidity_reconstruction import historical_luhamet_candidate
+        cases = (
+            (10.9166666666667, 11.3, 43, 44.1),
+            (-6.6, -6.1, 82, 85.2),
+            (-0.3, 0.7, 86, 92.5),
+            (-1.03333333333333, -0.1, 83, 88.8),
+            (0.7, 1.7, 79, 84.9),
+        )
+        for local_t, ref_t, rh, expected in cases:
+            self.assertEqual(
+                historical_luhamet_candidate(local_t, ref_t, rh, rh, rh),
+                expected,
+            )
+
+    def test_reject_invalid_and_unstable_reference(self):
+        from meteo_audit.humidity_reconstruction import historical_luhamet_candidate
+        self.assertIsNone(historical_luhamet_candidate(12, 12, 0, 0, 0))
+        self.assertIsNone(historical_luhamet_candidate(12, 12, 75, 0, 75))
+        self.assertIsNone(historical_luhamet_candidate(12, 12, 75, 75, 95))
+        self.assertIsNone(historical_luhamet_candidate(12, 15, 75, 75, 75))
+        self.assertIsNone(historical_luhamet_candidate(12, float("nan"), 75, 75, 75))
+
 if __name__ == "__main__":
     unittest.main()
