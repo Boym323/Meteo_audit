@@ -65,3 +65,36 @@ def short_gap_candidate(
     if abs(after_rh_pct - before_rh_pct) > max_endpoint_difference_pp:
         return None
     return before_rh_pct + (after_rh_pct - before_rh_pct) * (target_epoch - before_epoch) / span
+
+
+def july2022_dual_station_candidate(
+    local_temp_c: float,
+    ilouka4_temp_c: float,
+    ilouka4_rh_pct: float,
+    luhamet_rh_pct: float,
+) -> float | None:
+    """Conservative 2022-07 model v1, ESTIMATED_EXTERNAL only.
+
+    It was applied *only* to qualifying early-July missing RH (UTC date
+    2022-07-01 through 2022-07-05). Historical WH1080 RH is deliberately
+    excluded: faulty sensor values were intentionally removed on migration.
+    Validation MAE of qualifying points varies across July holdouts:
+    about 4.2, 7.6, and 5.2 percentage points, not a measurement guarantee.
+    Caller validates each source timestamp and that no duplicate reference
+    observation maps to its five-minute slot.
+    """
+    from decimal import Decimal, ROUND_HALF_UP
+
+    values = (local_temp_c, ilouka4_temp_c, ilouka4_rh_pct, luhamet_rh_pct)
+    if not all(math.isfinite(x) for x in values):
+        return None
+    if not (-40 <= local_temp_c <= 45 and -40 <= ilouka4_temp_c <= 45):
+        return None
+    if not (1 <= ilouka4_rh_pct <= 100 and 1 <= luhamet_rh_pct <= 100):
+        return None
+    if abs(ilouka4_rh_pct - luhamet_rh_pct) > 3:
+        return None
+    if abs(ilouka4_temp_c - local_temp_c) > 1.5:
+        return None
+    candidate = max(1.0, min(100.0, 0.8 * ilouka4_rh_pct + 0.2 * luhamet_rh_pct - 3.5))
+    return float(Decimal(str(candidate)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP))
