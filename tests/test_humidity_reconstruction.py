@@ -73,5 +73,26 @@ class DualReferenceJulyTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             july2022_dual_station_candidate(20, 21, 70, 75, max_reference_gap_pp=15)
 
+
+
+class LuhaMetMarch2022Tests(unittest.TestCase):
+    def test_march_archive_correction(self):
+        from meteo_audit.humidity_reconstruction import march2022_luhamet_candidate
+        self.assertEqual(
+            march2022_luhamet_candidate(0.95, 2.2, 50, 0.3, 47.3),
+            52.7
+        )
+        self.assertEqual(
+            march2022_luhamet_candidate(0.85, 1.6, 52, -0.2, 49.3),
+            52.9
+        )
+
+    def test_reject_faulty_or_noncomparable_reference(self):
+        from meteo_audit.humidity_reconstruction import march2022_luhamet_candidate
+        self.assertIsNone(march2022_luhamet_candidate(0, 0, 0, 0, 50))
+        self.assertIsNone(march2022_luhamet_candidate(0, 0, 55, 0, 80))
+        self.assertIsNone(march2022_luhamet_candidate(0, 4, 55, 0, 54))
+        self.assertIsNone(march2022_luhamet_candidate(0, 0, 55, float("nan"), 54))
+
 if __name__ == "__main__":
     unittest.main()
