@@ -202,3 +202,40 @@ Přímý SELECT přes Weather MCP po následných zápisech potvrdil pro WeeWX i
 ### Aktuální závěr
 
 Číslo 42,5672658 mm je potvrzeno jako známý součet hodnot uložených v pracovním archivu a je meteorologicky věrohodnější než původní čítač pro dny 22.–26. 7. Není to úplný ani nezávisle reprodukovaný lokální součet: 22 úhrnů zůstává NULL, IDW2 zdrojová provenience a váhy chybí, QC souhrny jsou zastaralé a kandidátní dávky nejsou uzavřené. Číselnou horní mez nejistoty nelze z dostupných dat určit.
+
+
+## 9. Následné opravy a ruční triage (2026-10-30)
+
+Tato sekce zachycuje stav po zápisech provedených autorizovanou funkcí Weather MCP `reconstruction_apply_corrections`. Starší části reportu popisují předchozí okamžiky a nejsou přepisovány.
+
+### 71 podezřelých impulsů převedeno na neznámé hodnoty
+
+Na osmi dnech, kdy tři stanice ČHMÚ 11775/11777/11778 uvádějí denní nulu a lokální LuhaMet RH nevykazuje vlhkou epizodu, se 71 hodnot `rain=0` v archivu změnilo na `rain=NULL`. Hodnoty se nepřepsaly nulou ani interpolovaným odhadem: jde o označení nejistého měření. Zápis proběhl ve dvou dávkách (50 a 21 změn), s kontrolou očekávané původní nuly a ověřením po zápisu. Dávka původních návrhů byla následně označena jako cancelled; kandidátní historie zůstává zachována a skutečné změny jsou auditovány v `reconstruction_changes`.
+
+Dny s nově neznámými intervaly: 7. 7. (11), 13. 7. (15), 16. 7. (3), 19. 7. (9), 22. 7. (8), 23. 7. (6), 24. 7. (7) a 30. 7. (12). Po těchto opravách má archiv za WeeWX interval `dateTime > 1625090400 AND dateTime <= 1627768800` stále 8 928 řádků, 93 `rain IS NULL` (22 původních časných neznámých a 71 nově karantenizovaných), 8 439 nul a 396 nenulových hodnot. Známý součet zůstává 42,5672658 mm, protože 71 nul bylo nahrazeno NULL, nikoli odečteno jako naměřená srážka. Jde o součet známých hodnot / odhadů v archivu, ne úplný lokální úhrn. `rainRate` zůstává NULL u 250 řádků.
+
+### Ruční posouzení tří odlišných starých záznamů
+
+Porovnání těchto časů v `pocasi-loucka.eu_old`, `pocasi-loucka.eu_GW1000`, předrekonstrukčním snapshotu a archivu ukazuje:
+
+| Čas v Loučce | Starší databáze (`rain`) | GW1000 | Původní pracovní snapshot | Rozhodnutí |
+|---|---:|---:|---:|---|
+| 4. 7. 02:45 | 1,6764 mm | 0 | 0 | neobnovovat starý impuls; archive ponechán 0 |
+| 6. 7. 14:30 | 1,6764 mm | 0 | 0 | neobnovovat starý impuls; archive ponechán 0 |
+| 18. 7. 14:15 | 5,5880 mm | 0 | 0 | neobnovovat starý impuls; archive ponechán 0 |
+
+V okolí těchto časů obsahuje starší databáze řadu dalších nenulových nebo kolísajících hodnot, které GW1000 v odpovídajících časech nepotvrzuje. U 6. 7. byla současně nízká vlhkost (přibližně 44–46 % RH, teplota kolem 28 °C). Hodinové/denní srážky ČHMÚ pro tyto tři dny ani radarový záznam pro přesné intervaly zde nebyly ověřeny, takže rozhodnutí je konzervativní zdrojové posouzení, nikoli nezávislý meteorologický důkaz nuly. Návrhový kandidátní balík se třemi případy byl po přezkumu označen jako cancelled; archive hodnoty se tímto krokem nezměnily.
+
+### Denní součty známých hodnot po karanténě
+
+Úhrny v mm podle dne WeeWX intervalu jsou: 1.7. 0,504; 2.7. 0; 3.7. 0,047; 4.7. 0,008; 5.7. 0; 6.7. 0; 7.7. 0 (11 neznámých intervalů); 8.7. 1,573; 9.7. 1,666; 10.7. 0; 11.7. 3,207; 12.7. 6,600; 13.7. 0 (15 neznámých); 14.7. 9,773; 15.7. 0; 16.7. 0 (3 neznámé); 17.7. 0,154; 18.7. 0; 19.7. 0 (9 neznámých); 20.7. 2,886; 21.7. 0,008; 22.7. 0 (8 neznámých); 23.7. 0 (6 neznámých); 24.7. 0 (7 neznámých); 25.7. 11,273; 26.7. 0,370; 27.7. 1,354; 28.7. 2,878; 29.7. 0,222; 30.7. 0 (12 neznámých); 31.7. 0,044. Číslo nula u dnů s NULL vyjadřuje pouze součet známé části, nikoli prokázanou suchost celého dne.
+
+### Aktuální omezení
+
+- `rain_qc_202107` a `rain_qc_daily_202107` se dostupnou zapisovací funkcí upravit nedají; nadále vyžadují synchronizaci. Neprovedl se pokus o obejití rozhraní.
+- Model IDW2 stále nemá dohledané přesné WSI, souřadnice, vzdálenosti/váhy a uložené vstupní CSV/hashy, takže jeho celý výpočet nelze nezávisle reprodukovat.
+- 93 intervalů `rain=NULL` zůstává nevyřešeno z hlediska skutečného místního úhrnu. Nelze z nich odvodit spolehlivou konečnou nejistotu měsíčního úhrnu. 7 chybějících původních časových bodů z 3. 7. zůstává v archivu jako řídké řádky s nulovým odhadem a `rainRate=NULL`, nikoli jako potvrzené měření.
+- Počet opravených archivních záznamů v této etapě: 71 změn `rain` z 0 na NULL. Tři posuzované staré impulsy nebyly obnoveny a archive se pro ně nezměnil.
+- Pět původních databází zůstalo pouze čteno; zápisy šly výhradně do `loucka_reconstruction.archive`.
+
+**Stav:** archiv je dílčím způsobem opraven a kandidáti pro červenec byly vyhodnoceny, ale měsíc nelze vědecky označit za plně rekonstruovaný ani uzavřít jako definitivní místní srážkový úhrn.
