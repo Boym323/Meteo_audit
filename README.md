@@ -105,6 +105,15 @@ WeeWX ukládá čas na konci archivního intervalu. Pro místní hranice je prot
 
 Přístup k DB je chráněn single-statement SELECT/SHOW kontrolou, allowlistem schémat, read-only transakcí, timeoutem a souborem přihlašovacích voleb 0600. Transakce nejsou náhradou za SELECT-only grant. CLI používá aktuální účet `loucka_audit`; samostatný SELECT-only účet podle [volitelného runbooku](sql/admin/create_meteo_audit_ro.sql) není podmínkou. Upozornění: do původních zdrojových databází je účet dle provozního nastavení pouze SELECT, ale v `loucka_reconstruction` je zápis povolen. Analytický klient v této pracovní DB nadále vynucuje read-only dotazy; opravy vyžadují samostatné schválení. Úplná pravidla jsou v [bezpečnostní dokumentaci](docs/security.md).
 
+## Ochrana aplikovaných rekonstrukcí (Issue #14)
+
+Čtecí inventář a blokace duplicitních návrhů: `PYTHONPATH=src python3 -m meteo_audit.reconstruction_guard`.
+Pro kontrolu neaplikovaného lokálního manifestu přidej `--proposal /secure/path/candidate.json`.
+Modul **neobsahuje žádnou operaci apply** a i čistá předkontrola vrací `authorized_to_apply=false`.
+Ověřuje dosavadní Fázi A, zálohy, červenec 2021, kolize `(target_time,variable)`,
+stavy `applied/cancelled` a hodnoty před změnou včetně rozdílu `NULL` vs `0`.
+Podrobný [bezpečnostní kontrakt a rollback metodika](docs/reconstruction-guard.md).
+
 ## Testy a CI
 
 Bez MariaDB spusť deterministickou sadu unit a mockovaných integračních testů:
