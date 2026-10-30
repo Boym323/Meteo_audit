@@ -439,3 +439,31 @@ Výpočet lze reprodukovat skriptem scripts/july2021_chmi_daily.py; hranice půl
 ### Dopad na konečný závěr
 
 Nezávislé CSV zpřesňují měsíční referenční hodnoty a potvrzují regionálně suché dny 22.–24. 7. Neposkytují přímé místní měření v Loučce, nedokazují správnost nul u jednotlivých lokálních impulsů a nedoplňují cílové souřadnice Loučky ani uložené IDW2 váhy. Měsíční pracovní archiv proto zůstává 42,5672658 mm jako hodnota uloženého modelu; scénář 70,5072658 mm při pravosti všech 71 sporných lokálních impulsů zůstává citlivostní variantou, nikoli intervalem nejistoty. QC tabulky zůstávají nesynchronizované: v aktuálním WeeWX rozsahu je 8 920 QC řádků a 8 archivních časů bez QC; všech 8 920 hodnot validated_rain_mm je NULL. Dostupný Weather MCP zapisuje pouze do archive, takže plné vědecké uzavření a číselnou nejistotu nelze zatím doložit.
+
+
+## 16. Zpětné ověření stanic a vah uloženého modelu
+
+Krátké ověření z oficiálních CSV a uložené tabulky objasnilo, odkud pochází většina modelových hodnot:
+
+- Počet 140 modelových pětiminutových bodů se dvěma stanicemi přesně odpovídá 70 desetiminutovým záznamům s QUALITY≠0 na WSI 11775/11777, každý rozdělený do dvou pětiminutových intervalů. Shoda je 140/140; žádný modelový bod nepřebývá a žádný očekávaný nechybí. WSI 11778 má v červenci všech 4 464 platných řádků.
+- Tři stanice použité modelem jsou proto s vysokou jistotou WSI 11775 Zlín, 11777 Vizovice a 11778 Luhačovice–Kladná-Žilín. Jde o zpětně ověřený závěr z pokrytí a počtu stanic, nikoli uloženou původní provenienci.
+- Na 98 desetiminutových intervalech, kdy pršelo právě na jedné z těchto tří stanic a ostatní dvě měly nulu, výstup modelu odvodil normalizované váhy (po zaokrouhlení) **0,082426 / 0,698151 / 0,219423** ve stejném pořadí stanic. Rozptyl poměrů mezi událostmi odpovídá zaokrouhlení 8 desetinných míst uložených pětiminutových hodnot.
+- Váhy implikují relativní vzdálenosti vůči Vizovicím **2,9103 : 1 : 1,7837** při předpokladu váhy d⁻². Absolutní vzdálenosti a přesnou souřadnici srážkoměru Počasí Loučka z dostupných podkladů nezískáme; váhy jsou získané z výstupu, nikoli nezávisle vypočtené z polohy cíle.
+
+S těmito vahami, kvalitními vstupy SRA10M, převodem jednotek a renormalizací při neplatném záznamu vychází za místní červenec:
+
+| Zdrojové skupiny | Nezávislý přepočet z CSV | Uložený model |
+|---|---:|---:|
+| 3 platné stanice; po prvních 11 desetiminutových intervalech | 40,43465891 mm | 40,43465960 mm |
+| 2 platné stanice | 2,13260609 mm | 2,13260620 mm |
+| Celkem bez počátečních 11 intervalů | 42,56726500 mm | 42,56726580 mm |
+
+Rozdíl celku je 0,00000080 mm, slučitelný se zaokrouhlením. Tím je agregát modelové tabulky prakticky reprodukován, ačkoli přesná původní poloha a vzdálenosti zůstávají nedoložené.
+
+Doplněná červnová CSV obsahují 11 místních desetiminutových intervalů před 02:00 dne 1. 7. Všechny mají kvalitní data; jen Luhačovice–Kladná-Žilín naměřily 0,1 mm v 01:20, ostatní stanice zůstaly suché. Čistý prostorový odhad by tím vzrostl asi o 0,02194 mm na 42,58921 mm. Návrhová tabulka místo toho obsahuje 23 počátečních nulových pětiminutových bodů označených initial_archive_zero_no_june_csv; 22 z nich leží v červenci a místní archivy i záloha se shodují na přímém lokálním rain=0. V pracovním archive proto zůstává místní nula, nikoli vzdálený prostorový odhad.
+
+### Závěr po přepočtu
+
+Měsíční hodnota 42,5672658 mm je nyní reprodukována jako směs modelových intervalů a doložených počátečních lokálních nul. Sedm chybějících bodů z 3. 7. má nulové hodnoty na všech třech ČHMÚ stanicích v odpovídajících desetiminutových časech. Zbývající hlavní nejistota je klasifikace 71 původních lokálních impulsů, převedených na nulové odhady: tři souhlasné databázové kopie sdílejí jeden lokální zdroj a 70 záznamů má kladné původní rainRate, které nemusí být nezávislým srážkoměrem. Pokud byly všechny impulsy pravé, citlivostní výsledek je 70,5072658 mm; tento scénář není statistický interval.
+
+Pracovní archive je číselně úplný a auditované opravy jsou dohledatelné. Ověřené QC zůstává neuzavřené: 8 archivních časů nemá QC řádek, všech 8 920 existujících validated_rain_mm je NULL a 31/31 denních ověření chybí. V dostupné sadě Weather MCP funkcí není writer pro QC tabulky. Proto lze uzavřít reprodukci modelového součtu, nikoli označit místní skutečný úhrn a jeho nejistotu za definitivně validované.
