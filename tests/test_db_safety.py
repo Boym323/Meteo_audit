@@ -40,9 +40,24 @@ class QueryGuardTests(unittest.TestCase):
         with self.assertRaises(ReadOnlyQueryError):
             _validate_select("SELECT * FROM " + tick + "arbitrary_schema" + tick + "." + tick + "archive" + tick)
 
-    def test_query_requires_dedicated_read_only_credentials(self):
+    def test_query_requires_configured_credentials(self):
         with self.assertRaises(RuntimeError):
             query("SELECT 1", env_file="/does/not/exist")
+
+    def test_existing_account_is_accepted_without_renaming_it(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "credentials"
+            path.write_text(
+                "DB_HOST=localhost\nDB_PORT=3306\n"
+                "DB_USER=loucka_audit\nDB_PASSWORD=dummy\n"
+            )
+            path.chmod(0o600)
+            with patch("meteo_audit.db.subprocess.run") as run:
+                run.return_value.stdout = "1\n"
+                run.return_value.stderr = ""
+                run.return_value.returncode = 0
+                self.assertEqual(query("SELECT 1", env_file=path), ["1"])
+            self.assertTrue(run.called)
 
     def test_timeout_has_safe_bounds(self):
         for timeout in (0, -1, 601, 1.5):
@@ -62,7 +77,7 @@ class QueryGuardTests(unittest.TestCase):
             path = Path(directory) / "readonly.env"
             path.write_text(
                 "DB_HOST=localhost\nDB_PORT=3306\n"
-                "DB_READONLY_USER=meteo_audit_ro\nDB_READONLY_PASSWORD=dummy\n"
+                "DB_USER=loucka_audit\nDB_PASSWORD=dummy\n"
             )
             path.chmod(0o600)
             observed = {}
@@ -73,11 +88,14 @@ class QueryGuardTests(unittest.TestCase):
                 observed["config"] = config
                 observed["mode"] = stat.S_IMODE(config.stat().st_mode)
                 observed["sql"] = args[-1]
+                observed["config_text"] = config.read_text(encoding="utf-8")
                 return type("Result", (), {"stdout": "1\n", "stderr": "", "returncode": 0})()
 
             with patch("meteo_audit.db.subprocess.run", side_effect=fake_run):
                 self.assertEqual(query("SELECT 1", env_file=path), ["1"])
             self.assertEqual(observed["mode"], 0o600)
+            self.assertIn('user="loucka_audit"', observed["config_text"])
+            self.assertIn("SET SESSION TRANSACTION READ ONLY", observed["sql"])
             self.assertIn("START TRANSACTION READ ONLY", observed["sql"])
             self.assertIn("ROLLBACK", observed["sql"])
             self.assertNotIn("secret-value", observed["sql"])
@@ -87,7 +105,7 @@ class QueryGuardTests(unittest.TestCase):
         path = Path(directory) / "readonly.env"
         path.write_text(
             "DB_HOST=localhost\nDB_PORT=3306\n"
-            "DB_READONLY_USER=meteo_audit_ro\nDB_READONLY_PASSWORD=dummy\n"
+            "DB_USER=loucka_audit\nDB_PASSWORD=dummy\n"
         )
         path.chmod(0o600)
         return path

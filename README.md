@@ -7,7 +7,7 @@ Prověřit historická měření přibližně od roku 2009 do roku 2026, odliši
 - Auditní prostředí: Debian LXC `zl-dev-AuditMeteo`, projekt `/opt/meteo-audit`.
 - Zdroj: MariaDB, předchozí známá verze 11.8.6 (aktuální ověřit).
 - Připojení bylo ověřeno 2026-10-30 na MariaDB 11.8.6; aktuální host a port jsou pouze v lokálním `.env` a do dokumentace se nekopírují.
-- Předchozí diagnostika používala účet `loucka_audit`, který má také zápisová oprávnění v `loucka_reconstruction`. Nový analytický klient ho odmítá a vyžaduje samostatný `meteo_audit_ro`; účet a granty musí založit správce podle read-only runbooku.
+- Analytické CLI znovu používá stávající účet `loucka_audit` z `.env` (`DB_USER`, `DB_PASSWORD`). **Podle provozního nastavení uživatele má do všech původních/produkčních databází pouze SELECT a zápisová oprávnění jen do `loucka_reconstruction`.** V rekonstrukční DB zůstává auditní CLI softwarově read-only (validace SELECT/SHOW a transakce READ ONLY); žádná oprávnění se nemění.
 - Tajné údaje jsou výhradně v lokálním `.env` s oprávněním 600; nikdy v dokumentaci ani Gitu.
 - **DB:** názvy databází obsahují tečku a pomlčku — v SQL je uzavírej do zpětných apostrofů, např. `` `pocasi-loucka.eu`.`archive` ``.
 
@@ -15,11 +15,11 @@ Prověřit historická měření přibližně od roku 2009 do roku 2026, odliši
 ```dotenv
 DB_HOST=VYPLNIT
 DB_PORT=3306
-DB_READONLY_USER=meteo_audit_ro
-DB_READONLY_PASSWORD=SET_OUT_OF_BAND
+DB_USER=loucka_audit
+DB_PASSWORD=SET_OUT_OF_BAND
 TZ=Europe/Prague
 ```
-Použij .gitignore obsahující .env a .env.* kromě .env.example; nastav chmod 600 .env. DB_READONLY_USER musí být přesně dedikovaný účet meteo_audit_ro; klient odmítá historický zápisový účet.
+Použij `.gitignore` obsahující `.env` a `.env.*` kromě `.env.example`; nastav `chmod 600 .env`. S existujícím `DB_USER=loucka_audit` a správným `DB_PASSWORD` v lokálním `.env` není potřeba zakládat další účet ani měnit granty.
 
 ## Ověřené databáze (Weather MCP, 30. 10. 2026)
 `pocasi-loucka.eu`, `loucka_reconstruction`, `old_weewx`, `pocasi-loucka.eu_GW1000`, `pocasi-loucka.eu_old`, `weewx_WH1080`. Přítomna je také systémová `information_schema`.
@@ -103,7 +103,7 @@ Každý zdroj dostane vlastní adresář pod reports/rainrate/; report uvádí N
 
 WeeWX ukládá čas na konci archivního intervalu. Pro místní hranice je proto filtr dateTime > start AND dateTime <= end. Místní půlnoc patří právě skončenému občanskému dni a měsíci. Časy vytvářej v Europe/Prague, aby se správně promítl CET/CEST. Podrobná pravidla jsou v [časové metodice](docs/time-intervals.md) a [metodice auditu srážek](docs/rain-audit-methodology.md).
 
-Přístup k DB je chráněn single-statement SELECT/SHOW kontrolou, allowlistem schémat, read-only transakcí, timeoutem a souborem přihlašovacích voleb 0600. Transakce nejsou náhradou za SELECT-only grant. Před prvním použitím založí účet správce podle [runbooku](sql/admin/create_meteo_audit_ro.sql) a ověří jeho oprávnění; tato změna se z repozitáře nespouští. Bez účtu s ověřenými SELECT-only oprávněními CLI odmítne pracovat. Úplná pravidla jsou v [bezpečnostní dokumentaci](docs/security.md).
+Přístup k DB je chráněn single-statement SELECT/SHOW kontrolou, allowlistem schémat, read-only transakcí, timeoutem a souborem přihlašovacích voleb 0600. Transakce nejsou náhradou za SELECT-only grant. CLI používá aktuální účet `loucka_audit`; samostatný SELECT-only účet podle [volitelného runbooku](sql/admin/create_meteo_audit_ro.sql) není podmínkou. Upozornění: do původních zdrojových databází je účet dle provozního nastavení pouze SELECT, ale v `loucka_reconstruction` je zápis povolen. Analytický klient v této pracovní DB nadále vynucuje read-only dotazy; opravy vyžadují samostatné schválení. Úplná pravidla jsou v [bezpečnostní dokumentaci](docs/security.md).
 
 ## Testy a CI
 
