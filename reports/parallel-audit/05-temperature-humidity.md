@@ -75,3 +75,22 @@ Magnusova kontrolní aproximace: `gamma = LN(RH/100)+17.625*T/(243.04+T)`, `Td=2
 **Limity:** Referenční plošný 5min JOIN přes rok 2022 vypršel na `max_statement_time`, proto jsou uvedeny spolehlivé celoměsíční průměry a bodové příklady, **ne úplná párová korelace**. Kontrola 12h konstantních bloků nemusí najít všechny zaseklé úseky. Bez instalačních logů nelze přesně přiřadit zdroj vady konkrétní dubnové/zářijové/srpnové výměně techniky; měsíční změna sama o sobě není důkaz hardwarového biasu. Pro konečné rozhodnutí doplnit nearest-time měsíční párové statistiky a revizi 5min exportu problematických dnů.
 
 **Bezpečnost:** žádné INSERT, UPDATE, DELETE nebo změny grantů v žádné databázi. Změněn pouze tento auditní dokument na samostatné GitHub větvi.
+
+## 8. Přídavný screening odvozených veličin
+
+Plošná agregace `dewpoint`, `heatindex`, `windchill`, `appTemp` podle kalendářního roku UTC:
+
+| Rok | NULL dewpoint | NULL heatindex | NULL windchill | NULL appTemp | Interpretace |
+|---|---:|---:|---:|---:|---|
+| 2015 | 5 993 | 5 993 | 3 | 5 994 | Odvozeniny závislé na RH chybí současně s RH; windchill je většinou dostupný |
+| 2016 | 13 436 | 13 436 | 212 | 13 451 | Převážně ztracená RH a částečně teplota |
+| 2017 | 24 967 | 24 967 | 330 | 25 000 | Rozsáhlá ztráta RH-dependentních odvozenin |
+| 2018 | 35 892 | 35 892 | 55 | 35 897 | Deficit RH při většinou uložené T/windchill |
+| 2019 | 19 722 | 19 722 | 339 | 19 767 | Výpadky RH pokračují do jara |
+| 2020 | 6 112 | 6 112 | 13 140 | 14 523 | Významné další NULL windchill a appTemp: kontrola zdroje větru |
+| 2022 | 45 070 | 45 070 | 3 176 | 45 392 | Rekonstruovaná RH neznamená přepočtené odvozeniny |
+| 2026* | 2 | 2 | 520 | 521 | Dostupnost do aktuálního konce pracovní kopie |
+
+\*Rok 2026 je průběžný. Při fyzikálním screeningu celého pracovního archivu bylo **0** případů `windchill > outTemp + 0,5 °C`, **0** případů `windchill < outTemp − 35 °C`, **0** případů `heatindex < outTemp − 4 °C` a **0** případů `heatindex > outTemp + 20 °C`. U `appTemp` je **0** překročení `outTemp − 35 °C` a `outTemp + 25 °C`. Jde o hrubé prahy, nikoli o důkaz přesnosti; každá z odvozenin může být interně konzistentní i tehdy, když základní RH/T senzor měří chybně.
+
+Rok 2020 zvlášť vyžaduje kontrolu dostupnosti a jednotek `windSpeed` po změně techniky: `windchill` má více chybějících bodů než `dewpoint`. Pro validaci správného algoritmu `heatindex` a `appTemp` je potřeba historická konfigurace a verze WeeWX, zejména zjištění, zda a kdy byly jednotlivé veličiny ukládány jako pevný archivní derivát.
