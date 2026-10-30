@@ -22,7 +22,7 @@
 | 2011-09 až 2012-02 | Bez hlavních archivních měření; nepřidělovat nulové srážky. | Velmi vysoká |
 | 2013-04-12/13 | Shodné timestampy: 12. 4. 21:20 CEST čítač +0,9 mm, rekonstruovaný interval 0,09 mm, surová intenzita 2,16 mm/h; 12. 4. 22:10 čítač +1,8 mm, interval 0,18 mm, intenzita 4,32 mm/h. 13. 4. 15:05 čítač +0,3 mm, interval 0,03 mm. | Velmi vysoká (datové poměry) |
 | 2013-04-14 až 2013-04-18 | Bez průkazných kladných společných intervalů určujících režim. Dne 14. 4. je pět záznamů `rain=NULL` a jeden čítačový přírůstek bez spárovaného `rain`. Není možné určit minutu změny. | Vysoká |
-| 2013-04-19/20 | 19. 4. 23:45 a 20. 4. 11:40 CEST: čítač +0,3 mm, rekonstruovaný interval **0,3 mm**, intenzita **3,6 mm/h**. První doložené přírůstky v novém režimu. | Velmi vysoká |
+| 2013-04-19/20 | 19. 4. 21:45 a 20. 4. 09:40 CEST: čítač +0,3 mm, rekonstruovaný interval **0,3 mm**, intenzita **3,6 mm/h**. První doložené přírůstky v novém režimu. | Velmi vysoká |
 | 2026-10-30 | Potvrzen aplikovaný stav Fáze A v pracovní DB; žádný zápis v rámci tohoto auditu. | Velmi vysoká |
 
 **Podrobnější vzorková kontrola převodu:** omezené měsíční okno, raw delta v (0,3 až 3,0 mm) a kladné intervalové `rain`:
