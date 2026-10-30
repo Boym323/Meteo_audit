@@ -13,6 +13,9 @@ Prováděj reprodukovatelný audit a návrhy rekonstrukcí meteorologických dat
 - Pracuj pod neprivilegovaným systémovým účtem; přístup do DB minimalizuj.
 - Analytické CLI používá výhradně `DB_READONLY_USER=meteo_audit_ro` a SELECT-only granty; účet ani oprávnění z projektu nevytvářej a neupravuj.
 - Pro archivní agregace používej WeeWX konec intervalu a hranice `(start, end]`; denní občanské součty výslovně odlišuj od meteorologického srážkoměrného dne.
+- U denních ČHMÚ `SRA` nejprve dolož význam `DT`, `TIMEFUNC`, přiřazený den a **24hodinové okno**; samotné `06:00 UTC` nebo shoda kalendářního dne nestačí. Bez tohoto mapování nedeklaruj denní ČHMÚ jako časově potvrzující konkrétní interval. Dodržuj `docs/chmi-daily-sra.md`.
+- Odděluj jistotu **diagnózy chyby** od jistoty **konkrétní náhradní hodnoty**. `SUSPECTED` ani `HIGH_CONFIDENCE` neznamená automatické schválení `rain=0`; neověřené náhrady a konfliktní aplikované změny nikdy nepoužívej v hromadném apply.
+- Historické reporty a kandidáty zachovej jako zdrojové důkazy; při korekci závěru přidej revizní poznámku a odkaz na důvod, nepřepisuj dřívější DB hodnoty, SQL zásahy ani historická CSV.
 
 ## Známý kontext
 - Databázový server: MariaDB, dle dřívější dokumentace verze 11.8.x (ověř aktuální stav).
