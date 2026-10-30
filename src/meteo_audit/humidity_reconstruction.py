@@ -103,3 +103,41 @@ def july2022_dual_station_candidate(
         return None
     candidate = max(1.0, min(100.0, 0.8 * ilouka4_rh_pct + 0.2 * luhamet_rh_pct - 3.5))
     return float(Decimal(str(candidate)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP))
+
+
+def march2022_luhamet_candidate(
+    local_temp_c: float,
+    luhamet_temp_c: float,
+    luhamet_rh_pct: float,
+    ilouka4_temp_c: float,
+    ilouka4_rh_pct: float,
+) -> float | None:
+    """March 2022 LuhaMet-derived *estimate*, corroborated by ILOUKA4.
+
+    Only model for the audited March 2022 interval. The 182 local holdout
+    measurements are mostly from 29-30 March, while the repaired gaps
+    mostly precede them. Therefore MAE 1.95 pp is NOT a demonstrated
+    uncertainty bound on each reconstructed value. Historical WH1080
+    humidity is invalid by migration provenance and must never be used.
+    """
+    from decimal import Decimal, ROUND_HALF_UP
+
+    values = (
+        local_temp_c, luhamet_temp_c, luhamet_rh_pct,
+        ilouka4_temp_c, ilouka4_rh_pct,
+    )
+    if not all(math.isfinite(x) for x in values):
+        return None
+    if not all(-40 <= x <= 45 for x in (local_temp_c, luhamet_temp_c, ilouka4_temp_c)):
+        return None
+    if not (30 <= luhamet_rh_pct <= 98 and 30 <= ilouka4_rh_pct <= 98):
+        return None
+    if abs(luhamet_rh_pct - ilouka4_rh_pct) > 3:
+        return None
+    if abs(luhamet_temp_c - local_temp_c) > 1.5:
+        return None
+    if abs(ilouka4_temp_c - local_temp_c) > 1.5:
+        return None
+    candidate = luhamet_rh_pct * saturation_factor(luhamet_temp_c) / saturation_factor(local_temp_c) - 2.0
+    candidate = min(100.0, max(1.0, candidate))
+    return float(Decimal(str(candidate)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP))
