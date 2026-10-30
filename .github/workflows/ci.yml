@@ -11,14 +11,11 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
       - name: Syntax check
-        run: python -m compileall -q src tests scripts
+        run: python3 -m compileall -q src tests scripts
       - name: Unit and mocked integration tests
         env:
           PYTHONPATH: src
-        run: python -m unittest discover -s tests -v
+        run: python3 -m unittest discover -s tests -v
       - name: Scan tracked files for secrets
-        run: python scripts/check_repo_secrets.py
+        run: python3 scripts/check_repo_secrets.py
