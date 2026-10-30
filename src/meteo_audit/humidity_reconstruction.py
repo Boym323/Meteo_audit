@@ -72,6 +72,9 @@ def july2022_dual_station_candidate(
     ilouka4_temp_c: float,
     ilouka4_rh_pct: float,
     luhamet_rh_pct: float,
+    *,
+    max_reference_gap_pp: float = 3.0,
+    max_temperature_gap_c: float = 1.5,
 ) -> float | None:
     """Conservative 2022-07 model v1, ESTIMATED_EXTERNAL only.
 
@@ -92,9 +95,11 @@ def july2022_dual_station_candidate(
         return None
     if not (1 <= ilouka4_rh_pct <= 100 and 1 <= luhamet_rh_pct <= 100):
         return None
-    if abs(ilouka4_rh_pct - luhamet_rh_pct) > 3:
+    if not (0 < max_reference_gap_pp <= 6 and 0 < max_temperature_gap_c <= 3):
+        raise ValueError("Candidate-gate thresholds outside validated July 2022 bounds")
+    if abs(ilouka4_rh_pct - luhamet_rh_pct) > max_reference_gap_pp:
         return None
-    if abs(ilouka4_temp_c - local_temp_c) > 1.5:
+    if abs(ilouka4_temp_c - local_temp_c) > max_temperature_gap_c:
         return None
     candidate = max(1.0, min(100.0, 0.8 * ilouka4_rh_pct + 0.2 * luhamet_rh_pct - 3.5))
     return float(Decimal(str(candidate)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP))
