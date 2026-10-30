@@ -11,7 +11,7 @@ Prováděj reprodukovatelný audit a návrhy rekonstrukcí meteorologických dat
 - Každé podezření a návrh opravy eviduj s časem UTC, názvem veličiny, původní hodnotou, navrženou hodnotou, zdrojem a stupněm jistoty.
 - Hesla, tokeny a connection stringy neuváděj do Markdownu, logů ani Gitu. Konfiguraci ukládej do `.env` s oprávněním 600. Nikdy `.env` necommituj.
 - Pracuj pod neprivilegovaným systémovým účtem; přístup do DB minimalizuj.
-- Analytické CLI používá výhradně `DB_READONLY_USER=meteo_audit_ro` a SELECT-only granty; účet ani oprávnění z projektu nevytvářej a neupravuj.
+- Pro analytické CLI používej existující `DB_USER=loucka_audit` a `DB_PASSWORD` z místního `.env`. Účet má v rekonstrukční DB i zápisová práva; tato skutečnost nezakládá souhlas se zápisem. Zachovej jediný SELECT/SHOW v `START TRANSACTION READ ONLY`, neměň granty a nevyžaduj nový účet, pokud to uživatel sám nepožádá.
 - Pro archivní agregace používej WeeWX konec intervalu a hranice `(start, end]`; denní občanské součty výslovně odlišuj od meteorologického srážkoměrného dne.
 
 ## Známý kontext

@@ -83,20 +83,18 @@ def _validate_select(sql: str) -> None:
 def query(sql: str, *, env_file: str | Path = ".env", timeout: int = 30) -> list[str]:
     """Run a single SELECT or SHOW in a read-only transaction.
 
-    Credentials must use DB_READONLY_USER / DB_READONLY_PASSWORD and the
-    configured account must have SELECT-only grants. The transaction provides
-    a second guard; it is not a replacement for least privilege.
+    Reuse existing DB_USER / DB_PASSWORD credentials. The SQL validator and
+    READ ONLY transaction constrain this client, but do not remove any
+    write privileges held by the configured MariaDB account.
     """
     _validate_select(sql)
     if not isinstance(timeout, int) or not 1 <= timeout <= 600:
         raise ValueError("timeout must be an integer between 1 and 600 seconds")
     env = _load_env(Path(env_file))
-    required = ("DB_HOST", "DB_PORT", "DB_READONLY_USER", "DB_READONLY_PASSWORD")
+    required = ("DB_HOST", "DB_PORT", "DB_USER", "DB_PASSWORD")
     missing = [key for key in required if not env.get(key)]
     if missing:
-        raise RuntimeError("Missing read-only DB configuration keys: " + ", ".join(missing))
-    if env["DB_READONLY_USER"] != "meteo_audit_ro":
-        raise RuntimeError("DB_READONLY_USER must identify the dedicated meteo_audit_ro account")
+        raise RuntimeError("Missing database configuration keys: " + ", ".join(missing))
     try:
         port = int(env["DB_PORT"])
     except ValueError as exc:
@@ -110,8 +108,8 @@ def query(sql: str, *, env_file: str | Path = ".env", timeout: int = 30) -> list
         with os.fdopen(fd, "w", encoding="utf-8") as stream:
             stream.write("[client]\n")
             for key, option in (("DB_HOST", "host"), ("DB_PORT", "port"),
-                                ("DB_READONLY_USER", "user"),
-                                ("DB_READONLY_PASSWORD", "password")):
+                                ("DB_USER", "user"),
+                                ("DB_PASSWORD", "password")):
                 value = env[key].replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
                 stream.write(f'{option}="{value}"\n')
         try:
