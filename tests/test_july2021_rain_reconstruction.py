@@ -1,4 +1,4 @@
-"""Unit tests for source consensus and WeeWX daily rainfall grouping."""
+"""Unit tests for archive-copy consensus and WeeWX daily rainfall grouping."""
 
 import unittest
 from datetime import datetime
@@ -9,7 +9,7 @@ from meteo_audit.time_bounds import PRAGUE
 
 
 class LocalRainConsensusTests(unittest.TestCase):
-    def test_exact_three_source_consensus_preserves_zero(self):
+    def test_exact_archive_copy_consensus_preserves_zero_without_quality_claim(self):
         self.assertEqual(
             agreed_local_rain(
                 {"production_rain": "0", "gw1000_rain": 0.0, "legacy_rain": "0.000"}
@@ -17,7 +17,7 @@ class LocalRainConsensusTests(unittest.TestCase):
             Decimal("0"),
         )
 
-    def test_nonzero_consensus_is_returned_exactly(self):
+    def test_nonzero_archive_copy_consensus_is_returned_exactly(self):
         self.assertEqual(
             agreed_local_rain(
                 {
