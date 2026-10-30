@@ -375,3 +375,18 @@ Datum odpovídá začátku pětiminutového intervalu WeeWX. Každý den obsahuj
 42,5672658 mm je nyní součet uložených hodnot, které na 8 927 společných časových bodech přesně odpovídají návrhové tabulce IDW2. **Není to nezávisle reprodukovaný ani definitivně ověřený místní úhrn.** Model stále postrádá dohledatelné vstupní CSV, vazby na konkrétní WSI, vzdálenosti a váhy; nelze tudíž vyčíslit vědecky obhajitelnou statistickou nejistotu. Nulové hodnoty u dnů s podezřelými původními impulzy jsou kvalifikované odhady, ne všechna nezávisle naměřená sucha.
 
 Tabulky `rain_qc_202107` a `rain_qc_daily_202107` jsou nadále zastaralé. Kompletní inventář dostupných Weather MCP nástrojů nabízí read-only SQL a zapisovací korekci výhradně pro `archive`; žádná autorizovaná zapisovací funkce pro QC tabulky zde není. Pokusy o synchronizaci přes read-only SQL nebyly provedeny. Pět původních databází zůstalo nedotčeno.
+
+
+## 13. Dodatečná kontrola QC, denních hranic a významu rainRate (2026-10-30)
+
+Nový SELECT přes Weather MCP znovu ověřil archiv a zároveň odhalil přesný rozsah nesouladu QC:
+
+- Pracovní archiv má ve WeeWX intervalu `dateTime > 1625090400 AND dateTime <= 1627768800` všech 8 928 časových pozic, žádné `rain IS NULL`, 8 532 nul a 396 kladných hodnot. `SUM(rain)*10 = 42,5672658 mm`; `rainRate IS NULL` má 250 pozic.
+- Při řazení podle začátku intervalu (`CEIL((dateTime - 1625090400)/86400)`) má každý z 31 místních dnů 288 intervalů. Denní součty v §12 se nezměnily; prosté seskupení podle data koncového `dateTime` by bod o půlnoci chybně přiřadilo následujícímu dni.
+- `rain_qc_202107` obsahuje v tomto rozsahu pouze 8 920 řádků. Osm aktuálních archivních časů nemá QC řádek: sedm synteticky doplněných pozic 3. 7. a závěrečný interval končící 1. 8. 00:00. Všech 8 920 existujících řádků má `validated_rain_mm IS NULL`.
+- Denní QC má 31/31 dní bez `verified_daily_rain_mm`; jeden uložený počet intervalů je zastaralý (3. 7. uvádí 281 namísto 288) a tři dny mají starý status `partial_archive_missing`. Celkových 243 chybějících intenzit v denní QC je rovněž starý stav.
+- Z 71 bodů převedených v §12 na nulový prostorový odhad je v původním archivním `rainRate` 70 kladných hodnot a jedna nula; žádná není NULL. Oficiální dokumentace WeeWX říká, že `rainRate` může být převzat z hardwaru nebo vypočten službou StdRainRater jako klouzavý průměr minulých srážkových událostí (výchozí okno 1 800 s): [WeeWX StdWXCalculate](https://github.com/weewx/weewx/blob/master/docs_src/reference/weewx-options/stdwxcalculate.md). Historické `weewx.conf` a volba `hardware/software/prefer_hardware` nejsou dostupné, proto tyto hodnoty nejsou nezávislým potvrzením, ale jsou relevantní nevyřešenou stopou. Současné nulové `rain` je nadále odhad, ne důkaz lokálního sucha.
+
+Pracovní měsíční součet 42,5672658 mm a citlivostní scénář, kdy by všech 71 původních lokálních impulzů bylo pravých (+27,94 mm; 70,5072658 mm celkem), jsou dvě porovnávané varianty, nikoli statistický interval ani prokázaná dolní/horní mez.
+
+Stále platí technické omezení zápisu: úplný inventář připojených Weather MCP funkcí obsahuje čtecí SQL a atomický writer pouze pro `archive`; žádný dostupný writer nemění `rain_qc_202107` ani `rain_qc_daily_202107`. Tabulky proto nebyly obcházeny přes read-only SQL. Záznamy původních pěti databází zůstaly nedotčené.
