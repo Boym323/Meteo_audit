@@ -62,5 +62,16 @@ class DualReferenceJulyTests(unittest.TestCase):
         self.assertIsNone(july2022_dual_station_candidate(24, 24, 0, 76))
         self.assertIsNone(july2022_dual_station_candidate(24, 24, float("nan"), 76))
 
+    def test_moderate_quality_gate(self):
+        from meteo_audit.humidity_reconstruction import july2022_dual_station_candidate
+        self.assertIsNone(july2022_dual_station_candidate(23.3, 24.4, 70.0, 76.0))
+        self.assertEqual(
+            july2022_dual_station_candidate(23.3, 24.4, 70.0, 76.0,
+                max_reference_gap_pp=6, max_temperature_gap_c=3),
+            67.7
+        )
+        with self.assertRaises(ValueError):
+            july2022_dual_station_candidate(20, 21, 70, 75, max_reference_gap_pp=15)
+
 if __name__ == "__main__":
     unittest.main()
