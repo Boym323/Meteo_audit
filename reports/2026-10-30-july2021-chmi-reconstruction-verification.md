@@ -239,3 +239,45 @@ V okolí těchto časů obsahuje starší databáze řadu dalších nenulových 
 - Pět původních databází zůstalo pouze čteno; zápisy šly výhradně do `loucka_reconstruction.archive`.
 
 **Stav:** archiv je dílčím způsobem opraven a kandidáti pro červenec byly vyhodnoceny, ale měsíc nelze vědecky označit za plně rekonstruovaný ani uzavřít jako definitivní místní srážkový úhrn.
+
+
+## 10. Oprava po zpětném ověření původních lokálních archivů (2026-10-30)
+
+Tato novější část **nahrazuje závěry sekcí 8–9 tam, kde se týkají původních 22 časných NULL a 71 karantenizovaných hodnot**. Předchozí kroky založené na regionálně suchém ČHMÚ a vlhkosti podcenily přímý důkaz z lokálního archivu.
+
+### Obnovené lokální hodnoty
+
+- U všech **71** intervalů karantenizovaných v dávkách `jul2021-quarantine-suspected-rain-impulses-v1-a/b` byly původní hodnoty `rain` v databázích `pocasi-loucka.eu`, `pocasi-loucka.eu_GW1000` a `pocasi-loucka.eu_old` shodné a nenulové: 71/71 bez jediné neshody. Zápisový archiv je nyní vrací z lokálního zdroje; hodnota odpovídá i uloženému `source_value` v historické karanténní události. To je důkaz lokálního měření, který má přednost před nepřítomností srážek na vzdálenějších ČHMÚ stanicích a nízkou RH.
+- U **22** časných hodnot 1. 7. 00:05–01:50 se produkční, GW1000 i starší lokální archive a záloha `rain_backup_202107_before_chmi_v1` shodují na `rain=0` i `rainRate=0` (22/22). Obnoveny proto byly zdrojové nuly; důvod „bez červnového CSV“ se pro tyto místní archivní řádky nepoužije.
+- Nejprve proběhl dry-run; pak atomický zápis přes Weather MCP s `expected_old_value=NULL`. Dávky `jul2021-restore-local-source-rain-v1-a` (50), `...-b` (21) a `jul2021-restore-local-start-zero-v1` (22) všechny skončily `applied`; writer ověřil 50/50, 21/21 a 22/22 hodnot. Následný read-only join potvrdil shodu všech 93 obnovených řádků s produkčním, GW1000 a starším archive, bez neshody. Historické karanténní události zůstávají zachovány.
+
+### Aktuální kontrola pracovního archivu
+
+Pro WeeWX měsíční hranice `dateTime > 1625090400 AND dateTime <= 1627768800`:
+
+- 8 928 řádků, 8 928/8 928 očekávaných časových pozic, `rain IS NULL = 0`; 8 461 nula, 467 kladná hodnota; `rainRate IS NULL = 250`.
+- `SUM(rain)*10 = 70.5072658 mm`. Oproti předchozímu známému/modelovému součtu 42.5672658 mm přidalo obnovení 71 původních lokálních impulzů přesně 27.94 mm; obnovení časných nul měsíční součet neměnilo.
+- Sedm původních mezer 3. 7. zůstává jedinými synteticky doplněnými řádky: žádná z pěti původních databází v těchto časech řádek nemá. V pracovním archivu mají `rain=0`, `rainRate=NULL`, ostatní meteorologická pole jsou prázdná; nula je regionálně podpořený odhad, ne lokální měření.
+- Denní součty níže odpovídají WeeWX intervalu: datum se přiřazuje podle začátku pětiminutového intervalu `dateTime-300`. Každý den má 288 intervalů. Součty jsou zapsané v pracovním archivu; zahrnují původní místní měření, ponechané modelové hodnoty a sedm odhadů:
+
+| Den | mm | Den | mm | Den | mm |
+|---|---:|---|---:|---|---:|
+| 1 | 0,504254 | 2 | 0,000000 | 3 | 0,046670 |
+| 4 | 0,008243 | 5 | 0,000000 | 6 | 0,000000 |
+| 7 | 3,073400 | 8 | 1,573173 | 9 | 1,665561 |
+| 10 | 0,000000 | 11 | 3,207369 | 12 | 6,599863 |
+| 13 | 6,985000 | 14 | 9,773180 | 15 | 0,000000 |
+| 16 | 1,397000 | 17 | 0,153596 | 18 | 0,000000 |
+| 19 | 4,191000 | 20 | 2,886011 | 21 | 0,008243 |
+| 22 | 2,514600 | 23 | 1,676400 | 24 | 3,911600 |
+| 25 | 11,272554 | 26 | 0,369815 | 27 | 1,354380 |
+| 28 | 2,878482 | 29 | 0,221988 | 30 | 4,191000 |
+| 31 | 0,043885 |  |  |  |  |
+
+### Význam výsledku a zbývající práce
+
+`70.5072658 mm` je nyní součet uložených známých hodnot v pracovním archive, nikoli plně nezávisle rekonstruovaný lokální měsíční úhrn. Sedm nulových mezer jsou odhady; zbývající modelové hodnoty stále postrádají úplnou provenienci vstupních CSV, WSI, souřadnic, vzdáleností a IDW vah. Číselnou nejistotu proto nelze poctivě vyčíslit a závěr o přesném měsíčním úhrnu zůstává otevřený.
+
+Pole `rainRate` nebylo odvozeno z obnovených `rain`; 250 NULL zůstává zachováno, protože srážkový úhrn intervalu neurčuje okamžitou nebo průměrnou intenzitu. QC tabulky `rain_qc_202107` a `rain_qc_daily_202107` zůstávají zastaralé: Weather MCP nabízí zapisovací korekci pouze pro `loucka_reconstruction.archive`, nikoli pro tyto QC tabulky, a `execute_sql` je výhradně read-only. Originální databáze nebyly upraveny.
+
+**Stav:** 93 chybných NULL bylo nahrazeno doloženými původními lokálními hodnotami. Mřížka je úplná, ale vědecké uzavření měsíčního úhrnu stále vyžaduje nezávislou reprodukci modelu, audit zbývajících modelových intervalů a synchronizaci QC provenance.
