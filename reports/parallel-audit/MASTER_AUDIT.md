@@ -17,7 +17,7 @@ Všech 9 souborů **existuje na samostatných auditních větvích**, nikoli v `
 | 05 | Teplota/vlhkost | [05-temperature-humidity.md](https://github.com/Boym323/Meteo_audit/blob/da2d2ef833fc89239d9af00b0c1e4da44c66f92d/reports/parallel-audit/05-temperature-humidity.md), [měsíční CSV](https://github.com/Boym323/Meteo_audit/blob/da2d2ef833fc89239d9af00b0c1e4da44c66f92d/reports/parallel-audit/05-temperature-humidity-monthly.csv) | Roční/měsíční QC, diagnostika odvozenin; nutná přesná meteorologická validace |
 | 06 | Tlak | [06-pressure.md](https://github.com/Boym323/Meteo_audit/blob/69ccb729b3f26aecaacc21b712fd266b5130564d/reports/parallel-audit/06-pressure.md) | Důkladná diagnostika, kalibrace a reference neuzavřeny |
 | 07 | Vítr | [07-wind.md](https://github.com/Boym323/Meteo_audit/blob/64f1c0bdc8abb03b53dc82f3eb053e0ec4449451/reports/parallel-audit/07-wind.md) | Jednotkové režimy a extrémy, náhrady neuzavřeny |
-| 08 | Čas/provenience | [08-time-provenance.md](https://github.com/Boym323/Meteo_audit/blob/6a4dbaa5affdc660d3948c29ff7374957cbca52f/reports/parallel-audit/08-time-provenance.md) | Inventář 214 měsíců; řádky nejsou validovaný uptime |
+| 08 | Čas/provenience | [08-time-provenance.md](https://github.com/Boym323/Meteo_audit/blob/cb371fe5f93d3108d2917386fa0305250adf100d/reports/parallel-audit/08-time-provenance.md) | Inventář 214 měsíců; řádky nejsou validovaný uptime |
 | 09 | Další senzory | [09-additional-sensors.md](https://github.com/Boym323/Meteo_audit/blob/76fd1b90fe86dcf05b867406305748c149cc4b19/reports/parallel-audit/09-additional-sensors.md) | Screening UV, radiace, PM, blesků a půdy; servisní konfigurace chybí |
 
 **Žádný z devíti vstupních reportů nechybí.** Jejich dílčí metodické limity jsou výše uvedeny; nelze je zaměnit za kompletní certifikaci měření.
@@ -68,7 +68,7 @@ Všech 9 souborů **existuje na samostatných auditních větvích**, nikoli v `
 
 **R8 — před instalací nejsou nuly měřením.** WH1080 historicky obsahuje nuly UV/radiace/soil i tehdy, když neexistoval fyzický senzor. `maxSolarRad` je model. Live 2026: **179** vyplněných `lightning_noise_count` je shodných se strike a `lightning_disturber_count` obsahuje hodnoty v rozsahu Unix epoch; vysoká pravděpodobnost mapovací chyby. Rozhodovat o opravě kódu, nikoli domýšlet náhradní meteorologické hodnoty.
 
-**R9 — oddělené časové značky nejsou nezávislá měření.** Z původních 70 746 raw WH1080 časových záznamů bez shody na 5min mřížce vzniklo 49 796 **jen vybraných staging kandidátů**: ostatní nepřevádět automaticky. `pocasi-loucka.eu_old` má mnoho timestampů posunutých o sekundy/minuty. Zarovnání bez kontroly `interval` a sousedů může způsobit duplicitní či přesunuté měření.
+**R9 — oddělené časové značky nejsou nezávislá měření.** Doplněný audit 08 nyní uvádí **8 587 469 řádkových výskytů ze šesti archivů**, **1 897 981 odlišných původních UTC epoch** a **1 750 930 hypotetických kanonických pětiminutových slotů**. Ve srovnání s 1 679 539 kanonickými sloty pracovní rekonstrukce vzniká **71 391 dosud nezastoupených slotů** (nejde o 71 391 prokázaných fyzických měření). Původních **70 746** WH1080 řádků bez shody na 5min mřížce vedlo jen ke **49 796 vybraným staging kandidátům**; zbývajících **20 950** řádků je mimo tento staging a vyžaduje další samostatnou časovou a senzorovou kontrolu. Automatický snap ani import nelze provést. `pocasi-loucka.eu_old` má mnoho timestampů posunutých o sekundy/minuty. Zarovnání bez kontroly `interval` a sousedů může způsobit duplicitní či přesunuté měření.
 
 ## 5. Stav datových zásahů a bezpečné deduplikace
 
@@ -101,7 +101,7 @@ Podrobný registr: [CONFIRMED_CANDIDATES.md](CONFIRMED_CANDIDATES.md). V něm �
 | **P1** | Validovat pressure-only WH1080 | 47 737 kandidátů (28 sousedních >2 hPa podle reportu 04) | Ověřená `pressure`/barometer sémantika, holdout časové testy, schválení jednotlivých veličin |
 | **P1** | Rozřešit jednotkový přechod 2013 a rainRate kontext | 2009–2013 | Originální driver/konfigurace + externí měsíční ČHMÚ |
 | **P1** | 758 WH1080 kandidátů a 1 301 frozen, omezení importu | 2009, 2011, 2019, 2020 | Antifreeze, 2 nezávislé kontroly, bez automatického full-row importu |
-| **P1** | Časové zarovnání 2014–2018 a senzory 2022 | ~70 tis. WH bez grid shody, různé datum změn | Jeden interval = jeden zdrojový observation ID; DST regresní test |
+| **P1** | Časové zarovnání 2014–2018 a senzory 2022 | 71 391 unikátních nových hypotetických slotů napříč šesti zdroji; 20 950 WH1080 řádků mimo staging | Jeden interval = jeden zdrojový observation ID; DST regresní test; měřit kolize a původ |
 | **P1** | Tlaková divergence březen–říjen 2026 | tisíce rozdílných bodů | Konfigurace QFE/QFF/QNH a nezávislá reference, bez konstantního přičtení |
 | **P1** | PM, UV a půda, detekce saturation/frozen | PM 2024, solar 2026, soil 2024–25 | Servis a hardware data, validované QC příznaky |
 | **P2** | Homogenizace staré RH, větru, teploty podle čidla/epochy | 2009–2022 | Chybějící zdroj a nezávislé reference, explicitní intervalová nejistota |
