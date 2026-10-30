@@ -1,0 +1,78 @@
+{
+  "created_utc": "2026-10-30T09:33:56+00:00",
+  "local_period": [
+    "2009-01",
+    "2026-10"
+  ],
+  "timezone": "Europe/Prague",
+  "unit": "rain and rainRate stored values; conversion not performed in this boundary comparison",
+  "source_databases": {
+    "pocasi-loucka.eu": {
+      "table": "archive",
+      "row_count_per_method": 1680020
+    },
+    "loucka_reconstruction": {
+      "table": "archive",
+      "row_count_per_method": 1679802
+    }
+  },
+  "filters": {
+    "old": "dateTime >= start AND dateTime < end",
+    "new": "dateTime > start AND dateTime <= end"
+  },
+  "transactions": "Separate START TRANSACTION READ ONLY snapshot for each database; no writes or account changes.",
+  "csv_rows": 856,
+  "summary": {
+    "pocasi-loucka.eu": {
+      "range_months": 214,
+      "old_rows": 1680020,
+      "new_rows": 1680020,
+      "old_rain_sum_stored": 1158.502619899,
+      "new_rain_sum_stored": 1158.502619899,
+      "old_rain_positive_rate_zero": 38244,
+      "new_rain_positive_rate_zero": 38244,
+      "months_with_any_change": 33,
+      "months_row_count_changed": 26,
+      "months_rain_total_changed": 8,
+      "largest_monthly_rain_sum_change_mm": 0.2,
+      "yearly_rain_sum_same": true,
+      "yearly_row_count_changes": {
+        "2009": 1,
+        "2011": -1,
+        "2012": 1,
+        "2016": -1,
+        "2017": 1,
+        "2018": -1,
+        "2019": 1,
+        "2026": -1
+      }
+    },
+    "loucka_reconstruction": {
+      "range_months": 214,
+      "old_rows": 1679802,
+      "new_rows": 1679802,
+      "old_rain_sum_stored": 1092.657886479,
+      "new_rain_sum_stored": 1092.657886479,
+      "old_rain_positive_rate_zero": 2476,
+      "new_rain_positive_rate_zero": 2476,
+      "months_with_any_change": 33,
+      "months_row_count_changed": 26,
+      "months_rain_total_changed": 8,
+      "largest_monthly_rain_sum_change_mm": 0.2,
+      "yearly_rain_sum_same": true,
+      "yearly_row_count_changes": {
+        "2009": 1,
+        "2011": -1,
+        "2012": 1,
+        "2016": -1,
+        "2017": 1,
+        "2018": -1,
+        "2019": 1,
+        "2026": -1
+      }
+    }
+  },
+  "limitations": "The sources are live; per-database read-only snapshots were taken sequentially.",
+  "analysis_code_version": "94e8616-dirty; values aggregated with equivalent read-only SQL, not via the new CLI",
+  "execution_context": "Bulk database queries issued from the root shell in read-only transactions; key counts rechecked as meteo-audit."
+}

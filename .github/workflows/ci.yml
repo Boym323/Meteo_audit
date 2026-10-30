@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax check
+        run: python3 -m compileall -q src tests scripts
+      - name: Unit and mocked integration tests
+        env:
+          PYTHONPATH: src
+        run: python3 -m unittest discover -s tests -v
+      - name: Scan tracked files for secrets
+        run: python3 scripts/check_repo_secrets.py

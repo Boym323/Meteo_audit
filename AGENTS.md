@@ -11,6 +11,8 @@ Prováděj reprodukovatelný audit a návrhy rekonstrukcí meteorologických dat
 - Každé podezření a návrh opravy eviduj s časem UTC, názvem veličiny, původní hodnotou, navrženou hodnotou, zdrojem a stupněm jistoty.
 - Hesla, tokeny a connection stringy neuváděj do Markdownu, logů ani Gitu. Konfiguraci ukládej do `.env` s oprávněním 600. Nikdy `.env` necommituj.
 - Pracuj pod neprivilegovaným systémovým účtem; přístup do DB minimalizuj.
+- Analytické CLI používá výhradně `DB_READONLY_USER=meteo_audit_ro` a SELECT-only granty; účet ani oprávnění z projektu nevytvářej a neupravuj.
+- Pro archivní agregace používej WeeWX konec intervalu a hranice `(start, end]`; denní občanské součty výslovně odlišuj od meteorologického srážkoměrného dne.
 
 ## Známý kontext
 - Databázový server: MariaDB, dle dřívější dokumentace verze 11.8.x (ověř aktuální stav).
@@ -37,6 +39,6 @@ Průběžně vytvářej `reports/`, `sql/readonly/` a `proposals/`. Každý repo
 - Hlavní vzdálený repozitář je `https://github.com/Boym323/Meteo_audit`, lokální remote `origin`, větev `main`.
 - Po dokončení každého auditního úkolu aktualizuj příslušný report a souhrnné Markdown soubory; přidej související CSV/JSON data a reprodukovatelné SQL/kód.
 - Před commitem zkontroluj staged soubory a diff. `.env`, hesla, tokeny, connection stringy a jiné tajné údaje se nikdy necommitují ani neposílají.
-- Po kontrole vytvoř commit a pushni dokončené výstupy na `origin/main`. Do commitu zahrň pouze soubory související s úkolem; neukládej Python cache ani nesouvisející balíčky.
+- Po kontrole vytvoř commit na pracovní větvi, pushni ji na `origin` a otevři pull request do `main`; PR automaticky neslučuj, pokud to zadání výslovně nepožaduje. Do commitu zahrň pouze soubory související s úkolem; neukládej Python cache ani nesouvisející balíčky.
 - Exporty z databáze musí uvádět původ, časové rozmezí, časovou zónu, jednotky, filtry a počet řádků. Zachovávej rozdíl mezi měřenými zdrojovými daty, odvozenými souhrny a návrhy rekonstrukcí.
 - Pokud se commit nebo push nepodaří, ponech změny lokálně, uveď důvod a nevypisuj přihlašovací údaje.
