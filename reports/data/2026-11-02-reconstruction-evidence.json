@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1",
+  "asOf": "2026-11-02",
+  "source": "Weather_MCP read-only, loucka_reconstruction",
+  "cutoffEpoch": 1793286600,
+  "archive": {
+    "count": 1679809,
+    "outHumidityNull": 154896,
+    "outTempNull": 18301
+  },
+  "staged": {
+    "pendingBatches": 20,
+    "pendingCandidates": 272,
+    "cancelledBatches": 4,
+    "cancelledCandidates": 93,
+    "wh1080Unapproved": 49796
+  },
+  "changes": {
+    "applied": {
+      "rainRate": 62252,
+      "outHumidity": 9964,
+      "rain": 789
+    },
+    "reverted": {
+      "rainRate": 8921,
+      "rain": 8921
+    }
+  },
+  "sensors": {
+    "soilMoist1FirstEpoch": 1661593200,
+    "pm25_1FirstEpoch": 1661593200,
+    "radiationFirstEpoch": 1661593200,
+    "soilTemp2Last30Days": {
+      "observations": 0,
+      "archiveRows": 8629
+    }
+  },
+  "referenceObservationCounts": {
+    "luhamet_sehradice": 1157794,
+    "wu_ilouka4": 494844
+  },
+  "publication": {
+    "approved": false,
+    "blockers": [
+      "unresolved_candidates",
+      "time_and_units_qc",
+      "historical_sensor_provenance",
+      "reference_verification",
+      "noncurrent_reconstruction_cutoff",
+      "source_schemas_inaccessible_via_MCP"
+    ]
+  },
+  "constraints": {
+    "dataChangesPerformed": false,
+    "productionTouched": false,
+    "unverifiedValuesMayNotBePublishedAsCertified": true
+  }
+}
