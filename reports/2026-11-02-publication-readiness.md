@@ -10,7 +10,7 @@
 | `outHumidity IS NULL` | 154 896 | Nelze dopočítat bez důvěryhodného vstupu |
 | `outTemp IS NULL` | 18 301 | Nelze považovat za dny bez mrazu |
 | `reconstruction_batches` | 20 pending / 4 cancelled | 272 pending a 93 cancelled návrhů; staging ≠ aplikace |
-| Pending podle veličiny | 207 rainRate, 25 outTemp, 13 outHumidity, 19 rain, 5 windSpeed, 4 radiation, 1 pm25_1, 2 soilTemp1, 1 barometer | Součty podle typů zahrnují i různé `rule`, ověřit individuálně |
+| Pending podle veličiny | 207 rainRate, 25 outTemp, 13 outHumidity, 14 rain, 5 windSpeed, 4 radiation, 1 pm25_1, 2 soilTemp1, 1 barometer | Součty podle typů zahrnují i různé `rule`, ověřit individuálně |
 | `reconstruction_changes` | 62 252 applied rainRate, 9 964 applied RH, 789 applied rain; 8 921 reverted rain + 8 921 reverted rainRate | Historie událostí, **neunikátní počet konečných měření** |
 | WH1080 staging | 47 737 pressure-only + 1 301 frozen + 758 needs-validation | Celkem 49 796 kandidátů, dosud bez potvrzené číselné náhrady |
 | PM2,5 (09–10/2024 UTC) | 1 401 hodnot ≥999,8; 2 125 hodnot >500 | Potvrzená saturace/podezření, ne automatická náhrada |
