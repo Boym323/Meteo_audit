@@ -1,0 +1,37 @@
+name: CHMI public humidity pilot
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/chmi-humidity-pilot.yml'
+permissions:
+  contents: read
+jobs:
+  public-reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Retrieve public CHMI data only
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import urllib.request, hashlib, csv, io, json, datetime
+          root='https://opendata.chmi.cz/meteorology/climate/historical_csv/data/'
+          def fetch(path):
+              url=root+path
+              with urllib.request.urlopen(url, timeout=60) as r:
+                  data=r.read()
+              rows=list(csv.reader(io.StringIO(data.decode('utf-8-sig'))))
+              print('SOURCE',path,hashlib.sha256(data).hexdigest(),len(data),repr(rows[0]))
+              return rows
+          for station in ('11777','11778'):
+              for variable,folder in [('H','humidity'),('T','temperature')]:
+                  rows=fetch(f'10min/{folder}/2019/10m-0-203-0-{station}-{variable}-201904.csv')
+                  for day in range(1,31):
+                      selected=[r for r in rows[1:] if any(f'2019-04-{day:02d}' in x for x in r)]
+                      print('PILOTROWS',station,variable,day,json.dumps(selected,separators=(',',':')))
+              for variable,folder in [('H','humidity'),('T','temperature')]:
+                  rows=fetch(f'daily/{folder}/dly-0-203-0-{station}-{variable}.csv')
+                  for year in range(2014,2021):
+                      selected=[r for r in rows[1:] if any(f'{year}-' in x for x in r)]
+                      print('DAILYROWS',station,variable,year,json.dumps(selected,separators=(',',':')))
+          PY
