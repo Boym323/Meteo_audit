@@ -1,0 +1,44 @@
+name: CHMI monthly precipitation reference
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/chmi-monthly-reference.yml'
+permissions:
+  contents: read
+jobs:
+  public-reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Download and inspect only public CHMI CSV
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import urllib.request, hashlib, csv, io, json
+          root = 'https://opendata.chmi.cz/meteorology/climate/historical_csv/data/monthly/precipitation/'
+          for station in ('11777','11778'):
+              url = root + f'mly-0-203-0-{station}-SRA.csv'
+              with urllib.request.urlopen(url, timeout=45) as r:
+                  data = r.read()
+              print('REFERENCE', station, hashlib.sha256(data).hexdigest(), len(data), url)
+              txt = data.decode('utf-8-sig')
+              print('HEADER', repr(txt.splitlines()[0]))
+              for line in txt.splitlines()[1:]:
+                  if any(str(year) in line for year in range(2009,2017)):
+                      print('REFROW', station, line)
+          for station in ('11777','11778'):
+              url = 'https://opendata.chmi.cz/meteorology/climate/historical_csv/data/daily/precipitation/' + f'dly-0-203-0-{station}-SRA.csv'
+              with urllib.request.urlopen(url, timeout=45) as r:
+                  data = r.read()
+              print('DAILYREF', station, hashlib.sha256(data).hexdigest(), len(data), url)
+              txt = data.decode('utf-8-sig')
+              print('DAILYHEADER', repr(txt.splitlines()[0]))
+              reader = csv.DictReader(io.StringIO(txt))
+              for year in range(2009,2017):
+                  rows = []
+                  # Daily CSV headers verified by the output; retain all columns.
+                  for row in csv.reader(io.StringIO(txt)):
+                      if any(str(year)+'-' in x for x in row):
+                          rows.append(row)
+                  print('DAILYROWS', station, year, json.dumps(rows,separators=(',',':'),ensure_ascii=True))
+          PY
