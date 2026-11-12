@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 .venv/
 reports/raw/
+/data/chmi-2018/
