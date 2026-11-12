@@ -7,6 +7,7 @@ import hashlib
 import json
 import math
 import time
+from urllib.error import HTTPError
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -64,6 +65,10 @@ def read_file(path, url, station, year, month):
             tmp.write_bytes(raw)
             tmp.replace(path)
             return raw, rows, issues
+        except HTTPError as exc:
+            if exc.code == 404 or attempt == 2:
+                raise
+            time.sleep(2 ** attempt)
         except Exception:
             if attempt == 2:
                 raise
@@ -74,7 +79,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--out", type=Path, default=Path("data/chmi-2018"))
     p.add_argument("--include-boundary", action="store_true",
-                   help="also retrieve December 2017 for the local-year boundary")
+                   help="try December 2017 for the local-year boundary; record unavailable files")
     args = p.parse_args()
     root = args.out
     rawdir = root / "raw"
@@ -88,9 +93,20 @@ def main():
             ym = f"{year}{month:02d}"
             name = f"10m-{station}-{ym}.json"
             url = f"{BASE}/{year}/{name}"
-            raw, rows, issues = read_file(rawdir / name, url, station, year, month)
-            timestamps = sorted({t for t, e in rows})
+            print(f"Fetching {url}", flush=True)
             expected = calendar.monthrange(year, month)[1] * 144
+            try:
+                raw, rows, issues = read_file(rawdir / name, url, station, year, month)
+            except HTTPError as exc:
+                if (year, month) != (2017, 12) or exc.code != 404:
+                    raise
+                manifest.append(dict(station=station, month=ym, url=url, bytes=0,
+                                     sha256=None, expected=expected, valid_T=0,
+                                     valid_H=0, paired=0, status="unavailable_http_404",
+                                     issues={"boundary_unavailable": 1}))
+                print(f"WARNING: {station} {ym} unavailable (404); no extrapolation.", flush=True)
+                continue
+            timestamps = sorted({t for t, e in rows})
             n_t = sum(e == "T" and v[3] for (_, e), v in rows.items())
             n_h = sum(e == "H" and v[3] for (_, e), v in rows.items())
             paired = 0
@@ -101,7 +117,7 @@ def main():
                 normalized.append((station, t, datetime.fromtimestamp(t, timezone.utc).isoformat(), *T, *H))
             manifest.append(dict(station=station, month=ym, url=url, bytes=len(raw),
                                  sha256=hashlib.sha256(raw).hexdigest(), expected=expected,
-                                 valid_T=n_t, valid_H=n_h, paired=paired, issues=dict(issues)))
+                                 valid_T=n_t, valid_H=n_h, paired=paired, status="downloaded", issues=dict(issues)))
             print(station, ym, paired, "/", expected, flush=True)
     csv_tmp = root / "reference_TH.csv.tmp"
     with csv_tmp.open("w", newline="", encoding="utf-8") as f:
@@ -114,7 +130,8 @@ def main():
     manifest_tmp = root / "manifest.json.tmp"
     manifest_tmp.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     manifest_tmp.replace(root / "manifest.json")
-    print(f"Completed: {len(manifest)} files; no database writes.")
+    downloaded = sum(row["status"] == "downloaded" for row in manifest)
+    print(f"Completed: {downloaded} files; {len(manifest)-downloaded} unavailable optional files; no database writes.")
 
 
 if __name__ == "__main__":
