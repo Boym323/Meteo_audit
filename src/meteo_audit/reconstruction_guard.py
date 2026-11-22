@@ -17,8 +17,8 @@ from .db import ALLOWED_DATABASES, query
 
 Reader = Callable[[str], list[str]]
 
-# Baseline verified by SELECT on 2026-10-30. These are immutable *expected*
-# historical effects, not meteorological proof that proposed zeros were right.
+# Historical effects verified by bounded SELECT snapshots. These are immutable
+# expected audit values, not meteorological proof that a replacement was right.
 APPLIED = {
     ("rain-2009-2011-utc-midnight-reset-v1", "rain"): (328, 175.14),
     ("rain-phaseA-june2010-corrected-20261030-v1", "rain"): (30, 161.76),
@@ -35,10 +35,17 @@ CANCELLED = {
     ),
 }
 BACKUPS = {
-    "rain_daily_reset_backup_2009_2011_v1": (328, 175.14),
-    "rain_phase_a_201006_backup_20261030_v1": (30, 161.76),
-    "rain_phase_a_backup_20261030_v1": (2, 61.22),
+    "rain_daily_reset_backup_2009_2011_v1": (328, 175.14, 0, 328, 0),
+    "rain_phase_a_201006_backup_20261030_v1": (30, 161.76, 18, 12, 18),
+    "rain_phase_a_backup_20261030_v1": (2, 61.22, 1, 1, 1),
 }
+BACKUP_BATCHES = {
+    "rain_daily_reset_backup_2009_2011_v1": "rain-2009-2011-utc-midnight-reset-v1",
+    "rain_phase_a_201006_backup_20261030_v1": "rain-phaseA-june2010-corrected-20261030-v1",
+    "rain_phase_a_backup_20261030_v1": "rain-phaseA-apply-20261030-v1",
+}
+SUPERSEDED_NULL_BATCH = "rain-2010-2011-phaseA-unknown-null-review-v1"
+SUPERSEDED_NULL_TARGETS = 19
 ARCHIVE_ROWS_AT_BASELINE = 1679802  # Historical reference, NOT fixed invariant.
 JULY_2021_MM = 42.5673
 JULY_START_EXCLUSIVE = 1625090400
@@ -92,6 +99,106 @@ def inspect_baseline(read: Reader) -> dict:
     if len(observations) != len(APPLIED):
         errors.append("applied audit group count differs from baseline")
 
+    superseded_rows = _parse(read(
+        "SELECT COUNT(*), COUNT(DISTINCT c.target_time), COUNT(DISTINCT c.variable), "
+        "SUM(c.variable='rain'), SUM(c.variable='rainRate'), "
+        "SUM(c.state='applied'), SUM(c.old_value=0), SUM(c.new_value IS NULL), "
+        "SUM((c.variable='rain' AND a.rain <=> c.new_value) OR "
+        "(c.variable='rainRate' AND a.rainRate <=> c.new_value)), "
+        "COUNT(DISTINCT c.target_time,c.variable) "
+        "FROM reconstruction_changes c JOIN archive a ON a.dateTime=c.target_time "
+        "WHERE c.batch_key='" + SUPERSEDED_NULL_BATCH + "'"
+    ), 10, "known Phase A supersession")
+    expected_supersession = [
+        2 * SUPERSEDED_NULL_TARGETS, SUPERSEDED_NULL_TARGETS, 2,
+        SUPERSEDED_NULL_TARGETS, SUPERSEDED_NULL_TARGETS,
+        2 * SUPERSEDED_NULL_TARGETS, 2 * SUPERSEDED_NULL_TARGETS,
+        2 * SUPERSEDED_NULL_TARGETS, 2 * SUPERSEDED_NULL_TARGETS,
+        2 * SUPERSEDED_NULL_TARGETS,
+    ]
+    observed_supersession = [int(value) for value in superseded_rows[0]] if len(superseded_rows) == 1 else []
+    if observed_supersession != expected_supersession:
+        errors.append("Phase A supersession event/current-archive chain differs from baseline")
+
+    history_rows = _parse(read(
+        "SELECT state,COUNT(*),COUNT(DISTINCT batch_key),"
+        "COUNT(DISTINCT target_time,variable) FROM reconstruction_changes "
+        "GROUP BY state ORDER BY state"
+    ), 4, "reconstruction_changes state summary")
+    history = {}
+    for state, event_count, batch_count, target_count in history_rows:
+        if state not in {"applied", "reverted"} or state in history:
+            errors.append("unexpected or duplicate reconstruction_changes state")
+            continue
+        events, batches, targets = int(event_count), int(batch_count), int(target_count)
+        if events < targets or batches < 1 or targets < 1:
+            errors.append(f"{state}: invalid aggregate event counts")
+        history[state] = {
+            "event_rows": events, "batches": batches, "distinct_targets": targets,
+            "additional_events_on_existing_targets": events - targets,
+        }
+    if set(history) != {"applied", "reverted"}:
+        errors.append("reconstruction_changes state summary incomplete")
+
+    staging_rows = _parse(read(
+        "SELECT COUNT(*),SUM(b.candidate_count),SUM(COALESCE(c.stored_count,0)),"
+        "SUM(b.candidate_count<>COALESCE(c.stored_count,0)),"
+        "COALESCE(SUM(c.duplicate_pairs),0),"
+        "SUM(GREATEST(b.candidate_count-COALESCE(c.stored_count,0),0)) "
+        "FROM reconstruction_batches b LEFT JOIN ("
+        "SELECT batch_id,COUNT(*) AS stored_count,"
+        "COUNT(*)-COUNT(DISTINCT target_time,variable) AS duplicate_pairs "
+        "FROM reconstruction_candidates GROUP BY batch_id"
+        ") c ON c.batch_id=b.batch_id"
+    ), 6, "staged candidate inventory")
+    orphan_candidates = _parse(read(
+        "SELECT COUNT(*) FROM reconstruction_candidates c "
+        "LEFT JOIN reconstruction_batches b ON b.batch_id=c.batch_id "
+        "WHERE b.batch_id IS NULL"
+    ), 1, "orphan staged candidates")
+    candidate_history_rows = _parse(read(
+        "SELECT b.state,COUNT(*),COUNT(DISTINCT c.target_time,c.variable),"
+        "SUM(EXISTS(SELECT 1 FROM reconstruction_changes h "
+        "WHERE h.target_time=c.target_time AND BINARY h.variable=BINARY c.variable)) "
+        "FROM reconstruction_candidates c JOIN reconstruction_batches b "
+        "ON b.batch_id=c.batch_id GROUP BY b.state ORDER BY b.state"
+    ), 4, "candidate/history overlap")
+    duplicate_candidate_pairs = _parse(read(
+        "SELECT COUNT(*) FROM (SELECT target_time,variable "
+        "FROM reconstruction_candidates GROUP BY target_time,variable "
+        "HAVING COUNT(DISTINCT batch_id)>1) d"
+    ), 1, "cross-batch candidate duplicates")
+    staging = {}
+    if len(staging_rows) != 1 or len(orphan_candidates) != 1:
+        errors.append("staged candidate inventory unavailable")
+    else:
+        batch_count, declared, stored, mismatched, duplicate_pairs, missing_rows = map(int, staging_rows[0])
+        orphan_count = int(orphan_candidates[0][0])
+        staging = {
+            "batch_count": batch_count, "declared_candidates": declared,
+            "stored_candidates": stored, "batches_with_count_mismatch": mismatched,
+            "duplicate_pairs_within_batches": duplicate_pairs,
+            "candidate_rows_missing": missing_rows, "orphan_candidate_rows": orphan_count,
+            "cross_batch_duplicate_target_pairs": int(duplicate_candidate_pairs[0][0])
+            if len(duplicate_candidate_pairs) == 1 else None,
+            "history_overlap_by_state": {
+                state: {
+                    "candidate_rows": int(candidate_count),
+                    "distinct_target_pairs": int(target_count),
+                    "rows_overlapping_existing_history": int(overlap_count),
+                }
+                for state, candidate_count, target_count, overlap_count in candidate_history_rows
+            },
+        }
+        if (mismatched or duplicate_pairs or missing_rows or orphan_count
+                or len(duplicate_candidate_pairs) != 1):
+            errors.append("staged candidate count/identity differs from batch metadata")
+        if {row[0] for row in candidate_history_rows} != {"cancelled", "pending"}:
+            errors.append("staged candidate states differ from the expected pending/cancelled set")
+        for state, candidate_count, target_count, overlap_count in candidate_history_rows:
+            if state not in {"pending", "cancelled"} or int(overlap_count) > int(candidate_count) or int(target_count) > int(candidate_count):
+                errors.append("candidate/history overlap summary is inconsistent")
+
     batch_ids = ",".join("'" + key + "'" for key in sorted(CANCELLED))
     canceled_rows = _parse(read(
         "SELECT batch_id,state,candidate_count,payload_hash FROM reconstruction_batches "
@@ -110,18 +217,54 @@ def inspect_baseline(read: Reader) -> dict:
         errors.append("expected cancelled proposal count differs")
 
     backups = {}
-    for name, (count, expected_mm) in BACKUPS.items():
+    for name, (count, expected_mm, expected_superseded, expected_zero, expected_null) in BACKUPS.items():
+        initial_batch = BACKUP_BATCHES[name]
         rows = _parse(read(
-            "SELECT COUNT(*), SUM(a.rain=0 AND a.rainRate=0), "
-            "ROUND(SUM(b.rain_before)*10,5) "
-            "FROM archive a JOIN " + name + " b ON b.dateTime=a.dateTime"
-        ), 3, name)
+            "SELECT COUNT(*),SUM(i.event_count=1),"
+            "SUM(i.event_count IS NULL OR i.event_count=0),SUM(i.event_count>1),"
+            "SUM(i.event_count=1 AND i.old_value <=> b.rain_before),"
+            "SUM(i.event_count=1 AND i.applied_count=1),"
+            "SUM(i.event_count=1 AND i.zero_count=1),SUM(l.state='applied'),"
+            "SUM(l.batch_key='" + SUPERSEDED_NULL_BATCH + "'),SUM(a.rain=0),"
+            "SUM(a.rain IS NULL),SUM(a.dateTime IS NOT NULL AND a.rainRate <=> a.rain),"
+            "SUM(a.dateTime IS NOT NULL AND a.rain <=> CASE l.state "
+            "WHEN 'applied' THEN l.new_value WHEN 'reverted' THEN l.old_value END),"
+            "SUM(l.id=i.event_id),SUM(a.dateTime IS NOT NULL),"
+            "ROUND(SUM(b.rain_before)*10,5) FROM " + name + " b "
+            "LEFT JOIN (SELECT target_time,COUNT(id) event_count,MAX(id) event_id,"
+            "MAX(old_value) old_value,SUM(state='applied') applied_count,"
+            "SUM(new_value=0) zero_count FROM reconstruction_changes "
+            "WHERE batch_key='" + initial_batch + "' AND variable='rain' "
+            "GROUP BY target_time) i ON i.target_time=b.dateTime "
+            "LEFT JOIN reconstruction_changes l ON l.target_time=b.dateTime "
+            "AND l.variable='rain' AND l.id=(SELECT c2.id FROM reconstruction_changes c2 "
+            "WHERE c2.target_time=b.dateTime AND c2.variable='rain' "
+            "ORDER BY c2.created_at DESC,c2.id DESC LIMIT 1) "
+            "LEFT JOIN archive a ON a.dateTime=b.dateTime"
+        ), 16, name)
         if len(rows) != 1:
             errors.append(f"{name}: missing backup result")
             continue
-        found, zero, total = rows[0]
-        backups[name] = {"rows": int(found), "zeroed": int(zero), "original_rain_mm": float(total)}
-        if int(found) != count or int(zero) != count or not _close(float(total), expected_mm):
+        values = [int(value) if index < 15 else float(value)
+                  for index, value in enumerate(rows[0])]
+        (found, exactly_one, missing, multiple, old_match, initial_applied,
+         initial_zero, latest_applied, superseded, current_zero, current_null,
+         rate_matches_rain_state, matches_latest, initial_latest, archive_rows, total) = values
+        backups[name] = {
+            "rows": found, "initial_events": exactly_one, "missing_initial_events": missing,
+            "duplicate_initial_events": multiple, "backup_old_values_match": old_match,
+            "initial_events_applied": initial_applied, "initial_events_zero": initial_zero,
+            "latest_events_applied": latest_applied, "superseded_to_unknown_null": superseded,
+            "current_zero": current_zero, "current_null": current_null,
+            "current_rainRate_matches_rain_state": rate_matches_rain_state,
+            "current_matches_latest_event": matches_latest,
+            "initial_event_still_latest": initial_latest,
+            "archive_rows_present": archive_rows, "original_rain_mm": total,
+        }
+        expected_profile = [count, count, 0, 0, count, count, count, count,
+                            expected_superseded, expected_zero, expected_null, count,
+                            count, count - expected_superseded, count, expected_mm]
+        if values[:15] != expected_profile[:15] or not _close(total, expected_mm):
             errors.append(f"{name}: backup/current archive inconsistency")
 
     totals = _parse(read(
@@ -145,6 +288,14 @@ def inspect_baseline(read: Reader) -> dict:
         "applied": [{"batch_id": k[0], "variable": k[1], **v}
                     for k, v in sorted(observations.items())],
         "cancelled": canceled,
+        "superseded_null_review": {
+            "batch_id": SUPERSEDED_NULL_BATCH,
+            "target_timestamps": SUPERSEDED_NULL_TARGETS,
+            "field_events": 2 * SUPERSEDED_NULL_TARGETS,
+            "all_current_values_match": observed_supersession == expected_supersession,
+        },
+        "change_history": history,
+        "staged_candidates": staging,
         "backups": backups,
         "notes": [
             "Archive row count can grow; it is not a blocking invariant.",
