@@ -94,3 +94,7 @@ Všechny cesty byly porovnány vůči aktuálním blobům na `main`; nic nebylo 
 - CSV je metadata-only inventář; neobsahuje obsah, surové hodnoty ani kontrolní součty lokálních dat.
 
 Po PR #41–#43 jsou všechny zjištěné cesty buď už publikované, nebo zařazené jako neveřejný důkaz, lokální report, provozní/pomocný výstup, zastaralá kopie či zdroj/test vyžadující neveřejné artefakty. Nezveřejněné záznamy zůstávají záměrně v `/opt/meteo-audit`; nic nebylo odstraněno.
+
+## Kontrola lokálních větví
+
+Na větvi `chore/finalize-sync-20261122` zůstal lokální commit `9400f3a11efe3cd048567ab5431fa53dcbe84922`, který není ancestor aktuálního `main`. Porovnání stromů vůči `main` neukázalo žádnou cestu ani změnu obsahu jedinečnou pro tuto větev: její soubory jsou buď stejné, nebo starší než zveřejněné verze. Mezi stromy je 6 nových cest na současném `main` a 7 novějších verzí souborů na `main`; lokální commit tedy nepředstavuje chybějící publikovatelnou práci a nebyl znovu pushnut. Ostatní lokální pracovní větve nemají commit navíc oproti svým vzdáleným upstreamům. Větve nebyly přepisovány ani mazány.
