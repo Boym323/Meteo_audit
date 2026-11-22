@@ -2,7 +2,7 @@
 
 **Stav:** READ-ONLY, ověřená databáze MariaDB 11.8.6 na `lo-infra-db-mariadb01`. Neproveden žádný DDL, DML, přepis produkce, změna WeeWX, aktivního sběru ani průběžného GW3000 synchronizéru. Technická konzistence je jiný pojem než fyzikální správnost měření.
 
-**Reprodukovatelný bod paritní kontroly:** UTC `2026-11-22T20:20:00Z`, epoch `1795378800`. Zbylé agregace byly provedeny průběžně kolem tohoto času a živá produkce se mezi dotazy měnila. Přesné SQL je zde: [nový read-only kontrolní soubor](../sql/readonly/reconstruction_comprehensive_quality_20261122.sql), starší [80sloupcová parita](../sql/readonly/reconstruction_v1_all_80_columns_parity.sql).
+**Reprodukovatelný bod paritní kontroly:** UTC `2026-11-22T20:20:00Z`, epoch `1795378800`. Zbylé agregace byly provedeny průběžně kolem tohoto času a živá produkce se mezi dotazy měnila. Přesné SQL je zde: [nový read-only kontrolní soubor](../sql/readonly/reconstruction_comprehensive_quality_20261122.sql), starší [80sloupcová parita přesně ke cutoff](../sql/readonly/reconstruction_80field_parity_cutoff_1795378800.sql).
 
 ## Executive decision
 
@@ -120,7 +120,7 @@ Vývojové zobrazení nad `original_unverified` je bezpečně oddělitelné. Pro
 
 ## I. Synchronizace, kontrolní součty, infra a backup — PASS/P1
 
-- `archive_sync_audit` **6 971** přenesených řádků, `archive_sync_verification` **732** dávek a `SUM(row_count)=6 971`. **0** dávek bez auditovaných řádků, **0** nesouladů počtu a **0** chybějících zdrojových/target časových značek v auditovaných řádcích.
+- Při první dílčí kontrole `archive_sync_audit` obsahoval **6 971** přenesených řádků, `archive_sync_verification` **732** dávek a `SUM(row_count)=6 971` (běžící synchronizace poté přidala další dávku; tato čísla nejsou fixní snapshot). **0** dávek bez auditovaných řádků, **0** nesouladů počtu a **0** chybějících zdrojových/target časových značek v auditovaných řádcích.
 - **684/732** batchů má shodné `source_payload_sha256` a `verified_target_postimage_sha256`. **48** nejstarších dávkových hash párů z **15. 11. 2026** se liší (4 651 auditovaných řádků). V aktuální databázi na těchto 4 651 řádcích není rozdíl ve čtyřech polích, která jinak tvoří celý schválený historický diff. Příčinu rozdílu hashů je třeba potvrdit z původní kanonikalizace/receiptů; **není doložena fyzická ztráta měření**. `archive_sync_audit.verified_target_postimage_sha256` je NULL na úrovni jednotlivých řádků, postimage hash je správně přítomný na úrovni verifikované dávky; neporovnávat per-row NULL proti source hash.
 - `archive_sync_cursor` pravidelně postupuje; poslední kontrolovaný watermark `1795378800`, ověřený 22. 11. 2026 20:22 UTC.
 - Produkce a rekonstrukce leží na **stejném serveru** `lo-infra-db-mariadb01`, MariaDB 11.8.6, `@@read_only=0`. Nejde o izolovanou cílovou instanci pro destruktivní migrační zkoušku.
