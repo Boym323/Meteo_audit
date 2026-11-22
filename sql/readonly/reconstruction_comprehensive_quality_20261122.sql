@@ -3,7 +3,7 @@
 -- YEAR(FROM_UNIXTIME(dateTime)) if the server session timezone is not UTC.
 -- NO DML/DDL, no automatic historical correction or production cutover.
 -- Fixed cutoff: 2026-11-22 20:20:00 UTC = 1795378800.
--- See reconstruction_v1_all_80_columns_parity.sql for exhaustive 79-field
+-- See reconstruction_80field_parity_cutoff_1795378800.sql for exhaustive 79-field
 -- NULL-safe comparisons; that file already exists in the repository.
 
 -- 1. Consistent source/target row identity at a fixed checkpoint.
@@ -80,9 +80,9 @@ WHERE dateTime>1494564600 AND dateTime<1496007900;
 
 -- 6. Lightning mapper: Unix epoch values in *_disturber_count,
 -- noise_count repeating strike_count. Do not treat as valid counts.
-SELECT COUNT(*) AS disturber_nonnull,
+SELECT COUNT(r.lightning_disturber_count) AS disturber_nonnull,
  SUM(r.lightning_disturber_count>1000000000) AS timestamp_like_disturbers,
- SUM(p.lightning_disturber_count <=> r.lightning_disturber_count)
+ SUM(r.lightning_disturber_count IS NOT NULL AND (p.lightning_disturber_count <=> r.lightning_disturber_count))
   AS unchanged_from_production,
  SUM(r.lightning_noise_count IS NOT NULL) AS noise_nonnull,
  SUM(r.lightning_noise_count IS NOT NULL AND
