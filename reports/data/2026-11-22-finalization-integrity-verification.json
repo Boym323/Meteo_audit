@@ -1,12 +1,6 @@
 {
   "schema": "loucka-finalization-integrity-verification-v1",
   "verification": "PASS",
-  "source_artifacts": {
-    "checkpoint": "MASTER_FINALIZATION_CHECKPOINT_20261117.json",
-    "manifest": "FINAL_MIGRATION_MANIFEST_20261117.jsonl",
-    "migration_diff": "final_migration_package/MIGRATION_DIFF.csv",
-    "decision_summary": "FINAL_MIGRATION_DECISION_SUMMARY_20261117.json"
-  },
   "sha256": {
     "manifest": "a6ed14c902b9bec4e746c00aeb71aed225b9672363592cf5add3d57a3a242ef6",
     "migration_diff": "8adda4e543ea7a0128d919689efe2f18475e1330488cd9e4dfb98b21c5eb5780",
@@ -39,5 +33,12 @@
     "status_sum_verified": true
   },
   "database_access_performed": false,
-  "operation_level_values_emitted": false
+  "operation_level_values_emitted": false,
+  "artifact_paths": {
+    "checkpoint": "MASTER_FINALIZATION_CHECKPOINT_20261117.json",
+    "decision_manifest": "FINAL_MIGRATION_MANIFEST_20261117.jsonl",
+    "migration_diff": "final_migration_package/MIGRATION_DIFF.csv",
+    "decision_summary": "FINAL_MIGRATION_DECISION_SUMMARY_20261117.json"
+  },
+  "sensitivity_note": "Summary only. Underlying decision manifest and migration diff contain row-level meteorological values and remain local."
 }
