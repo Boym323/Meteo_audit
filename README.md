@@ -4,8 +4,7 @@
 Prověřit historická měření přibližně od roku 2009 do roku 2026, odlišit chyby senzorů, změny hardwaru, jednotek a časového posunu od skutečných extrémních jevů a připravit doložené, vratné návrhy rekonstrukce.
 
 ## Infrastrukturа a připojení
-- Aktuální vývojové a auditní prostředí (podle posledního předání): Debian LXC `zl-dev-frontendPocasi`, projekt `/opt/meteo-audit`. Přítomnost adresáře a lokálního Git stromu je nutné ověřit přímo na LXC; nelze ji potvrdit jen z GitHubu.
-- Původní LXC `zl-dev-AuditMeteo` byl odstraněn a není platným cílem pro SSH, CI ani synchronizaci.
+- Auditní prostředí: Debian LXC `zl-dev-AuditMeteo`, projekt `/opt/meteo-audit`.
 - Zdroj: MariaDB, předchozí známá verze 11.8.6 (aktuální ověřit).
 - Připojení bylo ověřeno 2026-10-30 na MariaDB 11.8.6; aktuální host a port jsou pouze v lokálním `.env` a do dokumentace se nekopírují.
 - Analytické CLI znovu používá stávající účet `loucka_audit` z `.env` (`DB_USER`, `DB_PASSWORD`). **Podle provozního nastavení uživatele má do všech původních/produkčních databází pouze SELECT a zápisová oprávnění jen do `loucka_reconstruction`.** V rekonstrukční DB zůstává auditní CLI softwarově read-only (validace SELECT/SHOW a transakce READ ONLY); žádná oprávnění se nemění.
@@ -106,15 +105,6 @@ WeeWX ukládá čas na konci archivního intervalu. Pro místní hranice je prot
 
 Přístup k DB je chráněn single-statement SELECT/SHOW kontrolou, allowlistem schémat, read-only transakcí, timeoutem a souborem přihlašovacích voleb 0600. Transakce nejsou náhradou za SELECT-only grant. CLI používá aktuální účet `loucka_audit`; samostatný SELECT-only účet podle [volitelného runbooku](sql/admin/create_meteo_audit_ro.sql) není podmínkou. Upozornění: do původních zdrojových databází je účet dle provozního nastavení pouze SELECT, ale v `loucka_reconstruction` je zápis povolen. Analytický klient v této pracovní DB nadále vynucuje read-only dotazy; opravy vyžadují samostatné schválení. Úplná pravidla jsou v [bezpečnostní dokumentaci](docs/security.md).
 
-## Ochrana aplikovaných rekonstrukcí (Issue #14)
-
-Čtecí inventář a blokace duplicitních návrhů: `PYTHONPATH=src python3 -m meteo_audit.reconstruction_guard`.
-Pro kontrolu neaplikovaného lokálního manifestu přidej `--proposal /secure/path/candidate.json`.
-Modul **neobsahuje žádnou operaci apply** a i čistá předkontrola vrací `authorized_to_apply=false`.
-Ověřuje dosavadní Fázi A, zálohy, červenec 2021, kolize `(target_time,variable)`,
-stavy `applied/cancelled` a hodnoty před změnou včetně rozdílu `NULL` vs `0`.
-Podrobný [bezpečnostní kontrakt a rollback metodika](docs/reconstruction-guard.md).
-
 ## Testy a CI
 
 Bez MariaDB spusť deterministickou sadu unit a mockovaných integračních testů:
@@ -141,6 +131,28 @@ První aktuální diagnostika a Fáze A jsou zaznamenány v [reports/2026-10-30-
 - `reports/` — běhy auditů a důkazy.
 - `proposals/` — návrhy bez automatické aplikace.
 
+## Checkpoint běhu auditu
+
+Pro lokální reprodukovatelný běh lze příkaz obalit `scripts/run_audit_checkpoint.py`.
+Obal sám databázi neotevírá a child proces nesandboxuje; databázové běhy musí použít
+projektový SELECT/SHOW-only adapter `src/meteo_audit/db.py` a příkaz je třeba předem
+zkontrolovat. Wrapper spustí předaný příkaz bez shellu, uloží průběžný log
+a zapíše `manifest.json` s run ID, rozsahem z JSON konfigurace, exit stavem a SHA-256
+skriptu, vstupů, vytvořených výstupů a logu. Konfigurace nesmí obsahovat tajné údaje.
+Příklad (výstupní cesta musí odpovídat skriptu, který se spouští):
+
+```bash
+python3 scripts/run_audit_checkpoint.py \\
+  --config config/audit-run.example.json \\
+  --source sql/readonly/long_gap_source_cadence.sql \\
+  --output reports/<generated-output>.csv \\
+  -- python3 <audit-script.py> <its-arguments>
+```
+
+Každý běh dostane samostatný adresář v `runs/`. Před předáním běhu je třeba
+zkontrolovat, že uvedený scope/config odpovídá skutečně spuštěnému příkazu a že
+výstupy existují; hash identifikuje soubor, sám o sobě nepotvrzuje věcnou správnost.
+
 ## GitHub a pravidelná synchronizace
 
 Repozitář `https://github.com/Boym323/Meteo_audit` je připojen jako `origin`; změny vznikají na pracovní větvi a předávají se pull requestem do `main`. Před commitem zkontroluj staged diff a spusť tajemství scanner. `.env` zůstává ignorovaný; nikdy se nepublikují tajné údaje.
@@ -150,3 +162,32 @@ Repozitář `https://github.com/Boym323/Meteo_audit` je připojen jako `origin`;
 Verzovaný soubor `.githooks/post-commit` je součástí repozitáře, ale běží jen pokud jej checkout aktivoval (např. přes `core.hooksPath`). Výchozí hook nyní **nic automaticky nepushuje** a pouze upozorní na commit na `main`. Před commitem ověř `git branch --show-current` a `git config --get core.hooksPath`; změny publikuj přes pracovní větev a PR. Staré lokální hooky v LXC mohou mít jiný obsah a mohou stále automaticky pushovat — ověř je samostatně.
 
 Aktuální diagnostika a Fáze A: [report](reports/2026-10-30-diagnostic-phase-a.md). Výsledky stabilizace a metodiky: [report](reports/2026-10-30-code-review-stabilization.md). Přehledová CSV a evidence ČHMÚ jsou v `reports/`. Tato data představují auditní souhrny a zdokumentované reference; kompletní produkční `archive` není v tomto pracovním stromu exportován.
+
+## Offline audit CLI (Stage N, partial)
+
+`scripts/meteo_audit.py` is a local entry point over the existing deterministic validators. It has no database client and does not perform database writes. Database snapshots must continue to come from the approved bounded read-only Weather MCP workflow.
+
+Run a validator with hashed inputs and evidence outputs:
+
+```bash
+python3 scripts/meteo_audit.py run-validator \
+  --script scripts/validate_secondary_channel_followup.py \
+  --name secondary-channel-followup \
+  --scope snapshot=2026-11-13 --scope database_access=none \
+  --source reports/2026-11-13-secondary-channel-followup.csv \
+  --output reports/2026-11-13-secondary-channel-followup.csv
+```
+
+The run wrapper creates a unique ID, UTC timestamps, JSON configuration, command log, exit status, and SHA-256 records under `runs/`. Use `--source` and `--output` repeatedly to capture the full evidence set. `compare` accepts two successful manifests only when their scopes are identical and writes a JSON digest comparison; hash changes do not imply scientific changes. Arbitrary shell commands and non-validator scripts are rejected.
+
+This is an incremental Stage N interface: it standardizes offline validation and run comparison. It does not yet provide one command for live year/variable SQL audits, source extraction, correction-package construction, or readiness generation; those stages remain tied to their reviewed, bounded SQL and analysis scripts.
+
+
+## Stav synchronizace a finální validační rozhodnutí (22. 11. 2026)
+
+- Aktivní LXC je ověřen jako `zl-dev-frontendPocasi`, pracovní strom `/opt/meteo-audit`; odstraněný `zl-dev-AuditMeteo` se nepoužívá.
+- Lokální checkpoint a rozhodovací artefakty ověřují 92 664 operací: 92 366 `QUARANTINE`, 298 `ALREADY_APPLIED`, žádné další `APPLY` ani `KEEP`. To není certifikace ani souhlas s produkčním cutoverem.
+- Publikace zůstává blokována: Q1 2018 je chráněné, rok 2021 diagnostický a 462 GW3000 E4 řádků `rain`/`rainRate` blokovaných.
+- SHA a počty reprodukuje `scripts/verify_finalization_integrity.py`. Velké hodnotové manifesty, konkordance SQLite a ZIP balíčky zůstávají mimo Git; soupis jejich hashů je v `reports/data/2026-11-22-local-package-integrity.json`.
+- Žádný produkční zápis, WeeWX rebuild ani webový deploy nebyl proveden. Aktuální synchronizační PR a CI: doplnit po dokončení.
+- Podrobnosti: [ověřený report finalizace](reports/2026-11-22-reconstruction-finalization-status.md).

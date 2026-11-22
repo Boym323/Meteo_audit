@@ -26,6 +26,18 @@ V `reports/chmi_daily_incident_rows.csv` jsou hodnoty `DT` zapsané jako `date_t
 - **2011-03-28 08:50 místně (06:50Z):** prudký skok zdrojového čítače a okolní intervaly podporují podezření na chybný impuls. ČHMÚ řádek z `2011-03-28T06:00Z` **není ověřeným časovým důkazem** tohoto incidentu. Ani silná diagnóza poruchy nepotvrzuje `rain=0`.
 - **2025-02-27 21:15 místně (20:15Z):** lokální výpadek a dvě okolní stanice podporují podezření na chybných 30,5 mm. ČHMÚ řádek `2025-02-27T06:00Z` nelze bez ověření časového okna použít k potvrzení incidentu. `rainRate` má samostatný konflikt v pracovní DB.
 
+## Empirický překryv SRA/SRA10M (2018; není autoritativní definice)
+
+Lokální reprodukovatelná kontrola dvou stanic porovnala denní SRA s dvěma kandidátními 24h okny desetiminutového SRA10M. SRA10M součet v okně `(DT, DT+24h]` se shodl s denním SRA na 305/328 QC-validních dnech ve Vizovicích a 316/334 v Kladné-Žilín; okno končící v DT mělo podstatně horší shodu. Jde o silnou empirickou indicii exportního indexování pro rok 2018, ne o autoritativní časovou definici, nezávislou referenci ani pravidlo pro starší roky. Denní hodnota proto zůstává `REFERENCE_WINDOW_UNVERIFIED`, dokud ČHMÚ nepotvrdí význam DT/TIMEFUNC a assigned day. Metoda a omezení: `reports/2026-11-13-chmi-sra-window-empirical.md`; konkrétní otázka ER-27.
+
+
+
+## Upřesnění 2018 okna pomocí 07:00 místního středního slunečního času
+
+Oficiální metadata datasetu výslovně stanoví 24hodinový úhrn odečítaný v 07:00 místního středního slunečního času a přiřazený předchozímu dni ([metadata ČHMÚ/Geoportálu](https://geoportal.gov.cz/php/micka/record/basic/6a589302-99f4-47f9-a4ee-152508c0a8017c), [popis denního úhrnu ČHMÚ](https://www.chmi.cz/namerena-data/data-z-mericich-stanic/denni-uhrn-srazek)). Popis Open Data portálu uvádí desetiminutová SRA10M data od roku 2018 a formát historických souborů, avšak neurčuje mapování sloupců `DT` a `TIMEFUNC` denního CSV ([PDF ČHMÚ](https://opendata.chmi.cz/meteorology/climate/Klimatologicka_data_popis.pdf)). Proto obecné mapování `DT` je nadále `REFERENCE_WINDOW_UNVERIFIED`.
+
+Nový lokální test převádí 07:00 LMT pomocí longitude z uložených metadat stanic a nejbližšího desetiminutového endpointu. Pro hypotézu, že `DT` označuje přiřazený den, vychází odečet následující ráno na 05:48:37Z ve Vizovicích a 05:48:50Z v Kladné-Žilín; nejbližší dostupný SRA10M endpoint je 05:50Z (`DT+23h50m`). Tento 24hodinový součet odpovídá 328/328 QC-validním dnům Vizovice a 333/334 Kladná-Žilín, včetně všech 260 mokrých denních hodnot. Fixní `DT+24h` odpovídá 305/328 a 316/334. Jde o velmi silnou empirickou podporu přiřazovacího dne plus následujícího LMT odečtu pro tato dvě místa v roce 2018; nezaměňovat ji za formální specifikaci exportu nebo pravidlo pro starší roky či Loučku. Reprodukce/manifestační hashe: `reports/2026-11-13-chmi-sra-lmt-offset.md`, `.csv`, `.summary.csv`, `.manifest.json`, skript a validator; ER-27.
+
 ## Co zůstává otevřené
 
 - Doplnit a ověřit přesné časové okno původních ČHMÚ řádků včetně zdrojových `FLAG` a `QUALITY`.

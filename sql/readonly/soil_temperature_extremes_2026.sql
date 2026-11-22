@@ -1,0 +1,2 @@
+-- Bounded case-level context for 2026 soilTemp5/6 extreme screen.
+SELECT a.dateTime,a.usUnits,a.interval,a.soilTemp5,a.soilTemp6,a.outTemp,a.soilTemp1,a.soilTemp2,a.soilTemp3,a.soilTemp4,m.soilTemp5 AS main_soilTemp5,m.soilTemp6 AS main_soilTemp6 FROM loucka_reconstruction.archive a LEFT JOIN `pocasi-loucka.eu`.archive m ON m.dateTime=a.dateTime WHERE a.dateTime>=1767225600 AND a.dateTime<1798761600 AND (a.soilTemp5 < -40 OR a.soilTemp6 < -40) ORDER BY a.dateTime;

@@ -1,0 +1,55 @@
+{
+  "schema": "loucka-final-migration-decision-summary-v1",
+  "generated_at_utc": "2026-11-17T16:08:22.977055+00:00",
+  "diff_sha256": "8adda4e543ea7a0128d919689efe2f18475e1330488cd9e4dfb98b21c5eb5780",
+  "manifest_path": "/opt/meteo-audit/FINAL_MIGRATION_MANIFEST_20261117.jsonl",
+  "manifest_sha256": "a6ed14c902b9bec4e746c00aeb71aed225b9672363592cf5add3d57a3a242ef6",
+  "operation_count": 92664,
+  "statuses": {
+    "QUARANTINE": 92366,
+    "ALREADY_APPLIED": 298
+  },
+  "status_sum_verified": true,
+  "by_status_and_operation": {
+    "QUARANTINE|UPDATE": 68759,
+    "QUARANTINE|INVALIDATE": 835,
+    "ALREADY_APPLIED|NULL_FILL": 7,
+    "QUARANTINE|NULL_FILL": 12664,
+    "ALREADY_APPLIED|INSERT": 291,
+    "QUARANTINE|INSERT": 10108
+  },
+  "by_status_and_variable": {
+    "QUARANTINE|rainRate": 59595,
+    "QUARANTINE|rain": 2197,
+    "ALREADY_APPLIED|outTemp": 1,
+    "ALREADY_APPLIED|outHumidity": 2,
+    "QUARANTINE|outHumidity": 20420,
+    "QUARANTINE|outTemp": 46,
+    "ALREADY_APPLIED|rain": 4,
+    "ALREADY_APPLIED|__ARCHIVE_ROW__": 291,
+    "QUARANTINE|__ARCHIVE_ROW__": 10108
+  },
+  "by_reason_code": {
+    "RAIN_SEMANTICS_QUARANTINE": 55081,
+    "TEST_COMMIT_VERIFIED": 298,
+    "ESTIMATE_NOT_APPROVED": 14791,
+    "PROTECTED_PERIOD": 22372,
+    "PROTECTED_Q1_EXACT_SOURCE": 34,
+    "SOURCE_CONFLICT": 88
+  },
+  "by_provenance": {
+    "SOURCE_CLAIM_OR_RAIN_SEMANTICS_UNRESOLVED": 55081,
+    "DIRECT_SOURCE_MEASUREMENT": 298,
+    "ESTIMATED_OR_DERIVED": 14791,
+    "ESTIMATED_OR_PROTECTED": 22372,
+    "MEASURED_SOURCE_EXACT_TIME": 34,
+    "CONFLICTING_SOURCE_CLAIMS": 88
+  },
+  "apply_verified_unapplied": 0,
+  "apply_estimated_approved": 0,
+  "keep_original": 0,
+  "quarantine_reason": "Every non-applied operation is estimated, protected, conflicting, disputed, or missing operation-specific re-verification/owner approval.",
+  "already_applied_count": 298,
+  "remaining_not_applied": 92366,
+  "note": "No blanket expert approval is inferred. QUARANTINE is a final explained decision for this diff revision; previously committed test operations are ALREADY_APPLIED."
+}
