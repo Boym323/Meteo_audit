@@ -1,0 +1,135 @@
+{
+  "schema": "loucka-cumulus-weewx-lineage-v1",
+  "captured_date_utc": "2026-11-22",
+  "method": "Read-only MariaDB aggregates, original 2009 Wayback page, year-only user archival observations; no historical writes",
+  "web_observations": [
+    {
+      "generator": "Cumulus",
+      "evidence_type": "DIRECT_ARCHIVE",
+      "capture_utc": 1251645949,
+      "year": 2009,
+      "source_ref": "https://web.archive.org/web/20090830152549/pomykal.eu/pocasi",
+      "displayed_station": "Watson W-8681 / Fine Offset",
+      "displayed_units": [
+        "wind km/h",
+        "rain mm",
+        "pressure hPa"
+      ],
+      "software_version": "1.8.7"
+    },
+    {
+      "generator": "Cumulus",
+      "evidence_type": "USER_REPORTED_YEAR",
+      "year": 2013,
+      "source_ref": "Owner report 2026-11-22: Wayback 2013 still Cumulus; exact snapshot URL not independently retrieved"
+    },
+    {
+      "generator": "WeeWX",
+      "evidence_type": "USER_REPORTED_YEAR",
+      "year": 2017,
+      "source_ref": "Owner report 2026-11-22: Wayback 2017 already WeeWX; exact snapshot URL not independently retrieved"
+    }
+  ],
+  "archive_markers": [
+    {
+      "marker_type": "archive_last_before_gap",
+      "source": "old_weewx.archive",
+      "time_utc": 1403304540,
+      "source_ref": "sql/readonly/cumulus_weewx_transition_pivot.sql#B",
+      "notes": "Last source archive row 2014-06-20 22:49 UTC"
+    },
+    {
+      "marker_type": "archive_last_before_gap",
+      "source": "pocasi-loucka.eu.archive",
+      "time_utc": 1403304600,
+      "source_ref": "sql/readonly/cumulus_weewx_transition_pivot.sql#B",
+      "notes": "Last normalized production archive row 2014-06-20 22:50 UTC"
+    },
+    {
+      "marker_type": "archive_first_after_gap",
+      "source": "old_weewx.archive",
+      "time_utc": 1404406800,
+      "source_ref": "sql/readonly/cumulus_weewx_transition_pivot.sql#B",
+      "notes": "First source archive row 2014-07-03 17:00 UTC"
+    },
+    {
+      "marker_type": "first_field_present",
+      "source": "old_weewx.archive:pressure",
+      "time_utc": 1404406800,
+      "source_ref": "sql/readonly/cumulus_weewx_transition_pivot.sql#A",
+      "notes": "First nonnull pressure in old_weewx; does not date software change"
+    },
+    {
+      "marker_type": "first_subminute_timestamp",
+      "source": "old_weewx.archive",
+      "time_utc": 1404651601,
+      "source_ref": "sql/readonly/cumulus_weewx_transition_pivot.sql#A",
+      "notes": "2014-07-06 13:00:01 UTC; also first in weewx_WH1080"
+    },
+    {
+      "marker_type": "first_subminute_timestamp",
+      "source": "weewx_WH1080.archive",
+      "time_utc": 1404651601,
+      "source_ref": "sql/readonly/cumulus_weewx_transition_pivot.sql#A",
+      "notes": "Same first second-offset as old_weewx; not independent station confirmation"
+    },
+    {
+      "marker_type": "first_nonfive_interval",
+      "source": "old_weewx.archive",
+      "time_utc": 1406312994,
+      "source_ref": "sql/readonly/cumulus_weewx_transition_pivot.sql#A",
+      "notes": "2014-07-25 18:29:54 UTC; interval=6 or 30 in early period"
+    },
+    {
+      "marker_type": "numeric_unit_ratio_break",
+      "source": "old_weewx vs pocasi-loucka.eu.windSpeed",
+      "time_utc": 1365261000,
+      "source_ref": "sql/readonly/cumulus_weewx_transition_pivot.sql#D",
+      "notes": "Last detected near 1-to-1 wind pairing before April 2013 outage: 2013-04-06 15:10 UTC"
+    },
+    {
+      "marker_type": "numeric_unit_ratio_break",
+      "source": "old_weewx vs pocasi-loucka.eu.windSpeed",
+      "time_utc": 1365789300,
+      "source_ref": "sql/readonly/cumulus_weewx_transition_pivot.sql#D",
+      "notes": "First detected near factor 3.6 after outage: 2013-04-12 17:55 UTC"
+    }
+  ],
+  "wind_ratio_snapshots": [
+    {
+      "window": "2013-03 UTC",
+      "positive_pairs": 4802,
+      "same_numeric_unit": 4801,
+      "x3_6": 0
+    },
+    {
+      "window": "2013-05 through July UTC",
+      "positive_pairs": 6259,
+      "same_numeric_unit": 0,
+      "x3_6": 6259
+    },
+    {
+      "window": "2014-05 through Jun 20 UTC",
+      "positive_pairs": 11525,
+      "same_numeric_unit": 0,
+      "x3_6": 11524
+    },
+    {
+      "window": "2014-Jul-03 through Jul-31 UTC",
+      "positive_pairs": 7068,
+      "same_numeric_unit": 4,
+      "x3_6": 6815,
+      "source_rows": 8406,
+      "snapped_target_pairs": 7615
+    }
+  ],
+  "interpretation": {
+    "candidate_technical_pivot": "2014-06-20 22:50 UTC through 2014-07-06 13:00:01 UTC",
+    "why": "12.76-day archive gap followed by new pressure availability and second-level timestamps in old sources",
+    "status": "CHANGE_OF_ARCHIVE_PIPELINE_PLAUSIBLE; NOT_PROVEN_CUMULUS_TO_WEEWX_SWITCH",
+    "unit_2013": "numeric wind scale changed during 2013-04-06 to 2013-04-12 outage; NOT proof of WeeWX cutover",
+    "source_2013_2017": "reported year only; exact captured HTML and date not independently available",
+    "source_schema_limitation": "usUnits=17 and a database name containing weewx do not identify original logger; Cumulus archives can be imported into WeeWX",
+    "approved_historical_changes": 0
+  }
+}
