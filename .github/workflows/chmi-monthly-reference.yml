@@ -19,6 +19,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import urllib.request, hashlib, csv, io, json
+          print("Attribution: Czech Hydrometeorological Institute (ČHMÚ), opendata.chmi.cz, CC BY 4.0; https://www.chmi.cz/files/portal/docs/meteo/ok/open_data_2023/Podminky_uziti_udaju.pdf")
           root = 'https://opendata.chmi.cz/meteorology/climate/historical_csv/data/monthly/precipitation/'
           for station in ('11777','11778'):
               url = root + f'mly-0-203-0-{station}-SRA.csv'
