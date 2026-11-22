@@ -32,6 +32,9 @@ def run_validator(args: argparse.Namespace) -> int:
         raise ValueError("--script must name an existing scripts/validate_*.py file")
     sources = [(ROOT / p).resolve() for p in args.source]
     outputs = [(ROOT / p).resolve() for p in args.output]
+    run_root = (ROOT / args.run_root).resolve()
+    if not _inside(run_root, ROOT):
+        raise ValueError("run directory must stay inside the audit workspace")
     for path in sources:
         if not path.is_file():
             raise ValueError(f"source does not exist: {path}")
@@ -54,7 +57,7 @@ def run_validator(args: argparse.Namespace) -> int:
     with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".json", delete=False) as stream:
         json.dump(config, stream, ensure_ascii=False, indent=2)
         config_path = Path(stream.name)
-    command = [sys.executable, str(WRAPPER), "--config", str(config_path), "--run-root", str((ROOT / args.run_root).resolve()),
+    command = [sys.executable, str(WRAPPER), "--config", str(config_path), "--run-root", str(run_root),
                "--source", str(Path(__file__).resolve()), "--source", str(script)]
     for path in sources:
         if path != script:
@@ -72,6 +75,8 @@ def compare_manifests(args: argparse.Namespace) -> int:
     left_path = (ROOT / args.left).resolve()
     right_path = (ROOT / args.right).resolve()
     runs_root = (ROOT / args.run_root).resolve()
+    if not _inside(runs_root, ROOT):
+        raise ValueError("run directory must stay inside the audit workspace")
     if not _inside(left_path, runs_root) or not _inside(right_path, runs_root):
         raise ValueError("manifest paths must be inside the run directory")
     left, right = json.loads(left_path.read_text()), json.loads(right_path.read_text())
