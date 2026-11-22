@@ -82,7 +82,7 @@ Změny databáze, živého WeeWX sběru ani starých archivů při této pokrač
 
 Tato část nahrazuje výše uvedené údaje o starém `main`, neuzavřených PR #32/#33 a jejich queued CI. Předchozí historické poznámky zůstávají zachovány jako dobový záznam.
 
-- Aktuální `main`: `9102d192cd5e0d65db78ef825f566d9d72bdbeb2`. CI na tomto SHA prošlo v [runu 45046227028](https://github.com/Boym323/Meteo_audit/actions/runs/45046227028).
+- `main` před sloučením tohoto pokračovacího záznamu: `9102d192cd5e0d65db78ef825f566d9d72bdbeb2` (CI [run 45046227028](https://github.com/Boym323/Meteo_audit/actions/runs/45046227028)). Samotný záznam byl sloučen přes PR #52; výsledný ověřený `main` je `e0ebdf53aca46fe29cae7cfe0eccba5bb81c00e9` a jeho CI prošlo v [runu 45046524923](https://github.com/Boym323/Meteo_audit/actions/runs/45046524923).
 - PR #51 sloučil kontrolu, že offline audit CLI ukládá běhy a porovnání pouze pod kořenem workspace, a 5 syntetických testů. Jeden CI běh na předchozím commitu odhalil závislost testů na existenci ignorovaného `runs/`; testy byly přesunuty do dočasných adresářů pod existující `tests/` a následný CI prošel. Na `main` je nyní 188 testů.
 - PR #33 je sloučen; PR #32 je zavřen jako nahrazený čistým PR #49, který je sloučen. Obě reference ČHMÚ mají public-reference CI a CC BY atribuci. Aktuálně není otevřený žádný PR.
 - Aktuálně zůstává 14 otevřených issues #14–#27. P0 #14–#16 stále vyžadují autorizované read-only databázové či epochové důkazy; #17 čeká na nasazený collector/driver mapper, jeho verzi a raw payload. Pro #14, #17 a #27 byly přidány aktualizační komentáře po PR #51. Nic z toho neodůvodňuje uzavření těchto issues.
