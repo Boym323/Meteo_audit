@@ -58,4 +58,10 @@ Ostatní starší PR byly již uzavřeny/sloučeny; jejich obsah se neimportoval
 
 ## Závěrečná kontrola
 
-GitHub snapshot byl načten přes API/CLI: `main` `747a654…`, 14 otevřených issues #14–#27 a 2 otevřené Draft PR #32–#33. Finální znovunačtení po tomto PR a CI doplní jeho merge SHA a aktuální počty; do té doby jde o report stavu před merge. Lokální pracovní větev má 4 731 záznamů změněného/necommitnutého stavu a 1 568 odlišných cest oproti vzdálenému `main`; žádné významné změny z tohoto stromu nebyly hromadně publikovány, protože ještě neprošly obsahovou a bezpečnostní kontrolou. Inventář poskytuje cestu po cestě vysvětlení A/B/C.
+Po merge PR #45 bylo znovu načteno GitHub API: `main` je `b9668ab5df2d4e4550f855bb7ad3bc9dba9008f6`; otevřených zůstává 14 issues (#14–#27) a 2 PR (#32/#33). CI pro PR #45 prošlo: syntax check, unit/mock integration tests a secret scan. Ověřené CI run: https://github.com/Boym323/Meteo_audit/actions/runs/45043540876.
+
+U #32/#33 byly po licenční úpravě úspěšné public-reference joby (runs [#32](https://github.com/Boym323/Meteo_audit/actions/runs/45043791300), [#33](https://github.com/Boym323/Meteo_audit/actions/runs/45043796286)). Python joby byly v okamžiku finální kontroly stále ve frontě a původní běhy byly po 24 hodinách zrušeny bez kroků; oba PR zůstávají otevřené. ČHMÚ podmínky CC BY 4.0 a atribuce jsou v jejich workflow uvedeny; logování plných hodnotových výstupů se musí ještě posoudit.
+
+Lokální pracovní strom měl 4 731 změněných/necommitnutých položek a 1 568 odlišných cest oproti původnímu vzdálenému `main`; tyto nezrevidované změny nebyly hromadně publikovány. Nový inventář vysvětluje 5 282 aktuálně zahrnutých cest po jednotlivých položkách. Není prokázáno, že nezbývá významný nepublikovaný zdrojový kód: 1 786 položek kategorie A je bezpečnostní a duplicitní kandidátní seznam, který vyžaduje obsahovou revizi; stav nelze označit za úplnou konsolidaci.
+
+Nebyl proveden produkční DB zápis, DDL, deploy, změna živého sběru ani mazání archivů.
