@@ -1,6 +1,6 @@
 # Issue #14 — read-only ochrana již provedených rekonstrukcí
 
-Aktuální stav ke **30. 10. 2026**. Tento dokument je návrh bezpečnostního kontraktu a inventář uložených výsledků, **není to příkaz k opětovnému zpracování dat**.
+Aktuální stav ke **22. 11. 2026**. Tento dokument je read-only bezpečnostní kontrakt a inventář uložených výsledků, **není to příkaz k opětovnému zpracování dat**.
 
 ## Sledované zdroje
 
@@ -20,9 +20,11 @@ CLI používá existující `.env` a `meteo_audit.db.query()` s jedním `SELECT`
 
 1. Přesně pět očekávaných `(batch_key, variable)` skupin v auditní tabulce a jejich stav `applied`, počty, historické rozdíly `rain`.
 2. Oba původní návrhové balíčky jsou `cancelled`, mají očekávané počty a původně uložené `payload_hash`.
-3. Tři záložní tabulky mají **328 / 30 / 2** řádků a všechny odpovídající pracovní `archive.rain` a `rainRate` jsou dnes nulové.
-4. Místní červenec 2021 v konvenci WeeWX `(start,end]` má **42,5673 mm** s hranicemi `dateTime > 1625090400 AND dateTime <= 1627768800`.
-5. Počet řádků `archive` je reportován, ale **není pevnou invariantou** — živý archiv může růst.
+3. Tři záložní tabulky mají **328 / 30 / 2** řádků a jsou spojeny s přesně jedním původním applied eventem na každý target; původní `old_value` odpovídá backupu a `new_value` bylo nula.
+4. Pozdější applied batch `rain-2010-2011-phaseA-unknown-null-review-v1` převedl 19 dřívějších nul na `NULL` (18 cílů z června 2010 a jeden další). Kontrola ověřuje všechny události a jejich aktuální hodnoty; nevyžaduje nesprávně nulu pro pozdější doložené `NULL`.
+5. Počet/identita uložených kandidátů musí souhlasit s `reconstruction_batches`; duplicitní pár uvnitř batch, chybějící candidate řádek nebo rozdíl deklarovaného a uloženého počtu selže.
+6. Místní červenec 2021 v konvenci WeeWX `(start,end]` má **42,5673 mm** s hranicemi `dateTime > 1625090400 AND dateTime <= 1627768800`.
+7. Počet řádků `archive` je reportován, ale **není pevnou invariantou** — živý archiv může růst.
 
 Výstup je JSON. `baseline.verified=false` a ukončovací kód 2 značí problém, který **blokuje další preflight**. Použitý účet musí mít jen čtecí přístup přes tento CLI, i když databázová identita drží v pracovním schématu více grantů.
 
@@ -94,4 +96,6 @@ CI používá mockované dotazy a nepotřebuje ani nesmí mít databázová taje
 | `rain-phaseA-apply-20261030-v1` | rain + rainRate | 2 + 1 applied | 61,22 mm |
 | `rainrate-restore-2009-2025-v1` | rainRate | 58 936 applied | nesčítat jako úhrn |
 
-**Výsledek základní kontrolní relace:** `archive=1679802`, zálohy 328/30/2, červenec 2021 42,5673 mm. Tyto počty odpovídají aktuálně vráceným SELECTům dne 2026-10-30, nikoli garanci stavu v budoucnu.
+**Read-only ověření 22. 11. 2026 přes Weather MCP:** `archive=1,695,717`, červenec 2021 `42,5673 mm`; change ledger má 95,252 `applied` a 17,842 `reverted` událostí. Z 360 Phase A backup cílů má 341 současnou nulu a 19 současný NULL po doložené supersession. Současné hodnoty všech 360 cílů souhlasí s posledním eventem. Součet záznamů není fixní invariant.
+
+Read-only test batch supersession ověřil 38 změn na 19 cílech (po jednom `rain` a `rainRate`), původní nulu, nové NULL a shodu všech 38 současných hodnot. U staged tabulek se počty candidates shodují s deklaracemi batchů (24 batchů, 365 uložených candidates). Všechny změny v tomto pokračování byly pouze SELECT; tato evidence nepotvrzuje fyzikální správnost starých rozhodnutí ani neobnovuje nedochované Navicat SQL/before-image SHA-256.

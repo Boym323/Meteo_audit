@@ -3,7 +3,8 @@ import unittest
 
 from meteo_audit.db import _validate_select
 from meteo_audit.reconstruction_guard import (
-    APPLIED, BACKUPS, CANCELLED, GuardError, inspect_baseline, inspect_proposal,
+    APPLIED, BACKUPS, CANCELLED, SUPERSEDED_NULL_TARGETS, GuardError,
+    inspect_baseline, inspect_proposal,
 )
 
 
@@ -18,8 +19,26 @@ class FakeDatabase:
             f"{batch}\tcancelled\t{count}\t{digest}"
             for batch, (count, digest) in sorted(CANCELLED.items())
         ]
-        self.backups = {name: [f"{n}\t{n}\t{mm}"]
-                        for name, (n, mm) in BACKUPS.items()}
+        profiles = {
+            "rain_daily_reset_backup_2009_2011_v1": (328, 175.14, 0, 328, 0),
+            "rain_phase_a_201006_backup_20261030_v1": (30, 161.76, 18, 12, 18),
+            "rain_phase_a_backup_20261030_v1": (2, 61.22, 1, 1, 1),
+        }
+        self.backups = {}
+        for name, (n, mm, superseded, current_zero, current_null) in profiles.items():
+            values = (n, n, 0, 0, n, n, n, n, superseded, current_zero,
+                      current_null, n, n, n - superseded, n, mm)
+            self.backups[name] = ["\t".join(map(str, values))]
+        count = 2 * SUPERSEDED_NULL_TARGETS
+        self.superseded_rows = ["\t".join(map(str, (
+            count, SUPERSEDED_NULL_TARGETS, 2, SUPERSEDED_NULL_TARGETS,
+            SUPERSEDED_NULL_TARGETS, count, count, count, count, count,
+        )))]
+        self.history_rows = ["applied\t95252\t741\t91815", "reverted\t17842\t1\t17842"]
+        self.staging_rows = ["24\t365\t365\t0\t0\t0"]
+        self.orphan_candidates = ["0"]
+        self.candidate_history_rows = ["cancelled\t93\t93\t93", "pending\t272\t272\t58"]
+        self.duplicate_candidate_pairs = ["2"]
         self.archive_count = "1679802\t42.5673"
         self.prior_changes = []
         self.prior_candidates = []
@@ -32,9 +51,21 @@ class FakeDatabase:
         self.queries.append(sql)
         if "FROM reconstruction_changes WHERE batch_key IN" in sql:
             return self.audit_rows
+        if "FROM reconstruction_changes c JOIN archive a" in sql:
+            return self.superseded_rows
+        if "FROM reconstruction_changes GROUP BY state" in sql:
+            return self.history_rows
+        if "FROM reconstruction_batches b LEFT JOIN (" in sql:
+            return self.staging_rows
+        if "FROM reconstruction_candidates c LEFT JOIN reconstruction_batches b" in sql:
+            return self.orphan_candidates
+        if "FROM reconstruction_candidates c JOIN reconstruction_batches b" in sql and "GROUP BY b.state" in sql:
+            return self.candidate_history_rows
+        if "HAVING COUNT(DISTINCT batch_id)>1" in sql:
+            return self.duplicate_candidate_pairs
         if "FROM reconstruction_batches WHERE batch_id IN" in sql:
             return self.canceled_rows
-        if "FROM archive a JOIN " in sql:
+        if "LEFT JOIN archive a ON a.dateTime=b.dateTime" in sql:
             return self.backups[next(key for key in self.backups if key in sql)]
         if "SUM(CASE WHEN dateTime>" in sql:
             return [self.archive_count]
@@ -44,7 +75,7 @@ class FakeDatabase:
             return self.batch_changes_exist
         if "FROM reconstruction_changes WHERE target_time IN" in sql:
             return self.prior_changes
-        if "FROM reconstruction_candidates c" in sql:
+        if "FROM reconstruction_candidates c" in sql and "WHERE c.target_time IN" in sql:
             return self.prior_candidates
         if "SELECT dateTime,rain,rainRate FROM archive" in sql:
             return self.current_rows
@@ -78,6 +109,12 @@ class BaselineTests(unittest.TestCase):
         self.assertAlmostEqual(result["july_2021_mm"], 42.5673)
         self.assertEqual(result["archive_count"], 1679802)
         self.assertEqual(len(result["backups"]), 3)
+        self.assertEqual(result["superseded_null_review"]["target_timestamps"], 19)
+        self.assertTrue(result["superseded_null_review"]["all_current_values_match"])
+        self.assertEqual(result["change_history"]["applied"]["event_rows"], 95252)
+        self.assertEqual(result["staged_candidates"]["stored_candidates"], 365)
+        self.assertEqual(result["staged_candidates"]["cross_batch_duplicate_target_pairs"], 2)
+        self.assertEqual(result["staged_candidates"]["history_overlap_by_state"]["pending"]["rows_overlapping_existing_history"], 58)
         self.assertTrue(db.queries)
         self.assertTrue(all(sql.startswith("SELECT ") for sql in db.queries))
         self.assertFalse(any("UPDATE " in sql or "INSERT " in sql for sql in db.queries))
@@ -91,8 +128,22 @@ class BaselineTests(unittest.TestCase):
 
     def test_fail_closed_when_backup_damaged(self):
         db = FakeDatabase()
-        db.backups["rain_phase_a_201006_backup_20261030_v1"] = ["30\t29\t161.76"]
+        db.backups["rain_phase_a_201006_backup_20261030_v1"] = ["30\t29\t0\t1\t30\t30\t30\t30\t18\t12\t18\t30\t29\t12\t30\t161.76"]
         self.assertFalse(inspect_baseline(db)["verified"])
+
+    def test_fail_closed_when_supersession_no_longer_matches_archive(self):
+        db = FakeDatabase()
+        db.superseded_rows = ["38\t19\t2\t19\t19\t38\t38\t38\t37\t38"]
+        result = inspect_baseline(db)
+        self.assertFalse(result["verified"])
+        self.assertIn("Phase A supersession event/current-archive chain differs from baseline", result["errors"])
+
+    def test_fail_closed_when_staged_candidate_metadata_is_incomplete(self):
+        db = FakeDatabase()
+        db.staging_rows = ["24\t365\t364\t1\t0\t1"]
+        result = inspect_baseline(db)
+        self.assertFalse(result["verified"])
+        self.assertIn("staged candidate count/identity differs from batch metadata", result["errors"])
 
     def test_fail_closed_when_july_regressed(self):
         db = FakeDatabase()

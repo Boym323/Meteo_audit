@@ -1,0 +1,4 @@
+backup_name,backup_rows,exactly_one_initial_batch_event,missing_initial_event,multiple_initial_events,backup_matches_initial_old,initial_event_applied,initial_event_zero,latest_event_applied,superseded_to_null_review,current_zero,current_null,current_matches_latest_event,initial_event_still_latest
+daily_reset_2009_2011,328,328,0,0,328,328,328,328,0,328,0,328,328
+june_2010_phase_a,30,30,0,0,30,30,30,30,18,12,18,30,12
+phase_a_other,2,2,0,0,2,2,2,2,1,1,1,2,1
