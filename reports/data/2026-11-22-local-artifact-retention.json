@@ -1,0 +1,14 @@
+{
+  "schema": "loucka-local-artifact-retention-v1",
+  "as_of": "2026-11-22",
+  "purpose": "GitHub is not a complete LXC backup. Preserve sensitive/nonpublishable originals locally and create separately encrypted, access-controlled backup.",
+  "known_artifacts": [
+    {"path":"data/historical_value_concordance.sqlite","bytes":1663004672,"purpose":"field-level meteorological value concordance and timestamp evidence","dependencies":["SQLite runtime","manifest and source inventory"],"handling":"restricted encrypted backup; verify SHA-256 and PRAGMA integrity_check on isolated restore"},
+    {"path":"*.zip (114 archives; historical manifest total 3403538773 bytes)","bytes":null,"purpose":"bundled audit, evidence, source and migration artifacts; membership differs by package","dependencies":["per-file SHA-256 inventory","package manifests"],"handling":"inspect manifest; restricted encrypted backup; test each archive with unzip -t on restore"},
+    {"path":"FINAL_MIGRATION_MANIFEST_20261117.jsonl","bytes":128967733,"purpose":"row-level migration decision manifest including proposed/historical values","dependencies":["checkpoint","migration diff","decision summary"],"handling":"restricted encrypted backup; never publish raw payload"},
+    {"path":"final_migration_package/MIGRATION_DIFF.csv","bytes":83067783,"purpose":"row-level migration values and expected changes","dependencies":["decision manifest","source snapshot","rollback package"],"handling":"restricted encrypted backup; never publish raw payload"},
+    {"path":".env and credential files","bytes":null,"purpose":"local connection credentials","dependencies":["authorized secret manager and local service configuration"],"handling":"exclude from Git and ordinary backup; rotate if exposed; store only in approved secret manager"}
+  ],
+  "backup_procedure": ["Create an encrypted backup in an approved external location with least-privilege access and retention policy.","Record per-file relative path, byte size, SHA-256, purpose, dependencies, owner and backup location in a restricted manifest.","Do not delete or move the LXC originals as part of backup.","Periodically restore to an isolated directory, verify SHA-256, run SQLite/ZIP integrity checks, and record restoration evidence."],
+  "limitation": "Current detailed per-path inventory is reports/data/2026-11-22-local-file-inventory.csv. Package-level historical totals are snapshots and must be reconciled to current files before backup or restore."
+}
