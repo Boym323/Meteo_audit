@@ -65,3 +65,15 @@ U #32/#33 byly po licenční úpravě úspěšné public-reference joby (runs [#
 Lokální pracovní strom měl 4 731 změněných/necommitnutých položek a 1 568 odlišných cest oproti původnímu vzdálenému `main`; tyto nezrevidované změny nebyly hromadně publikovány. Nový inventář vysvětluje 5 282 aktuálně zahrnutých cest po jednotlivých položkách. Není prokázáno, že nezbývá významný nepublikovaný zdrojový kód: 1 786 položek kategorie A je bezpečnostní a duplicitní kandidátní seznam, který vyžaduje obsahovou revizi; stav nelze označit za úplnou konsolidaci.
 
 Nebyl proveden produkční DB zápis, DDL, deploy, změna živého sběru ani mazání archivů.
+
+## Pokračování implementace po původním předání
+
+Následující změny proběhly při navazující práci na izolovaných větvích z aktuálního `main`:
+
+- **PR #48** sloučil `tests/test_archive_sync_frozen_synthetic.py`: pět offline testů ověřuje schválený frozen planner proti syntetickým řádkům bez zveřejnění canonical 4 651řádkového payloadu. CI prošlo; žádný DB přístup.
+- **PR #33** sloučil licencovaný public ČHMÚ humidity/temperature retrieval po aktualizaci větve z aktuálního main. Python CI a public-reference workflow prošly. **PR #32** měl po starém base chybný summary diff 1 584 souborů; jeho obsah byl přenesen do čistého jednosouborového **PR #49**, Python i public-reference CI prošly, PR #49 je sloučeno a starý #32 zavřen jako nahrazený. Obě workflow vypisují ČHMÚ/CC BY 4.0 atribuci a oficiální podmínky; žádné lokální Loučka hodnoty nejsou staženy.
+- Původní Python joby #32/#33 zůstávaly queued proto, že push workflow načítal historický `.github/workflows/ci.yml` z jejich hlav s `runs-on: self-hosted`; REST Actions job ukazoval `labels=["self-hosted"]` a `runner_id=null`. Jejich PR merge workflow používalo současný `ubuntu-latest`. Sloučení aktuálního main do obou větví přineslo `runs-on: ubuntu-latest`; oba Python push joby následně prošly.
+- **PR #50** přidal obecný lightning evidence QC modul, CLI a syntetické testy. Jeho CI na okamžik tohoto doplňku prošlo; ověřuje pouze agregační konzistenci a detekci podezřelých vzorů bez tvrzení o fyzikální sémantice. Issue #17 zůstává otevřené, protože collector/driver mapper, firmware verze a raw GW3000 payload pro záměrnou změnu mapování nejsou v tomto projektu ani LXC dostupné.
+- Issues **#14–#16 zůstávají otevřené**. Guard #14 a syntetické testy už jsou v main, ale lokální `/opt/meteo-audit/.env` chybí, proto nebylo možné znovu provést live read-only baseline. #15 čeká na dobovou WeeWX formuli/config a read-only RH/T/dewpoint export; #16 na RainRater epochovou konfiguraci, per-event raw okolí a vhodnou nezávislou intervalovou referenci. Stav a další konkrétní kroky byly přidány do jednotlivých issue komentářů.
+
+Změny databáze, živého WeeWX sběru ani starých archivů při této pokračující práci provedeny nebyly.
