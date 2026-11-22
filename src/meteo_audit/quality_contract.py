@@ -14,7 +14,7 @@ from zoneinfo import ZoneInfo
 
 STATES = frozenset({
     "MEASURED", "CORRECTED", "ESTIMATED", "MISSING",
-    "NOT_INSTALLED", "SENSOR_ERROR",
+    "NOT_INSTALLED", "SENSOR_ERROR", "UNVERIFIED",
 })
 CONFIDENCE = frozenset({"UNRESOLVED", "LOW", "MEDIUM", "HIGH"})
 PRAGUE = ZoneInfo("Europe/Prague")
@@ -74,8 +74,11 @@ class FieldObservation:
         else:
             if self.display_value is None or self.measurement_value is None:
                 raise QualityContractError("numeric quality state requires explicit values")
-            if not self.source_ref or not self.epoch_ref:
+            if not self.source_ref or (self.state != "UNVERIFIED" and not self.epoch_ref):
                 raise QualityContractError("numeric observation requires source and sensor epoch provenance")
+        if self.state == "UNVERIFIED":
+            if self.approved or self.independent_validation or not self.qc_flags:
+                raise QualityContractError("unverified original requires QC flags and cannot claim approval or independent validation")
         if self.state in {"CORRECTED", "ESTIMATED"}:
             if not self.change_ref or not self.approved:
                 raise QualityContractError("correction or estimate requires an approved change reference")
