@@ -77,3 +77,16 @@ Následující změny proběhly při navazující práci na izolovaných větví
 - Issues **#14–#16 zůstávají otevřené**. Guard #14 a syntetické testy už jsou v main, ale lokální `/opt/meteo-audit/.env` chybí, proto nebylo možné znovu provést live read-only baseline. #15 čeká na dobovou WeeWX formuli/config a read-only RH/T/dewpoint export; #16 na RainRater epochovou konfiguraci, per-event raw okolí a vhodnou nezávislou intervalovou referenci. Stav a další konkrétní kroky byly přidány do jednotlivých issue komentářů.
 
 Změny databáze, živého WeeWX sběru ani starých archivů při této pokračující práci provedeny nebyly.
+
+## Ověřený pokračovací stav — 2026-11-22, po PR #51
+
+Tato část nahrazuje výše uvedené údaje o starém `main`, neuzavřených PR #32/#33 a jejich queued CI. Předchozí historické poznámky zůstávají zachovány jako dobový záznam.
+
+- Aktuální `main`: `9102d192cd5e0d65db78ef825f566d9d72bdbeb2`. CI na tomto SHA prošlo v [runu 45046227028](https://github.com/Boym323/Meteo_audit/actions/runs/45046227028).
+- PR #51 sloučil kontrolu, že offline audit CLI ukládá běhy a porovnání pouze pod kořenem workspace, a 5 syntetických testů. Jeden CI běh na předchozím commitu odhalil závislost testů na existenci ignorovaného `runs/`; testy byly přesunuty do dočasných adresářů pod existující `tests/` a následný CI prošel. Na `main` je nyní 188 testů.
+- PR #33 je sloučen; PR #32 je zavřen jako nahrazený čistým PR #49, který je sloučen. Obě reference ČHMÚ mají public-reference CI a CC BY atribuci. Aktuálně není otevřený žádný PR.
+- Aktuálně zůstává 14 otevřených issues #14–#27. P0 #14–#16 stále vyžadují autorizované read-only databázové či epochové důkazy; #17 čeká na nasazený collector/driver mapper, jeho verzi a raw payload. Pro #14, #17 a #27 byly přidány aktualizační komentáře po PR #51. Nic z toho neodůvodňuje uzavření těchto issues.
+- Při obsahovém porovnání inventáře A s předchozím `main` vyšlo 1 535 byte-identických cest, 241 chybějících a 10 rozdílných; následně byly doplněny některé syntetické testy. **Obsahová revize všech kandidátů A ani bezpečná redakce kandidátů B není dokončena**, a proto nelze tvrdit úplnou konsolidaci lokálního projektu. Cesty `tracked_in_current_checkout` v inventáři nejsou autoritativní bez současného obsahového porovnání.
+- Při kontrole lokálních aplikačních kandidátů byly nalezeny skripty s přímými DB zápisy, interními cíli/schema názvy a konkrétními timestamp allowlisty. Ty nebyly publikovány; jde o lokální provozní payloady a nejsou vhodnými veřejnými obecnými nástroji. Jejich bezpečné planner/writer části a testy jsou již v repozitáři.
+- Před prací byly ověřeny označené procesy: šlo jen o čekající `gh run watch` pro staré PR #32/#33 a byly ukončeny; aktuálně nebyl nalezen běžící watcher/test/WeeWX proces. `/opt/meteo-audit/.env` není přítomen. Původní `/opt/meteo-audit` nebyl upraven; pracovalo se ve worktree `/tmp/meteo-audit-consolidation`.
+- Nebyl proveden databázový dotaz, zápis, DDL, změna živého WeeWX, změna schématu ani zásah do archivů.
