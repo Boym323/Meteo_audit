@@ -1,0 +1,1 @@
+-- Chunked read-only exact timestamp query set. See sql/readonly/gap_slot_source_availability/chunks/gap_slot_source_availability_2010_*.sql

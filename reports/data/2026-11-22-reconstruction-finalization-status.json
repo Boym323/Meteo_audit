@@ -1,0 +1,26 @@
+{
+  "schema": "loucka-reconstruction-finalization-summary-v1",
+  "report_date": "2026-11-22",
+  "manifest_as_of": "2026-11-17",
+  "verification": "local file integrity PASS on 2026-11-22; no database connection",
+  "manifest": {
+    "operation_count": 92664,
+    "QUARANTINE": 92366,
+    "ALREADY_APPLIED": 298,
+    "additional_apply": 0,
+    "additional_keep": 0,
+    "sha256": "a6ed14c902b9bec4e746c00aeb71aed225b9672363592cf5add3d57a3a242ef6"
+  },
+  "migration_diff_sha256": "8adda4e543ea7a0128d919689efe2f18475e1330488cd9e4dfb98b21c5eb5780",
+  "production_writes_in_this_session": 0,
+  "database_rechecked_in_this_session": false,
+  "publication_certified": false,
+  "remaining_gates": [
+    "Q1 2018 protected; external reference SELECT access was previously denied",
+    "2021 remains diagnostic-only",
+    "historical rain and GW3000 E4 semantics unresolved",
+    "WeeWX daily summary rebuild not verified",
+    "production cutover requires explicit approval and fresh live preflight",
+    "current archive row counts and sync lag not rechecked"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "issues": 14,
+  "as_of": "2026-11-22",
+  "rule": "Only independently evidenced acceptance criteria were marked complete. No issues closed in this consolidation because live DB/reference evidence and requested integration tests were not rerun.",
+  "items": [
+    {
+      "number": 14,
+      "state": "open",
+      "status": "partially complete; #28 merged, fresh DB baseline pending"
+    },
+    {
+      "number": 15,
+      "state": "open",
+      "status": "blocked on historical WeeWX formula and value-level derivative review"
+    },
+    {
+      "number": 16,
+      "state": "open",
+      "status": "blocked on per-epoch rain-rate semantics and independent interval evidence"
+    },
+    {
+      "number": 17,
+      "state": "open",
+      "status": "blocked on raw GW3000 payload and mapper/config source"
+    },
+    {
+      "number": 18,
+      "state": "open",
+      "status": "blocked on pressure semantics, reference and per-candidate review"
+    },
+    {
+      "number": 19,
+      "state": "open",
+      "status": "blocked on field-level evidence for valid/frozen candidates"
+    },
+    {
+      "number": 20,
+      "state": "open",
+      "status": "blocked on full 20,950-row classification and temporal join evidence"
+    },
+    {
+      "number": 21,
+      "state": "open",
+      "status": "blocked on historical configuration establishing unit epochs"
+    },
+    {
+      "number": 22,
+      "state": "open",
+      "status": "blocked on paired GW1000, station and reference data"
+    },
+    {
+      "number": 23,
+      "state": "open",
+      "status": "prior reviews exist; current monthly QC and sensor epochs not revalidated"
+    },
+    {
+      "number": 24,
+      "state": "open",
+      "status": "blocked on sensor epochs, payload and signal/zero tests"
+    },
+    {
+      "number": 25,
+      "state": "open",
+      "status": "model documented; ERD/dev migration/API/UI acceptance incomplete"
+    },
+    {
+      "number": 26,
+      "state": "open",
+      "status": "design exists; isolated concurrent apply/rollback integration evidence incomplete"
+    },
+    {
+      "number": 27,
+      "state": "open",
+      "status": "umbrella plan remains open with dependent issues blocked or incomplete"
+    }
+  ]
+}

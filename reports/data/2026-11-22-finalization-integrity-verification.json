@@ -1,0 +1,44 @@
+{
+  "schema": "loucka-finalization-integrity-verification-v1",
+  "verification": "PASS",
+  "sha256": {
+    "manifest": "a6ed14c902b9bec4e746c00aeb71aed225b9672363592cf5add3d57a3a242ef6",
+    "migration_diff": "8adda4e543ea7a0128d919689efe2f18475e1330488cd9e4dfb98b21c5eb5780",
+    "checkpoint": "44e4511b0f09cbea34d397f22266f19dae47a76b7d23ef1c663d8d7975ee25d1",
+    "decision_summary": "afc84835ec8be8572b53e04d74572e5e2b6dde7904edc3f843a225e41322b704"
+  },
+  "operation_count": 92664,
+  "status_counts": {
+    "ALREADY_APPLIED": 298,
+    "QUARANTINE": 92366
+  },
+  "reason_counts": {
+    "ESTIMATE_NOT_APPROVED": 14791,
+    "PROTECTED_PERIOD": 22372,
+    "PROTECTED_Q1_EXACT_SOURCE": 34,
+    "RAIN_SEMANTICS_QUARANTINE": 55081,
+    "SOURCE_CONFLICT": 88,
+    "TEST_COMMIT_VERIFIED": 298
+  },
+  "checks": {
+    "manifest_hash_matches_checkpoint": true,
+    "manifest_hash_matches_decision_summary": true,
+    "diff_hash_matches_checkpoint": true,
+    "diff_hash_matches_decision_summary": true,
+    "operation_count_matches_metadata": true,
+    "status_counts_match_checkpoint": true,
+    "status_counts_match_decision_summary": true,
+    "reason_counts_match_checkpoint": true,
+    "reason_counts_match_decision_summary": true,
+    "status_sum_verified": true
+  },
+  "database_access_performed": false,
+  "operation_level_values_emitted": false,
+  "artifact_paths": {
+    "checkpoint": "MASTER_FINALIZATION_CHECKPOINT_20261117.json",
+    "decision_manifest": "FINAL_MIGRATION_MANIFEST_20261117.jsonl",
+    "migration_diff": "final_migration_package/MIGRATION_DIFF.csv",
+    "decision_summary": "FINAL_MIGRATION_DECISION_SUMMARY_20261117.json"
+  },
+  "sensitivity_note": "Summary only. Underlying decision manifest and migration diff contain row-level meteorological values and remain local."
+}

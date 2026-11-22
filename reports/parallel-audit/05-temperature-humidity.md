@@ -94,3 +94,7 @@ Plošná agregace `dewpoint`, `heatindex`, `windchill`, `appTemp` podle kalendá
 \*Rok 2026 je průběžný. Při fyzikálním screeningu celého pracovního archivu bylo **0** případů `windchill > outTemp + 0,5 °C`, **0** případů `windchill < outTemp − 35 °C`, **0** případů `heatindex < outTemp − 4 °C` a **0** případů `heatindex > outTemp + 20 °C`. U `appTemp` je **0** překročení `outTemp − 35 °C` a `outTemp + 25 °C`. Jde o hrubé prahy, nikoli o důkaz přesnosti; každá z odvozenin může být interně konzistentní i tehdy, když základní RH/T senzor měří chybně.
 
 Rok 2020 zvlášť vyžaduje kontrolu dostupnosti a jednotek `windSpeed` po změně techniky: `windchill` má více chybějících bodů než `dewpoint`. Pro validaci správného algoritmu `heatindex` a `appTemp` je potřeba historická konfigurace a verze WeeWX, zejména zjištění, zda a kdy byly jednotlivé veličiny ukládány jako pevný archivní derivát.
+
+## Následná revalidace plateau — 2026-11-12
+
+Pět původně uvedených 12h společných freeze oken bylo read-only dotazy rozšířeno na celé sousední konstantní 5min běhy a porovnáno s `old_weewx`, `weewx_WH1080`, `reconstruction_changes` a denním TMI/TMA ČHMÚ kontextem. T/RH běhy trvají přibližně 15,5–24 hodin a zdrojové kopie se na dostupných přesných timestamp hodnotách shodují; jedna epizoda má jediný timestamp pouze v rekonstrukci, chybí v obou zdrojích. ČHMÚ denní okno není pro subdaily validaci dostatečně určeno. Výsledek nemění `REVIEW_REQUIRED` a neautorizuje odstranění/obnovu bodů. Detailní aktuální report: `../2026-11-12-freeze-2013-full-run-reconciliation.md`; ER-14.

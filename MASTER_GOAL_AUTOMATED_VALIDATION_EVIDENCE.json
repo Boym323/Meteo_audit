@@ -1,0 +1,775 @@
+{
+  "artifacts": {
+    "ANNUAL_INTERVAL_AWARE_TEMPERATURE_REVIEW.json": {
+      "exists": true,
+      "sha256": "d32195cba49bf1d286bad5dc7e82571802fdecb107a870278403ea76e60d1d01"
+    },
+    "ANNUAL_REPRESENTATIVENESS_REVIEW.json": {
+      "exists": true,
+      "sha256": "0c5d0f6ad4e4dc3c634cde22c6caf679d26103ffcb4aca9e7c37802fa02b8db8"
+    },
+    "ATLAS_LOCAL_PREVIEW_REPORT.md": {
+      "exists": true,
+      "sha256": "a0a4733fcb7c068f7f104f23c64f6e7fa82a9540783652223260326942509e00"
+    },
+    "ATLAS_STATISTICS_CONTRACT.json": {
+      "exists": true,
+      "sha256": "f464b4c8a121ecdd0757c897a31d2ef6304fe8c520525c19343d339d288cc8a4"
+    },
+    "AUTOMATED_VALIDATION_RUN.json": {
+      "exists": true,
+      "sha256": "d5db98d3d7b19e73133285ed955bf913fc4d3909a96ce2ed3c1abd872e516b4f"
+    },
+    "CHMI_DAILY_TEMPERATURE_CONTEXT_REVIEW.json": {
+      "exists": true,
+      "sha256": "a07345ed1df7edc18c71b6a2819fddeeef90e61a74f81457d1d604988e0a9cc4"
+    },
+    "CHMI_DAILY_TEMPERATURE_CONTEXT_REVIEW.md": {
+      "exists": true,
+      "sha256": "4657a1e2a0ccc36bd76c523c6fcb85fd9d0036e4bdcc7f1af773905aa42cc7f6"
+    },
+    "CURRENT_GW3000_E4_VALIDATION.json": {
+      "exists": true,
+      "sha256": "5efbb8163ec52efd11cef77715d846937c8cdf3c9ba3bd9ccc56d8ac26c70428"
+    },
+    "CURRENT_GW3000_E4_VALIDATION_REPORT.md": {
+      "exists": true,
+      "sha256": "40095eee8cc92fabf0eaa22e4923bc43fe78a271377ce2d21d3c56ead866d501"
+    },
+    "HISTORICAL_CONFLICT_EPOCH_REVIEW.json": {
+      "exists": true,
+      "sha256": "9dbff2ba3711bc81c141e19e64439412b786b9ef6f0ded1924a353ae1cd1a163"
+    },
+    "HISTORICAL_CONFLICT_EPOCH_REVIEW.md": {
+      "exists": true,
+      "sha256": "aff7ba285fb7dc84d662c905835485bc5c17d633d8b42b0e89e5a975d88aee5f"
+    },
+    "HUMIDITY_CANDIDATE_VALIDATION_REVIEW.json": {
+      "exists": true,
+      "sha256": "6cdf3b53106e07a585d9b6f3fcc45d12cbf9082b19b4616c3455e29eb0667eb8"
+    },
+    "HUMIDITY_CANDIDATE_VALIDATION_REVIEW.md": {
+      "exists": true,
+      "sha256": "673b29a4d60a3d1ccd91831783c17f738f986c9e96f06888187c357f651f7f34"
+    },
+    "HUMIDITY_DAILY_REFERENCE_CONTEXT.json": {
+      "exists": true,
+      "sha256": "0dd251270c58d63355ddbca7099efc9a9e525913be4843fa6a5c86a7d620106f"
+    },
+    "HUMIDITY_MONTHLY_SERIES_REVIEW.md": {
+      "exists": true,
+      "sha256": "2dfa2f6c9f90f27cde9d2d5e712cc2164512f19390877638877a357d1a81474a"
+    },
+    "HUMIDITY_PLATEAU_CONTEXT_REPLAY_RESULT.json": {
+      "exists": true,
+      "sha256": "81076058d090398546813c71843000d36a932fcd6d90c3e780db8fa587e2abc6"
+    },
+    "HUMIDITY_SENSOR_VALIDATION_REPORT.md": {
+      "exists": true,
+      "sha256": "898f08ad02ab8b5fc234e9d99ba012363607da4cda47a80dc51a3fc774d4d66e"
+    },
+    "INTERVAL_ADJUSTED_MONTHLY_MEANS.json": {
+      "exists": true,
+      "sha256": "fff03df4e85059e2725268ef5b34c1e59adf78ad25d166cea26efd3398d3aa4f"
+    },
+    "INTERVAL_COVERAGE_REVIEW.json": {
+      "exists": true,
+      "sha256": "97544ec5574734e2e882c097414a51db647d40dd2d664c444d5416c24af2ebd5"
+    },
+    "INTERVAL_TIME_METHOD_REVIEW.md": {
+      "exists": true,
+      "sha256": "ea7723d65b168f578f683d8b6b399b6c89ccb7a8410fd8bbc804834e7b52e49d"
+    },
+    "MASTER_GOAL_AUTOMATED_VALIDATION_CANDIDATE_OUTCOMES.json": {
+      "exists": true,
+      "sha256": "68824b98eb6895ca9ba2cfc1b3f1817e53ddfb43e7383cba5a814587bd77af32"
+    },
+    "MONTHLY_CANDIDATE_SERIES_DIAGNOSTICS.json": {
+      "exists": true,
+      "sha256": "8a43b737f20d446cda103285a779a3e654efa426ac3baa20066cafddcffaa306"
+    },
+    "MONTHLY_EVIDENCE_REPLAY_RESULT.json": {
+      "exists": true,
+      "sha256": "223ca2ae0fd14e1db962b7e70212c5e0d8b54c0d6e682bc959d4006cc9330514"
+    },
+    "MONTHLY_HUMIDITY_REFERENCE_VALIDATION.json": {
+      "exists": true,
+      "sha256": "32644f309c2a2382585ed4d06e9e17e7b23dc95a74e10269233f814a0e1d7599"
+    },
+    "MONTHLY_PRESSURE_REFERENCE_VALIDATION.json": {
+      "exists": true,
+      "sha256": "ddbfe69a5dc4877407073a8647a616a068ed2f2a748e3e2a578d20bc9df4130f"
+    },
+    "MONTHLY_PUBLICATION_CANDIDATES.json": {
+      "exists": true,
+      "sha256": "352ed670e1eada4b251b35340ed21f22bfb8701570aa8eb9100f27b1444725b3"
+    },
+    "MONTHLY_TEMPERATURE_REFERENCE_VALIDATION.json": {
+      "exists": true,
+      "sha256": "46811c9090d02365abe9c0aa7c465a516dc9df78758cac16085cef8f0c812b41"
+    },
+    "MONTHLY_VALIDATION_EVIDENCE.json": {
+      "exists": true,
+      "sha256": "e2d2b68ede2e4237a5546ceb6cab90e6291cc2b49fb018a2cb73919c0ea2f767"
+    },
+    "MONTHLY_VALIDATION_RESULTS.json": {
+      "exists": true,
+      "sha256": "62157ae040ad77e58d72ca1d114917f63c4abeefdeb30dbab0432cdb6211cde8"
+    },
+    "MONTHLY_WIND_REFERENCE_VALIDATION.json": {
+      "exists": true,
+      "sha256": "ed8ede9e27926edec9d49c84dc09c991d1fd0c60435a7d15e29758477ca86312"
+    },
+    "POST_PIPELINE_VALIDATION_AUDIT.json": {
+      "exists": true,
+      "sha256": "17479e5a9092bbb2bc92da04e62ac35596a33d4ec54da5ad40e56105c919cb85"
+    },
+    "PRESSURE_CANDIDATE_SEMANTICS_REVIEW.md": {
+      "exists": true,
+      "sha256": "9485b23b2d88f70f04cbb76c30a47ee32b0f4968e445704875a9288956f3c1fe"
+    },
+    "PRESSURE_DAILY_REFERENCE_CONTEXT.json": {
+      "exists": true,
+      "sha256": "41a28df1e52ebf70caf66675fa58706b1ce5450c5602bc597e36803bd12579cd"
+    },
+    "PRESSURE_SEMANTICS_VALIDATION_REPORT.md": {
+      "exists": true,
+      "sha256": "b120ad4faa7de24247c45ceb4f31a6f83b151ae221159449d3357abfeae16860"
+    },
+    "PROVENANCE_COUNTS_CORRECTED.json": {
+      "exists": true,
+      "sha256": "b25dcc4d73d183624540758185ac21e71ea95fd9c8e345a18cf89e273d72df28"
+    },
+    "REFERENCE_STATION_CATALOG.json": {
+      "exists": true,
+      "sha256": "c052c9fc6575e769f3d8c561eedd90f4d143bd69f7e803f69275e240f1328941"
+    },
+    "STATION_SENSOR_EPOCH_REGISTRY.json": {
+      "exists": true,
+      "sha256": "f5c126f3b2c921a36ed5c0eeb06403563d83b69289c7ed18b46aba84a5606b08"
+    },
+    "STATISTICAL_PUBLICATION_DECISIONS_V3.csv": {
+      "exists": true,
+      "sha256": "381017a9f48117c994eda75983f15926c4e1389f247706f5d1e74aee11a7d531"
+    },
+    "STATISTICAL_PUBLICATION_DECISIONS_V3.json": {
+      "exists": true,
+      "sha256": "0a367c38414e0ef7598fcb4d2fa074442252001c3113f0f20023904bd80fd76d"
+    },
+    "STATISTICAL_PUBLICATION_POLICY_V3.md": {
+      "exists": true,
+      "sha256": "5f82e789961b3bd5edea75df4064c3d112c4b533db38a980cad449a7733dd39e"
+    },
+    "TEMPERATURE_CANDIDATE_EXPERT_REVIEW.json": {
+      "exists": true,
+      "sha256": "10f7c1d646ba77d9a3a9d05c12e8a72b4448bd92b8881ff80670d8c77c0bba1e"
+    },
+    "TEMPERATURE_CANDIDATE_EXPERT_REVIEW.md": {
+      "exists": true,
+      "sha256": "f640032c4852db5c61ce18e46cf52456eda65d31acb549707cd1cc1a441ea886"
+    },
+    "TEMPERATURE_MONTHLY_VALIDATION_REPORT.md": {
+      "exists": true,
+      "sha256": "183a141d2472a5fcbf0947b0c34581704a4f35bd4f42bfb7b6cdb9a3be0112f7"
+    },
+    "TEMPERATURE_REFERENCE_AVAILABILITY.json": {
+      "exists": true,
+      "sha256": "ee600ff69ebf41e12b02448c34eebcca141b3f5e97c89f65aa3b0a0951cb8be2"
+    },
+    "THREE_UNMATCHED_TEMPERATURE_VALUES_REVIEW.json": {
+      "exists": true,
+      "sha256": "895fec32cf2093d8c1ed18140d0822f789b20d90998daf513ede25f2dec8f164"
+    },
+    "WIND_MONTHLY_VALIDATION_REPORT.md": {
+      "exists": true,
+      "sha256": "58dae9728b63f80a06593aef2f4bbeed132f8d7840da174c740846404d3d78f5"
+    },
+    "data/INTERVAL_WEIGHTED_STATISTICAL_VARIANTS_ANNUAL.csv": {
+      "exists": true,
+      "sha256": "d728eed2b7f46646dc9c12f53fd8cf2393f36971043d57c59f98a360b2ca35f3"
+    },
+    "data/INTERVAL_WEIGHTED_STATISTICAL_VARIANTS_MANIFEST.json": {
+      "exists": true,
+      "sha256": "fc8e415749d3ec1972d42942ee2e37ba68ae729ab14293c8f308049807da9f2e"
+    },
+    "data/INTERVAL_WEIGHTED_STATISTICAL_VARIANTS_MONTHLY.csv": {
+      "exists": true,
+      "sha256": "d64016bd0d7c00fcaaf7c55e87f3f0be8f24ecb65b7e54450c157b10ebe3f061"
+    },
+    "data/PUBLICATION_READINESS_DECISIONS.csv": {
+      "exists": true,
+      "sha256": "1564ffc42fdd02e4e2aecbdfd020b6327f5621a196f8a3df1e6c52af991af65f"
+    },
+    "data/PUBLICATION_READINESS_DECISIONS.json": {
+      "exists": true,
+      "sha256": "35c60269c5625bad8b46ada17ba009dd338e688ecb1f5e129f302d0b96e96a43"
+    },
+    "data/STATISTICAL_READINESS_CURRENT.json": {
+      "exists": true,
+      "sha256": "cd1e069fdf228bd712fd436455735734c3e14bdc31c51033a89193a7f93b908c"
+    },
+    "data/STATISTICAL_READINESS_VALIDATION.json": {
+      "exists": true,
+      "sha256": "bd98597961d6009d635c9abb59274817fd7666f8bf1ffef40c22c45d7cfcdea1"
+    },
+    "data/STATISTICAL_VARIANTS_ANNUAL.csv": {
+      "exists": true,
+      "sha256": "c84d2df2e208bc90596040c822a19bd328561304af20aeb21c053c370c56eb9e"
+    },
+    "data/STATISTICAL_VARIANTS_MANIFEST.json": {
+      "exists": true,
+      "sha256": "2684d37aeffdd30ced0dd9aa22477eea0447e3c52f96d86e53a697002b94ae41"
+    },
+    "data/STATISTICAL_VARIANTS_MONTHLY.csv": {
+      "exists": true,
+      "sha256": "309fb3d0c65962b4057ad36e5e181fd3809af51dddb716f9f921462f011e9a50"
+    },
+    "data/chmi-2026-recent/manifest.json": {
+      "exists": true,
+      "sha256": "7b385acac024e727a8d4e3085db48dabd6841b55084d9137b61742f136e60e2f"
+    },
+    "data/chmi-2026-synop-pressure/manifest.json": {
+      "exists": true,
+      "sha256": "5ecb9ebb639d6dfd00610526dc62408b9260157170349d9b8397168795f2a762"
+    },
+    "data/chmi-2026-synop-pressure/raw/1h-0-20000-0-11774-202601.json": {
+      "exists": true,
+      "sha256": "93528bf5cda74e1b8836c68917872cd982796da908de7217c4b8a380ecd720e5"
+    },
+    "data/chmi-2026-synop-pressure/raw/1h-0-20000-0-11774-202602.json": {
+      "exists": true,
+      "sha256": "f3e7d3525768353eb1e63c7337383566749ab63c9e59da63cfd893bca9f871ac"
+    },
+    "data/chmi-daily-humidity/manifest.json": {
+      "exists": true,
+      "sha256": "a8cd7acb7a32351b6f5f7e63d9dde10b85c2f0de7482242040441b0d3c300491"
+    },
+    "data/chmi-daily-humidity/raw/dly-0-203-0-11777-H.csv": {
+      "exists": true,
+      "sha256": "605861e69edbf35d98d387325561c44a140f613b5239d993a4c394b36aabd84a"
+    },
+    "data/chmi-daily-humidity/raw/dly-0-203-0-11778-H.csv": {
+      "exists": true,
+      "sha256": "83f2525164911d0070de1305b6f8f2a84bab5dd8471436ab4b53cd04944a3adf"
+    },
+    "data/chmi-daily-pressure/manifest.json": {
+      "exists": true,
+      "sha256": "4fc9221eea443ee62900b1088941c90c8c27582694c8e09d2b52d483f1db0b71"
+    },
+    "data/chmi-daily-pressure/raw/dly-0-203-0-11774-P.csv": {
+      "exists": false,
+      "sha256": null
+    },
+    "data/chmi-historical-daily-temperature/manifest.json": {
+      "exists": true,
+      "sha256": "047413ed4a72d002cf0a96cb799876d4d0d48f0ab59e8dc7bf770a5a23ca2292"
+    },
+    "data/chmi-priority-temperature/manifest.json": {
+      "exists": true,
+      "sha256": "b7fac1936dffe17ca82e9ff4bb2e5af7bb04d552460c3992f8c8b67090afe79f"
+    },
+    "data/chmi-priority-temperature/raw/10m-0-203-0-11777-202212.json": {
+      "exists": true,
+      "sha256": "44daec3cd6bfb95d4e429cef23a37ca1b6ccc7e9f517c2d06f6548ad4485d4c9"
+    },
+    "data/chmi-priority-temperature/raw/10m-0-203-0-11778-202212.json": {
+      "exists": true,
+      "sha256": "120029221a6f8f034415ec4ea0906bd3237dd8ce8cc48f21789bce9bedbe1a84"
+    },
+    "data/goal-phase-j-sync-health-20261116.json": {
+      "exists": true,
+      "sha256": "0093d0c6dcce8891cefd0b80bc684ab0925923ab12f24298a93446fb22a08943"
+    },
+    "data/gw3000-current-readonly/capture-20261116T010749Z.json": {
+      "exists": true,
+      "sha256": "d3a74538b9d86f2a1157ae030fccae6b27954f1cffbbc51de444c865a76d5412"
+    },
+    "scripts/build_authoritative_statistical_readiness.py": {
+      "exists": true,
+      "sha256": "51934f1a783df1288ab15cdb54eeddf3e48acb28b7fd769dab5f48521f6ccf13"
+    },
+    "scripts/build_automated_validation_candidate_outcomes.py": {
+      "exists": true,
+      "sha256": "7c833100c93439a3324592909287499fc6171ef2db963c6695292b1d84bfabb2"
+    },
+    "scripts/build_automated_validation_progress.py": {
+      "exists": true,
+      "sha256": "76065d3b977ee4535f55e3973a4c222b39bc18c3d925e7ad7e07db47828ad183"
+    },
+    "scripts/build_automated_validation_report.py": {
+      "exists": true,
+      "sha256": "a11ecfac9883e910436021bc179d95bdcc83f684cbd3f51b74a7107d1f30b7b2"
+    },
+    "scripts/build_humidity_candidate_validation_review.py": {
+      "exists": true,
+      "sha256": "52bdb187f9347c40cef317db822e2bc8122872ab0650c244a4e078caebe41906"
+    },
+    "scripts/build_humidity_daily_context_review.py": {
+      "exists": true,
+      "sha256": "cb32e046a91194f6a6ef0fc7c08878bd092b434cbe968fc04ad584df0210bf43"
+    },
+    "scripts/build_humidity_sensor_validation_report.py": {
+      "exists": true,
+      "sha256": "301c4df2a21a3c9707ed5632844e0b97a5c56865f65e7716bb690d02f0d76279"
+    },
+    "scripts/build_interval_adjusted_candidate_means.py": {
+      "exists": true,
+      "sha256": "99b83525a717284f97fcaecaa9929733ae8385410c8b1903f117c7ff146fa0ae"
+    },
+    "scripts/build_interval_aware_annual_temperature_review.py": {
+      "exists": true,
+      "sha256": "4dfe4a3ddcc9dd429aa5e018a34c3716f56645469f557598827b4a0a61bc6f75"
+    },
+    "scripts/build_interval_coverage_review.py": {
+      "exists": true,
+      "sha256": "2d82f0b293b771501f34e5714f8cd19f5f8bca86686b761a6e2439f7e9fb949d"
+    },
+    "scripts/build_interval_time_method_report.py": {
+      "exists": true,
+      "sha256": "d848aa2fba01b56d51b364c1164c7fc5d469039c64772afcb68ed0c85fe16ca9"
+    },
+    "scripts/build_interval_weighted_statistical_variants.py": {
+      "exists": true,
+      "sha256": "eab37801248850ecce6fae6fa1695b72b072456e402b17f04b2fd72aa279e1ab"
+    },
+    "scripts/build_pressure_daily_reference_context.py": {
+      "exists": true,
+      "sha256": "e77cccdcb1fcc001fff2d650cdcbc87ae7e5142764ab723fdfa88949a3efe857"
+    },
+    "scripts/build_pressure_semantics_validation_report.py": {
+      "exists": true,
+      "sha256": "de498505508ebd117a91c717b4db81ec9b32fd7552daa1a401f6dc91b52c4ef1"
+    },
+    "scripts/build_provenance_counts.py": {
+      "exists": true,
+      "sha256": "a75f4db931d8b38bcb7ed9acb3ef80c6642e085641e30d12dce6d1e703420ff5"
+    },
+    "scripts/build_publication_pilot_v2.py": {
+      "exists": true,
+      "sha256": "fcfd4999c0a1f76e8e8bd2caecf2eed7d036d104ec0fca1051994ade18f7f997"
+    },
+    "scripts/build_publication_readiness_matrix.py": {
+      "exists": true,
+      "sha256": "1a6fa1eef57937797ddb649e1e0750ccc4116f338a64b6ed7308eb7cccb693a5"
+    },
+    "scripts/build_statistical_variants.py": {
+      "exists": true,
+      "sha256": "a14d10ec949261034a56b79eb48fcb100eebdb931d987f113f6d0a3444c8feaa"
+    },
+    "scripts/build_temperature_candidate_expert_review.py": {
+      "exists": true,
+      "sha256": "8a548e8641be187f4e25fcf878927da351f1dd492b3ffbf79f49587afd43d930"
+    },
+    "scripts/build_three_unmatched_temperature_review.py": {
+      "exists": true,
+      "sha256": "34b583fde4647f4c506a7dbed016c896f572f2ecc2d15ebc32131e01b7efc068"
+    },
+    "scripts/build_wind_monthly_validation_report.py": {
+      "exists": true,
+      "sha256": "608e600b104619d13071e93e022f08b4bfa2bd5f15fd697b29dcc156efb90cfb"
+    },
+    "scripts/capture_gw3000_live_e4_readonly_evidence.py": {
+      "exists": true,
+      "sha256": "f493506eb386261f0338b7a259b04028a0abeb548de0797a62067116b8e51379"
+    },
+    "scripts/fetch_chmi_daily_humidity_context.py": {
+      "exists": true,
+      "sha256": "6e046b9febd76f7be7a147dca583a9989b9ca02fafedbe86541c2b88a9252a9c"
+    },
+    "scripts/fetch_chmi_daily_pressure_context.py": {
+      "exists": true,
+      "sha256": "6f11aad2a5a987409549169da6761bc71cb06a0b660498a04d33edd0d9fc169c"
+    },
+    "scripts/fetch_chmi_historical_daily_temperature_context.py": {
+      "exists": true,
+      "sha256": "2dd6a40510a9e8c19b3864e3e95889b20a636099872b93435a0c491c9e7dc075"
+    },
+    "scripts/finalize_authoritative_statistical_outputs.py": {
+      "exists": true,
+      "sha256": "f9e41664bacbd400f4af1c45be0a1709ff27676f58ca05c4316dc05cb11021be"
+    },
+    "scripts/run_automated_validation_pipeline.py": {
+      "exists": true,
+      "sha256": "594fda480aa0d2a8c711ef4b4d4c9b35878ab2a92916568430a963b1e079fdcd"
+    },
+    "scripts/validate_automated_validation_postrun.py": {
+      "exists": true,
+      "sha256": "73b04ab350a4af68fc4cfa1d1f56d67bb9f57cf45ceb2ef0d7fa2b18a3aa53dd"
+    },
+    "scripts/validate_chmi_daily_humidity_cache.py": {
+      "exists": true,
+      "sha256": "e4ade3be1a2c7e56903d1ce2b29493428d269d3598269de1bd8b87c8ff1c9f93"
+    },
+    "scripts/validate_chmi_daily_pressure_cache.py": {
+      "exists": true,
+      "sha256": "0c61ffd682ca954fc69099209f4825f557f340439da9b71ef6701c3ca9d23b01"
+    },
+    "scripts/validate_chmi_daily_temperature_context.py": {
+      "exists": true,
+      "sha256": "ecf9b2d0c4bdbba40c8585a1270688353976b669bb685e12edc4df0e633c9ba4"
+    },
+    "scripts/validate_chmi_pressure_candidate_reference_cache.py": {
+      "exists": true,
+      "sha256": "db7a124cb2fe40c5a0490fbb1201459b674bd2cd655283108cb1503cc88675d9"
+    },
+    "scripts/validate_humidity_monthly_references.py": {
+      "exists": true,
+      "sha256": "7ae440aa6b288ad8c8195a6acde80624025323e2300e583b1746dae493d5449b"
+    },
+    "scripts/validate_pressure_monthly_reference.py": {
+      "exists": true,
+      "sha256": "9c7515bb8cda1a2191e50bfc92cf490077cb6a07487395c483580a609177542c"
+    },
+    "scripts/validate_wind_monthly_references.py": {
+      "exists": true,
+      "sha256": "6865c5d6f589c054aa3caa4c7611b846b4b4dcdd9284d4be145df9a1a2adeee9"
+    },
+    "scripts/verify_monthly_evidence_replay.py": {
+      "exists": true,
+      "sha256": "d25dc393de96332cb7aeac360edb67e1657c6150715803de70ce1ef760d30843"
+    },
+    "src/meteo_audit/interval_period_stats.py": {
+      "exists": true,
+      "sha256": "cd52420041dcbda71c86c5a8d0e642536de67db2816ffd01b1cd16a534b8d2a3"
+    },
+    "src/meteo_audit/provenance_counts.py": {
+      "exists": true,
+      "sha256": "50360567ce6df386965041b1e098f6168d1a1760e3a2a4fdf46028992493b627"
+    },
+    "src/meteo_audit/publication_classifier.py": {
+      "exists": true,
+      "sha256": "d51f1d0a53321c72790c00e7d14759ce09862f5efdf03ad9d6a5b1951d9e96ce"
+    },
+    "src/meteo_audit/readiness_snapshot_adapter.py": {
+      "exists": true,
+      "sha256": "d18b19a28875528717b24dda4fa2546b2cd581314f36f994b1998b84a440085f"
+    },
+    "src/meteo_audit/time_bounds.py": {
+      "exists": true,
+      "sha256": "a9aba2527c2fc441fdcc178d42091e413fa36bb7b35dabe924333718ffeb644f"
+    },
+    "tests/test_atlas_preview_http.py": {
+      "exists": true,
+      "sha256": "8031e9e15a71166baf57e5dc550145fb018b59bc7e13e36c219d223a1201eef7"
+    },
+    "tests/test_automated_candidate_outcomes.py": {
+      "exists": true,
+      "sha256": "d071a23072d2e776af0c2690223beeba598910d8003b4f10a95370d7d9e3b639"
+    },
+    "tests/test_humidity_reference_validation.py": {
+      "exists": true,
+      "sha256": "51f0a8100c42a1156b184796dfed209f76f1324160c1eb03d90a7dfff558914f"
+    },
+    "tests/test_interval_period_stats.py": {
+      "exists": true,
+      "sha256": "76f248cef96ec744e75a668699e09d8710be59cf7f5a80c93b47094146bfa628"
+    },
+    "tests/test_interval_weighted_variants.py": {
+      "exists": true,
+      "sha256": "b704f1bc7595b351dff470ecd8104ea3232582c1cf09bfb8cd782e055c335548"
+    },
+    "tests/test_pressure_reference_validation.py": {
+      "exists": true,
+      "sha256": "0e839d9f74a2f3ef8579c762ca9673baa9216e44d5e573f9a63478e794e87623"
+    },
+    "tests/test_provenance_counts.py": {
+      "exists": true,
+      "sha256": "3f9f9de42801d0bd802bb10e4b88aef09dc286b673410867c39a879839c846d5"
+    },
+    "tests/test_publication_v3_exports.py": {
+      "exists": true,
+      "sha256": "63537279458160bc6145dfea106706e1a7a0bcc0bb02d2ac3a55fcb135b836d8"
+    },
+    "tests/test_readiness_snapshot_adapter.py": {
+      "exists": true,
+      "sha256": "69d6ef3661ff3dcf792318cbc4f0ceca3499d7e1d32aac0f4e3400294f3b418c"
+    },
+    "tests/test_statistical_variants.py": {
+      "exists": true,
+      "sha256": "387745b000b0e142995ba2c75a7b499c2afef51d8e0e9c2af7c4a9461718f64a"
+    },
+    "tests/test_three_unmatched_temperature_review.py": {
+      "exists": true,
+      "sha256": "cb9b2a1924cc531528671358ca6386a28c1de002de35699a7f7a7ff2eacf2f45"
+    },
+    "tests/test_time_bounds.py": {
+      "exists": true,
+      "sha256": "3372d99f68ac8a3bf820ad21ec38634192d90c29b5c9b868dd3a29abb8839d05"
+    },
+    "tests/test_wind_reference_validation.py": {
+      "exists": true,
+      "sha256": "05188b4c81eee472ca1f9956bd247f798f7aa488744af55465cbbb75924f1d4d"
+    }
+  },
+  "candidate_count": 248,
+  "candidate_evidence_count": 248,
+  "completion_status": "INCOMPLETE; see report outstanding work",
+  "decision_counts": {
+    "BLOCKED_E4": 462,
+    "DIAGNOSTIC_ONLY": 195,
+    "NOT_REPRESENTATIVE_COVERAGE": 2305,
+    "PROTECTED": 60,
+    "READY_WITH_DISCLOSED_LIMITATIONS": 2,
+    "REVIEW_REQUIRED_CONFLICTS": 475,
+    "REVIEW_REQUIRED_ESTIMATES": 76,
+    "REVIEW_REQUIRED_SENSOR_VALIDATION": 352
+  },
+  "deployment_performed": false,
+  "generated_utc": "2026-11-15T16:03:04Z",
+  "historical_database_writes": false,
+  "pipeline_run": {
+    "database_write_performed": false,
+    "deployment_performed": false,
+    "publication_authorized": false,
+    "reference_sha256": "b7e01c6ed701081e981b85a935556316585d53ebae5ffa020ccf19a13325684a",
+    "run_utc": "2026-11-16T21:22:20Z",
+    "schema": "loucka-automated-validation-run-v1",
+    "scope_limit": "Implements existing pilot, monthly candidate evidence, interval diagnostics, readiness matrix, and atlas pilot contract. Does not claim completion of all 248 expert validations, all requested phases, or full E2E source regeneration.",
+    "snapshot_id": "1e34859d05bb0ec20d3810c4fbb376d231a6ee0bfca0c4c636dcfb2d1114e4ba",
+    "snapshot_rows": 1695104,
+    "stages": [
+      {
+        "script": "scripts/build_provenance_counts.py",
+        "stage": "dynamic-snapshot-provenance-counts",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_authoritative_statistical_readiness.py",
+        "stage": "concordance-daily-readiness",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/finalize_authoritative_statistical_outputs.py",
+        "stage": "finalize-concordance-daily-readiness",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_statistical_variants.py",
+        "stage": "snapshot-monthly-annual-statistical-variants",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_interval_weighted_statistical_variants.py",
+        "stage": "all-period-interval-weighted-variants",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_annual_representativeness_review.py",
+        "stage": "annual-representativeness-review",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_interval_aware_annual_temperature_review.py",
+        "stage": "interval-aware-annual-temperature-review",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/validate_chmi_candidate_reference_cache.py",
+        "stage": "chmi-reference-cache-integrity",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/validate_chmi_priority_temperature_cache.py",
+        "stage": "chmi-priority-temperature-cache-integrity",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/validate_chmi_pressure_candidate_reference_cache.py",
+        "stage": "chmi-pressure-reference-cache-integrity",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_reference_data_catalog.py",
+        "stage": "reference-data-catalog",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_reference_station_catalog.py",
+        "stage": "reference-station-catalog",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_temperature_reference_availability.py",
+        "stage": "temperature-reference-availability",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/validate_chmi_daily_temperature_context.py",
+        "stage": "chmi-daily-temperature-context",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/validate_pilot_chmi_reference.py",
+        "stage": "external-reference-validation",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_publication_pilot_v2.py",
+        "stage": "publication-pilot-and-candidate-selection",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/validate_temperature_monthly_references.py",
+        "stage": "monthly-temperature-reference-validation",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_temperature_candidate_expert_review.py",
+        "stage": "temperature-candidate-expert-review",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/validate_humidity_monthly_references.py",
+        "stage": "monthly-humidity-reference-validation",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/validate_chmi_daily_humidity_cache.py",
+        "stage": "chmi-daily-humidity-cache-integrity",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_humidity_daily_context_review.py",
+        "stage": "humidity-daily-regional-context",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_humidity_sensor_validation_report.py",
+        "stage": "humidity-validation-report",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/validate_pressure_monthly_reference.py",
+        "stage": "monthly-pressure-reference-validation",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/validate_chmi_daily_pressure_cache.py",
+        "stage": "chmi-daily-pressure-cache-integrity",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_pressure_daily_reference_context.py",
+        "stage": "pressure-daily-regional-context",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/validate_wind_monthly_references.py",
+        "stage": "monthly-wind-reference-validation",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_wind_monthly_validation_report.py",
+        "stage": "wind-validation-report",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_temperature_monthly_validation_report.py",
+        "stage": "temperature-validation-report",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_interval_coverage_review.py",
+        "stage": "interval-coverage-review",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_interval_adjusted_candidate_means.py",
+        "stage": "interval-adjusted-diagnostic-means",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_interval_time_method_report.py",
+        "stage": "interval-time-method-report",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_historical_conflict_epoch_review.py",
+        "stage": "historical-conflict-epoch-review",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_three_unmatched_temperature_review.py",
+        "stage": "three-unmatched-temperature-case-review",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_monthly_candidate_series_diagnostics.py",
+        "stage": "monthly-candidate-series-diagnostics",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_pressure_candidate_semantics_review.py",
+        "stage": "pressure-candidate-semantics-review",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_pressure_semantics_validation_report.py",
+        "stage": "pressure-semantics-validation-report",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_humidity_monthly_series_review.py",
+        "stage": "humidity-candidate-series-review",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_humidity_candidate_validation_review.py",
+        "stage": "humidity-candidate-specific-validation-review",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_monthly_validation_evidence.py",
+        "stage": "candidate-evidence-records",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/audit_local_station_metadata_sources.py",
+        "stage": "local-station-metadata-source-search",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_epoch_registry_and_monthly_results.py",
+        "stage": "epoch-registry-and-monthly-results",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_current_gw3000_e4_report.py",
+        "stage": "current-gw3000-e4-review",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_publication_readiness_matrix.py",
+        "stage": "readiness-decisions",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_publication_v3.py",
+        "stage": "v3-policy-decisions",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_publication_pilot_v2.py",
+        "stage": "final-v2-decision-export-refresh",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_atlas_statistics_contract.py",
+        "stage": "atlas-contract",
+        "status": "PASS"
+      },
+      {
+        "script": "scripts/build_automated_validation_candidate_outcomes.py",
+        "stage": "priority-candidate-outcomes",
+        "status": "PASS"
+      },
+      {
+        "stage": "focused-contract-and-classifier-tests",
+        "status": "PASS"
+      }
+    ]
+  },
+  "publication_authorized": false,
+  "schema": "loucka-automated-validation-evidence-v1",
+  "snapshot_id": "1e34859d05bb0ec20d3810c4fbb376d231a6ee0bfca0c4c636dcfb2d1114e4ba"
+}

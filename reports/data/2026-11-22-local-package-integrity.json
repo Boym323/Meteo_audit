@@ -1,0 +1,2203 @@
+{
+  "schema": "loucka-local-package-integrity-inventory-v1",
+  "generated_utc": "2026-11-22",
+  "source_directory": "/opt/meteo-audit",
+  "zip_packages": [
+    {
+      "path": "MASTER_GOAL_PUBLICATION_PILOT_BUNDLE.zip",
+      "bytes": 689695,
+      "sha256": "8888c06351c4538f1e79a69a2e157a1b00e20bbc602475542b95fd7f6a80d4ad",
+      "member_count": 25,
+      "uncompressed_bytes": 15766559,
+      "contents_sample": [
+        "ANNUAL_REPRESENTATIVENESS_REVIEW.json",
+        "ANNUAL_REPRESENTATIVENESS_REVIEW.md",
+        "E4_EPOCH_EVIDENCE_REQUIREMENTS.md",
+        "HISTORICAL_CONFLICT_SUBTYPES_SUMMARY.json",
+        "HISTORICAL_SOURCE_CATALOG.json",
+        "HISTORICAL_SOURCE_DEPENDENCY_GRAPH.json",
+        "MASTER_GOAL_PUBLICATION_PILOT_BUNDLE_MANIFEST.json",
+        "MASTER_GOAL_PUBLICATION_PILOT_EVIDENCE.json"
+      ],
+      "additional_member_count": 17
+    },
+    {
+      "path": "estimated_short_temperature_gaps_v2.1.zip",
+      "bytes": 77778,
+      "sha256": "e79df481cbca533ddfd44a8112fa257b82a64a8b280ed4943cacc477830e9f62",
+      "member_count": 26,
+      "uncompressed_bytes": 2315602,
+      "contents_sample": [
+        "estimated_short_temperature_gaps_v2.1/README.md",
+        "estimated_short_temperature_gaps_v2.1/candidate_metadata.json",
+        "estimated_short_temperature_gaps_v2.1/change_event_counts_107.json",
+        "estimated_short_temperature_gaps_v2.1/conditional_holdout_2019_2020.json",
+        "estimated_short_temperature_gaps_v2.1/corrections.csv",
+        "estimated_short_temperature_gaps_v2.1/corrections.json",
+        "estimated_short_temperature_gaps_v2.1/dependency_metadata.json",
+        "estimated_short_temperature_gaps_v2.1/excluded_cases.csv"
+      ],
+      "additional_member_count": 18
+    },
+    {
+      "path": "loucka_automated_validation_completion_v1.zip",
+      "bytes": 10841624,
+      "sha256": "d3dd6d6eb44fbc3d4d7763ec3cffd1377ca44f1bf2c30a7d236e737414d27af8",
+      "member_count": 171,
+      "uncompressed_bytes": 243785118,
+      "contents_sample": [
+        "ANNUAL_INTERVAL_AWARE_TEMPERATURE_REVIEW.json",
+        "ANNUAL_REPRESENTATIVENESS_REVIEW.json",
+        "ATLAS_LOCAL_PREVIEW_REPORT.md",
+        "ATLAS_STATISTICS_CONTRACT.json",
+        "AUTOMATED_VALIDATION_RUN.json",
+        "BUNDLE_MANIFEST.json",
+        "BUNDLE_README.md",
+        "CHMI_DAILY_TEMPERATURE_CONTEXT_REVIEW.json"
+      ],
+      "additional_member_count": 163
+    },
+    {
+      "path": "loucka_complete_historical_data_audit_v1.1.zip",
+      "bytes": 27962929,
+      "sha256": "71b40577715de0a95459acbe60d342099467dc9dae1f6332cf01b861c10f721e",
+      "member_count": 3426,
+      "uncompressed_bytes": 258666323,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3418
+    },
+    {
+      "path": "loucka_complete_historical_data_audit_v1.zip",
+      "bytes": 27947580,
+      "sha256": "f3c75f8a43ab787f67d6fb1deb6e374af9b5d4646c955af69b60bee55b35ee05",
+      "member_count": 3420,
+      "uncompressed_bytes": 258583402,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3412
+    },
+    {
+      "path": "loucka_gw3000_frozen_backfill_production_v1.zip",
+      "bytes": 19519,
+      "sha256": "f5666927b3b850992c86d0389fd6e7d8790240f9ec61aa197e5be610dde7921f",
+      "member_count": 7,
+      "uncompressed_bytes": 69760,
+      "contents_sample": [
+        "loucka_gw3000_frozen_backfill_production_v1/CODE_SHA256SUMS.txt",
+        "loucka_gw3000_frozen_backfill_production_v1/GW3000_FROZEN_BACKFILL_PRODUCTION_EVIDENCE.json",
+        "loucka_gw3000_frozen_backfill_production_v1/GW3000_FROZEN_BACKFILL_PRODUCTION_MANIFEST.json",
+        "loucka_gw3000_frozen_backfill_production_v1/GW3000_FROZEN_BACKFILL_PRODUCTION_REPORT.md",
+        "loucka_gw3000_frozen_backfill_production_v1/README.txt",
+        "loucka_gw3000_frozen_backfill_production_v1/isolated-test-evidence/gw3000_archive_live_ddl.sql",
+        "loucka_gw3000_frozen_backfill_production_v1/isolated-test-evidence/gw3000_full_frozen_backfill.json"
+      ],
+      "additional_member_count": 0
+    },
+    {
+      "path": "loucka_gw3000_frozen_backfill_production_v1_pre_boundary_check.zip",
+      "bytes": 6155,
+      "sha256": "2ec1bd4b5390c4c78ee511e52cbbafe9a012cbd6ca2068998f8a5bad5f732faa",
+      "member_count": 3,
+      "uncompressed_bytes": 11602,
+      "contents_sample": [
+        "GW3000_FROZEN_BACKFILL_PRODUCTION_REPORT.md",
+        "GW3000_FROZEN_BACKFILL_PRODUCTION_EVIDENCE.json",
+        "GW3000_FROZEN_BACKFILL_PRODUCTION_MANIFEST.json"
+      ],
+      "additional_member_count": 0
+    },
+    {
+      "path": "loucka_gw3000_sync_release_candidate_v1.1.zip",
+      "bytes": 1322973,
+      "sha256": "816a08cf48e1af52f9ee52d6a75ca64bc5d6a61cab4069276beb82f6dad14820",
+      "member_count": 23,
+      "uncompressed_bytes": 9201646,
+      "contents_sample": [
+        "loucka-gw3000-v1.1/GW3000_SYNC_FINAL_TECHNICAL_REVIEW.md",
+        "loucka-gw3000-v1.1/OWNER_GW3000_BACKFILL_APPROVAL.md",
+        "loucka-gw3000-v1.1/README.md",
+        "loucka-gw3000-v1.1/SHA256SUMS.json",
+        "loucka-gw3000-v1.1/data/GW3000_INSERT_ONLY_BACKFILL_MANIFEST.json",
+        "loucka-gw3000-v1.1/data/GW3000_INSERT_ONLY_BACKFILL_PAYLOAD.jsonl",
+        "loucka-gw3000-v1.1/data/GW3000_INSERT_ONLY_BACKFILL_ROW_HASHES.json",
+        "loucka-gw3000-v1.1/requirements-sync.txt"
+      ],
+      "additional_member_count": 15
+    },
+    {
+      "path": "loucka_gw3000_sync_release_candidate_v1.2.zip",
+      "bytes": 1380716,
+      "sha256": "c994ad1a10f57b03f853b9189366cd707b618a10d35198f876e08200ae52eef1",
+      "member_count": 29,
+      "uncompressed_bytes": 9251531,
+      "contents_sample": [
+        "loucka-gw3000-v1.2/GW3000_SYNC_FINAL_TECHNICAL_REVIEW.md",
+        "loucka-gw3000-v1.2/OWNER_GW3000_BACKFILL_APPROVAL.md",
+        "loucka-gw3000-v1.2/README.md",
+        "loucka-gw3000-v1.2/SHA256SUMS.json",
+        "loucka-gw3000-v1.2/SHA256SUMS.json.sha256",
+        "loucka-gw3000-v1.2/config/archive_sync_env.example",
+        "loucka-gw3000-v1.2/data/GW3000_INSERT_ONLY_BACKFILL_MANIFEST.json",
+        "loucka-gw3000-v1.2/data/GW3000_INSERT_ONLY_BACKFILL_PAYLOAD.jsonl"
+      ],
+      "additional_member_count": 21
+    },
+    {
+      "path": "loucka_gw3000_sync_release_candidate_v1.zip",
+      "bytes": 1306578,
+      "sha256": "42d5196db8f7a89a8f73aa79d4b4ef7b495df363d4f9c023f25081cf268738ce",
+      "member_count": 21,
+      "uncompressed_bytes": 9125565,
+      "contents_sample": [
+        "loucka_gw3000_sync_release_candidate_v1/.env.source.example",
+        "loucka_gw3000_sync_release_candidate_v1/.env.target.example",
+        "loucka_gw3000_sync_release_candidate_v1/GW3000_SYNC_FINAL_TECHNICAL_REVIEW.md",
+        "loucka_gw3000_sync_release_candidate_v1/RELEASE_CANDIDATE_SHA256SUMS.txt",
+        "loucka_gw3000_sync_release_candidate_v1/data/GW3000_INSERT_ONLY_BACKFILL_MANIFEST.json",
+        "loucka_gw3000_sync_release_candidate_v1/data/GW3000_INSERT_ONLY_BACKFILL_PAYLOAD.jsonl",
+        "loucka_gw3000_sync_release_candidate_v1/data/GW3000_INSERT_ONLY_BACKFILL_ROW_HASHES.json",
+        "loucka_gw3000_sync_release_candidate_v1/deploy/loucka-archive-sync.service.example"
+      ],
+      "additional_member_count": 13
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v1.zip",
+      "bytes": 307907,
+      "sha256": "34b883da1da040290abdc026a09c8bbe6a1e99f1d696b29ae500977f307cc658",
+      "member_count": 92,
+      "uncompressed_bytes": 970465,
+      "contents_sample": [
+        "reports/MASTER_AUDIT_REPORT.md",
+        "reports/DATABASE_INVENTORY.md",
+        "reports/TIME_CONTINUITY_AUDIT.md",
+        "reports/TEMPERATURE_AUDIT.md",
+        "reports/HUMIDITY_AUDIT.md",
+        "reports/PRECIPITATION_AUDIT.md",
+        "reports/SECONDARY_SENSORS_AUDIT.md",
+        "reports/REFERENCE_DATA_INVENTORY.md"
+      ],
+      "additional_member_count": 84
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v10.zip",
+      "bytes": 15680011,
+      "sha256": "ebd92dcb62ed565be6b0b1d5808af19536e17691f5e9d9aa45bb409edae2ac28",
+      "member_count": 2259,
+      "uncompressed_bytes": 201472230,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2251
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v11.zip",
+      "bytes": 15806872,
+      "sha256": "9e407429856a2b7d5749a3bb87629824f30e988cffaca9443381bce60b6b120a",
+      "member_count": 2268,
+      "uncompressed_bytes": 201953760,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2260
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v12.zip",
+      "bytes": 15943805,
+      "sha256": "eab061bf0b10219abbf4265e459f23f9a83aa2825f6bc445ced035145d3be19d",
+      "member_count": 2279,
+      "uncompressed_bytes": 202466952,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2271
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v13.zip",
+      "bytes": 16081604,
+      "sha256": "9accdcf3a43430939a4890e9df053713ec288424266fd15f1df2ee2ddf2991e6",
+      "member_count": 2291,
+      "uncompressed_bytes": 202972631,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2283
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v14.zip",
+      "bytes": 16219294,
+      "sha256": "c15245cbacdcde2bedbc41cdd3d52cf2125ef9f92dbe6d3dcd053ebd0c99f80c",
+      "member_count": 2301,
+      "uncompressed_bytes": 203479021,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2293
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v15.zip",
+      "bytes": 16378996,
+      "sha256": "972689830f3058fa98389b5819164ff64bfa7993c41608cdcb2ed8a04102c036",
+      "member_count": 2318,
+      "uncompressed_bytes": 204347260,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2310
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v16.zip",
+      "bytes": 16519662,
+      "sha256": "f829c14466b655359f1d3b0ba2c70bd06e43389ec187aa6127783a186b570cb8",
+      "member_count": 2333,
+      "uncompressed_bytes": 204915637,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2325
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v17.zip",
+      "bytes": 16660447,
+      "sha256": "bcf0d2288f81dd5ec61bd363ebae24d3b241c04a7ac226534002a278eef4384b",
+      "member_count": 2348,
+      "uncompressed_bytes": 205498529,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2340
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v18.zip",
+      "bytes": 16789906,
+      "sha256": "ca97f578556273187498fb3897b27076ed9efabad9bebf9920b942b28e7eec5e",
+      "member_count": 2353,
+      "uncompressed_bytes": 205991082,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2345
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v19.zip",
+      "bytes": 16920146,
+      "sha256": "981c201aada7dfbf88166dbfd1e02330c28aee934649c4e5ef7fcdc55e47c1da",
+      "member_count": 2358,
+      "uncompressed_bytes": 206486337,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2350
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v2.zip",
+      "bytes": 770951,
+      "sha256": "76d284f1e876a67e2bfd6c8a89a221a6bebbd2865537aa77b2d85691ef3c171a",
+      "member_count": 163,
+      "uncompressed_bytes": 4709268,
+      "contents_sample": [
+        "EXPERT_REVIEW_REQUIRED.md",
+        "GOAL_ADDENDUM.md",
+        "MASTER_PLAN.md",
+        "PROGRESS.json",
+        "STATUS.md",
+        "archives/v1/estimated_short_temperature_gaps/README.md",
+        "archives/v1/estimated_short_temperature_gaps/candidate_metadata.json",
+        "archives/v1/estimated_short_temperature_gaps/corrections.csv"
+      ],
+      "additional_member_count": 155
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v20.zip",
+      "bytes": 17283437,
+      "sha256": "4b2285e45211014f695dd5bd04791c6b43733fd4469311cbebf76825d708be0b",
+      "member_count": 2368,
+      "uncompressed_bytes": 209600181,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2360
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v21.zip",
+      "bytes": 17415476,
+      "sha256": "bf0f27cc3106dd763c78f1f24b57d1534da6e7a51805e85bb12dcfe5c7148ab3",
+      "member_count": 2373,
+      "uncompressed_bytes": 210100113,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2365
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v22.zip",
+      "bytes": 17562618,
+      "sha256": "880e842cb7e7e9c4141bbc89eb4b91f5035363b885c41e36b91866e9ffabfad7",
+      "member_count": 2390,
+      "uncompressed_bytes": 210634652,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2382
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v23.zip",
+      "bytes": 17696183,
+      "sha256": "e3b32e70513a58fee9644f7607fa3db437824649fdc364af23217220d24cef72",
+      "member_count": 2394,
+      "uncompressed_bytes": 211146850,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2386
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v24.zip",
+      "bytes": 17833678,
+      "sha256": "486cbc4dadb7e49db055577895a57decb189f2e43aff78bb01930cbbc4c43f14",
+      "member_count": 2402,
+      "uncompressed_bytes": 211663129,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2394
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v25.zip",
+      "bytes": 17969593,
+      "sha256": "a202e6d95cda103010ef85454789f05c3b0605536bb83d751f11d615c85b895f",
+      "member_count": 2409,
+      "uncompressed_bytes": 212176081,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2401
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v26.zip",
+      "bytes": 18102794,
+      "sha256": "e317d8d3a0553bce074374f3aac8561aef5d5bd2e50b388fbd8df15a85348479",
+      "member_count": 2413,
+      "uncompressed_bytes": 212684289,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2405
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v27.zip",
+      "bytes": 18239512,
+      "sha256": "8370a9d8a781c0c2ccc464d981f88667590351be7183e27520c2daf11a286504",
+      "member_count": 2420,
+      "uncompressed_bytes": 213200841,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2412
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v28.zip",
+      "bytes": 18377044,
+      "sha256": "6475b92720493f69b182523d2676f6e275c94234edaa956a2d8c27e7230d4bae",
+      "member_count": 2428,
+      "uncompressed_bytes": 213719450,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2420
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v29.zip",
+      "bytes": 18514300,
+      "sha256": "5bd9f340148298bd0e97bd33d832cf66b9e60aea6dd5d2d80b807b2d9dc9f5f5",
+      "member_count": 2435,
+      "uncompressed_bytes": 214238934,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2427
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v3.zip",
+      "bytes": 14588415,
+      "sha256": "1377033a0bdab98b858dde7e77ca07a75fa9f47a4b96d3fd683c5aecea7556c5",
+      "member_count": 2113,
+      "uncompressed_bytes": 193886484,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "EXPERT_REVIEW_REQUIRED.md",
+        "GOAL_ADDENDUM.md"
+      ],
+      "additional_member_count": 2105
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v30.zip",
+      "bytes": 18654173,
+      "sha256": "653c5f7b1a8cecdf09b9beb30bb54b1dd7b7417b258fb4aa7c33cd080ecf28cc",
+      "member_count": 2444,
+      "uncompressed_bytes": 214770133,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2436
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v31.zip",
+      "bytes": 18792154,
+      "sha256": "2d9c8b96b4be2329a401de4ac9c59e1dec2b61fc512c9c3833ef13418703d115",
+      "member_count": 2451,
+      "uncompressed_bytes": 215292099,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2443
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v32.zip",
+      "bytes": 18933989,
+      "sha256": "f960e06614a40bd9c73ff581db09d336d050a6cda51a8857a72b34885e6c9470",
+      "member_count": 2460,
+      "uncompressed_bytes": 215826564,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2452
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v33.zip",
+      "bytes": 19084257,
+      "sha256": "00bc54118c3df90e7342eab8137b4364b64549e86c2e8a0a1eb374f6a139dccd",
+      "member_count": 2469,
+      "uncompressed_bytes": 216440798,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2461
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v34.zip",
+      "bytes": 19227512,
+      "sha256": "d4eaedf266ac6b8f6d6bd0ad452412ff44b9ebeffb17150cef7ccc53e5fc3386",
+      "member_count": 2477,
+      "uncompressed_bytes": 216989127,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2469
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v35.zip",
+      "bytes": 19364518,
+      "sha256": "b4ca36a9aefbd3ab21c631de6578397060d4fd9b71b848a6a0daed96cd7f6c6e",
+      "member_count": 2481,
+      "uncompressed_bytes": 217512616,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2473
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v36.zip",
+      "bytes": 19505316,
+      "sha256": "458bac5a02090de238541f41b5c804e9072182fbd39df0fb617930e984073abb",
+      "member_count": 2487,
+      "uncompressed_bytes": 218044735,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2479
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v37.zip",
+      "bytes": 19643086,
+      "sha256": "6766c19836fdfdb7de3fd3ae8e5e1a4b53943a88d258f13bf08f0f366895e256",
+      "member_count": 2491,
+      "uncompressed_bytes": 218571036,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2483
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v38.zip",
+      "bytes": 19775343,
+      "sha256": "7fa0ec999fa184d89a69b4bbf31931cfd46a5c509eba9bbca1029485934a53cd",
+      "member_count": 2494,
+      "uncompressed_bytes": 219072393,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2486
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v39.zip",
+      "bytes": 19918044,
+      "sha256": "486d53c7afc79ceb0d350692b2efe5632ae86f5b6bd4c1e84ff04901306d1c5a",
+      "member_count": 2502,
+      "uncompressed_bytes": 219610623,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2494
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v4.zip",
+      "bytes": 14700494,
+      "sha256": "0f477d32958c1167d8a2862b6d152600beef9a6045dfae7fa73e144ea34652e7",
+      "member_count": 2126,
+      "uncompressed_bytes": 194342446,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2118
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v40.zip",
+      "bytes": 20062998,
+      "sha256": "f350bbf4d3803dbd9245844be437f76f660e1cf090d2e7930ce7080a66337f05",
+      "member_count": 2510,
+      "uncompressed_bytes": 220156550,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2502
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v41.zip",
+      "bytes": 20208063,
+      "sha256": "e7e87f269be0faddd2695a59ce73245fc7829fe57f1c6ae3b58909084e1b113a",
+      "member_count": 2518,
+      "uncompressed_bytes": 220702850,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2510
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v42.zip",
+      "bytes": 20354863,
+      "sha256": "a8acd14af51576dcae7840cf0a0f5bbc96e5bc634756e528d0a9a81bcd5ea631",
+      "member_count": 2526,
+      "uncompressed_bytes": 221250704,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2518
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v43.zip",
+      "bytes": 20498942,
+      "sha256": "dbb13b1014a6a95bcd423728d0843e8941cd0efd989b837886046c1591baf2b6",
+      "member_count": 2531,
+      "uncompressed_bytes": 221794060,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2523
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v44.zip",
+      "bytes": 20647522,
+      "sha256": "2371ba5d8eca7ad7f17b374e095a95a4a69a633aac0cf2f8d55d708a6a23ed00",
+      "member_count": 2539,
+      "uncompressed_bytes": 222352354,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2531
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v45.zip",
+      "bytes": 20796203,
+      "sha256": "c0d91dae657ae08a7fc8c0ca0f96df1cbaa3106adc06d86a9b0a64e8b4cf1e34",
+      "member_count": 2547,
+      "uncompressed_bytes": 222912799,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2539
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v46.zip",
+      "bytes": 21017943,
+      "sha256": "bffa5bc87056af5dab0a22431e9568643180081dbc71628ff221c688888acab0",
+      "member_count": 2554,
+      "uncompressed_bytes": 223552243,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2546
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v47.zip",
+      "bytes": 21208099,
+      "sha256": "6de93e5814ee21ba221e21bbb683acea6fa9658f32fc9320cdc4ede366ad5fcd",
+      "member_count": 2582,
+      "uncompressed_bytes": 224572251,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2574
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v48.zip",
+      "bytes": 21415895,
+      "sha256": "90302a6ad387b0a12b16d54f05b1ff10889957f95d2bce9c639fc90d655d0557",
+      "member_count": 2627,
+      "uncompressed_bytes": 225811887,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2619
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v49.zip",
+      "bytes": 21671644,
+      "sha256": "a29fd83cfefc6e56ec5c30c4ac366acdceb7595c8d25bddd490e59d46bf7a6d0",
+      "member_count": 2708,
+      "uncompressed_bytes": 227640665,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2700
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v5.zip",
+      "bytes": 15037172,
+      "sha256": "20d441e3f7a9bf83d872268ef1ef3b5055be0db1c706d66043ed0086bde8c4b6",
+      "member_count": 2199,
+      "uncompressed_bytes": 199081025,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2191
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v50.zip",
+      "bytes": 21861127,
+      "sha256": "bdca6f06cee153c97ded1f0a676e7a7d4a34f9b0ee595ce13c77a030d2ee5e87",
+      "member_count": 2741,
+      "uncompressed_bytes": 228578987,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2733
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v51.zip",
+      "bytes": 22052957,
+      "sha256": "0c966f19f6f172c02da2b1dafe3652789184f859d9646b3379b7315f72b08e53",
+      "member_count": 2786,
+      "uncompressed_bytes": 229441163,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2778
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v52.zip",
+      "bytes": 22226093,
+      "sha256": "095e312b77de5a9b3821005827a7fb7c8c73aeab9bf3dc8baa8ca7bc49e3f61e",
+      "member_count": 2795,
+      "uncompressed_bytes": 230177030,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2787
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v53.zip",
+      "bytes": 22393733,
+      "sha256": "2adc90df013f93e639fed71de220f5d444cda15e2ca5232bb4d08e86d762e9f4",
+      "member_count": 2804,
+      "uncompressed_bytes": 230849699,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2796
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v54.zip",
+      "bytes": 22559945,
+      "sha256": "ce6a5921f50313dd0a1146ab612a03827e7eb2f78770299231881b4cc8658704",
+      "member_count": 2812,
+      "uncompressed_bytes": 231520173,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2804
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v55.zip",
+      "bytes": 22718913,
+      "sha256": "efe39ca07f733a363ead0bb6ee5881f8160a0dc83a5ae1e1d34d3a0701ced053",
+      "member_count": 2816,
+      "uncompressed_bytes": 232145101,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2808
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v56.zip",
+      "bytes": 22878114,
+      "sha256": "b229e1aac7c0c5e9b5114b55b3b1593d5f472bceebb0fe77699171cdf9e7d922",
+      "member_count": 2820,
+      "uncompressed_bytes": 232771227,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2812
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v57.zip",
+      "bytes": 23041222,
+      "sha256": "7e94ec9c0f89832b46abc21c9e800804bad59f09b67ee626126ec411308209df",
+      "member_count": 2826,
+      "uncompressed_bytes": 233404996,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2818
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v58.zip",
+      "bytes": 23201106,
+      "sha256": "9cb2151e3698cf40ee04ba1b905efdca662593799893738a9f08c9746a9b6631",
+      "member_count": 2830,
+      "uncompressed_bytes": 234033865,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2822
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v59.zip",
+      "bytes": 23370711,
+      "sha256": "e991cdf8331c408f2eeaa3894afd26800f5c94271f2abca4973bacad364f8825",
+      "member_count": 2839,
+      "uncompressed_bytes": 234688362,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2831
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v6.zip",
+      "bytes": 15179551,
+      "sha256": "265058e9b99079501251a758c2440ba7990e82a071d8e3226e3c53a75684a2d3",
+      "member_count": 2226,
+      "uncompressed_bytes": 199580776,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2218
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v60.zip",
+      "bytes": 23559689,
+      "sha256": "be7f178f0e12063b32acf8c2a839b3d78ef71b90da266e7f111e89c4de2dd54e",
+      "member_count": 2851,
+      "uncompressed_bytes": 235836505,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2843
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v61.zip",
+      "bytes": 23741125,
+      "sha256": "4740ff6a1f1f685e14f6375fca5228b211f8e987eb71426cbf91686621ff13f2",
+      "member_count": 2863,
+      "uncompressed_bytes": 236752900,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2855
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v62.zip",
+      "bytes": 23918503,
+      "sha256": "0c5e9302482b63004de447337f71563adceb3ecd9975abe652e7b018ce46c38d",
+      "member_count": 2875,
+      "uncompressed_bytes": 237547167,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2867
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v63.zip",
+      "bytes": 24095942,
+      "sha256": "a449091eb16fe06288292b038f7410ce376e364d73d0cd9f54b8129e1b7a5fb9",
+      "member_count": 2887,
+      "uncompressed_bytes": 238334503,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2879
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v64.zip",
+      "bytes": 24268230,
+      "sha256": "ffaa58016a64e10dfed619e18d733f4e2d60dc2ddaa189ae7610a01c7cadd750",
+      "member_count": 2896,
+      "uncompressed_bytes": 239037843,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2888
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v65.zip",
+      "bytes": 24442660,
+      "sha256": "cdea316c5910700ea336a4ccbdbf93248a3abedfd4f7ce9cc248c546158604f4",
+      "member_count": 2906,
+      "uncompressed_bytes": 239790987,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2898
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v66.zip",
+      "bytes": 24627348,
+      "sha256": "3470e0551a8574fd335b26954969a2b58031459e2b72ab6839626c3c4a7a8172",
+      "member_count": 2914,
+      "uncompressed_bytes": 240475277,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2906
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v67.zip",
+      "bytes": 24779500,
+      "sha256": "ef260d04cd1922b38eaad9039702a21d4f08db0c927acd7146db18b13f7c85d9",
+      "member_count": 2918,
+      "uncompressed_bytes": 241050111,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2910
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v68.zip",
+      "bytes": 24940292,
+      "sha256": "6942b95adac0a0c4be9821cfe0b4770eeb0df6e27f329ca3fd0384378c0e401e",
+      "member_count": 2928,
+      "uncompressed_bytes": 241793924,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2920
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v69.zip",
+      "bytes": 25108243,
+      "sha256": "ade466eadd0c75ae42a80862ddb0e671c46236eca9327ce62bd07c7737fb4ce7",
+      "member_count": 2943,
+      "uncompressed_bytes": 242558200,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2935
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v7.zip",
+      "bytes": 15298987,
+      "sha256": "b1d7cbc7916dae2da15d87f340db1d2e30b72b02c7fbe118021dc3fcd1546001",
+      "member_count": 2231,
+      "uncompressed_bytes": 200033931,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2223
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v70.zip",
+      "bytes": 25264975,
+      "sha256": "2cf0e1a6722b99ebb65f20a2dbba0a74158df7f844e47acd70de3c4ab389883f",
+      "member_count": 2950,
+      "uncompressed_bytes": 243177671,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2942
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v71.zip",
+      "bytes": 25432691,
+      "sha256": "42bebd0958d36facc5344a4331fa8b9806448ed3253f7251fc2f0bb07b98e5e8",
+      "member_count": 2965,
+      "uncompressed_bytes": 243922282,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2957
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v72.zip",
+      "bytes": 25593297,
+      "sha256": "ffe31933f5ea829bbb8c1d0910cf5c70854dfdbcf688fab0fb2ef238a2a41b28",
+      "member_count": 2972,
+      "uncompressed_bytes": 244554819,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2964
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v73.zip",
+      "bytes": 27027555,
+      "sha256": "8953aae1baa169c86c0dc8a89a402f18855a236e0abb566cdfeeeda044e5d179",
+      "member_count": 2982,
+      "uncompressed_bytes": 245195616,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2974
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v74.zip",
+      "bytes": 27184631,
+      "sha256": "668d33233cf4a114521591b178d9aee15a662919e62387054cce3619d126ac48",
+      "member_count": 3103,
+      "uncompressed_bytes": 246778097,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3095
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v75.zip",
+      "bytes": 27200444,
+      "sha256": "54dac640600d64fad154f8d981cc265bb66ecb24aea66cb96143d321fa97c7b4",
+      "member_count": 3112,
+      "uncompressed_bytes": 246888052,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3104
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v76.zip",
+      "bytes": 27216244,
+      "sha256": "53405ded22b94655aa68b62dbe3a0ec873e3f7f019095969af5aba1c4e70049d",
+      "member_count": 3117,
+      "uncompressed_bytes": 247142654,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3109
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v77.zip",
+      "bytes": 27315376,
+      "sha256": "3b51b67c31de819222b10b27ced70844b79d2d79cb977b7dc6f3099ef02169c8",
+      "member_count": 3220,
+      "uncompressed_bytes": 247675327,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3212
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v78.zip",
+      "bytes": 27339405,
+      "sha256": "820ad226397430a3ea39ded12a189893b31bcb79ea719a0db5ce6191d5fbc12f",
+      "member_count": 3232,
+      "uncompressed_bytes": 247768663,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3224
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v79.zip",
+      "bytes": 27365669,
+      "sha256": "32e0ff234a326162465c86355ad43e5d757e5c275854b74d9b7f1676ae05ce7a",
+      "member_count": 3240,
+      "uncompressed_bytes": 247912945,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3232
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v8.zip",
+      "bytes": 15417688,
+      "sha256": "12787c89da5ed44cdc84869296dfffd9ab6c9f60b97efebbbb84cd6405c9ce98",
+      "member_count": 2235,
+      "uncompressed_bytes": 200486035,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2227
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v80.zip",
+      "bytes": 27396434,
+      "sha256": "2e7ea0f3eecbf5ff335a2ef978b2d442bc3c52c01a5f5b93233f64fa83b0be3f",
+      "member_count": 3248,
+      "uncompressed_bytes": 248247134,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3240
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v81.zip",
+      "bytes": 27588910,
+      "sha256": "9cc2dd8fb2097e8e9968e08160fd04c2664099f2ccf1dc6f0c5b0fba251e10ec",
+      "member_count": 3256,
+      "uncompressed_bytes": 252658370,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3248
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v82.zip",
+      "bytes": 27607317,
+      "sha256": "f6701afe3d27d60fcba7246d9b2e25b355335af78ecb8db588c122ac3ecfe0df",
+      "member_count": 3268,
+      "uncompressed_bytes": 252711514,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3260
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v83.zip",
+      "bytes": 27682751,
+      "sha256": "3a809b69c78a3821bc2a85e7b1eb0ac05b4151402eb7d07b511f184bc8d699ba",
+      "member_count": 3303,
+      "uncompressed_bytes": 254144966,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3295
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v84.zip",
+      "bytes": 27709310,
+      "sha256": "6e89bd15982b556df5d8158b2fa44394099d092f5a52c3461f008be7cfa40367",
+      "member_count": 3322,
+      "uncompressed_bytes": 254230730,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3314
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v85.zip",
+      "bytes": 27738222,
+      "sha256": "c095c884a749f8031df31703369d97c9f2fe5806a255240af48fbb650db29ed1",
+      "member_count": 3340,
+      "uncompressed_bytes": 254343232,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3332
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v86.zip",
+      "bytes": 27747226,
+      "sha256": "ad5b8acc77dc2b9a28d039841f3454d1c14d0996681886352c376cc3a2795f86",
+      "member_count": 3344,
+      "uncompressed_bytes": 254371799,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3336
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v87.zip",
+      "bytes": 27758698,
+      "sha256": "d99c34011244d7b283f0e644fbd8af7061b1a8c1c3aeef7b7d1bffbe9ef91fd5",
+      "member_count": 3350,
+      "uncompressed_bytes": 254406087,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3342
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v88.zip",
+      "bytes": 27771170,
+      "sha256": "bfdcbe062c12eb27000b495a83fafa16047e39ff7571484598381dfe6500f0d8",
+      "member_count": 3357,
+      "uncompressed_bytes": 254450084,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3349
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v89.zip",
+      "bytes": 27784358,
+      "sha256": "1985b09eff3d03958ff401c8dc16db0932825ed6c6c472d1eed8c9ace0c8a04e",
+      "member_count": 3362,
+      "uncompressed_bytes": 254490714,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3354
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v9.zip",
+      "bytes": 15560307,
+      "sha256": "6b9e596ff4032bfdb751d7bd2a55d29ccddcd12aff68c39af45d949c46472bc8",
+      "member_count": 2255,
+      "uncompressed_bytes": 201015948,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 2247
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v90.zip",
+      "bytes": 27798617,
+      "sha256": "58ba3cb63b80e4181ce48df811d6c8365db5632d4f9ff81152b09701044e0ae7",
+      "member_count": 3368,
+      "uncompressed_bytes": 254530882,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3360
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v91.zip",
+      "bytes": 27823817,
+      "sha256": "324dd55043280ab5fc08d6391a3a4950f93d4b6c2a4b9f0102bb07020895b01c",
+      "member_count": 3377,
+      "uncompressed_bytes": 254639036,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3369
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v92.zip",
+      "bytes": 27842843,
+      "sha256": "ffa500bd48a24ac599de668b08cdd735416e52334dd550d8471d92f2b35a74b4",
+      "member_count": 3386,
+      "uncompressed_bytes": 254692512,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3378
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v93.zip",
+      "bytes": 27862488,
+      "sha256": "9b276e3227c033993df2efd6a37a9ca1d79866bc9934fe7e3ab644cbea276ffd",
+      "member_count": 3395,
+      "uncompressed_bytes": 254748468,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3387
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v94.zip",
+      "bytes": 27888972,
+      "sha256": "0763e379f71e3d4b6412a173a69aad516cd2794b0f7c003e8ddc38025a535b54",
+      "member_count": 3405,
+      "uncompressed_bytes": 254836078,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3397
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v95.zip",
+      "bytes": 27907732,
+      "sha256": "7625ffa8271e9aa545dd51fb955b54b57e1552f1933ae213724c34e2823132ee",
+      "member_count": 3414,
+      "uncompressed_bytes": 254821312,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3406
+    },
+    {
+      "path": "loucka_historical_audit_and_priority_corrections_v96.zip",
+      "bytes": 27914886,
+      "sha256": "22cff69ca3cfd4dcec9f56bb057959f6645f1605453daeaba329940f21d45b31",
+      "member_count": 3416,
+      "uncompressed_bytes": 254842787,
+      "contents_sample": [
+        ".env.example",
+        ".githooks/post-commit",
+        ".github/workflows/ci.yml",
+        ".gitignore",
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CHECKPOINT_TIMESTAMP_RECONCILIATION.md",
+        "CONSOLIDATED_CORRECTIONS_REPORT.md"
+      ],
+      "additional_member_count": 3408
+    },
+    {
+      "path": "loucka_historical_provenance_completion_v1.zip",
+      "bytes": 1239004867,
+      "sha256": "6865afc0a4ee9801e67187fa4ddf56ddbbd92e5e5d37ac62ce7cb99d7f6d5ae3",
+      "member_count": 30,
+      "uncompressed_bytes": 1671042329,
+      "contents_sample": [
+        "MASTER_GOAL_HISTORICAL_PROVENANCE_REPORT.md",
+        "MASTER_GOAL_HISTORICAL_PROVENANCE_EVIDENCE.json",
+        "MASTER_GOAL_HISTORICAL_PROVENANCE_PROGRESS.json",
+        "HISTORICAL_SOURCE_CATALOG.md",
+        "HISTORICAL_SOURCE_CATALOG.json",
+        "HISTORICAL_SOURCE_DEPENDENCY_GRAPH.json",
+        "HISTORICAL_PROVENANCE_READINESS.csv",
+        "HISTORICAL_RECONSTRUCTION_CURRENT_REGISTRY.json"
+      ],
+      "additional_member_count": 22
+    },
+    {
+      "path": "loucka_historical_provenance_review_v1.zip",
+      "bytes": 372901,
+      "sha256": "69b95732cb5ab64cb173a1543ed02fc14cde0c0f235f4261b0e3d6a2da0f6f47",
+      "member_count": 43,
+      "uncompressed_bytes": 8267970,
+      "contents_sample": [
+        "E4_RAIN_SEMANTICS_CURRENT_REPORT.md",
+        "HISTORICAL_PROVENANCE_POLICY.md",
+        "HISTORICAL_PROVENANCE_READINESS.csv",
+        "HISTORICAL_PROVENANCE_REVIEW_SUMMARY.json",
+        "HISTORICAL_RECONSTRUCTION_CURRENT_REGISTRY.json",
+        "HISTORICAL_RECONSTRUCTION_REGISTRY_REPORT.md",
+        "HISTORICAL_SOURCE_CATALOG.json",
+        "HISTORICAL_SOURCE_CATALOG.md"
+      ],
+      "additional_member_count": 35
+    },
+    {
+      "path": "loucka_master_archive_completion_v1.zip",
+      "bytes": 9750526,
+      "sha256": "4fa11b3cc88db0b31362c6d6e1038721671adfd065edc3e7af4f2629de26bbd3",
+      "member_count": 78,
+      "uncompressed_bytes": 183673335,
+      "contents_sample": [
+        "FUTURE_RECONSTRUCTION_PLAN.md",
+        "GW3000_ARCHIVE_SYNC_RUNBOOK.md",
+        "GW3000_FROZEN_BACKFILL_PRODUCTION_REPORT.md",
+        "GW3000_FROZEN_BOUNDARY_FIX_REPORT.md",
+        "LOUCKA_REMAINING_COMPLETION_FINAL_REPORT.md",
+        "MASTER_GOAL_ARCHIVE_COMPLETION_EVIDENCE.json",
+        "MASTER_GOAL_ARCHIVE_COMPLETION_REPORT.md",
+        "MASTER_GOAL_ARCHIVE_PROGRESS.json"
+      ],
+      "additional_member_count": 70
+    },
+    {
+      "path": "loucka_migration_final_handoff_20261117.zip",
+      "bytes": 15667437,
+      "sha256": "9b5fc2245087bf0256558c2e5372cc2d5dd0ec050bf500a63a5ba1917a23d44b",
+      "member_count": 33,
+      "uncompressed_bytes": 202123390,
+      "contents_sample": [
+        "loucka_migration_final_handoff_20261117/MIGRATION_ACCESS_INVENTORY.json",
+        "loucka_migration_final_handoff_20261117/MIGRATION_BATCHES.json",
+        "loucka_migration_final_handoff_20261117/MIGRATION_DIFF.csv",
+        "loucka_migration_final_handoff_20261117/MIGRATION_DIFF_STATUS.json",
+        "loucka_migration_final_handoff_20261117/MIGRATION_DIFF_VALIDATION.json",
+        "loucka_migration_final_handoff_20261117/MIGRATION_EXPORT_CHECKPOINTS.json",
+        "loucka_migration_final_handoff_20261117/MIGRATION_FINAL_CHECKLIST.md",
+        "loucka_migration_final_handoff_20261117/MIGRATION_FINAL_REPORT.md"
+      ],
+      "additional_member_count": 25
+    },
+    {
+      "path": "loucka_reconstruction_execution_322_v1.1.zip",
+      "bytes": 410360,
+      "sha256": "c9db374f1eaae4bcaf58a4f6c1e6ada360512c94e563a385a6b07495cfaa4b42",
+      "member_count": 364,
+      "uncompressed_bytes": 4374205,
+      "contents_sample": [
+        "FIRST_RECONSTRUCTION_BATCH_APPLICATION_REPORT.md",
+        "FIRST_RECONSTRUCTION_BATCH_REVISED_PAYLOAD.json",
+        "PACKAGE_CONTENTS.txt",
+        "RECONSTRUCTION_EXECUTION_FINAL_REPORT.md",
+        "RECONSTRUCTION_EXECUTION_PROGRESS.json",
+        "SHA256SUMS.txt",
+        "execution_payloads/v1.2/EXECUTION_FINAL_MANIFEST.json",
+        "execution_payloads/v1.2/EXECUTION_FINAL_MANIFEST.json.sha256"
+      ],
+      "additional_member_count": 356
+    },
+    {
+      "path": "loucka_reconstruction_execution_322_v1.zip",
+      "bytes": 406081,
+      "sha256": "ca1315aafa3cf6c247bdf19b09d03a8c21553ae45ae8c775a3a3cef50d922c31",
+      "member_count": 362,
+      "uncompressed_bytes": 4358798,
+      "contents_sample": [
+        "FIRST_RECONSTRUCTION_BATCH_APPLICATION_REPORT.md",
+        "FIRST_RECONSTRUCTION_BATCH_REVISED_PAYLOAD.json",
+        "PACKAGE_CONTENTS.txt",
+        "RECONSTRUCTION_EXECUTION_FINAL_REPORT.md",
+        "RECONSTRUCTION_EXECUTION_PROGRESS.json",
+        "SHA256SUMS.txt",
+        "execution_payloads/v1.2/EXECUTION_MANIFEST.json",
+        "execution_payloads/v1.2/EXECUTION_MANIFEST.json.sha256"
+      ],
+      "additional_member_count": 354
+    },
+    {
+      "path": "loucka_remaining_completion_v1.zip",
+      "bytes": 7810983,
+      "sha256": "682da33186dcdbdc48a9d451c636adbc166ce2f2ceea31449313f41bd97c9aec",
+      "member_count": 92,
+      "uncompressed_bytes": 137772838,
+      "contents_sample": [
+        "ARCHIVE_GAP_INTERVALS.csv",
+        "ARCHIVE_STATISTICAL_QUALITY_MATRIX.csv",
+        "ARCHIVE_TIME_COVERAGE.csv",
+        "BUNDLE_README.md",
+        "C_PERIOD_SCREEN_README.md",
+        "EXACT_SOURCE_RESTORATION_FINAL_REVIEW.md",
+        "LOUCKA_REMAINING_COMPLETION_FINAL_REPORT.md",
+        "OWNER_FINAL_APPROVAL_PACKAGE.md"
+      ],
+      "additional_member_count": 84
+    },
+    {
+      "path": "loucka_unified_archive_completion_v1.zip",
+      "bytes": 373166,
+      "sha256": "a2a3bd5c6f2f96db64439a388729574f40c7477c26674af15a0f137118a9dbac",
+      "member_count": 47,
+      "uncompressed_bytes": 7253746,
+      "contents_sample": [
+        "ARCHIVE_CONTINUOUS_SYNC_DESIGN.md",
+        "ARCHIVE_GAP_INTERVALS.csv",
+        "ARCHIVE_PROVENANCE_BASELINE.json",
+        "ARCHIVE_QUALITY_AND_PROVENANCE_MODEL.md",
+        "ARCHIVE_SOURCE_WATERMARKS.json",
+        "ARCHIVE_STATISTICAL_QUALITY_MATRIX.csv",
+        "ARCHIVE_SYNC_BACKFILL_PLAN.json",
+        "ARCHIVE_TIME_COVERAGE.csv"
+      ],
+      "additional_member_count": 39
+    }
+  ],
+  "sqlite_artifact": {
+    "path": "data/historical_value_concordance.sqlite",
+    "bytes": 1663004672,
+    "sha256": "1e34859d05bb0ec20d3810c4fbb376d231a6ee0bfca0c4c636dcfb2d1114e4ba",
+    "tables": [
+      {
+        "name": "field_rollup",
+        "sql": "CREATE TABLE field_rollup(\n        period TEXT NOT NULL, variable TEXT NOT NULL, target_nonnull INTEGER NOT NULL,\n        source_overlap INTEGER NOT NULL, source_exact_match INTEGER NOT NULL,\n        source_conflict INTEGER NOT NULL, no_source_overlap INTEGER NOT NULL,\n        recovered_source INTEGER NOT NULL, source_matched INTEGER NOT NULL, restored INTEGER NOT NULL,\n        corrected INTEGER NOT NULL, estimated INTEGER NOT NULL, conflicting_source INTEGER NOT NULL,\n        unclassified INTEGER NOT NULL, unresolved INTEGER NOT NULL, invalidated INTEGER NOT NULL,\n        original_verified INTEGER NOT NULL,\n        target_null_with_source_value INTEGER NOT NULL,\n        PRIMARY KEY(period,variable)\n      ) WITHOUT ROWID"
+      },
+      {
+        "name": "snapshot_meta",
+        "sql": "CREATE TABLE snapshot_meta(key TEXT PRIMARY KEY,value TEXT NOT NULL)"
+      },
+      {
+        "name": "timestamp_evidence",
+        "sql": "CREATE TABLE timestamp_evidence(\n        dateTime INTEGER PRIMARY KEY, local_year INTEGER NOT NULL, local_month TEXT NOT NULL,\n        target_usUnits INTEGER NOT NULL, target_interval INTEGER NOT NULL,\n        comparison_zlib BLOB NOT NULL, audit_zlib BLOB NOT NULL\n      )"
+      }
+    ],
+    "row_level_payload_published": false
+  },
+  "reported_commit_b0b5750": {
+    "local_object_type": null,
+    "github": {
+      "available": false,
+      "http_status": 422,
+      "note": "Not resolvable by GitHub API."
+    }
+  },
+  "audited_project_artifacts": [
+    {
+      "path": "MASTER_FINALIZATION_CHECKPOINT_20261117.json",
+      "bytes": 2932,
+      "sha256": "44e4511b0f09cbea34d397f22266f19dae47a76b7d23ef1c663d8d7975ee25d1",
+      "publication": "published",
+      "reason_not_published": null
+    },
+    {
+      "path": "FINAL_MIGRATION_DECISION_SUMMARY_20261117.json",
+      "bytes": 2085,
+      "sha256": "afc84835ec8be8572b53e04d74572e5e2b6dde7904edc3f843a225e41322b704",
+      "publication": "published",
+      "reason_not_published": null
+    },
+    {
+      "path": "FINAL_MIGRATION_MANIFEST_20261117.jsonl",
+      "bytes": 128967733,
+      "sha256": "a6ed14c902b9bec4e746c00aeb71aed225b9672363592cf5add3d57a3a242ef6",
+      "publication": "local_only",
+      "reason_not_published": "Contains value-level, station-specific or large local snapshot evidence; SHA-256 and size retained here."
+    },
+    {
+      "path": "final_migration_package/MIGRATION_DIFF.csv",
+      "bytes": 83067783,
+      "sha256": "8adda4e543ea7a0128d919689efe2f18475e1330488cd9e4dfb98b21c5eb5780",
+      "publication": "local_only",
+      "reason_not_published": "Contains value-level, station-specific or large local snapshot evidence; SHA-256 and size retained here."
+    },
+    {
+      "path": "MASTER_GOAL_AUTOMATED_VALIDATION_REPORT.md",
+      "bytes": 15144,
+      "sha256": "7a994a056883ec732a7509f938c34df65469eeb6c1fd52c4b816af80ac32df99",
+      "publication": "published",
+      "reason_not_published": null
+    },
+    {
+      "path": "MASTER_GOAL_AUTOMATED_VALIDATION_EVIDENCE.json",
+      "bytes": 29775,
+      "sha256": "a03d768525ff7bd2210400455f2ab0e39c2a7f2636606f6de14e8feeec0bb898",
+      "publication": "published",
+      "reason_not_published": null
+    },
+    {
+      "path": "MASTER_GOAL_AUTOMATED_VALIDATION_PROGRESS.json",
+      "bytes": 27169,
+      "sha256": "7adb498468fbe1df9c2fc04f58b9f4a5767b87c7dd7a824a0d29929a2064b7b7",
+      "publication": "published",
+      "reason_not_published": null
+    },
+    {
+      "path": "MASTER_GOAL_AUTOMATED_VALIDATION_CANDIDATE_OUTCOMES.json",
+      "bytes": 7443,
+      "sha256": "68824b98eb6895ca9ba2cfc1b3f1817e53ddfb43e7383cba5a814587bd77af32",
+      "publication": "local_only",
+      "reason_not_published": "Contains value-level, station-specific or large local snapshot evidence; SHA-256 and size retained here."
+    },
+    {
+      "path": "STATISTICAL_PUBLICATION_DECISIONS_V3.json",
+      "bytes": 14901180,
+      "sha256": "0a367c38414e0ef7598fcb4d2fa074442252001c3113f0f20023904bd80fd76d",
+      "publication": "local_only",
+      "reason_not_published": "Contains value-level, station-specific or large local snapshot evidence; SHA-256 and size retained here."
+    },
+    {
+      "path": "STATISTICAL_PUBLICATION_DECISIONS_V3.csv",
+      "bytes": 10230109,
+      "sha256": "381017a9f48117c994eda75983f15926c4e1389f247706f5d1e74aee11a7d531",
+      "publication": "local_only",
+      "reason_not_published": "Contains value-level, station-specific or large local snapshot evidence; SHA-256 and size retained here."
+    },
+    {
+      "path": "MONTHLY_VALIDATION_RESULTS.json",
+      "bytes": 2098057,
+      "sha256": "62157ae040ad77e58d72ca1d114917f63c4abeefdeb30dbab0432cdb6211cde8",
+      "publication": "local_only",
+      "reason_not_published": "Contains value-level, station-specific or large local snapshot evidence; SHA-256 and size retained here."
+    },
+    {
+      "path": "ATLAS_STATISTICS_CONTRACT.json",
+      "bytes": 725622,
+      "sha256": "f464b4c8a121ecdd0757c897a31d2ef6304fe8c520525c19343d339d288cc8a4",
+      "publication": "local_only",
+      "reason_not_published": "Contains value-level, station-specific or large local snapshot evidence; SHA-256 and size retained here."
+    },
+    {
+      "path": "STATION_SENSOR_EPOCH_REGISTRY.json",
+      "bytes": 29899,
+      "sha256": "f5c126f3b2c921a36ed5c0eeb06403563d83b69289c7ed18b46aba84a5606b08",
+      "publication": "local_only",
+      "reason_not_published": "Contains value-level, station-specific or large local snapshot evidence; SHA-256 and size retained here."
+    },
+    {
+      "path": "HISTORICAL_CONFLICT_EPOCH_REVIEW.json",
+      "bytes": 396902,
+      "sha256": "9dbff2ba3711bc81c141e19e64439412b786b9ef6f0ded1924a353ae1cd1a163",
+      "publication": "local_only",
+      "reason_not_published": "Contains value-level, station-specific or large local snapshot evidence; SHA-256 and size retained here."
+    },
+    {
+      "path": "HISTORICAL_CONFLICT_EPOCH_REVIEW.md",
+      "bytes": 3031,
+      "sha256": "aff7ba285fb7dc84d662c905835485bc5c17d633d8b42b0e89e5a975d88aee5f",
+      "publication": "published",
+      "reason_not_published": null
+    },
+    {
+      "path": "CURRENT_GW3000_E4_VALIDATION.json",
+      "bytes": 23630,
+      "sha256": "5efbb8163ec52efd11cef77715d846937c8cdf3c9ba3bd9ccc56d8ac26c70428",
+      "publication": "local_only",
+      "reason_not_published": "Contains value-level, station-specific or large local snapshot evidence; SHA-256 and size retained here."
+    },
+    {
+      "path": "CURRENT_GW3000_E4_VALIDATION_REPORT.md",
+      "bytes": 3302,
+      "sha256": "40095eee8cc92fabf0eaa22e4923bc43fe78a271377ce2d21d3c56ead866d501",
+      "publication": "published",
+      "reason_not_published": null
+    }
+  ],
+  "large_artifacts_policy": "ZIP packages and SQLite data are inventoried but not uploaded. Value-level decision rows and detailed statistical/sensor snapshots are inventoried by relative path, byte size and SHA-256 only."
+}

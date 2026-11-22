@@ -5,3 +5,17 @@ __pycache__/
 *.pyc
 .venv/
 reports/raw/
+/data/chmi-2018/
+
+# Local audit data packages and value-level finalization exports stay off GitHub.
+*.zip
+*.sqlite
+FINAL_MIGRATION_MANIFEST_20261117.jsonl
+final_migration_package/MIGRATION_DIFF.csv
+STATISTICAL_PUBLICATION_DECISIONS_V3.json
+STATISTICAL_PUBLICATION_DECISIONS_V3.csv
+MONTHLY_VALIDATION_RESULTS.json
+ATLAS_STATISTICS_CONTRACT.json
+STATION_SENSOR_EPOCH_REGISTRY.json
+HISTORICAL_CONFLICT_EPOCH_REVIEW.json
+CURRENT_GW3000_E4_VALIDATION.json
