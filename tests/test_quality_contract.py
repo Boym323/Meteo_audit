@@ -68,6 +68,38 @@ class FieldQualityTests(unittest.TestCase):
     def test_unverified_measurement_rejects_extrema(self):
         self.assertFalse(field(independent_validation=False).extrema_eligible)
 
+    def test_unverified_original_has_no_implicit_approval_or_extrema(self):
+        original = serialize_field(field(
+            "UNVERIFIED", source_ref="weewx_original_archive",
+            epoch_ref=None, independent_validation=False,
+            qc_flags=("ORIGINAL_NOT_INDEPENDENTLY_VALIDATED",)))
+        self.assertEqual(original["state"], "UNVERIFIED")
+        self.assertIsNone(original["epoch_ref"])
+        self.assertEqual(original["display_value"], 0)
+        self.assertFalse(original["approved"])
+        self.assertFalse(original["extrema_eligible"])
+        self.assertFalse(original["join_chart_line"])
+
+    def test_unverified_requires_reason_and_never_claims_validation(self):
+        for kwargs in (
+            dict(qc_flags=(), independent_validation=False),
+            dict(qc_flags=("ORIGINAL_NOT_INDEPENDENTLY_VALIDATED",), approved=True,
+                 independent_validation=False),
+            dict(qc_flags=("ORIGINAL_NOT_INDEPENDENTLY_VALIDATED",), independent_validation=True),
+        ):
+            with self.subTest(kwargs=kwargs), self.assertRaises(QualityContractError):
+                field("UNVERIFIED", epoch_ref=None, **kwargs)
+
+    def test_unverified_distinct_from_missing_null_and_zero(self):
+        zero = serialize_field(field("UNVERIFIED", epoch_ref=None,
+            independent_validation=False, qc_flags=("ORIGINAL_NOT_INDEPENDENTLY_VALIDATED",)))
+        missing = serialize_field(field("MISSING", epoch_ref=None,
+            measurement_value=None, display_value=None, independent_validation=False,
+            qc_flags=("NO_ARCHIVED_MEASUREMENT",)))
+        self.assertEqual(zero["display_value"], 0)
+        self.assertIsNone(missing["display_value"])
+        self.assertNotEqual(zero["state"], missing["state"])
+
     def test_numeric_without_source_provenance_rejected(self):
         with self.assertRaisesRegex(QualityContractError, "provenance"):
             field(source_ref=None)
