@@ -8,9 +8,14 @@ permissions:
 
 jobs:
   python:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Syntax check
         run: python3 -m compileall -q src tests scripts
       - name: Unit and mocked integration tests
