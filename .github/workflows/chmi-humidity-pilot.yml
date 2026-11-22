@@ -5,6 +5,10 @@ on:
       - '.github/workflows/chmi-humidity-pilot.yml'
 permissions:
   contents: read
+# Source: Czech Hydrometeorological Institute (ČHMÚ), opendata.chmi.cz.
+# Licence: Creative Commons Attribution 4.0 (CC BY 4.0).
+# Conditions: https://www.chmi.cz/files/portal/docs/meteo/ok/open_data_2023/Podminky_uziti_udaju.pdf
+# Independent research only; do not imply ČHMÚ endorsement or alter data meaning.
 jobs:
   public-reference:
     runs-on: ubuntu-latest
