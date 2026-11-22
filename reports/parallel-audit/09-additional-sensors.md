@@ -76,7 +76,7 @@ Předběžná jednotka dle běžného Ecowitt/WeeWX: **µg/m³**; doložit konfi
 **Akutní datový incident září–říjen 2024:**
 - Samotné **září 2024**: 2 064 záznamů `pm25_1>500`; měsíční průměr z přítomných měření ~279,2; v říjnu dalších 61 >500, v květnu jeden.
 - Celý rok **1 401 hodnot `>=999,8`** na horní hranici 999,9. Jde o výstražný znak saturace/sentinel, nikoli důkaz skutečného koncentrátu aerosolu.
-- Souvislý běh **446 pětiminutových intervalů nad 500** od **2024-09-13 20:05 UTC do 2024-09-15 09:10 UTC**, při souvislosti časových značek 300 s; přibližně **37 h 10 min**. Dne 14. 9. všech 288 pětiminutových záznamů přes 500; denní průměr ~958,3. Relativní vlhkost v části tohoto období ~95–97 %, ale nelze tím bez dalšího prokázat příčinu.
+- Souvislý běh **446 pětiminutových intervalů nad 500** od **2024-09-13 20:05 UTC do 2024-09-15 09:10 UTC**, při souvislosti časových značek 300 s; **37 h 05 min mezi krajními timestampy**; 446 pětiminutových vzorků pokrývá nominálně **37 h 10 min**. Dne 14. 9. všech 288 pětiminutových záznamů přes 500; průměr místního kalendářního dne Europe/Prague ~958,3 (UTC den má ~980,85; oba mají 288/288 bodů >500). Relativní vlhkost v části tohoto období ~95–97 %, ale nelze tím bez dalšího prokázat příčinu.
 - Extrémní PM se nevyskytují při všeobecném výpadku: roku 2024 **2 126/2 126** PM>500 současně má dostupnou radiaci a **2 105/2 126** i venkovní teplotu. Ukazuje na senzorově specifické selhání nebo extrém, nikoli primárně výpadek celé stanice.
 - Výpadky přenosu PM: **2024-08: 1 296 NULL**, **2024-10: 8 390 NULL z 8 934 řádků**, **2024-12: 3 771 NULL**; 2025-03: 2 650 NULL. Některé výpadky jsou současné s absencí bateriové telemetrie, jiné nikoli.
 

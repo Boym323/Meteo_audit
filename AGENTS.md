@@ -3,6 +3,13 @@
 ## Úloha
 Prováděj reprodukovatelný audit a návrhy rekonstrukcí meteorologických dat stanice Počasí Loučka za období přibližně 2009–2026. Komunikuj česky. Nejdříve zmapuj existující stav; neopakuj již provedené práce bez důvodu.
 
+## Stav ověřený při synchronizaci 2026-11-22
+- Aktivní kontejner je `zl-dev-frontendPocasi`, pracovní adresář `/opt/meteo-audit`; `zl-dev-AuditMeteo` byl odstraněn a nesmí se používat.
+- Lokální finální manifest byl ověřen proti checkpointu: 92 664 operací, 92 366 `QUARANTINE`, 298 `ALREADY_APPLIED`; ověřovací skript `scripts/verify_finalization_integrity.py` vypisuje pouze souhrnné počty a hashe.
+- Q1 2018 zůstává chráněné, rok 2021 diagnostický a všech 462 aktuálních E4 řádků `rain`/`rainRate` blokovaných. Žádná z těchto bran neopravňuje k publikaci nebo DB zápisu.
+- Při GitHub synchronizaci neotevírat ani neměnit produkční DB, archiv, živou GW3000 synchronizaci ani web. Velké hodnotové manifesty, SQLite databáze a ZIPy jsou lokální; veřejný inventář obsahuje pouze metadata a kontrolní součty.
+- Původní `zl-dev-AuditMeteo` se nepoužívá. PR #28, #29, #30, #34, #35, #36 a #38 jsou již sloučeny; nepřidávat jejich změny duplicitně.
+
 ## Bezpečnost a změny dat
 - Ve výchozím stavu **pouze čti**. Neupravuj, nemaž, nepřepisuj ani netrunkuj tabulky v žádné databázi.
 - Před změnou dat vždy připrav: konkrétní SQL návrh, počet dotčených řádků, zálohu, důkazní podklady, možnost rollbacku a ověřovací dotazy. Vyžádej si výslovné schválení změny.

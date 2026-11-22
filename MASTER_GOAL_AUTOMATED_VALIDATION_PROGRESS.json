@@ -1,0 +1,608 @@
+{
+  "candidate_count": 248,
+  "candidate_evidence_record_count": 248,
+  "goal_complete": false,
+  "missing_required_deliverables": [],
+  "outputs": {
+    "atlas_contract": {
+      "records": 248,
+      "status": "all candidate evidence rows have a stable contract; private preview only"
+    },
+    "current_gw3000_e4": {
+      "rows": 4651,
+      "status": "frozen archive plus immutable sanitized live read-only gateway evidence; wet/reset history and WeeWX mapping remain blocked"
+    },
+    "daily_temperature_context": {
+      "evidence": "CHMI_DAILY_TEMPERATURE_CONTEXT_REVIEW.json",
+      "months": 23,
+      "station_month_rows": 46,
+      "status": "regional daily means added; not directly comparable to civil-month archive means"
+    },
+    "deterministic_replay": {
+      "evidence": [
+        "MONTHLY_EVIDENCE_REPLAY_RESULT.json",
+        "HUMIDITY_PLATEAU_CONTEXT_REPLAY_RESULT.json"
+      ],
+      "full_replay_artifacts": 58,
+      "full_replay_scope_note": "Current full deterministic replay run as delivery stage of the successful 48-stage orchestration after E1 humidity extension. Exit code 0. Hash comparison covered 58 unique artifact paths; 59 list entries are printed because HUMIDITY_SENSOR_VALIDATION_REPORT.md occurs twice in the verifier tuple. The replay baseline included the just-regenerated LOCAL_STATION_METADATA_SEARCH.json.",
+      "full_replay_status": "PASS",
+      "latest_targeted_humidity_rebuilds": 2,
+      "latest_targeted_humidity_status": "PASS"
+    },
+    "dynamic_snapshot_provenance": {
+      "evidence": "PROVENANCE_COUNTS_CORRECTED.json",
+      "field_value_total": 13560832,
+      "known_snapshot_matches": true,
+      "nonempty_total": 12695375,
+      "snapshot_rows": 1695104,
+      "status": "computed from read-only snapshot rollups with row/field, value, NULL and annual/monthly invariants"
+    },
+    "end_to_end": {
+      "last_run": {
+        "database_write_performed": false,
+        "deployment_performed": false,
+        "publication_authorized": false,
+        "reference_sha256": "b7e01c6ed701081e981b85a935556316585d53ebae5ffa020ccf19a13325684a",
+        "run_utc": "2026-11-16T21:22:20Z",
+        "schema": "loucka-automated-validation-run-v1",
+        "scope_limit": "Implements existing pilot, monthly candidate evidence, interval diagnostics, readiness matrix, and atlas pilot contract. Does not claim completion of all 248 expert validations, all requested phases, or full E2E source regeneration.",
+        "snapshot_id": "1e34859d05bb0ec20d3810c4fbb376d231a6ee0bfca0c4c636dcfb2d1114e4ba",
+        "snapshot_rows": 1695104,
+        "stages": [
+          {
+            "script": "scripts/build_provenance_counts.py",
+            "stage": "dynamic-snapshot-provenance-counts",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_authoritative_statistical_readiness.py",
+            "stage": "concordance-daily-readiness",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/finalize_authoritative_statistical_outputs.py",
+            "stage": "finalize-concordance-daily-readiness",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_statistical_variants.py",
+            "stage": "snapshot-monthly-annual-statistical-variants",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_interval_weighted_statistical_variants.py",
+            "stage": "all-period-interval-weighted-variants",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_annual_representativeness_review.py",
+            "stage": "annual-representativeness-review",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_interval_aware_annual_temperature_review.py",
+            "stage": "interval-aware-annual-temperature-review",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/validate_chmi_candidate_reference_cache.py",
+            "stage": "chmi-reference-cache-integrity",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/validate_chmi_priority_temperature_cache.py",
+            "stage": "chmi-priority-temperature-cache-integrity",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/validate_chmi_pressure_candidate_reference_cache.py",
+            "stage": "chmi-pressure-reference-cache-integrity",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_reference_data_catalog.py",
+            "stage": "reference-data-catalog",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_reference_station_catalog.py",
+            "stage": "reference-station-catalog",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_temperature_reference_availability.py",
+            "stage": "temperature-reference-availability",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/validate_chmi_daily_temperature_context.py",
+            "stage": "chmi-daily-temperature-context",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/validate_pilot_chmi_reference.py",
+            "stage": "external-reference-validation",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_publication_pilot_v2.py",
+            "stage": "publication-pilot-and-candidate-selection",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/validate_temperature_monthly_references.py",
+            "stage": "monthly-temperature-reference-validation",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_temperature_candidate_expert_review.py",
+            "stage": "temperature-candidate-expert-review",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/validate_humidity_monthly_references.py",
+            "stage": "monthly-humidity-reference-validation",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/validate_chmi_daily_humidity_cache.py",
+            "stage": "chmi-daily-humidity-cache-integrity",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_humidity_daily_context_review.py",
+            "stage": "humidity-daily-regional-context",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_humidity_sensor_validation_report.py",
+            "stage": "humidity-validation-report",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/validate_pressure_monthly_reference.py",
+            "stage": "monthly-pressure-reference-validation",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/validate_chmi_daily_pressure_cache.py",
+            "stage": "chmi-daily-pressure-cache-integrity",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_pressure_daily_reference_context.py",
+            "stage": "pressure-daily-regional-context",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/validate_wind_monthly_references.py",
+            "stage": "monthly-wind-reference-validation",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_wind_monthly_validation_report.py",
+            "stage": "wind-validation-report",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_temperature_monthly_validation_report.py",
+            "stage": "temperature-validation-report",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_interval_coverage_review.py",
+            "stage": "interval-coverage-review",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_interval_adjusted_candidate_means.py",
+            "stage": "interval-adjusted-diagnostic-means",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_interval_time_method_report.py",
+            "stage": "interval-time-method-report",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_historical_conflict_epoch_review.py",
+            "stage": "historical-conflict-epoch-review",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_three_unmatched_temperature_review.py",
+            "stage": "three-unmatched-temperature-case-review",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_monthly_candidate_series_diagnostics.py",
+            "stage": "monthly-candidate-series-diagnostics",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_pressure_candidate_semantics_review.py",
+            "stage": "pressure-candidate-semantics-review",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_pressure_semantics_validation_report.py",
+            "stage": "pressure-semantics-validation-report",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_humidity_monthly_series_review.py",
+            "stage": "humidity-candidate-series-review",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_humidity_candidate_validation_review.py",
+            "stage": "humidity-candidate-specific-validation-review",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_monthly_validation_evidence.py",
+            "stage": "candidate-evidence-records",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/audit_local_station_metadata_sources.py",
+            "stage": "local-station-metadata-source-search",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_epoch_registry_and_monthly_results.py",
+            "stage": "epoch-registry-and-monthly-results",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_current_gw3000_e4_report.py",
+            "stage": "current-gw3000-e4-review",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_publication_readiness_matrix.py",
+            "stage": "readiness-decisions",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_publication_v3.py",
+            "stage": "v3-policy-decisions",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_publication_pilot_v2.py",
+            "stage": "final-v2-decision-export-refresh",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_atlas_statistics_contract.py",
+            "stage": "atlas-contract",
+            "status": "PASS"
+          },
+          {
+            "script": "scripts/build_automated_validation_candidate_outcomes.py",
+            "stage": "priority-candidate-outcomes",
+            "status": "PASS"
+          },
+          {
+            "stage": "focused-contract-and-classifier-tests",
+            "status": "PASS"
+          }
+        ]
+      },
+      "post_run_audit": "POST_PIPELINE_VALIDATION_AUDIT.json",
+      "status": "48 pipeline stages passed and 82 tests passed against the current immutable snapshot; post-run invariants and live sync passed; full expert-evidence scope remains incomplete"
+    },
+    "historical_conflict_epoch_review": {
+      "groups": 168,
+      "pairwise_source_groups": 240,
+      "status": "directional and distributional comparison by field, year, and named archive; physical sensor/driver epochs and causal transformations remain unproven"
+    },
+    "humidity_plateau_weather_context": {
+      "evidence": "MONTHLY_HUMIDITY_REFERENCE_VALIDATION.json",
+      "periods_by_year": {
+        "2009": {
+          "candidate_periods": 3,
+          "local_ge_99_rows": 185,
+          "periods_with_ge_99_plateaus": 1,
+          "plateau_run_count": 8
+        },
+        "2010": {
+          "candidate_periods": 6,
+          "local_ge_99_rows": 4810,
+          "periods_with_ge_99_plateaus": 6,
+          "plateau_run_count": 57
+        },
+        "2011": {
+          "candidate_periods": 2,
+          "local_ge_99_rows": 4468,
+          "periods_with_ge_99_plateaus": 2,
+          "plateau_run_count": 37
+        },
+        "2013": {
+          "candidate_periods": 2,
+          "local_ge_99_rows": 850,
+          "periods_with_ge_99_plateaus": 2,
+          "plateau_run_count": 41
+        },
+        "2014": {
+          "candidate_periods": 5,
+          "local_ge_99_rows": 1196,
+          "periods_with_ge_99_plateaus": 4,
+          "plateau_run_count": 101
+        },
+        "2015": {
+          "candidate_periods": 2,
+          "local_ge_99_rows": 313,
+          "periods_with_ge_99_plateaus": 2,
+          "plateau_run_count": 23
+        },
+        "2020": {
+          "candidate_periods": 1,
+          "local_ge_99_rows": 2380,
+          "periods_with_ge_99_plateaus": 1,
+          "plateau_run_count": 15
+        },
+        "2023": {
+          "candidate_periods": 10,
+          "local_ge_99_rows": 0,
+          "periods_with_ge_99_plateaus": 0,
+          "plateau_run_count": 0
+        },
+        "2024": {
+          "candidate_periods": 8,
+          "local_ge_99_rows": 3384,
+          "periods_with_ge_99_plateaus": 7,
+          "plateau_run_count": 80
+        },
+        "2025": {
+          "candidate_periods": 4,
+          "local_ge_99_rows": 2788,
+          "periods_with_ge_99_plateaus": 4,
+          "plateau_run_count": 50
+        },
+        "2026": {
+          "candidate_periods": 2,
+          "local_ge_99_rows": 3236,
+          "periods_with_ge_99_plateaus": 2,
+          "plateau_run_count": 32
+        }
+      },
+      "periods_with_ge_99_plateaus": 31,
+      "plateau_runs": 444
+    },
+    "humidity_pressure": {
+      "daily_humidity_evidence": "HUMIDITY_DAILY_REFERENCE_CONTEXT.json",
+      "daily_humidity_station_months": 79,
+      "daily_pressure_candidate_months": 66,
+      "daily_pressure_evidence": "PRESSURE_DAILY_REFERENCE_CONTEXT.json",
+      "humidity_candidate_review": "HUMIDITY_CANDIDATE_VALIDATION_REVIEW.json",
+      "humidity_candidate_review_count": 45,
+      "humidity_report_exists": true,
+      "pressure_report_exists": true,
+      "status": "45 humidity candidates have individual conservative dispositions; 25 months have exact-UTC subdaily comparisons and all 20 subdaily gaps have official CHMI daily H,AVG context; 66 of 68 pressure candidates have CHMI Holešov daily P,AVG regional context and two 2026 months have exact-hour P_hm comparisons; fields remain distinct and sensor epochs unresolved"
+    },
+    "interval_aware_annual_temperature": {
+      "evidence": "ANNUAL_INTERVAL_AWARE_TEMPERATURE_REVIEW.json",
+      "status": "interval-clipped B/E robustness metrics; exact-variant interval coverage and gap gates now constrain canonical readiness decisions for all monthly and annual means/extrema",
+      "years": {
+        "2010": {
+          "B_DOCUMENTED_SOURCE_AND_RECOVERY": {
+            "interval_aware_mean_C": 8.81158555873815,
+            "longest_monthly_gap_seconds": 26700,
+            "slot_based_mean_C": 8.811676214448978,
+            "time_coverage": 0.9863869863013699
+          },
+          "E_FULL_CURRENT_ARCHIVE": {
+            "interval_aware_mean_C": 8.786686940467147,
+            "longest_monthly_gap_seconds": 26700,
+            "slot_based_mean_C": 8.78677733116652,
+            "time_coverage": 0.9892789193302892
+          }
+        },
+        "2024": {
+          "B_DOCUMENTED_SOURCE_AND_RECOVERY": {
+            "interval_aware_mean_C": 11.284353598571125,
+            "longest_monthly_gap_seconds": 57300,
+            "slot_based_mean_C": 11.284302116018521,
+            "time_coverage": 0.989735124468731
+          },
+          "E_FULL_CURRENT_ARCHIVE": {
+            "interval_aware_mean_C": 11.284559831343095,
+            "longest_monthly_gap_seconds": 57300,
+            "slot_based_mean_C": 11.284508347307188,
+            "time_coverage": 0.9897446114146934
+          }
+        }
+      }
+    },
+    "interval_time_method_review": {
+      "decision_manifest": "data/PUBLICATION_READINESS_DECISIONS.json",
+      "overlap_groups": 17,
+      "path": "INTERVAL_TIME_METHOD_REVIEW.md",
+      "period_variable_rows": 248,
+      "status": "clipped interval union, overlaps and gaps are calculated; exact-variant coverage/gap gates are applied to all monthly and annual mean/extrema readiness rows; interval-weighted values are separately labeled"
+    },
+    "latest_live_gw3000_readonly_poll": {
+      "interpretation": "Fresh live read-only gateway poll; does not validate rain sensor behavior, historical mapping, or physical correctness.",
+      "observed_at_utc": "2026-11-16T21:47:18.674921Z",
+      "service_exit_local": "2026-11-16 22:47:18 CET",
+      "service_exit_status": 0,
+      "source": "GW3000_LAN_HTTP",
+      "status": "POLL_SUCCEEDED",
+      "timer_active": "active",
+      "timer_enabled": "enabled"
+    },
+    "local_preview": {
+      "path": "atlas_preview/index.html",
+      "status": "implemented locally"
+    },
+    "monthly_series_diagnostics": {
+      "records": 248,
+      "status": "archive-derived descriptive screening for every candidate"
+    },
+    "monthly_validation_results": {
+      "daily_temperature_context_only_records": 23,
+      "records": 248,
+      "status": "candidate-specific evidence joined; specialist analysis incomplete where noted"
+    },
+    "ongoing_sync_health": {
+      "conflicts": 0,
+      "evidence": "POST_PIPELINE_VALIDATION_AUDIT.json",
+      "lag_seconds": 0,
+      "last_service_result": "success",
+      "last_successful_health_checked_utc": "2026-11-16T21:42:17Z",
+      "missing_source_rows": 0,
+      "status": "HEALTHY",
+      "timer_enabled": "enabled",
+      "timer_state": "active"
+    },
+    "pressure_candidate_review": {
+      "records": 68,
+      "status": "concurrent stored-field offsets reviewed; physical semantics unresolved"
+    },
+    "priority_candidate_evidence": {
+      "candidates": 248,
+      "records": 248,
+      "status": "candidate-level records exist; expert analysis incomplete"
+    },
+    "shared_classifier": {
+      "path": "src/meteo_audit/publication_classifier.py",
+      "status": "implemented"
+    },
+    "station_sensor_epoch_registry": {
+      "evidence": "LOCAL_STATION_METADATA_SEARCH.json",
+      "local_application_location_verified": false,
+      "local_application_sensor_fixture_records": 1,
+      "records": 1,
+      "reported_location_metadata_variants": 2,
+      "reported_station_configuration_periods": 2,
+      "standard_named_configuration_or_backup_matches": 0,
+      "status": "operator-reported station history and public location reports remain separate from physical sensor epochs; host filename search found no standard-named WeeWX config/backup, local app location remains unverified"
+    },
+    "statistical_variants": {
+      "annual_rows": 720,
+      "manifest": "data/STATISTICAL_VARIANTS_MANIFEST.json",
+      "monthly_rows": 8520,
+      "snapshot_alignment": {
+        "readiness_max_timestamp": 1794758400,
+        "readiness_rows": 1695104,
+        "readiness_snapshot_utc": "2026-11-15T16:03:04Z",
+        "status": "MATCH",
+        "tail_reconciliation": {
+          "limitations": [],
+          "row_count": 0,
+          "status": "NOT_APPLICABLE_SAME_IMMUTABLE_SNAPSHOT"
+        },
+        "variant_max_timestamp": 1794758400,
+        "variant_snapshot_rows": 1695104
+      },
+      "status": "daily readiness and monthly/annual variants regenerated from the same immutable concordance snapshot"
+    },
+    "temperature_candidate_expert_review": {
+      "candidate_count": 54,
+      "daily_context_only_months": 23,
+      "evidence": "TEMPERATURE_CANDIDATE_EXPERT_REVIEW.json",
+      "status": "candidate-specific regional disposition for every selected outTemp month; no numeric correction or publication authorized",
+      "subdaily_two_station_months": 31
+    },
+    "temperature_external_validation": {
+      "candidate_count": 54,
+      "candidate_months_with_local_reference": 31,
+      "candidate_months_without_local_reference": 21,
+      "status": "partial",
+      "subdaily_station_month_results": 62
+    },
+    "time_interval_review": {
+      "annual_interval_variant_rows": 720,
+      "monthly_interval_variant_rows": 8520,
+      "period_variable_rows": 248,
+      "readiness_manifest": "data/PUBLICATION_READINESS_DECISIONS.json",
+      "status": "candidate interval-union coverage and gap diagnostics are integrated as representativeness gates in canonical readiness decisions; interval-weighted values remain explicitly identified as separate statistics"
+    },
+    "unmatched_temperature_review": {
+      "chmi_reference_files": 2,
+      "correction_authorized": false,
+      "dispositions": {
+        "NO_METEOROLOGICAL_CORRECTION": 2,
+        "UNRESOLVED_SOURCE_CONFLICT": 1
+      },
+      "status": "two floating-point epsilon cases require no meteorological correction; one 2022 archive-copy conflict remains unresolved, with adjacent exact-UTC CHMI context on both sides but no exact-time match",
+      "values": 3
+    },
+    "wind_external_comparison": {
+      "candidate_count": 81,
+      "report_exists": true,
+      "station_month_results": 162,
+      "status": "all 81 candidates compared to exact-UTC CHMI 10-minute elements where data are available; remains regional context with averaging window, exposure and sensor epoch unresolved"
+    }
+  },
+  "phases": {
+    "A": "PARTIAL",
+    "B": "PARTIAL",
+    "C": "PARTIAL",
+    "D": "PARTIAL",
+    "E": "PARTIAL",
+    "F": "PARTIAL",
+    "G": "PARTIAL",
+    "H": "PARTIAL",
+    "I": "PARTIAL",
+    "J": "PARTIAL"
+  },
+  "publication_authorized": false,
+  "readiness_counts": {
+    "BLOCKED_E4": 462,
+    "DIAGNOSTIC_ONLY": 195,
+    "NOT_REPRESENTATIVE_COVERAGE": 2305,
+    "PROTECTED": 60,
+    "READY_WITH_DISCLOSED_LIMITATIONS": 2,
+    "REVIEW_REQUIRED_CONFLICTS": 475,
+    "REVIEW_REQUIRED_ESTIMATES": 76,
+    "REVIEW_REQUIRED_SENSOR_VALIDATION": 352
+  },
+  "readiness_matrix_rows": 3927,
+  "schema": "loucka-automated-validation-progress-v1",
+  "source_sha256": {
+    "ATLAS_STATISTICS_CONTRACT.json": "f464b4c8a121ecdd0757c897a31d2ef6304fe8c520525c19343d339d288cc8a4",
+    "AUTOMATED_VALIDATION_RUN.json": "d5db98d3d7b19e73133285ed955bf913fc4d3909a96ce2ed3c1abd872e516b4f",
+    "CHMI_DAILY_TEMPERATURE_CONTEXT_REVIEW.json": "a07345ed1df7edc18c71b6a2819fddeeef90e61a74f81457d1d604988e0a9cc4",
+    "INTERVAL_COVERAGE_REVIEW.json": "97544ec5574734e2e882c097414a51db647d40dd2d664c444d5416c24af2ebd5",
+    "LOCAL_STATION_METADATA_SEARCH.json": "43296f355d77199f60f450ac3e6908356dce2761d0362c2a9e20baf10d527330",
+    "MASTER_GOAL_AUTOMATED_VALIDATION_CANDIDATE_OUTCOMES.json": "68824b98eb6895ca9ba2cfc1b3f1817e53ddfb43e7383cba5a814587bd77af32",
+    "MONTHLY_CANDIDATE_SERIES_DIAGNOSTICS.json": "8a43b737f20d446cda103285a779a3e654efa426ac3baa20066cafddcffaa306",
+    "MONTHLY_HUMIDITY_REFERENCE_VALIDATION.json": "32644f309c2a2382585ed4d06e9e17e7b23dc95a74e10269233f814a0e1d7599",
+    "MONTHLY_PRESSURE_REFERENCE_VALIDATION.json": "ddbfe69a5dc4877407073a8647a616a068ed2f2a748e3e2a578d20bc9df4130f",
+    "MONTHLY_PUBLICATION_CANDIDATES.json": "352ed670e1eada4b251b35340ed21f22bfb8701570aa8eb9100f27b1444725b3",
+    "MONTHLY_TEMPERATURE_REFERENCE_VALIDATION.json": "46811c9090d02365abe9c0aa7c465a516dc9df78758cac16085cef8f0c812b41",
+    "MONTHLY_VALIDATION_EVIDENCE.json": "e2d2b68ede2e4237a5546ceb6cab90e6291cc2b49fb018a2cb73919c0ea2f767",
+    "MONTHLY_VALIDATION_RESULTS.json": "62157ae040ad77e58d72ca1d114917f63c4abeefdeb30dbab0432cdb6211cde8",
+    "MONTHLY_WIND_REFERENCE_VALIDATION.json": "ed8ede9e27926edec9d49c84dc09c991d1fd0c60435a7d15e29758477ca86312",
+    "PROVENANCE_COUNTS_CORRECTED.json": "b25dcc4d73d183624540758185ac21e71ea95fd9c8e345a18cf89e273d72df28",
+    "STATION_SENSOR_EPOCH_REGISTRY.json": "f5c126f3b2c921a36ed5c0eeb06403563d83b69289c7ed18b46aba84a5606b08",
+    "TEMPERATURE_CANDIDATE_EXPERT_REVIEW.json": "10f7c1d646ba77d9a3a9d05c12e8a72b4448bd92b8881ff80670d8c77c0bba1e",
+    "THREE_UNMATCHED_TEMPERATURE_VALUES_REVIEW.json": "895fec32cf2093d8c1ed18140d0822f789b20d90998daf513ede25f2dec8f164",
+    "data/INTERVAL_WEIGHTED_STATISTICAL_VARIANTS_MANIFEST.json": "fc8e415749d3ec1972d42942ee2e37ba68ae729ab14293c8f308049807da9f2e",
+    "data/STATISTICAL_VARIANTS_ANNUAL.csv": "c84d2df2e208bc90596040c822a19bd328561304af20aeb21c053c370c56eb9e",
+    "data/STATISTICAL_VARIANTS_MANIFEST.json": "2684d37aeffdd30ced0dd9aa22477eea0447e3c52f96d86e53a697002b94ae41",
+    "data/STATISTICAL_VARIANTS_MONTHLY.csv": "309fb3d0c65962b4057ad36e5e181fd3809af51dddb716f9f921462f011e9a50",
+    "data/chmi-2026-recent/manifest.json": "7b385acac024e727a8d4e3085db48dabd6841b55084d9137b61742f136e60e2f",
+    "data/chmi-2026-synop-pressure/manifest.json": "5ecb9ebb639d6dfd00610526dc62408b9260157170349d9b8397168795f2a762",
+    "data/chmi-historical-daily-temperature/manifest.json": "047413ed4a72d002cf0a96cb799876d4d0d48f0ab59e8dc7bf770a5a23ca2292",
+    "data/chmi-priority-temperature/manifest.json": "b7fac1936dffe17ca82e9ff4bb2e5af7bb04d552460c3992f8c8b67090afe79f",
+    "data/goal-phase-j-sync-health-20261116.json": "0093d0c6dcce8891cefd0b80bc684ab0925923ab12f24298a93446fb22a08943",
+    "data/source-lineage/public_station_history_20261113.json": "8224a21469f06293b4575dcbcad4e2dd1d74bf5747eb5370fec7caf5ff01c6db",
+    "scripts/audit_local_station_metadata_sources.py": "3b9052a9e9df98b03b2ffa7df891e7005c7734f866e148fbc9dba957e6695f51",
+    "scripts/build_automated_validation_candidate_outcomes.py": "7c833100c93439a3324592909287499fc6171ef2db963c6695292b1d84bfabb2",
+    "scripts/build_epoch_registry_and_monthly_results.py": "f49ae971fc7eed356777f4fa00036b7432bd2d3f1d29ca33367db927f43f211b",
+    "scripts/build_interval_weighted_statistical_variants.py": "eab37801248850ecce6fae6fa1695b72b072456e402b17f04b2fd72aa279e1ab",
+    "scripts/build_provenance_counts.py": "a75f4db931d8b38bcb7ed9acb3ef80c6642e085641e30d12dce6d1e703420ff5",
+    "scripts/build_statistical_variants.py": "a14d10ec949261034a56b79eb48fcb100eebdb931d987f113f6d0a3444c8feaa",
+    "src/meteo_audit/provenance_counts.py": "50360567ce6df386965041b1e098f6168d1a1760e3a2a4fdf46028992493b627",
+    "tests/test_atlas_preview_http.py": "8031e9e15a71166baf57e5dc550145fb018b59bc7e13e36c219d223a1201eef7",
+    "tests/test_epoch_registry_and_monthly_results.py": "a94a6fb5562f9c30fc3e360a7c4cd2a93ac89daf4b15d2c1a972f414d032dec9",
+    "tests/test_interval_weighted_variants.py": "b704f1bc7595b351dff470ecd8104ea3232582c1cf09bfb8cd782e055c335548",
+    "tests/test_provenance_counts.py": "3f9f9de42801d0bd802bb10e4b88aef09dc286b673410867c39a879839c846d5",
+    "tests/test_statistical_variants.py": "387745b000b0e142995ba2c75a7b499c2afef51d8e0e9c2af7c4a9461718f64a"
+  },
+  "updated_utc": "2026-11-15T16:03:04Z"
+}

@@ -1,0 +1,73 @@
+{
+  "created_local": "2026-11-17T17:12:00+01:00",
+  "status": "DATA RECONSTRUCTION – CLOSED / PRODUCTION CUTOVER READY",
+  "source_diff": {
+    "path": "/opt/meteo-audit/final_migration_package/MIGRATION_DIFF.csv",
+    "sha256": "8adda4e543ea7a0128d919689efe2f18475e1330488cd9e4dfb98b21c5eb5780",
+    "operations": 92664
+  },
+  "manifest": {
+    "path": "/opt/meteo-audit/FINAL_MIGRATION_MANIFEST_20261117.jsonl",
+    "sha256": "a6ed14c902b9bec4e746c00aeb71aed225b9672363592cf5add3d57a3a242ef6",
+    "operation_count": 92664,
+    "statuses": {
+      "QUARANTINE": 92366,
+      "ALREADY_APPLIED": 298
+    },
+    "sum_verified": true,
+    "status_reason_counts": {
+      "RAIN_SEMANTICS_QUARANTINE": 55081,
+      "TEST_COMMIT_VERIFIED": 298,
+      "ESTIMATE_NOT_APPROVED": 14791,
+      "PROTECTED_PERIOD": 22372,
+      "PROTECTED_Q1_EXACT_SOURCE": 34,
+      "SOURCE_CONFLICT": 88
+    }
+  },
+  "test_migration": {
+    "applied_operations": 298,
+    "integrity": "PASS",
+    "audits": [
+      "/opt/meteo-audit/three-test-repairs-commit-20261117.json",
+      "/opt/meteo-audit/recovered-source-inserts-20261117.json",
+      "/opt/meteo-audit/recovered-insert-batches-20261117/",
+      "/opt/meteo-audit/nullfill-rain-zero-verified-20261117.json"
+    ],
+    "weewx_rebuild_daily": "NOT RUN: weectl/weewx absent and dpkg-query reports no weewx package; isolated aggregate rebuild unverified"
+  },
+  "q1_2018": {
+    "missing_rows": 10080,
+    "source_review": "/opt/meteo-audit/q1-2018-readonly-source-review-20261117.json",
+    "reconstruction_matches_diff": 10080,
+    "estimates_or_derived_events": 10372,
+    "external_source": "SELECT denied (MySQL 1142) for LuhaMet+CHMI_11777_11778.archive",
+    "minimum_grant": "GRANT SELECT ON `LuhaMet+CHMI_11777_11778`.`archive` TO 'loucka_migration_test'@'192.168.0.131'; not requested/applied; affected operations quarantined"
+  },
+  "production": {
+    "dry_run": "/opt/meteo-audit/production-cutover-dry-run-20261117.json",
+    "ready": 298,
+    "inserts": 291,
+    "null_fills": 7,
+    "conflicts_at_dry_run": 0,
+    "approval_required": true,
+    "prepared_sql": "/opt/meteo-audit/production-cutover-approved-candidates-20261117.sql",
+    "rollback_sql": "/opt/meteo-audit/production-cutover-rollback-20261117.sql",
+    "no_production_dml_executed": true
+  },
+  "website": {
+    "url": "https://dev.pocasi-loucka.eu",
+    "http_status": 200,
+    "repo": "/home/loucka/Loucka_weather",
+    "commit": "7edd6b3",
+    "api_healthz": 200,
+    "api_readyz": 503,
+    "api_history_and_statistics": "503 UPSTREAM_UNAVAILABLE: Archive unavailable / Daily summaries unavailable",
+    "dirty_untracked": [
+      "api/dist/",
+      "api/node_modules/",
+      "deploy/lxc/__pycache__/",
+      "deploy/lxc/tests/__pycache__/"
+    ]
+  },
+  "single_pending_approval": "Production cutover of exactly 298 already test-verified operations; execution must repeat preconditions against live production."
+}
