@@ -38,9 +38,26 @@ Rovněž 2013 vykazuje **1 946** pozic chybějícího `outTemp` s hodnotou v kop
 - Produkční zdroj, běžící WeeWX a kontinuální GW3000 synchronizace zůstávají nedotčené.
 - **92 366 QUARANTINE** operací v dřívějším finálním manifestu zůstává odděleně neschválených. Nesmí se zaměnit s 272 původními pending QA příznaky ve stagingu.
 - Pro další automatický apply momentálně **0** nových kandidátů s doloženým source time, jednotkovou epochou, nekolizním cílem, nezávislou věcnou kontrolou, explicitní approval a ověřeným restore/rollback.
-- Mimo čtyři A–D dokončené SQL kontroly měl následný pokus o širokou 80sloupcovou kontrolu spojení k Weather MCP `UNAVAILABLE`; **kompletní 80-field parity v tomto běhu nebyla ověřena**.
+- Read-only připojení mělo krátký výpadek `UNAVAILABLE`, ale obnovilo se; následně se podařilo **ověřit i všech 80 sloupců** společných původních a rekonstruovaných timestampů. Reprodukce níže.
 
-## 5. Přesné dokončovací kritérium bez předstírání kompletní fyziky
+## 5. Kompletní NULL-safe kontrola všech 80 sloupců
+
+Při obnoveném připojení jsem přímo spustil **tři read-only SELECTy** přes všechny společné timestampy: 79 měřených/metadatových sloupců `<=>` + klíčový `dateTime` pro přesné párování. Ve všech třech dotazech bylo **1 686 768** společných řádků. Ze 79 porovnaných sloupců se přesně **75** vůbec neliší; další sloupec `dateTime` je identita joinu, tj. **76 z 80 sloupců nezměněno**.
+
+| Rozdílné pole | Počet překryvných řádků s rozdílem |
+|---|---:|
+| `outTemp` | 47 |
+| `outHumidity` | 20 422 |
+| `rain` | 2 201 |
+| `rainRate` | 59 595 |
+| **Součet hodnotových změn** | **82 265** |
+
+K tomu je **10 399** historicky přidaných řádků: **92 664** operací proti současnému původnímu archivu, což číselně přesně odpovídá poslednímu dříve zafixovanému diffu. Tyto výsledky neznamenají, že 92 664 operací bylo schváleno pro produkci: manifest stále eviduje **92 366 QUARANTINE** + **298 ALREADY_APPLIED** jako samostatné rozhodovací stavy. Samotný číselný diff není fyzikální validace a nemá význam náhrady originálních hodnot.
+
+Přesný reprodukovatelný checkpoint: [`sql/readonly/reconstruction_v1_all_80_columns_parity.sql`](../sql/readonly/reconstruction_v1_all_80_columns_parity.sql), s pevným horním UTC timestampem `1795377300`, aby nově přicházející GW3000 nezkreslovala porovnání. Počty odpovídají živému MariaDB SELECTu; publikovaný SQL se má samostatně znovu spustit při budoucí revizi.
+
+## 6. Akceptační kritéria bez fiktivních hodnot
+
 
 1. Každý archivní sloupec klasifikovat **po veličině a čase** jako MEASURED / RESTORED / ESTIMATED / SENSOR_ERROR / UNVERIFIED / MISSING s auditní stopou, ne přes celý řádek.
 2. Teplotní 2020 konflikt a 2022 dešťovou mezeru označit `HOLD_SOURCE_CONFLICT` a vyloučit z certifikovaných extrémů; `NULL` zachovat tam, kde chybí nezávislý důkaz.
