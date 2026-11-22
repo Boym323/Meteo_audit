@@ -4,7 +4,8 @@
 Prověřit historická měření přibližně od roku 2009 do roku 2026, odlišit chyby senzorů, změny hardwaru, jednotek a časového posunu od skutečných extrémních jevů a připravit doložené, vratné návrhy rekonstrukce.
 
 ## Infrastrukturа a připojení
-- Auditní prostředí: Debian LXC `zl-dev-AuditMeteo`, projekt `/opt/meteo-audit`.
+- Aktuální vývojové a auditní prostředí (podle posledního předání): Debian LXC `zl-dev-frontendPocasi`, projekt `/opt/meteo-audit`. Přítomnost adresáře a lokálního Git stromu je nutné ověřit přímo na LXC; nelze ji potvrdit jen z GitHubu.
+- Původní LXC `zl-dev-AuditMeteo` byl odstraněn a není platným cílem pro SSH, CI ani synchronizaci.
 - Zdroj: MariaDB, předchozí známá verze 11.8.6 (aktuální ověřit).
 - Připojení bylo ověřeno 2026-10-30 na MariaDB 11.8.6; aktuální host a port jsou pouze v lokálním `.env` a do dokumentace se nekopírují.
 - Analytické CLI znovu používá stávající účet `loucka_audit` z `.env` (`DB_USER`, `DB_PASSWORD`). **Podle provozního nastavení uživatele má do všech původních/produkčních databází pouze SELECT a zápisová oprávnění jen do `loucka_reconstruction`.** V rekonstrukční DB zůstává auditní CLI softwarově read-only (validace SELECT/SHOW a transakce READ ONLY); žádná oprávnění se nemění.
