@@ -21,13 +21,12 @@ def quote(name: str) -> str:
 
 
 def connect(database: str):
-    connection_args = {
-        "host": os.environ["WEATHER_DB_HOST"], "port": int(os.environ.get("WEATHER_DB_PORT", "3306")),
-        "user": os.environ["WEATHER_DB_USER"], "database": database, "charset": "utf8mb4",
-        "autocommit": False, "cursorclass": pymysql.cursors.DictCursor,
-    }
-    connection_args["pass" + "word"] = os.environ["WEATHER_DB_PASSWORD"]
-    conn = pymysql.connect(**connection_args)
+    conn = pymysql.connect(
+        host=os.environ["WEATHER_DB_HOST"], port=int(os.environ.get("WEATHER_DB_PORT", "3306")),
+        user=os.environ["WEATHER_DB_USER"], password=os.environ["WEATHER_DB_PASSWORD"],
+        database=database, charset="utf8mb4", autocommit=False,
+        cursorclass=pymysql.cursors.DictCursor,
+    )
     cur = conn.cursor()
     cur.execute("SET SESSION TRANSACTION READ ONLY")
     cur.execute("START TRANSACTION READ ONLY")

@@ -69,13 +69,9 @@ def open_db(schema: str):
     missing = [x for x in required if not os.environ.get(x)]
     if missing:
         raise RuntimeError("missing protected DB settings: " + ", ".join(missing))
-    connection_args = {
-        "host": os.environ["WEATHER_DB_HOST"], "port": int(os.environ.get("WEATHER_DB_PORT", "3306")),
-        "user": os.environ["WEATHER_DB_USER"], "database": schema,
-        "charset": "utf8mb4", "autocommit": False, "cursorclass": SSCursor,
-    }
-    connection_args["pass" + "word"] = os.environ["WEATHER_DB_PASSWORD"]
-    conn = pymysql.connect(**connection_args)
+    conn = pymysql.connect(host=os.environ["WEATHER_DB_HOST"], port=int(os.environ.get("WEATHER_DB_PORT", "3306")),
+                           user=os.environ["WEATHER_DB_USER"], password=os.environ["WEATHER_DB_PASSWORD"],
+                           database=schema, charset="utf8mb4", autocommit=False, cursorclass=SSCursor)
     cur = conn.cursor(); cur.execute("SET SESSION TRANSACTION READ ONLY"); cur.close(); conn.begin()
     return conn
 

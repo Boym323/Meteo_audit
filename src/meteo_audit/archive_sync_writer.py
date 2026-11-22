@@ -363,14 +363,10 @@ def pymysql_connection_from_env(database: str, *, readonly: bool = False) -> Con
     missing = [k for k in required if not os.environ.get(k)]
     if missing:
         raise RuntimeError("missing DB environment settings: " + ", ".join(missing))
-    connection_args = {
-        "host": os.environ[f"{prefix}_HOST"], "port": int(os.environ[f"{prefix}_PORT"]),
-        "user": os.environ[f"{prefix}_USER"], "database": database,
-        "charset": "utf8mb4", "autocommit": False,
-        "cursorclass": pymysql.cursors.DictCursor,
-    }
-    connection_args["pass" + "word"] = os.environ[f"{prefix}_PASSWORD"]
-    conn = pymysql.connect(**connection_args)
+    conn = pymysql.connect(host=os.environ[f"{prefix}_HOST"], port=int(os.environ[f"{prefix}_PORT"]),
+                           user=os.environ[f"{prefix}_USER"], password=os.environ[f"{prefix}_PASSWORD"],
+                           database=database, charset="utf8mb4", autocommit=False,
+                           cursorclass=pymysql.cursors.DictCursor)
     if readonly:
         cur = conn.cursor()
         cur.execute("SET SESSION TRANSACTION READ ONLY")

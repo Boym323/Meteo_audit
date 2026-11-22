@@ -46,13 +46,10 @@ def connect_readonly():
     missing = [x for x in required if not os.environ.get(x)]
     if missing:
         raise RuntimeError("missing protected database environment settings: " + ", ".join(missing))
-    connection_args = {
-        "host": os.environ["TARGET_DB_HOST"], "port": int(os.environ["TARGET_DB_PORT"]),
-        "user": os.environ["TARGET_DB_USER"], "database": "loucka_reconstruction",
-        "charset": "utf8mb4", "autocommit": False, "cursorclass": SSCursor,
-    }
-    connection_args["pass" + "word"] = os.environ["TARGET_DB_PASSWORD"]
-    c = pymysql.connect(**connection_args)
+    c = pymysql.connect(host=os.environ["TARGET_DB_HOST"], port=int(os.environ["TARGET_DB_PORT"]),
+                        user=os.environ["TARGET_DB_USER"], password=os.environ["TARGET_DB_PASSWORD"],
+                        database="loucka_reconstruction", charset="utf8mb4", autocommit=False,
+                        cursorclass=SSCursor)
     q = c.cursor(); q.execute("SET SESSION TRANSACTION READ ONLY"); q.close()
     c.begin()
     return c

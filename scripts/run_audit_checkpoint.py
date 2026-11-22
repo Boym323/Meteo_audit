@@ -41,20 +41,20 @@ def safe_command(command: list[str]) -> list[str]:
     """Redact common secret-bearing CLI options before logging the argv."""
     safe: list[str] = []
     redact_next = False
-    for argument in command:
+    for token in command:
         if redact_next:
             safe.append("<redacted>")
             redact_next = False
             continue
-        if re.search(r"(?i)(password|passwd|token|secret|api[-_]?key)(=|$)", argument):
-            if "=" in argument:
-                safe.append(argument.split("=", 1)[0] + "=<redacted>")
+        if re.search(r"(?i)(password|passwd|token|secret|api[-_]?key)(=|$)", token):
+            if "=" in token:
+                safe.append(token.split("=", 1)[0] + "=<redacted>")
             else:
-                safe.append(argument)
+                safe.append(token)
                 redact_next = True
             continue
         # Avoid leaking credentials embedded in a connection URL.
-        safe.append(re.sub(r"(?i)(://[^:/@]+):[^@/]+@", r"\1:<redacted>@", argument))
+        safe.append(re.sub(r"(?i)(://[^:/@]+):[^@/]+@", r"\1:<redacted>@", token))
     return safe
 
 
