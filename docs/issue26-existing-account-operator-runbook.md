@@ -1,3 +1,36 @@
+> **Dodatek 23. 11. 2026: čtecí přístup bez přihlašovacích údajů loucka_audit v LXC**
+>
+> Codex ověřil, že na zl-dev-frontendPocasi existují bezpečně uložené
+> údaje k **již existujícímu** loucka_web_ro a připojení na
+> lo-infra-db-mariadb01 funguje. Aktuálně však tento účet nemá žádné
+> SELECT oprávnění k loucka_reconstruction (SQL chyba 1142 a při pokusu
+> o výběr databáze chyba 1044).
+>
+> Po rozhodnutí vlastníka lze ručně spustit v Navicatu
+> soubor sql/issue26_grant_existing_webro_select_only.sql:
+> přidává SELECT **pouze čtyřem pracovním tabulkám** účtu
+> loucka_web_ro@192.168.0.131; nezřizuje účet ani jiné objekty.
+> Tím se mění oprávnění již existujícího webového účtu,
+> takže je nutné zohlednit přístup webové aplikace k těmto datům.
+>
+> Nový runner připouští pro **status/inspect** buď
+> loucka_audit@%, nebo loucka_web_ro@192.168.0.131;
+> **apply/rollback stále vyžaduje výhradně loucka_audit@%**
+> a nezávislé přesné podepsání dávky.
+>
+> Spuštění bez zapisovacího účtu z kořene worktree na LXC:
+>
+>     PYTHONPATH=src .venv/bin/python scripts/issue26_operator.py status \
+>       --client-file /root/<EXISTUJICI_PRIVATNI_WEB_RO_KONFIGURACE>
+>
+> Konkrétní cestu musí určit Codex z dříve nalezeného bezpečného
+> souboru, bez výpisu hesla. Pokud CNF soubor neexistuje, lze jej
+> bezpečně připravit pouze z již dostupných soukromých credentials,
+> bez změny hesla nebo založení účtu.
+>
+> Před aplikací GRANT se STATUS má nadále odmítnout jako NO-GO,
+> žádný oprávněný účet ani SQL právo není vhodné předstírat.
+>
 # Issue #26: existing account operator workflow (2026-11-23)
 
 Binding owner decisions: no new SQL users, no new persistent MariaDB, no
