@@ -1,3 +1,11 @@
+> **HISTORICKÝ DOKUMENT — NAHRAZEN ROZHODNUTÍM 23. 11. 2026**
+>
+> Zálohy MariaDB/PBS se v projektu nadále **neověřují ani nevyžadují**.
+> Text níže zachycuje starší, již neplatný postup a **není** podmínkou
+> uzavření #26. Platí [rozhodnutí vlastníka](issue26-owner-decision-ignore-backups.md).
+> Historické informace nesmí být vykládány jako potvrzení existence
+> obnovitelné zálohy.
+
 # Issue #26: Proxmox Backup Server jako schválený model obnovy
 
 **Rozhodnutí vlastníka, 23. 11. 2026:** další instanci MariaDB nezřizujeme.
