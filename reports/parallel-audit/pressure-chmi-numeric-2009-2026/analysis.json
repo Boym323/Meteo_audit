@@ -24,7 +24,7 @@
   "hourly_pair_rows": 495270,
   "hourly_statistics_groups": 64,
   "methods": {
-    "elevation": "Loucka site 425m per task; station elevation/coordinates taken from time-valid official meta1 JSON. Difference between station pressures is not treated as calibration error.",
+    "elevation": "Loucka site 425m; diagnostic formula used fixed modern Holešov 222.25m / Mošnov 252.8m elevations for all years. Historical station movements in meta1 (Holešov early 2009, Mošnov pre-2016-05-24) were identified but not applied; pre-move diagnostics are approximate.",
     "field_semantics": "Loucka pressure treated as site pressure and barometer as sea-level reduced only as hypotheses; no relabeling. CHMI P is station pressure; P_hm is reduced pressure.",
     "hourly_quality": "Only CHMI QUALITY 0/0.0 enters numeric comparisons; flags retained and distributions reported.",
     "limitations": "No hourly CHMI before 2018. Daily CSV has a different temporal support and TIMEFUNC; annual daily comparisons are trend context only, never exact-hour pairs.",
