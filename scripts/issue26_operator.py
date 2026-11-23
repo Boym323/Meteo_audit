@@ -16,6 +16,13 @@ from pathlib import Path
 import stat
 import sys
 
+# When invoked as ``python scripts/issue26_operator.py``, Python puts the
+# scripts directory first on sys.path. Its meteo_audit.py helper shadows the
+# actual src/meteo_audit package unless src is explicitly preferred.
+_REPO_SRC = Path(__file__).resolve().parents[1] / "src"
+if _REPO_SRC.is_dir():
+    sys.path.insert(0, str(_REPO_SRC))
+
 from meteo_audit.approval_dryrun import CandidateBatch, FieldCorrection, PreflightError
 from meteo_audit.approval_gate import (
     SignedApproval, challenge_for, verify_exact_batch, verify_fresh_snapshot,

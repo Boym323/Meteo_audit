@@ -16,6 +16,12 @@ from pathlib import Path
 import stat
 import sys
 
+# Prefer the repository package over scripts/meteo_audit.py when this file is
+# launched directly from any working directory.
+_REPO_SRC = Path(__file__).resolve().parents[1] / "src"
+if _REPO_SRC.is_dir():
+    sys.path.insert(0, str(_REPO_SRC))
+
 from meteo_audit.approval_dryrun import CandidateBatch, FieldCorrection, PreflightError
 from meteo_audit.issue26_readonly_export import export_current_review
 from meteo_audit.issue26_transaction import TARGET
