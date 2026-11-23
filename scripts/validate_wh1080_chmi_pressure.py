@@ -188,17 +188,19 @@ def save_csv(path: Path, records: list[dict]):
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--cnf",required=True,type=Path,help="existing loucka_web_ro cnf; never logged")
+    ap.add_argument("--chmi-cache",type=Path,default=DATA,help="directory holding PR #89 manifest.json and raw/ (may be another clean worktree)")
+    ap.add_argument("--out-dir",type=Path,default=OUT,help="write aggregate evidence locally; never SQL")
     args=ap.parse_args()
-    source = load_chmi_2018()
+    source = load_chmi_2018(args.chmi_cache / "manifest.json", args.chmi_cache / "raw")
     rows, identity = collect_rows(args.cnf)
     observations,buckets=prepare_comparisons(rows,source["references"])
     if buckets.get("target_pressure_NULL",0)<100 or len(observations)<100:
         raise RuntimeError("Insufficient source coverage; no output generated")
     annual=group_statistics(observations,monthly=False)
     monthly=group_statistics(observations,monthly=True)
-    OUT.mkdir(parents=True,exist_ok=True)
-    save_csv(OUT/"wh_chmi_annual_groups.csv",annual)
-    save_csv(OUT/"wh_chmi_monthly_groups.csv",monthly)
+    args.out_dir.mkdir(parents=True,exist_ok=True)
+    save_csv(args.out_dir/"wh_chmi_annual_groups.csv",annual)
+    save_csv(args.out_dir/"wh_chmi_monthly_groups.csv",monthly)
     info={"schema":"wh1080-chmi-pressure-2018-source-comparison-v1", "created_at_utc":datetime.now(timezone.utc).isoformat(),
           "mode":"READ_ONLY_SOURCE_DIAGNOSTICS_NO_APPROVED_REPLACEMENTS",
           "year":2018,"database_identity":identity,"source_rows":len(rows),"target_buckets":buckets,
@@ -209,10 +211,10 @@ def main():
                      "Dry-air altitude transport uses contemporaneous local outTemp; not calibration ground truth",
                      "Historical GW1000-named archive is not an independent GW1000 hardware source before its installation",
                      "Protected Q1 2018 and production archive untouched; no SQL writes"]}
-    (OUT/"evidence.json").write_text(json.dumps(info,indent=2,ensure_ascii=False,sort_keys=True)+"\n",encoding="utf-8")
+    (args.out_dir/"evidence.json").write_text(json.dumps(info,indent=2,ensure_ascii=False,sort_keys=True)+"\n",encoding="utf-8")
     print(json.dumps({"status":"READ_ONLY_DONE","groups":len(monthly),"source_rows":len(rows),
                       "target_buckets":buckets,"annual_stats":annual,
-                      "out_dir":str(OUT)},indent=2,ensure_ascii=False))
+                      "out_dir":str(args.out_dir)},indent=2,ensure_ascii=False))
 
 
 if __name__=="__main__":
