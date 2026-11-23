@@ -1,5 +1,5 @@
 -- READ ONLY / 2026-11-23: anomaly discovery in original production
--- Schema: \`pocasi-loucka.eu\`.archive, all 80 columns, 2009-present.
+-- Schema: `pocasi-loucka.eu`.archive, all 80 columns, 2009-present.
 -- Execute ONE SELECT at a time; high-cost gap/window queries off-peak.
 -- NEVER UPDATE production, loucka_reconstruction or GW3000 sync.
 -- "candidate" is not independent meteorological corroboration.
@@ -9,8 +9,8 @@
 -- A. Raw time identity and 5-min metadata.
 SELECT COUNT(*) rows_total,MIN(dateTime) first_ts,MAX(dateTime) last_ts,
  COUNT(DISTINCT dateTime) distinct_timestamps,
- SUM(MOD(dateTime,300)<>0) off_grid,SUM(\`interval\`<>5) non5
-FROM \`pocasi-loucka.eu\`.archive WHERE dateTime<=1795415700;
+ SUM(MOD(dateTime,300)<>0) off_grid,SUM(`interval`<>5) non5
+FROM `pocasi-loucka.eu`.archive WHERE dateTime<=1795415700;
 
 -- B. Year and field availability. A NULL does NOT prove a sensor was installed.
 SELECT YEAR(DATE_ADD('1970-01-01',INTERVAL dateTime SECOND)) utc_year,
@@ -19,8 +19,8 @@ SELECT YEAR(DATE_ADD('1970-01-01',INTERVAL dateTime SECOND)) utc_year,
  SUM(pressure IS NULL) missing_pressure,SUM(rain IS NULL) missing_rain,
  SUM(windSpeed IS NULL) missing_wind,
  SUM(dewpoint IS NULL) missing_dewpoint,
- SUM(MOD(dateTime,300)<>0) offgrid,SUM(\`interval\`<>5) non5
-FROM \`pocasi-loucka.eu\`.archive
+ SUM(MOD(dateTime,300)<>0) offgrid,SUM(`interval`<>5) non5
+FROM `pocasi-loucka.eu`.archive
 WHERE dateTime<=1795415700
 GROUP BY utc_year ORDER BY utc_year;
 
@@ -30,14 +30,14 @@ SELECT MIN(CASE WHEN rainRate>0 THEN dateTime END) first_positive_rainRate,
  SUM(dateTime<1767225600 AND rainRate=0) pre2026_zero_rainRate_rows,
  SUM(dateTime<1767225600 AND rain>0 AND rainRate=0) wet_with_zero_rate,
  SUM(dateTime>=1767225600 AND rainRate>0) positive_rate_in_2026
-FROM \`pocasi-loucka.eu\`.archive WHERE dateTime<=1795415700;
+FROM `pocasi-loucka.eu`.archive WHERE dateTime<=1795415700;
 
 -- D. Suspicious 5-min rain totals: review, never auto-delete on threshold alone.
 SELECT YEAR(DATE_ADD('1970-01-01',INTERVAL p.dateTime SECOND)) utc_year,
  COUNT(*) gt5mm, SUM(p.rain>=1) ge10mm,
  SUM(r.rain IS NULL) recon_null, SUM(r.rain=0) recon_zero,
  SUM(r.rain>0) recon_positive
-FROM \`pocasi-loucka.eu\`.archive p
+FROM `pocasi-loucka.eu`.archive p
 LEFT JOIN loucka_reconstruction.archive r ON r.dateTime=p.dateTime
 WHERE p.rain>0.5 AND p.dateTime<=1795415700
 GROUP BY utc_year ORDER BY utc_year;
@@ -45,7 +45,7 @@ GROUP BY utc_year ORDER BY utc_year;
 -- E. July 2021 source/reconstruction rain divergence: dateTime is UTC,
 -- and 10*rain converts WeeWX METRIC centimetres into mm.
 SELECT 'production' src,COUNT(*) n,ROUND(SUM(rain)*10,3) rain_mm
-FROM \`pocasi-loucka.eu\`.archive
+FROM `pocasi-loucka.eu`.archive
 WHERE dateTime>1625090400 AND dateTime<=1627768800
 UNION ALL
 SELECT 'reconstruction',COUNT(*),ROUND(SUM(rain)*10,3)
@@ -58,7 +58,7 @@ SELECT YEAR(DATE_ADD('1970-01-01',INTERVAL p.dateTime SECOND)) utc_year,
  SUM(r.outHumidity=10) remains_ten_in_reconstruction,
  SUM(w.outHumidity=10) wh_same_ten,
  SUM(w.outHumidity IS NOT NULL) wh_present
-FROM \`pocasi-loucka.eu\`.archive p
+FROM `pocasi-loucka.eu`.archive p
 LEFT JOIN loucka_reconstruction.archive r ON r.dateTime=p.dateTime
 LEFT JOIN weewx_WH1080.archive w ON w.dateTime=p.dateTime
 WHERE p.outHumidity=10 AND p.dateTime>=1420070400 AND p.dateTime<1546300800
@@ -69,8 +69,8 @@ SELECT YEAR(DATE_ADD('1970-01-01',INTERVAL p.dateTime SECOND)) utc_year,
  COUNT(*) n,SUM(o.outTemp=4.25) old_copy_same,
  SUM(w.outTemp IS NOT NULL) wh_temp_present,
  SUM(w.outTemp IS NOT NULL AND ABS(w.outTemp-p.outTemp)>.5) wh_conflicts
-FROM \`pocasi-loucka.eu\`.archive p
-LEFT JOIN \`pocasi-loucka.eu_old\`.archive o ON o.dateTime=p.dateTime
+FROM `pocasi-loucka.eu`.archive p
+LEFT JOIN `pocasi-loucka.eu_old`.archive o ON o.dateTime=p.dateTime
 LEFT JOIN weewx_WH1080.archive w ON w.dateTime=p.dateTime
 WHERE p.dateTime>=1577836800 AND p.dateTime<1672531200
  AND p.outTemp=4.25
@@ -82,10 +82,10 @@ SELECT COUNT(*) source_temp_missing,
  SUM(w.outTemp IS NOT NULL) wh_candidate_present,
  SUM(w.outTemp=0) wh_zero_placeholder,
  SUM(o.outTemp IS NOT NULL) old_copy_candidate_present
-FROM \`pocasi-loucka.eu\`.archive p
+FROM `pocasi-loucka.eu`.archive p
 LEFT JOIN loucka_reconstruction.archive r ON r.dateTime=p.dateTime
 LEFT JOIN weewx_WH1080.archive w ON w.dateTime=p.dateTime
-LEFT JOIN \`pocasi-loucka.eu_old\`.archive o ON o.dateTime=p.dateTime
+LEFT JOIN `pocasi-loucka.eu_old`.archive o ON o.dateTime=p.dateTime
 WHERE p.dateTime>=1356998400 AND p.dateTime<1388534400
  AND p.outTemp IS NULL;
 
@@ -95,7 +95,7 @@ SELECT YEAR(DATE_ADD('1970-01-01',INTERVAL p.dateTime SECOND)) utc_year,
  SUM(w.outHumidity IS NOT NULL) wh_available,
  SUM(w.outHumidity=10) wh_at_floor_10,
  SUM(w.outHumidity>100) wh_over_100
-FROM \`pocasi-loucka.eu\`.archive p
+FROM `pocasi-loucka.eu`.archive p
 LEFT JOIN loucka_reconstruction.archive r ON r.dateTime=p.dateTime
 LEFT JOIN weewx_WH1080.archive w ON w.dateTime=p.dateTime
 WHERE p.dateTime>=1514764800 AND p.dateTime<1577836800
@@ -107,9 +107,9 @@ SELECT IF(p.dateTime<1661593200,'before_gw','after_gw') era,
  COUNT(*) rh_missing,SUM(r.outHumidity IS NOT NULL) recon_filled,
  SUM(g.outHumidity IS NOT NULL) gw_rh_available,
  SUM(p.pressure IS NULL) also_pressure_missing
-FROM \`pocasi-loucka.eu\`.archive p
+FROM `pocasi-loucka.eu`.archive p
 LEFT JOIN loucka_reconstruction.archive r ON r.dateTime=p.dateTime
-LEFT JOIN \`pocasi-loucka.eu_GW1000\`.archive g ON g.dateTime=p.dateTime
+LEFT JOIN `pocasi-loucka.eu_GW1000`.archive g ON g.dateTime=p.dateTime
 WHERE p.dateTime>=1640995200 AND p.dateTime<1672531200
  AND p.outHumidity IS NULL GROUP BY era;
 
@@ -140,8 +140,8 @@ SELECT YEAR(DATE_ADD('1970-01-01',INTERVAL p.dateTime SECOND)) utc_year,
  SUM(ABS(p.outHumidity-q.outHumidity)>50) rh_jump_gt50pp,
  SUM(ABS(p.barometer-q.barometer)>8) barometer_jump_gt8hPa,
  SUM(ABS(p.windSpeed-q.windSpeed)>60) wind_jump_gt60kmh
-FROM \`pocasi-loucka.eu\`.archive p
-JOIN \`pocasi-loucka.eu\`.archive q ON q.dateTime=p.dateTime-300
+FROM `pocasi-loucka.eu`.archive p
+JOIN `pocasi-loucka.eu`.archive q ON q.dateTime=p.dateTime-300
 WHERE p.dateTime<=1795415700
 GROUP BY utc_year ORDER BY utc_year;
 
@@ -158,7 +158,7 @@ SELECT SUM(radiation>1500) extreme_solar_gt1500,
     OR soilTemp5 NOT BETWEEN -50 AND 80
     OR soilTemp6 NOT BETWEEN -50 AND 80) soil_temp_outlier_rows,
  MIN(CASE WHEN extraTemp2>800 THEN dateTime END) extraTemp2_high_first
-FROM \`pocasi-loucka.eu\`.archive WHERE dateTime<=1795415700;
+FROM `pocasi-loucka.eu`.archive WHERE dateTime<=1795415700;
 
 -- N. Lightning source mapping: epoch-like "counter" and noise=strikes alias.
 SELECT COUNT(*) disturber_present,
@@ -167,7 +167,7 @@ SELECT COUNT(*) disturber_present,
  SUM(lightning_noise_count IS NOT NULL
    AND lightning_noise_count<=>lightning_strike_count) noise_equals_strikes,
  MIN(dateTime) first_ts,MAX(dateTime) last_ts
-FROM \`pocasi-loucka.eu\`.archive
+FROM `pocasi-loucka.eu`.archive
 WHERE lightning_disturber_count IS NOT NULL AND dateTime<=1795415700;
 
 -- O. Production dewpoint consistency screen. Good consistency in original
@@ -177,7 +177,7 @@ SELECT COUNT(*) comparable,
  (LN(outHumidity/100)+17.625*outTemp/(243.04+outTemp))/
  (17.625-(LN(outHumidity/100)+17.625*outTemp/(243.04+outTemp)))))>2)
    AS inconsistent_over_2C
-FROM \`pocasi-loucka.eu\`.archive
+FROM `pocasi-loucka.eu`.archive
 WHERE outTemp IS NOT NULL AND dewpoint IS NOT NULL
  AND outHumidity BETWEEN 1 AND 100 AND usUnits=16 AND dateTime<=1795415700;
 
@@ -189,7 +189,7 @@ SELECT COUNT(*) overlap,
  SUM(NOT (p.outHumidity <=> r.outHumidity)) rh_diffs,
  SUM(NOT (p.rain <=> r.rain)) rain_diffs,
  SUM(NOT (p.rainRate <=> r.rainRate)) rainRate_diffs
-FROM \`pocasi-loucka.eu\`.archive p
+FROM `pocasi-loucka.eu`.archive p
 JOIN loucka_reconstruction.archive r ON r.dateTime=p.dateTime
 WHERE p.dateTime<=1795415700;
 
@@ -201,7 +201,7 @@ SELECT q.period,COUNT(*) positive_speed_pairs,
 FROM (SELECT '2013_mar' period,1362096000 lo,1364774400 hi
  UNION ALL SELECT '2013_may_jul',1367366400,1375315200) q
 JOIN old_weewx.archive s ON s.dateTime>=q.lo AND s.dateTime<q.hi
-JOIN \`pocasi-loucka.eu\`.archive p
+JOIN `pocasi-loucka.eu`.archive p
  ON p.dateTime=FLOOR((s.dateTime+150)/300)*300
 WHERE s.windSpeed>0 AND p.windSpeed IS NOT NULL
 GROUP BY q.period ORDER BY q.period;
@@ -212,11 +212,11 @@ GROUP BY q.period ORDER BY q.period;
 -- rebuilding it against validated reconstruction needs a separate process.
 WITH days AS (
  SELECT d.dateTime day_start,LEAD(d.dateTime) OVER(ORDER BY d.dateTime) next_start,
- d.\`sum\` daily_source_rain
- FROM \`pocasi-loucka.eu\`.archive_day_rain d
+ d.`sum` daily_source_rain
+ FROM `pocasi-loucka.eu`.archive_day_rain d
 ), agg AS (
  SELECT d.day_start,d.daily_source_rain,COALESCE(SUM(a.rain),0) sum_intervals
- FROM days d LEFT JOIN \`pocasi-loucka.eu\`.archive a
+ FROM days d LEFT JOIN `pocasi-loucka.eu`.archive a
  ON a.dateTime>d.day_start AND a.dateTime<=d.next_start
  WHERE d.day_start>=1625090400 AND d.day_start<1627768800
  AND d.next_start IS NOT NULL
