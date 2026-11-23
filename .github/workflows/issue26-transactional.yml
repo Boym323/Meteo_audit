@@ -6,12 +6,18 @@ on:
       - src/meteo_audit/issue26_transaction.py
       - tests/test_issue26_transaction_mariadb.py
       - sql/issue26_transactional_audit_schema.sql
+      - src/meteo_audit/issue26_readonly_export.py
+      - scripts/issue26_db_readonly_review.py
+      - tests/test_issue26_readonly_export_mariadb.py
       - .github/workflows/issue26-transactional.yml
   pull_request:
     paths:
       - src/meteo_audit/issue26_transaction.py
       - tests/test_issue26_transaction_mariadb.py
       - sql/issue26_transactional_audit_schema.sql
+      - src/meteo_audit/issue26_readonly_export.py
+      - scripts/issue26_db_readonly_review.py
+      - tests/test_issue26_readonly_export_mariadb.py
       - .github/workflows/issue26-transactional.yml
 
 permissions:
@@ -55,6 +61,12 @@ jobs:
           conn.close()
           print('Synthetic reconstruction schema created (no production connections)')
           PY
+      - name: Verify read-only consistent SQL snapshot before audit DDL installation
+        env:
+          PYTHONPATH: src
+          ISSUE26_CI_MYSQL: "1"
+        run: |
+          python3 -m unittest discover -s tests -p 'test_issue26_readonly_export_mariadb.py' -v
       - name: Exercise real SQL CAS, audit, simultaneous writers, rollback and failure
         env:
           PYTHONPATH: src
