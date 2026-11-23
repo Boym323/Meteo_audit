@@ -13,6 +13,8 @@ on:
       - scripts/issue26_db_provision.py
       - tests/test_issue26_provision_mariadb.py
       - tests/test_issue26_provision_socket.py
+      - scripts/issue26_operator.py
+      - tests/test_issue26_operator_mariadb.py
       - .github/workflows/issue26-transactional.yml
   pull_request:
     paths:
@@ -26,6 +28,8 @@ on:
       - scripts/issue26_db_provision.py
       - tests/test_issue26_provision_mariadb.py
       - tests/test_issue26_provision_socket.py
+      - scripts/issue26_operator.py
+      - tests/test_issue26_operator_mariadb.py
       - .github/workflows/issue26-transactional.yml
 
 permissions:
@@ -87,6 +91,12 @@ jobs:
           ISSUE26_CI_MYSQL: "1"
         run: |
           python3 -m unittest discover -s tests -p 'test_issue26_transaction_mariadb.py' -v
+      - name: Test existing-account operator status, exact signed APPLY and separate ROLLBACK
+        env:
+          PYTHONPATH: src
+          ISSUE26_CI_MYSQL: "1"
+        run: |
+          python3 -m unittest discover -s tests -p 'test_issue26_operator_mariadb.py' -v
       - name: Run full offline Python regression suite and security scan
         env:
           PYTHONPATH: src
