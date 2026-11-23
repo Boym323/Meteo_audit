@@ -107,7 +107,7 @@ class RestoreDrillTests(unittest.TestCase):
              patch.object(drill, "fingerprint", side_effect=fingerprints), \
              patch.object(drill, "dump", side_effect=lambda a, b: b.write_bytes(b"synthetic-fixture")), \
              patch.object(drill, "restore") as restored:
-            with self.assertRaisesRegex(drill.DrillError, "checksum mismatch"):
+            with self.assertRaisesRegex(drill.DrillError, "restored schema/invariants/checksums differ"):
                 drill.drill(SimpleNamespace(
                     source_cnf="/a", destination_cnf="/b",
                     execute=True, confirm=drill.CONFIRMATION, receipt_dir=str(Path(tmp) / "drill")
