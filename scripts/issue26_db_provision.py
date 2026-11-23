@@ -1,29 +1,25 @@
 #!/usr/bin/env python3
-"""Issue #26: fail-closed audit DDL and restricted account on ONE existing DB server.
+"""Issue #26: EXISTING-ACCOUNTS-ONLY read-only audit status.
 
-Default: read-only inspection only. No new MariaDB instance, no PBS checks.
-Execute is an explicit separate administrative operation, NOT meteorological
-correction approval. It creates two audit tables and one restricted SQL account
-in loucka_reconstruction, never edits archive rows or production databases.
+Owner decision (2026-11-23): never create any new MariaDB user account.
+The old --execute provisioning path is permanently retired. This command
+cannot create users, grants, tables or any data changes on any server.
 """
 from __future__ import annotations
 
 import argparse
 from hashlib import sha256
-import ipaddress
 import json
 import os
 from pathlib import Path
-import secrets
 import stat
 import sys
 
 from meteo_audit.approval_dryrun import PreflightError
-from meteo_audit.archive_sync import ARCHIVE_FIELDS, VALUE_FIELDS
+from meteo_audit.archive_sync import ARCHIVE_FIELDS
 from meteo_audit.issue26_audit_ddl_guard import verify_audit_ddl
 
 DB_SCHEMA = "loucka_reconstruction"
-FIXED_USER = "meteo_issue26_writer"
 FIXED_SERVER = "lo-infra-db-mariadb01"
 FIXED_SERVER_ID = 1
 EXPECTED_ARCHIVE_COLUMNS = len(ARCHIVE_FIELDS)
@@ -126,91 +122,33 @@ def _ddl_source() -> tuple[str, str]:
     return source, sha256(source.encode("utf-8")).hexdigest()
 
 
-def grant_restricted(cur, *, client_ipv4: str, credential: str) -> None:
-    """Create exactly one account and only stage-scoped grants; no global grants."""
-    addr = str(ipaddress.IPv4Address(client_ipv4))
-    if addr in {"0.0.0.0", "255.255.255.255"}:
-        raise PreflightError("refusing unspecified/broadcast writer client IP")
-    user_identity = "'" + FIXED_USER + "'@'" + addr + "'"
-    # The account must NOT preexist. CREATE USER without IF NOT EXISTS fails closed.
-    cur.execute("CREATE USER " + user_identity + " IDENTIFIED BY %s", (credential,))
-    cur.execute("GRANT SELECT ON loucka_reconstruction.archive TO " + user_identity)
-    cur.execute("GRANT SELECT ON loucka_reconstruction.reconstruction_changes TO " + user_identity)
-    for table in ("issue26_batch_events", "issue26_field_events"):
-        cur.execute("GRANT SELECT,INSERT ON loucka_reconstruction." + table
-                    + " TO " + user_identity)
-    # Never grant UPDATE on archive.dateTime, interval or usUnits.
-    columns = ",".join(chr(96) + x + chr(96) for x in sorted(VALUE_FIELDS))
-    cur.execute("GRANT UPDATE (" + columns + ") ON loucka_reconstruction.archive TO "
-                + user_identity)
-
-
 def install_on_existing(connection, *, client_ipv4: str,
                         client_address: str, output_dir: Path,
                         execute: bool, confirmation: str | None) -> dict:
+    """Legacy-compatible interface, now strictly inspection only.
+
+    All write/provisioning operations are forbidden regardless of confirm.
+    No SQL DDL/GRANT/CREATE USER can be reached via this function.
+    """
+    if execute:
+        raise PreflightError(
+            "owner policy: NO NEW SQL ACCOUNTS; old DDL/account installer retired"
+        )
     snapshot = inspect_existing(connection)
     _, ddl_hash = _ddl_source()
-    if snapshot["audit"]["status"] != "NOT_INSTALLED":
-        raise PreflightError("audit tables already installed: refuse automatic provisioning/reuse")
-    address = str(ipaddress.IPv4Address(client_address))
-    client = str(ipaddress.IPv4Address(client_ipv4))
-    info = {
-        **snapshot,
-        "status": "DRY_RUN_NOT_INSTALLED_NO_DB_WRITES",
-        "ddl_sha256": ddl_hash,
-        "new_audit_tables": 2,
-        "new_db_accounts": 1,
-        "account": FIXED_USER,
-        "client_ipv4": client,
-        "db_address": address,
-        "production_archive_affected": False,
-        "archive_rows_affected": 0,
-    }
-    if not execute:
-        return info
-    if confirmation != EXACT_CONFIRM:
-        raise PreflightError("explicit exact single-server DDL confirmation missing")
-    if (not output_dir.is_absolute() or output_dir.is_symlink()
-            or output_dir.exists()):
-        raise PreflightError("new, absolute, non-symlink credential directory required")
-    if not output_dir.parent.is_dir():
-        raise PreflightError("credential parent directory does not exist")
-    # Create output before DDL so credential persistence failures cannot occur
-    # after partial SQL changes. Fail closed: no automatic retry on partial DDL.
-    output_dir.mkdir(mode=0o700)
-    os.chmod(output_dir, 0o700)
-    generated_credential = secrets.token_urlsafe(40)
-    private = output_dir / "writer.cnf"
-    with private.open("x", encoding="utf-8") as handle:
-        os.fchmod(handle.fileno(), 0o600)
-        handle.write("[client]\n")
-        for name, val in (
-            ("host", address), ("port", "3306"), ("user", FIXED_USER),
-            ("database", DB_SCHEMA), ("pass" + "word", generated_credential)
-        ):
-            handle.write(name + "=" + val + "\n")
-        handle.flush()
-        os.fsync(handle.fileno())
-    source, _ = _ddl_source()
-    statements = [s.strip() for s in source.split(";") if s.strip()]
-    cur = connection.cursor()
-    try:
-        for statement in statements:
-            cur.execute(statement)
-        verified = verify_audit_ddl(cur)
-        if verified["status"] != "DDL_VERIFIED":
-            raise PreflightError("audit schema failed post-DDL verification")
-        grant_restricted(cur, client_ipv4=client, credential=generated_credential)
-    except BaseException:
-        # MariaDB DDL and GRANT auto-commit. Never claim transactional rollback.
-        raise
-    finally:
-        cur.close()
     return {
-        **info, "status": "DDL_AND_ROLE_CREATED_NO_ARCHIVE_CHANGES",
-        "audit": verified,
-        "db_credential_file": str(private),
-        "credential_file_permissions": "0600",
+        **snapshot,
+        "status": (
+            "EXISTING_AUDIT_DDL_VERIFIED_NO_DB_WRITES"
+            if snapshot["audit"]["status"] == "DDL_VERIFIED"
+            else "AUDIT_DDL_MISSING_READ_ONLY"
+        ),
+        "ddl_sha256": ddl_hash,
+        "new_audit_tables": 0,
+        "new_db_accounts": 0,
+        "existing_accounts_only": True,
+        "db_writes": 0,
+        "production_archive_affected": False,
         "archive_rows_affected": 0,
     }
 
@@ -223,12 +161,14 @@ def main() -> int:
     parser.add_argument("--writer-client-ip", default="192.168.0.131")
     parser.add_argument("--writer-db-address", default="192.168.1.52")
     parser.add_argument("--output-dir", default="/root/meteo-issue26-private")
-    parser.add_argument("--execute", action="store_true")
-    parser.add_argument("--confirm", help="extra exact confirmation required for DDL and grants")
+    parser.add_argument("--execute", action="store_true", help="retired: always NO-GO")
+    parser.add_argument("--confirm", help="retired: does not enable any writes")
     args = parser.parse_args()
     try:
-        if args.execute and args.confirm != EXACT_CONFIRM:
-            raise PreflightError("missing exact DDL install confirmation")
+        if args.execute:
+            raise PreflightError(
+                "owner policy: NO NEW SQL ACCOUNTS; old --execute installer retired"
+            )
         if args.local_root_socket:
             socket = check_local_root_socket(args.local_root_socket)
             connection_options = {
