@@ -123,19 +123,61 @@ class ExistingAccountOperatorTests(unittest.TestCase):
             return c.fetchone()[0]
 
     def test_status_select_only_and_account_pin(self):
-        status = self.runner.live_status(
-            self.conn, expected_hostname=self.host,
-            expected_server_id=self.sid, expected_account=self.account,
-        )
-        self.assertEqual(status["db_writes"], 0)
-        self.assertEqual(status["new_sql_users"], 0)
-        self.assertEqual(status["audit"]["status"], "DDL_VERIFIED")
-        self.assertEqual(status["batch_events"], 0)
-        with self.assertRaisesRegex(PreflightError, "account"):
-            self.runner.live_status(
+        with patch.object(self.runner, "EXISTING_ACCOUNT", self.account):
+            status = self.runner.live_status(
                 self.conn, expected_hostname=self.host,
-                expected_server_id=self.sid, expected_account="wrong@%",
+                expected_server_id=self.sid, expected_account=self.account,
             )
+            self.assertEqual(status["db_writes"], 0)
+            self.assertEqual(status["new_sql_users"], 0)
+            self.assertEqual(status["audit"]["status"], "DDL_VERIFIED")
+            self.assertEqual(status["batch_events"], 0)
+            with self.assertRaisesRegex(PreflightError, "account"):
+                self.runner.live_status(
+                    self.conn, expected_hostname=self.host,
+                    expected_server_id=self.sid, expected_account="wrong@%",
+                )
+
+    def test_webro_can_only_status_or_inspect_not_signed_apply(self):
+        # Synthetic root account plays role of EXISTING web_ro, NEVER creates users.
+        with patch.object(self.runner, "READ_ONLY_ACCOUNT", self.account):
+            state = self.runner.live_status(
+                self.conn, expected_hostname=self.host,
+                expected_server_id=self.sid, expected_account=self.account,
+            )
+            self.assertEqual(state["db_writes"], 0)
+            self.assertEqual(state["account"], self.account)
+            reviewed = self.runner.operation(
+                self.conn, mode="inspect",
+                manifest_path=str(self.manifest_path),
+                review_path=str(self.review_path),
+                expected_hostname=self.host, expected_server_id=self.sid,
+                expected_account=self.account,
+            )
+            self.assertEqual(reviewed["db_writes"], 0)
+            receipt = self._sign(now=1795430000)
+            with self.assertRaisesRegex(PreflightError, "requires.*loucka_audit"):
+                self.runner.operation(
+                    self.conn, mode="apply",
+                    manifest_path=str(self.manifest_path),
+                    review_path=str(self.review_path),
+                    receipt_path=str(receipt), key_path=str(self.key_path),
+                    execute=True, prompt=lambda _: self._phrase("apply"),
+                    expected_hostname=self.host, expected_server_id=self.sid,
+                    expected_account=self.account, now=1795430020,
+                )
+            with self.assertRaisesRegex(PreflightError, "requires.*loucka_audit"):
+                self.runner.operation(
+                    self.conn, mode="rollback",
+                    manifest_path=str(self.manifest_path),
+                    review_path=str(self.review_path),
+                    receipt_path=str(receipt), key_path=str(self.key_path),
+                    execute=True, prompt=lambda _: self._phrase("rollback"),
+                    expected_hostname=self.host, expected_server_id=self.sid,
+                    expected_account=self.account, now=1795430020,
+                )
+            self.assertEqual(self._event_count(), 0)
+            self.assertEqual(self._value(), 1.0)
 
     def test_inspect_no_execution_or_signature_required(self):
         result = self._operation("inspect")
