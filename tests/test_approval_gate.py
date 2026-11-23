@@ -10,7 +10,7 @@ from meteo_audit.approval_gate import (
     challenge_for, sign_exact_batch, verify_exact_batch, verify_fresh_snapshot,
 )
 
-SECRET = bytes(range(32))
+MAC_TEST_KEY = bytes(range(32))
 
 
 def operation(t=1540000000, variable="outTemp", old=0.0, new=12.5):
@@ -28,7 +28,7 @@ def approved(b, report):
     return sign_exact_batch(
         b, report, approver="owner:synthetic",
         entered_challenge=challenge_for(b, report),
-        secret_key=SECRET, now=1795430000,
+        secret_key=MAC_TEST_KEY, now=1795430000,
     )
 
 
@@ -39,13 +39,13 @@ class OwnerApprovalGateTests(unittest.TestCase):
             sign_exact_batch(
                 b, report, approver="owner:synthetic",
                 entered_challenge="SCHVALUJI-JINOU-DAVKU",
-                secret_key=SECRET, now=1795430000,
+                secret_key=MAC_TEST_KEY, now=1795430000,
             )
 
     def test_receipt_pins_batch_payload_and_before_image(self):
         b, snapshot, report = example()
         receipt = approved(b, report)
-        verified = verify_exact_batch(b, report, receipt, secret_key=SECRET, now=1795430020)
+        verified = verify_exact_batch(b, report, receipt, secret_key=MAC_TEST_KEY, now=1795430020)
         updated, commit = simulate_atomic_apply(b, snapshot, verified)
         self.assertEqual(updated[(1540000000, "outTemp")], 12.5)
         self.assertEqual(snapshot[(1540000000, "outTemp")], 0.0)
@@ -57,14 +57,14 @@ class OwnerApprovalGateTests(unittest.TestCase):
         receipt = approved(b, report)
         changed = CandidateBatch(b.batch_id, (operation(new=13.0),))
         with self.assertRaisesRegex(PreflightError, "preflight identity"):
-            verify_exact_batch(changed, report, receipt, secret_key=SECRET, now=1795430020)
+            verify_exact_batch(changed, report, receipt, secret_key=MAC_TEST_KEY, now=1795430020)
 
     def test_tampered_receipt_and_wrong_key_rejected(self):
         b, _, report = example()
         receipt = approved(b, report)
         with self.assertRaisesRegex(PreflightError, "integrity"):
             verify_exact_batch(b, report, replace(receipt, approver="owner:intruder"),
-                               secret_key=SECRET, now=1795430020)
+                               secret_key=MAC_TEST_KEY, now=1795430020)
         with self.assertRaisesRegex(PreflightError, "integrity"):
             verify_exact_batch(b, report, receipt, secret_key=b"A"*32, now=1795430020)
 
@@ -72,9 +72,9 @@ class OwnerApprovalGateTests(unittest.TestCase):
         b, _, report = example()
         receipt = approved(b, report)
         with self.assertRaisesRegex(PreflightError, "expired"):
-            verify_exact_batch(b, report, receipt, secret_key=SECRET, now=1795433600)
+            verify_exact_batch(b, report, receipt, secret_key=MAC_TEST_KEY, now=1795433600)
         with self.assertRaisesRegex(PreflightError, "future"):
-            verify_exact_batch(b, report, receipt, secret_key=SECRET, now=1795429999)
+            verify_exact_batch(b, report, receipt, secret_key=MAC_TEST_KEY, now=1795429999)
 
     def test_changed_source_before_image_is_rejected(self):
         b, _, report = example()
@@ -83,14 +83,14 @@ class OwnerApprovalGateTests(unittest.TestCase):
                 b, dict(report, before_image=[{"target_time_utc":1540000000,
                                               "variable":"outTemp", "old":99.0}]),
                 approver="owner:synthetic", entered_challenge="anything",
-                secret_key=SECRET, now=1795430000,
+                secret_key=MAC_TEST_KEY, now=1795430000,
             )
 
     def test_unsigned_plain_object_not_accepted(self):
         b, _, report = example()
         with self.assertRaisesRegex(PreflightError, "signed approval"):
             verify_exact_batch(b, report, {"approval_ref":"approved"},
-                               secret_key=SECRET, now=1795430020)
+                               secret_key=MAC_TEST_KEY, now=1795430020)
 
     def test_fresh_snapshot_cas_and_history_collision(self):
         b, old, report = example()
@@ -103,7 +103,7 @@ class OwnerApprovalGateTests(unittest.TestCase):
     def test_zero_is_distinct_from_null(self):
         b, snapshot, report = example()
         receipt = approved(b, report)
-        verify_exact_batch(b, report, receipt, secret_key=SECRET, now=1795430020)
+        verify_exact_batch(b, report, receipt, secret_key=MAC_TEST_KEY, now=1795430020)
         with self.assertRaisesRegex(PreflightError, "CAS"):
             verify_fresh_snapshot(b, report, {(1540000000, "outTemp"): None})
 
