@@ -54,6 +54,23 @@ Předběžná, **nikoliv schvalovací** podmínka „měsíční test prošel“
 4. **Rok 2022:** pro 45 069 chybějících primárních hodnot bez přímého zdroje **nelze** použít regionální ČHMÚ referenci jako původní místní měření. Případný odhad musí mít samostatnou validaci (chybějící vstupy, odlišná meteorologická podporovaná doba, confidence intervals).
 5. **Explicitní rozhodnutí:** než bude existovat hodinový a pětiminutový test i schválený individuální manifest `batch_id + SHA256 + before-images + old/new + source`, zůstává **NO-GO**. Neměnit produkci ani WeeWX v jiném LXC.
 
+## Druhá etapa připravena: skutečná hodinová validace na LXC
+
+Nový [`scripts/verify_pressure_epoch_hourly_holdout.py`](../../scripts/verify_pressure_epoch_hourly_holdout.py) **nemění a nepřetrénovává zmrazené koeficienty** z uloženého měsíčního výsledku. Pouze vyhodnotí tyto modely na **každé skutečné hodinové** dvojici `Loučka.barometer – ČHMÚ P_hm` v dosud neviděných holdout měsících. Pro Holešov i Mošnov zvlášť spočítá skutečné **hourly MAE, mediánovou odchylku, MAD, p95 absolutní hodinové chyby, n a počet pokrytých měsíců** a porovná je s nulovou korekcí. Všechny načtené zdrojové ČHMÚ soubory kontroluje oproti SHA-256 manifestu PR #89; aktuální JSON z roku 2026 má `manifest.element=null` a skutečný `P_hm` se filtruje uvnitř souboru. SQL funguje přes **jedinou read-only transakci** na existujícím `loucka_web_ro` účtu.
+
+Spuštění na LXC se staženými ČHMÚ soubory:
+
+```sh
+python3 scripts/verify_pressure_epoch_hourly_holdout.py \
+  --cnf /root/meteo-loucka-ro.cnf \
+  --chmi-cache /opt/meteo-pressure-chmi/data/chmi-pressure-2009-2026 \
+  --model reports/parallel-audit/pressure-epoch-monthly-holdout-20261123.json \
+  --out /tmp/loucka-pressure-hourly-holdout-evidence.json
+python3 -m unittest discover -s tests -p 'test_verify_pressure_epoch_hourly_holdout.py'
+```
+
+Hodinová diagnostická podmínka je pouze indikativní: alespoň tři rozdílné testovací měsíce, 200 hodin, MAE ≤2 hPa, p95 absolutní chyby ≤4 hPa a zlepšení MAE ≥20 % proti původním datům. **Ani její splnění nesmí spustit žádný automatický UPDATE.** Je nutný samostatný posudek, metrologická správnost, rozlišení `MEASURED` vs `ESTIMATED/CALIBRATED` a schválení manifestu. Hodinový runner a jeho samostatné Python unit testy **zatím nelze spustit z tohoto prostředí, protože původní SHA-ověřené CSV jsou pouze na LXC**. Jejich výsledek = **NOT_RUN**.
+
 ## Reprodukce
 
 Požaduje pouze Node.js 20+ a dva již verzované agregované CSV soubory PR #89. Z kořene čistého worktree:
