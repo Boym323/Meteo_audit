@@ -1,0 +1,38 @@
+name: Issue 26 Owner Approval Gate
+
+on:
+  push:
+    paths:
+      - src/meteo_audit/approval_gate.py
+      - scripts/issue26_approval_review.py
+      - tests/test_approval_gate.py
+      - tests/test_issue26_approval_review_cli.py
+      - .github/workflows/issue26-approval-gate.yml
+  pull_request:
+    paths:
+      - src/meteo_audit/approval_gate.py
+      - scripts/issue26_approval_review.py
+      - tests/test_approval_gate.py
+      - tests/test_issue26_approval_review_cli.py
+      - .github/workflows/issue26-approval-gate.yml
+
+permissions:
+  contents: read
+
+jobs:
+  offline-approval-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Syntax and full regression suite, no DB access
+        env:
+          PYTHONPATH: src
+        run: |
+          python3 -m compileall -q src scripts tests
+          python3 -m unittest discover -s tests -v
+      - name: Secret scanning
+        run: python3 scripts/check_repo_secrets.py
