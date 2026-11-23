@@ -1,0 +1,70 @@
+name: Issue 26 Transactional CAS and Rollback (synthetic SQL)
+
+on:
+  push:
+    paths:
+      - src/meteo_audit/issue26_transaction.py
+      - tests/test_issue26_transaction_mariadb.py
+      - sql/issue26_transactional_audit_schema.sql
+      - .github/workflows/issue26-transactional.yml
+  pull_request:
+    paths:
+      - src/meteo_audit/issue26_transaction.py
+      - tests/test_issue26_transaction_mariadb.py
+      - sql/issue26_transactional_audit_schema.sql
+      - .github/workflows/issue26-transactional.yml
+
+permissions:
+  contents: read
+
+jobs:
+  mariadb-atomic-cas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      mariadb:
+        image: mariadb:11.8
+        env:
+          MARIADB_ROOT_PASSWORD: ci
+          MARIADB_DATABASE: loucka_reconstruction
+          MARIADB_ROOT_HOST: "%"
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "healthcheck.sh --connect --innodb_initialized"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install client-only Python driver (no extra persistent DB)
+        run: python3 -m pip install pymysql==1.1.2
+      - name: Prepare isolated synthetic archive fixture
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import pymysql
+          conn=pymysql.connect(host='127.0.0.1',user='root',password='ci',
+                               port=3306,database='loucka_reconstruction',autocommit=True)
+          with conn.cursor() as c:
+              c.execute('CREATE TABLE archive (dateTime INT NOT NULL PRIMARY KEY, rain DOUBLE NULL, outTemp DOUBLE NULL, outHumidity DOUBLE NULL) ENGINE=InnoDB')
+              c.execute('CREATE TABLE reconstruction_changes (id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, batch_key VARCHAR(80), target_time INT, variable VARCHAR(64)) ENGINE=InnoDB')
+          conn.close()
+          print('Synthetic reconstruction schema created (no production connections)')
+          PY
+      - name: Exercise real SQL CAS, audit, simultaneous writers, rollback and failure
+        env:
+          PYTHONPATH: src
+          ISSUE26_CI_MYSQL: "1"
+        run: |
+          python3 -m unittest discover -s tests -p 'test_issue26_transaction_mariadb.py' -v
+      - name: Run full offline Python regression suite and security scan
+        env:
+          PYTHONPATH: src
+        run: |
+          python3 -m compileall -q src tests scripts
+          python3 -m unittest discover -s tests -v
+          python3 scripts/check_repo_secrets.py
