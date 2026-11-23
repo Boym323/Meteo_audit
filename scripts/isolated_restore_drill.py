@@ -66,9 +66,10 @@ def instance(cnf):
 
 def separate_instances(a, b):
     x, y = instance(a), instance(b)
-    if (x[0] == y[0] or x[1] == y[1] or x[3] == y[3]
+    if (x[0] == y[0] or x[1] == y[1]
             or x[1] in ("0", "") or y[1] in ("0", "")):
-        raise DrillError("NO-GO: host, datadir and server_id must prove separate instances")
+        # Different servers may legitimately use the same datadir path string.
+        raise DrillError("NO-GO: hostname and server_id must prove separate instances")
     return x, y
 
 
