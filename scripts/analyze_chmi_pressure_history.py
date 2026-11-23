@@ -171,6 +171,8 @@ def main():
         stats[(r["year"], r["station_id"], r["chmi_element"], r["loucka_field"])].append(r["loucka_minus_chmi_hpa"])
         monthly_stats[(r["year"], r["month"], r["station_id"], r["chmi_element"], r["loucka_field"])].append(r["loucka_minus_chmi_hpa"])
         if r["chmi_element"] == "P" and r["loucka_field"] == "pressure" and r["outTemp_c"] is not None:
+            # Fixed current elevations: appropriate for >=2018, approximate for earlier dates.
+            # Historical station moves must be accounted for before precision calibration.
             elev = 222.25 if r["station_id"].endswith("11774") else 252.8
             dz = 425.0 - elev
             tk = float(r["outTemp_c"]) + 273.15
@@ -249,7 +251,7 @@ def main():
          "reference_parse":ref_stats,"hourly_pair_rows":len(pair_rows),"hourly_statistics_groups":len(year_rows),"hourly_monthly_statistics_groups":len(month_rows),"daily_month_groups":len(drows),"coarse_daily_monthly_groups":len(coarse),
          "methods":{"timestamp":"Exact matching of explicit UTC Z hourly timestamps; archive dateTime interpreted Unix UTC.","hourly_quality":"Only CHMI QUALITY 0/0.0 enters numeric comparisons; flags retained and distributions reported.",
                     "field_semantics":"Loucka pressure treated as site pressure and barometer as sea-level reduced only as hypotheses; no relabeling. CHMI P is station pressure; P_hm is reduced pressure.",
-                    "elevation":"Loucka site 425m per task; station elevation/coordinates taken from time-valid official meta1 JSON. Difference between station pressures is not treated as calibration error.",
+                    "elevation":"Loucka site 425m per task. Diagnostic calculations use fixed modern CHMI heights Holešov 222.25m and Mošnov 252.8m for all years; historical station moves in meta1 are NOT currently applied (Holešov early 2009, Mošnov before May 2016). No station-pressure difference is treated as a calibration error without independent support.",
                     "station_pressure_height_model":"Only diagnostic: P adjusted from Loucka 425m to CHMI station height using observed Loucka outTemp as a representative column temperature and dry-air hypsometric equation; it is not an independent measurement or replacement candidate.",
                     "limitations":"No hourly CHMI before 2018. Daily CSV has a different temporal support and TIMEFUNC; annual daily comparisons are trend context only, never exact-hour pairs."}}
     (OUT/"analysis.json").write_text(json.dumps(doc,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
