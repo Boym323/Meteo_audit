@@ -1,0 +1,33 @@
+{
+  "annual_groups": 11,
+  "caveats": [
+    "Hourly SYNOP and WeeWX 5-min point have different temporal support",
+    "Dry-air altitude transport uses contemporaneous local outTemp; not calibration ground truth",
+    "Historical GW1000-named archive is not an independent GW1000 hardware source before its installation",
+    "Protected Q1 2018 and production archive untouched; no SQL writes"
+  ],
+  "chmi_manifest_sha256": "3c935d0a134a6cd351fe1915cb0a720cf47bed4dc8fc18c0e7d88ece4b72409e",
+  "chmi_quality_counts": {
+    "P:0.0": 17409,
+    "P:4.0": 111,
+    "P_hm:0.0": 17409,
+    "P_hm:4.0": 111
+  },
+  "comparison_points": 42940,
+  "created_at_utc": "2026-11-23T19:35:14.076316+00:00",
+  "database_identity": {
+    "account": "loucka_web_ro@192.168.0.131",
+    "host": "lo-infra-db-mariadb01",
+    "server_id": 1
+  },
+  "interpretation": "WH source is not independently validated by old_weewx duplication; compare with CHMI P and P_hm with altitude adjustment. This is NOT a per-field write manifest.",
+  "mode": "READ_ONLY_SOURCE_DIAGNOSTICS_NO_APPROVED_REPLACEMENTS",
+  "monthly_groups": 132,
+  "schema": "wh1080-chmi-pressure-2018-source-comparison-v1",
+  "source_rows": 8055,
+  "target_buckets": {
+    "target_pressure_NULL": 3835,
+    "target_pressure_present": 4220
+  },
+  "year": 2018
+}
