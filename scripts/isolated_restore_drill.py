@@ -79,6 +79,9 @@ def empty_destination(cnf):
                    "('mysql','information_schema','performance_schema','sys')")
     if other:
         raise DrillError("NO-GO: destination already contains a user database")
+    event_scheduler, binlog = one(select(cnf, "SELECT @@global.event_scheduler,@@global.log_bin"), 2)
+    if event_scheduler.upper() not in ("OFF", "0") or binlog not in ("OFF", "0"):
+        raise DrillError("NO-GO: isolated target must not execute events or binlog a restore")
 
 
 def inventory(cnf):
