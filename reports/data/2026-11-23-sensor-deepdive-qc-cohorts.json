@@ -1,0 +1,223 @@
+{
+  "schema": "loucka-production-sensor-deepdive-v1",
+  "snapshot_cutoff_unix": 1795415700,
+  "snapshot_cutoff_utc": "2026-11-23T06:35:00Z",
+  "parent_inventory": "reports/data/2026-11-23-production-anomaly-cohorts.json",
+  "sql": "sql/readonly/production_sensor_mapping_pm25_followup_20261123.sql",
+  "report": "reports/2026-11-23-deep-sensor-pm25-soil-mapping-followup.md",
+  "no_new_approved_operations": true,
+  "unverified_sensor_epoch": true,
+  "independent_source_not_proven": true,
+  "warning": "Counts overlap previous 26-cohort registry and must not be added as a total or converted to production DML; historical mirror equality does not imply independent confirmation.",
+  "cohorts": [
+    {
+      "id": "RA27",
+      "fields": [
+        "pm25_1"
+      ],
+      "period": "2024",
+      "observed_count": 2128,
+      "decision": "PM_SENSOR_SATURATION_REVIEW",
+      "evidence_sections": [
+        "A",
+        "B",
+        "C"
+      ],
+      "priority": "P1",
+      "notes": "2024 2,128 >=500, 1,401 near 999.9; longest contiguous run 446 five-minute samples; GW pm2_5 exact copy not independent",
+      "approved": false,
+      "auto_apply": false,
+      "source": "pocasi-loucka.eu.archive",
+      "status": "QC_REVIEW_REQUIRED"
+    },
+    {
+      "id": "RA28",
+      "fields": [
+        "bgt"
+      ],
+      "period": "2026-03-08..2026-04-27",
+      "observed_count": 1551,
+      "decision": "UNVERIFIED_PLACEHOLDER",
+      "evidence_sections": [
+        "D"
+      ],
+      "priority": "P1",
+      "notes": "All 1,551 nonnull bgt exactly -0.1, while 172 outside temperature values differ",
+      "approved": false,
+      "auto_apply": false,
+      "source": "pocasi-loucka.eu.archive",
+      "status": "QC_REVIEW_REQUIRED"
+    },
+    {
+      "id": "RA29",
+      "fields": [
+        "soilTemp3",
+        "soilTemp4",
+        "soilTemp5",
+        "soilTemp6"
+      ],
+      "period": "2022..2026",
+      "observed_count": null,
+      "decision": "SOIL_SENSOR_CHANNEL_MAPPING_EVIDENCE",
+      "evidence_sections": [
+        "E"
+      ],
+      "priority": "P0",
+      "notes": "GW soilTemp1/2/3/4 map respectively production soilTemp3/4/5/6 on 100% comparable 2022-25 samples; minor divergence 2026",
+      "approved": false,
+      "auto_apply": false,
+      "source": "pocasi-loucka.eu.archive",
+      "status": "QC_REVIEW_REQUIRED"
+    },
+    {
+      "id": "RA30",
+      "fields": [
+        "soilTemp1"
+      ],
+      "period": "2026",
+      "observed_count": 11,
+      "decision": "SOIL_SENSOR_NEGATIVE_SPIKE_REVIEW",
+      "evidence_sections": [
+        "F",
+        "G"
+      ],
+      "priority": "P1",
+      "notes": "11 original soilTemp1 below -20 in 2026, GW soilTemp1 equals production soilTemp3, not this channel; 2 additional 2022",
+      "approved": false,
+      "auto_apply": false,
+      "source": "pocasi-loucka.eu.archive",
+      "status": "QC_REVIEW_REQUIRED"
+    },
+    {
+      "id": "RA31",
+      "fields": [
+        "soilTemp5",
+        "soilTemp6"
+      ],
+      "period": "2026",
+      "observed_count": 31,
+      "decision": "SOIL_SENSOR_NEGATIVE_SPIKE_REVIEW",
+      "evidence_sections": [
+        "G"
+      ],
+      "priority": "P1",
+      "notes": "10 soilTemp5 below -40 plus 21 soilTemp6 below -40; prior six below -50 are subset",
+      "approved": false,
+      "auto_apply": false,
+      "source": "pocasi-loucka.eu.archive",
+      "status": "QC_REVIEW_REQUIRED"
+    },
+    {
+      "id": "RA32",
+      "fields": [
+        "extraTemp2"
+      ],
+      "period": "2022-09-02..2022-09-08",
+      "observed_count": 1765,
+      "decision": "UNVERIFIED_SENSOR_EPOCH",
+      "evidence_sections": [
+        "H"
+      ],
+      "priority": "P1",
+      "notes": "1,765 values 27.57-99, 1,204 over60. Might be humidity-like; channel/unit unknown",
+      "approved": false,
+      "auto_apply": false,
+      "source": "pocasi-loucka.eu.archive",
+      "status": "QC_REVIEW_REQUIRED"
+    },
+    {
+      "id": "RA33",
+      "fields": [
+        "extraTemp2"
+      ],
+      "period": "2024-02-17",
+      "observed_count": 14,
+      "decision": "SENSOR_ERROR_REVIEW",
+      "evidence_sections": [
+        "H"
+      ],
+      "priority": "P1",
+      "notes": "14 frozen ~822.4 values, GW extraTemp2 NULL; not valid physical temp without proven alternative",
+      "approved": false,
+      "auto_apply": false,
+      "source": "pocasi-loucka.eu.archive",
+      "status": "QC_REVIEW_REQUIRED"
+    },
+    {
+      "id": "RA34",
+      "fields": [
+        "sunshineDur",
+        "sunshine_time"
+      ],
+      "period": "2026",
+      "observed_count": 10555,
+      "decision": "UNIT_SEMANTICS_REVIEW",
+      "evidence_sections": [
+        "I"
+      ],
+      "priority": "P2",
+      "notes": "10,555 sunshineDur > interval seconds; 16,690 sunshine_time > interval seconds; not proof of corruption if cumulative/different units",
+      "approved": false,
+      "auto_apply": false,
+      "source": "pocasi-loucka.eu.archive",
+      "status": "QC_REVIEW_REQUIRED"
+    },
+    {
+      "id": "RA35",
+      "fields": [
+        "barometer",
+        "windSpeed",
+        "soilTemp5",
+        "pm25_1"
+      ],
+      "period": "2026-03-08 onward",
+      "observed_count": null,
+      "decision": "SOURCE_PROCESSING_EPOCH_REVIEW",
+      "evidence_sections": [
+        "J"
+      ],
+      "priority": "P1",
+      "notes": "First p/GW barometer >0.5hPa and windSpeed >1km/h discrepancies 2026-03-08 12:15 UTC. GW is related mirror",
+      "approved": false,
+      "auto_apply": false,
+      "source": "pocasi-loucka.eu.archive",
+      "status": "QC_REVIEW_REQUIRED"
+    },
+    {
+      "id": "RA36",
+      "fields": [
+        "dateTime"
+      ],
+      "period": "2026-10-29 onward",
+      "observed_count": null,
+      "decision": "HISTORICAL_MIRROR_LIMIT",
+      "evidence_sections": [
+        "K"
+      ],
+      "priority": "P2",
+      "notes": "GW archive ends 2026-10-29 10:10 UTC; production continues, so GW missing not proof production missing",
+      "approved": false,
+      "auto_apply": false,
+      "source": "pocasi-loucka.eu.archive",
+      "status": "QC_REVIEW_REQUIRED"
+    },
+    {
+      "id": "RA37",
+      "fields": [
+        "lightning_distance"
+      ],
+      "period": "2026",
+      "observed_count": 40,
+      "decision": "LAST_EVENT_SEMANTICS_REVIEW",
+      "evidence_sections": [
+        "L"
+      ],
+      "priority": "P2",
+      "notes": "All 40 available distances 34 with no coincident positive strikes; may be legitimate stored last-event distance",
+      "approved": false,
+      "auto_apply": false,
+      "source": "pocasi-loucka.eu.archive",
+      "status": "QC_REVIEW_REQUIRED"
+    }
+  ]
+}
