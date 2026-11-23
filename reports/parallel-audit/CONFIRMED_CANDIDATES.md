@@ -5,6 +5,8 @@
 
 **Aktualizace 23. 11. 2026:** C002 již nemá 28 otevřených databázových rozdílů `GW1000.rainRate>5` proti nulové rekonstruované hodnotě. Všechny 28/28 nyní přesně odpovídají zdroji i zaznamenanému `applied` auditu dávky `rainrate-2023-2024-wet-source-review-v1`. [Read-only důkazy](C002-rainrate-resolved-readonly-20261123.md). Tato shoda neprokazuje fyzikální pravost vysokých intenzit a nic nového neschvaluje. Původní část registru je historický stav k 30. 10. 2026.
 
+**Aktualizace Fáze A 23. 11. 2026:** původních 360 aplikovaných oprav `rain` není správné kontrolovat pouze proti původní nule: 19 z nich bylo 12. 11. 2026 legitimně supersedováno dávkou `rain-2010-2011-phaseA-unknown-null-review-v1` (`old=0` → `new=NULL`, protože pravý lokální úhrn je neznámý). Kontrola napojení auditu i současného archivu vyšla 19/19, zbývajících 341 rain odpovídá původní nule. [Read-only doklad](phase-a-supersessions-readonly-20261123.md). **NULL nikdy neměnit automaticky na 0**.
+
 ## A. Již aplikované zásahy — NEOPAKOVAT
 
 | ID | Klíč/rozsah | Aktuální DB | Rozhodnutí |
