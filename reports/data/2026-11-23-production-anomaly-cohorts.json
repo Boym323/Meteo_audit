@@ -338,10 +338,10 @@
         "outTemp"
       ],
       "window": "2011-2017",
-      "observed_count": 14778,
+      "observed_count": 15678,
       "decision": "BLOCK_LEGACY_PLACEHOLDER",
       "sql_block": "K",
-      "note": "WH1080 zero-placeholder counts across 2011/2012,2016,2017-Jan,2017-May; 3264+5343+2261+4810"
+      "note": "WH1080 zero-placeholder count: 3264 (2011/12), 5343 (2016), 2261 (2017 Jan), 4810 (2017 May). Not validated independent source measurements."
     },
     {
       "approved": false,
