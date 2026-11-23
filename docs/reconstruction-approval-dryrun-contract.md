@@ -19,6 +19,6 @@
 ## Co zbývá pro skutečné dokončení #26
 
 1. Získat per-variable verifikované návrhy (většina z 92 664 operací zůstává QUARANTINE) s originálními raw referencemi a ověřenými jednotkami.
-2. V izolované MariaDB vybudovat transakční implementaci s `SELECT ... FOR UPDATE`, DB advisory lockem, NULL-safe CAS, immutable before-image storage, append-only audit a tvrdým idempotency guardem. Nahradit kopírovací model skutečnými dvouprocesovými integračními testy.
-3. Ověřit obnovitelnost snapshotu a zvlášť historickou invariantu července 2021 cca 42,567 mm, Fáze A a všechny dřívější override události.
+2. Transakční implementaci s `SELECT ... FOR UPDATE`, DB advisory lockem, NULL-safe CAS, immutable before-image storage, append-only audit a idempotency guardem testovat na syntetických databázích v CI; žádný další trvalý server MariaDB se pro tento projekt nezřizuje. Provozní aplikace na stávající `loucka_reconstruction` musí mít nezávislé konkrétní schválení vlastníka.
+3. Jako model disaster recovery používat **stávající Proxmox Backup Server** podle [provozní PBS politiky](issue26-pbs-backup-recovery-policy.md): doložit snapshot pro správný DB host a zahrnutí všech disků/datadir, úspěšný backup job a PBS Verify, případně bezpečnou file-level kontrolu; oddělená MariaDB není podmínkou dokončení. PBS integrita není totéž jako reálně otestovaný start obnovené DB. Zvlášť kontrolovat historickou invariantu července 2021 cca 42,567 mm, Fázi A a všechny dřívější override události.
 4. Vyžádat explicitní souhlas vlastníka pro **konkrétní batch+SHA**, nikoliv pro celé issue, PR nebo algoritmus. Teprve potom provést testovací apply; produkční DB zůstává nedotknutá.
