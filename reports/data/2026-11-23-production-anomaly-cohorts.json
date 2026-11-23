@@ -1,0 +1,409 @@
+{
+  "schema": "loucka-production-anomaly-cohort-registry-v1",
+  "checked_at_utc": "2026-11-23T06:35:00Z",
+  "source_max_dateTime": 1795415700,
+  "source_rows": 1686896,
+  "source_columns": 80,
+  "status": "CANDIDATE_INVENTORY_NOT_APPROVED_RECONSTRUCTION_MANIFEST",
+  "read_only": true,
+  "source_independence": "NOT_VERIFIED_BY_DATABASE_NAME_OR_MATCHING_COPIES",
+  "sql": "sql/readonly/production_anomaly_inventory_20261123.sql",
+  "narrative_report": "reports/2026-11-23-production-anomaly-reconstruction-inventory.md",
+  "warning": "Entries overlap; observed_count is a screening count or metadata count, not number of approved SQL writes; no row-level manifest, no automatic operation.",
+  "cohorts": [
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA01",
+      "fields": [
+        "rainRate"
+      ],
+      "window": "2009-2025",
+      "observed_count": 1592925,
+      "decision": "HOLD_UNRECORDED_RATE",
+      "sql_block": "C",
+      "note": "37,611 wet intervals with zero rate; no verified original rate algorithm"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA02",
+      "fields": [
+        "rain"
+      ],
+      "window": "2021-07",
+      "observed_count": 1568,
+      "decision": "HOLD_AUDIT_CONFLICT",
+      "sql_block": "E",
+      "note": "Production 701.015mm vs reconstruction 42.567mm, 146 rain audit NULL/postimage-zero conflicts"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA03",
+      "fields": [
+        "outTemp"
+      ],
+      "window": "2013",
+      "observed_count": 5659,
+      "decision": "REVIEW_LEGACY_RESTORE",
+      "sql_block": "H",
+      "note": "WH1080 present 5651; reject 12 zero, ensure raw source provenance and units"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA04",
+      "fields": [
+        "outHumidity"
+      ],
+      "window": "2018",
+      "observed_count": 35892,
+      "decision": "REVIEW_LEGACY_RESTORE",
+      "sql_block": "I",
+      "note": "WH1080 has 6013 including 418 floor10; reconstruction filled 1374"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA05",
+      "fields": [
+        "outHumidity"
+      ],
+      "window": "2019",
+      "observed_count": 19721,
+      "decision": "REVIEW_LEGACY_RESTORE",
+      "sql_block": "I",
+      "note": "WH1080 has 7459 including 297 floor10 and 6 over100; reconstruction filled 4826"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA06",
+      "fields": [
+        "outHumidity"
+      ],
+      "window": "2022",
+      "observed_count": 44516,
+      "decision": "HOLD_MISSING_INDEPENDENT_SOURCE",
+      "sql_block": "J",
+      "note": "44509 before GW1000; GW source has no exact-time RH candidate"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA07",
+      "fields": [
+        "rain"
+      ],
+      "window": "2020",
+      "observed_count": 8126,
+      "decision": "HOLD_MISSING_INDEPENDENT_SOURCE",
+      "sql_block": "B",
+      "note": "Only four exact-time WH rain candidates, concurrent missing wind 8103"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA08",
+      "fields": [
+        "outHumidity"
+      ],
+      "window": "2015-2018",
+      "observed_count": 1500,
+      "decision": "REVIEW_SENSOR_FLOOR",
+      "sql_block": "F",
+      "note": "Exact 10% in original and reconstruction, historical WH copies reproduce floor"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA09",
+      "fields": [
+        "outTemp"
+      ],
+      "window": "2020-2022",
+      "observed_count": 1223,
+      "decision": "REVIEW_FROZEN_SENSOR",
+      "sql_block": "G",
+      "note": "Exact 4.25°C plateau, 2020 longest 62x5min, WH often differs"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA10",
+      "fields": [
+        "extraTemp1",
+        "extraTemp2"
+      ],
+      "window": "2022-2024",
+      "observed_count": 790,
+      "decision": "REVIEW_CHANNEL_MAPPING",
+      "sql_block": "M",
+      "note": "776 extraTemp2 high in 2022, 14 constant 822.4 in 2024"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA11",
+      "fields": [
+        "soilTemp5",
+        "soilTemp6"
+      ],
+      "window": "2026",
+      "observed_count": 6,
+      "decision": "REVIEW_SENSOR_SENTINEL",
+      "sql_block": "M",
+      "note": "-58.75 to -61.75°C; sensor map requires proof"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA12",
+      "fields": [
+        "lightning_disturber_count"
+      ],
+      "window": "2026",
+      "observed_count": 54154,
+      "decision": "REVIEW_LIVE_MAPPER",
+      "sql_block": "N",
+      "note": "Epoch-like values increasing; API redaction in place"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA13",
+      "fields": [
+        "lightning_noise_count"
+      ],
+      "window": "2026",
+      "observed_count": 179,
+      "decision": "REVIEW_LIVE_MAPPER",
+      "sql_block": "N",
+      "note": "Every non-null noise count equals strike count"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA14",
+      "fields": [
+        "radiation"
+      ],
+      "window": "2023-2026",
+      "observed_count": 10,
+      "decision": "REVIEW_SOLAR_SPIKE",
+      "sql_block": "M",
+      "note": "Above twice modeled maxSolarRad, 3 high >1500W/m2"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA15",
+      "fields": [
+        "barometer"
+      ],
+      "window": "2013-2019",
+      "observed_count": 9,
+      "decision": "REVIEW_5MIN_JUMP",
+      "sql_block": "L",
+      "note": "Changes >8hPa within exactly 300s, max25.4hPa"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA16",
+      "fields": [
+        "windSpeed"
+      ],
+      "window": "2014-2019",
+      "observed_count": 15,
+      "decision": "REVIEW_5MIN_JUMP",
+      "sql_block": "L",
+      "note": "Changes >60km/h in exactly 300s"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA17",
+      "fields": [
+        "outHumidity"
+      ],
+      "window": "2015-2021",
+      "observed_count": 8,
+      "decision": "REVIEW_5MIN_JUMP",
+      "sql_block": "L",
+      "note": "Changes >50 percentage points within 300s"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA18",
+      "fields": [
+        "rain"
+      ],
+      "window": "2009-2026",
+      "observed_count": 100,
+      "decision": "REVIEW_INTERVAL_EXTREME",
+      "sql_block": "D",
+      "note": "Interval rain>5mm; 11 of these >=10mm; some already NULL or 0 in reconstruction"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA19",
+      "fields": [
+        "dateTime"
+      ],
+      "window": "2009-2026",
+      "observed_count": 170050,
+      "decision": "HOLD_TIME_GAP",
+      "sql_block": "A",
+      "note": "Nominal five-minute slots not occupied, 44 long gaps >=24h"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA20",
+      "fields": [
+        "dateTime"
+      ],
+      "window": "2026",
+      "observed_count": 390,
+      "decision": "REVIEW_NON_GRID_TIMESTAMP",
+      "sql_block": "A",
+      "note": "43 rounded 5-min collisions, source values must not be auto-rounded"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA21",
+      "fields": [
+        "interval"
+      ],
+      "window": "2014-2025",
+      "observed_count": 2097,
+      "decision": "REVIEW_INTERVAL_EPOCH",
+      "sql_block": "A",
+      "note": "2090 interval=6 minutes; must preserve actual interval"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA22",
+      "fields": [
+        "outTemp"
+      ],
+      "window": "2011-2017",
+      "observed_count": 15678,
+      "decision": "BLOCK_LEGACY_PLACEHOLDER",
+      "sql_block": "K",
+      "note": "WH1080 zero-placeholder count: 3264 (2011/12), 5343 (2016), 2261 (2017 Jan), 4810 (2017 May). Not validated independent source measurements."
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA23",
+      "fields": [
+        "windSpeed"
+      ],
+      "window": "2013-04",
+      "observed_count": null,
+      "decision": "REVIEW_UNIT_EPOCH",
+      "sql_block": "Q",
+      "note": "Legacy/production wind numeric scale shifts 1 to 3.6 across April gap"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA24",
+      "fields": [
+        "dewpoint"
+      ],
+      "window": "2022-04",
+      "observed_count": 1077,
+      "decision": "REVIEW_DERIVED_RECALC",
+      "sql_block": "O",
+      "note": "In ORIGINAL values agree with original RH; mismatch only after 2022 RH reconstruction"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA25",
+      "fields": [
+        "archive_day_rain"
+      ],
+      "window": "2021-07",
+      "observed_count": 31,
+      "decision": "REBUILD_AFTER_APPROVAL",
+      "sql_block": "R",
+      "note": "Original daily rain cache matches uncorrected production, not reconstructed 42.567mm"
+    },
+    {
+      "approved": false,
+      "auto_apply": false,
+      "stage": "FORENSIC_REVIEW_ONLY",
+      "source": "pocasi-loucka.eu.archive",
+      "id": "RA26",
+      "fields": [
+        "extraHumid1",
+        "extraHumid2",
+        "lightning_energy"
+      ],
+      "window": "2009-2026",
+      "observed_count": 0,
+      "decision": "NOT_INSTALLED_OR_UNRECORDED_REVIEW",
+      "sql_block": "B",
+      "note": "Always NULL; must not be filled without sensor installation records"
+    }
+  ]
+}
