@@ -173,13 +173,32 @@ class RealMariaDbTransactionTests(unittest.TestCase):
         with self.conn.cursor() as c:
             c.execute("UPDATE archive SET outTemp=5 WHERE dateTime=%s", (EPOCH,))
         phrase = APPROVE_ROLLBACK + b.batch_id + ":" + b.payload_sha256 + ":" + report["before_image_sha256"]
+        new_signature = sign_exact_batch(
+            b, report, approver="owner:ci-synthetic-only",
+            entered_challenge=challenge_for(b, report),
+            secret_key=KEY_MATERIAL, now=NOW + 5,
+        )
         with self.assertRaisesRegex(PreflightError, "post-image"):
             rollback_approved_batch(
-                self.conn, b, report, sig, approval_key=KEY_MATERIAL,
-                entered_rollback_challenge=phrase, now=NOW,
+                self.conn, b, report, new_signature, approval_key=KEY_MATERIAL,
+                entered_rollback_challenge=phrase, now=NOW + 6,
             )
         self.assertEqual(self.count("issue26_batch_events"), 1)
         self.assertEqual(self.value(), 5)
+
+    def test_rollback_rejects_original_apply_receipt_even_if_still_valid(self):
+        b = self.batch(op())
+        report, sig = self.approve(self.conn, b)
+        apply_approved_batch(self.conn, b, report, sig,
+                             approval_key=KEY_MATERIAL, now=NOW)
+        phrase = APPROVE_ROLLBACK + b.batch_id + ":" + b.payload_sha256 + ":" + report["before_image_sha256"]
+        with self.assertRaisesRegex(PreflightError, "DIFFERENT"):
+            rollback_approved_batch(
+                self.conn, b, report, sig, approval_key=KEY_MATERIAL,
+                entered_rollback_challenge=phrase, now=NOW + 1,
+            )
+        self.assertEqual(self.value(), 2.5)
+        self.assertEqual(self.count("issue26_batch_events"), 1)
 
     def test_foreign_change_history_blocks_apply(self):
         with self.conn.cursor() as c:

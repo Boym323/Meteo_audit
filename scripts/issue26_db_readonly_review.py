@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Issue #26: export exact read-only review from the existing MariaDB.
 
-No SQL writer or DDL entrypoints. A privileged connection is unnecessary:
-use a dedicated SELECT-only database user. No backup or PBS checks.
+No SQL writer or DDL entrypoints. Reuse existing loucka_audit credentials
+(owner policy: NO new DB accounts). This tool executes only read-only SQL
+regardless of the broad rights currently held by loucka_audit.
+No backup or PBS checks.
 """
 from __future__ import annotations
 
