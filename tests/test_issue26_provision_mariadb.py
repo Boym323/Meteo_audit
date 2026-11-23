@@ -94,6 +94,34 @@ class DbProvisioningTests(unittest.TestCase):
             self.assertEqual(file.stat().st_mode & 0o777, 0o600)
             with self.conn.cursor() as cur:
                 self.assertEqual(verify_audit_ddl(cur)["status"], "DDL_VERIFIED")
+                # Structural drift must reject ALL future writer operations.
+                cur.execute(
+                    "ALTER TABLE issue26_field_events "
+                    "DROP INDEX idx_issue26_target_variable"
+                )
+                try:
+                    with self.assertRaisesRegex(PreflightError, "index"):
+                        verify_audit_ddl(cur)
+                finally:
+                    cur.execute(
+                        "ALTER TABLE issue26_field_events "
+                        "ADD INDEX idx_issue26_target_variable(target_time,variable)"
+                    )
+                cur.execute(
+                    "ALTER TABLE issue26_field_events "
+                    "DROP FOREIGN KEY fk_issue26_batch_event"
+                )
+                try:
+                    with self.assertRaisesRegex(PreflightError, "FK"):
+                        verify_audit_ddl(cur)
+                finally:
+                    cur.execute(
+                        "ALTER TABLE issue26_field_events "
+                        "ADD CONSTRAINT fk_issue26_batch_event "
+                        "FOREIGN KEY (batch_id,event_type) REFERENCES "
+                        "issue26_batch_events(batch_id,event_type)"
+                    )
+                self.assertEqual(verify_audit_ddl(cur)["status"], "DDL_VERIFIED")
                 cur.execute("SELECT outTemp FROM archive WHERE dateTime=1540000000")
                 self.assertEqual(cur.fetchone()[0], 1.0)
                 cur.execute("SELECT COUNT(*) FROM issue26_batch_events")
