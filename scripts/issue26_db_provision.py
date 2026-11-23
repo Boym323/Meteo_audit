@@ -42,6 +42,20 @@ def check_admin_config(path_string: str) -> Path:
     return config
 
 
+def check_local_root_socket(name: str) -> Path:
+    """Existing database host only: Linux root via local MariaDB Unix socket."""
+    if os.geteuid() != 0:
+        raise PreflightError("local MariaDB admin socket requires Linux root")
+    p = Path(name)
+    # No remote socket forwarding or arbitrary socket paths for DDL.
+    if str(p) != "/run/mysqld/mysqld.sock" or p.is_symlink():
+        raise PreflightError("expected exact MariaDB local socket path")
+    info = p.stat()
+    if not stat.S_ISSOCK(info.st_mode):
+        raise PreflightError("MariaDB Unix socket is missing or not a socket")
+    return p
+
+
 def _value(cursor, query: str, params: tuple = ()):
     cursor.execute(query, params)
     return cursor.fetchone()
@@ -203,7 +217,9 @@ def install_on_existing(connection, *, client_ipv4: str,
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--admin-client-file", required=True)
+    db_auth = parser.add_mutually_exclusive_group(required=True)
+    db_auth.add_argument("--admin-client-file")
+    db_auth.add_argument("--local-root-socket")
     parser.add_argument("--writer-client-ip", default="192.168.0.131")
     parser.add_argument("--writer-db-address", default="192.168.1.52")
     parser.add_argument("--output-dir", default="/root/meteo-issue26-private")
@@ -211,13 +227,24 @@ def main() -> int:
     parser.add_argument("--confirm", help="extra exact confirmation required for DDL and grants")
     args = parser.parse_args()
     try:
-        config = check_admin_config(args.admin_client_file)
         if args.execute and args.confirm != EXACT_CONFIRM:
             raise PreflightError("missing exact DDL install confirmation")
+        if args.local_root_socket:
+            socket = check_local_root_socket(args.local_root_socket)
+            connection_options = {
+                "unix_socket": str(socket),
+                "user": "root",
+            }
+        else:
+            config = check_admin_config(args.admin_client_file)
+            connection_options = {
+                "read_default_file": str(config),
+                "read_default_group": "client",
+            }
         import pymysql
         conn = pymysql.connect(
-            read_default_file=str(config), read_default_group="client",
-            database=DB_SCHEMA, autocommit=True, connect_timeout=8,
+            **connection_options, database=DB_SCHEMA,
+            autocommit=True, connect_timeout=8,
         )
         try:
             result = install_on_existing(
