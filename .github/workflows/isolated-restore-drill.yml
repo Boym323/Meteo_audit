@@ -1,0 +1,113 @@
+name: Isolated Restore Drill (synthetic MariaDB only)
+
+on:
+  push:
+    paths:
+      - scripts/isolated_restore_drill.py
+      - tests/test_isolated_restore_drill.py
+      - .github/workflows/isolated-restore-drill.yml
+  pull_request:
+    paths:
+      - scripts/isolated_restore_drill.py
+      - tests/test_isolated_restore_drill.py
+      - .github/workflows/isolated-restore-drill.yml
+
+permissions:
+  contents: read
+
+jobs:
+  independent-mariadb-restore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    services:
+      source:
+        image: mariadb:11.8
+        env:
+          MARIADB_ROOT_PASSWORD: ci
+          MARIADB_ROOT_HOST: "%"
+        ports:
+          - 3307:3306
+        options: >-
+          --health-cmd "healthcheck.sh --connect --innodb_initialized"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+      isolated:
+        image: mariadb:11.8
+        env:
+          MARIADB_ROOT_PASSWORD: ci
+          MARIADB_ROOT_HOST: "%"
+        ports:
+          - 3308:3306
+        options: >-
+          --health-cmd "healthcheck.sh --connect --innodb_initialized"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install MariaDB client only
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq mariadb-client
+      - name: Prepare private CI fixture credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          {
+            printf '[client]\nhost=127.0.0.1\nport=3307\nprotocol=tcp\nuser=root\npassword=ci\n'
+          } > "$RUNNER_TEMP/source.cnf"
+          {
+            printf '[client]\nhost=127.0.0.1\nport=3308\nprotocol=tcp\nuser=root\npassword=ci\n'
+          } > "$RUNNER_TEMP/target.cnf"
+          chmod 600 "$RUNNER_TEMP/source.cnf" "$RUNNER_TEMP/target.cnf"
+          echo "SOURCE_CNF=$RUNNER_TEMP/source.cnf" >> "$GITHUB_ENV"
+          echo "TARGET_CNF=$RUNNER_TEMP/target.cnf" >> "$GITHUB_ENV"
+      - name: Seed synthetic reconstruction only on source instance
+        shell: bash
+        run: |
+          set -euo pipefail
+          mariadb --defaults-extra-file="$SOURCE_CNF" -e "SET GLOBAL server_id=101"
+          mariadb --defaults-extra-file="$TARGET_CNF" -e "SET GLOBAL server_id=102"
+          python3 - <<'PY' > "$RUNNER_TEMP/fixture.sql"
+          print("CREATE DATABASE loucka_reconstruction;")
+          print("USE loucka_reconstruction;")
+          print("CREATE TABLE archive(dateTime BIGINT NOT NULL PRIMARY KEY, rain DECIMAL(10,6) NULL, outTemp DOUBLE NULL) ENGINE=InnoDB;")
+          print("INSERT INTO archive VALUES (1625097900,4.256727,16.7),(1625098200,0.000000,17.1),(1795000000,0.000000,NULL);")
+          print("CREATE TABLE reconstruction_changes(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,batch_key VARCHAR(80),variable VARCHAR(32),state VARCHAR(20),new_value DOUBLE NULL) ENGINE=InnoDB;")
+          for n in range(60):
+              batch = 'qc-extra-temp-outliers-20261123-v1' if n < 16 else 'qc-soil-negative-outliers-20261123-v1'
+              print(f"INSERT INTO reconstruction_changes(batch_key,variable,state,new_value) VALUES ('{batch}','extraTemp1','applied',NULL);")
+          PY
+          mariadb --defaults-extra-file="$SOURCE_CNF" < "$RUNNER_TEMP/fixture.sql"
+      - name: Execute fail-closed synthetic two-instance restore drill
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/isolated_restore_drill.py \
+            --source-cnf "$SOURCE_CNF" --destination-cnf "$TARGET_CNF"
+          python3 scripts/isolated_restore_drill.py \
+            --source-cnf "$SOURCE_CNF" --destination-cnf "$TARGET_CNF" \
+            --receipt-dir "$RUNNER_TEMP/isolated-restore-fixture" \
+            --execute --confirm RESTORE-ONLY-TO-SEPARATE-EMPTY-MARIADB
+          python3 - <<'PY'
+          import json,os,pathlib
+          r=json.loads((pathlib.Path(os.environ['RUNNER_TEMP'])/
+                        'isolated-restore-fixture/restore-receipt.json').read_text())
+          assert r['status']=='PASS_ISOLATED_RESTORE_DRILL_ONLY'
+          assert not r['production_cutover_authorized']
+          assert not r['correction_batch_approved']
+          assert r['invariants']['july_2021_mm']=='42.567'
+          assert r['invariants']['sensor_null_events']=='60'
+          assert len(r['tables'])==2
+          print('PASS: synthetic isolated restore, all tables, historical invariant, no cutover approval')
+          PY
+      - name: Confirm second dry-run cannot reuse nonempty target
+        shell: bash
+        run: |
+          set -euo pipefail
+          if python3 scripts/isolated_restore_drill.py \
+            --source-cnf "$SOURCE_CNF" --destination-cnf "$TARGET_CNF"; then
+            echo "::error::Nonempty target was not rejected"
+            exit 1
+          fi
+          echo "PASS: repeated restore attempt refused"
