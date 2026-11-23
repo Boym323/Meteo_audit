@@ -7,6 +7,8 @@
 
 **Aktualizace Fáze A 23. 11. 2026:** původních 360 aplikovaných oprav `rain` není správné kontrolovat pouze proti původní nule: 19 z nich bylo 12. 11. 2026 legitimně supersedováno dávkou `rain-2010-2011-phaseA-unknown-null-review-v1` (`old=0` → `new=NULL`, protože pravý lokální úhrn je neznámý). Kontrola napojení auditu i současného archivu vyšla 19/19, zbývajících 341 rain odpovídá původní nule. [Read-only doklad](phase-a-supersessions-readonly-20261123.md). **NULL nikdy neměnit automaticky na 0**.
 
+**Aktualizace C001 23. 11. 2026:** odchylky 1 077 dewpointů >2 °C proti výpočtu z *nově rekonstruované* RH na živých datech stále existují; jejich uložené hodnoty odpovídají naopak výpočtu ze *staré RH*. Viz [live read-only C001 report](C001-dewpoint-stale-readonly-20261123.md). Zastarávání odvozeniny je silně potvrzeno; náhrady dál nejsou autorizované.
+
 ## A. Již aplikované zásahy — NEOPAKOVAT
 
 | ID | Klíč/rozsah | Aktuální DB | Rozhodnutí |
@@ -22,7 +24,7 @@
 
 | ID | Priorita | Veličina / identifikace | Důkazní rozsah | Jistota diagnózy | Jistota náhradní hodnoty | Dále |
 |---|---|---|---|---|---|---|
-| C001 | P0 | `dewpoint` po RH 2022-04 | 1 077 diagnostických rozdílů >2 °C z 7 068 vypočitatelných | **HIGH** pro fyzikální nekonzistenci | **UNRESOLVED** do verifikace dobové formule | Rozhodnutí per timestamp, samostatně i `heatindex`, `appTemp` |
+| C001 | P0 | `dewpoint` po RH 2022-04 | **Živě ověřeno 23.11.2026:** 2 194 frozen záznamů s původní RH – 2 194 dewpoint shodných s diagnostickým Magnusem z **původní** RH, jen 79 z nynější RH; 1 077 odchylek >2 °C od výpočtu ze **současné** RH; max 13,507 °C. Samostatně 1 299 missing nová RH + dewpoint NULL a 85 invalidate RH NULL + dewpoint vyplněný | **HIGH** pro stale derived dewpoint | **UNRESOLVED** do dohledání dobové WeeWX formule, jednotek a ověření zdrojů | [Read-only potvrzení](C001-dewpoint-stale-readonly-20261123.md); připravit per-field evidence, bez automatického UPDATE |
 | C002 | P0 historicky; **datová divergence již odstraněna** | rainRate v letech 2023–2024 | Původně 13 + 15 GW1000 intervalů >5 cm/h s nulou v rekonstrukci; aktuálně všech 28/28 shodných se zdrojem a aplikovaných v auditu | **HIGH** pro historický rozpor | **Fyzikální správnost špiček stále UNRESOLVED** | **NEOPAKOVAT UPDATE**; viz [read-only ověření 23.11.2026](C002-rainrate-resolved-readonly-20261123.md); zvlášť lze řešit meteorologickou validitu vysokých intenzit |
 | C003 | P0 | `lightning_noise_count` a `lightning_disturber_count` | 2026: 179/179 shod noise=strike; disturber podobný UTC epoch | **HIGH** pro chybnou/nejistou sémantiku | Nejde o numerickou DB náhradu | Prověřit raw JSON, opravit mapper v odděleném code PR |
 | C004 | P1 | `pressure` chybějící 2016–2018 | 47 737 `pressure_only_review`; 28 hraničních konfliktů >2 hPa v reportu 04 | **HIGH** pro existenci jiných timestampů, MEDIUM pro tlakovou věrohodnost | **UNRESOLVED** | Srovnat `pressure` a sousedy, kalibraci ČHMÚ; nepřebírat `barometer` z vadné T |
