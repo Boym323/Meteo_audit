@@ -1,0 +1,1861 @@
+{
+  "schema": "loucka-pressure-monthly-calibration-backtest-v1",
+  "scope": "MONTHLY_DIAGNOSTICS_ONLY_NO_WEATHER_DATABASE_WRITES",
+  "method": "Theil-Sen robust trend; constant median; raw baseline; validation selects model independently per CHMI station. Chronological 60/20/20 train/validation/holdout. Never train or select on held-out months.",
+  "stationIds": {
+    "H": "0-20000-0-11774",
+    "M": "0-20000-0-11782"
+  },
+  "epochs": [
+    {
+      "id": "D1",
+      "tag": "2009–2011 před výpadkem",
+      "type": "daily",
+      "start": "2009-04",
+      "end": "2011-08",
+      "months": 29,
+      "field": "height-adjusted pressure − ČHMÚ daily P (coarse)",
+      "splits": {
+        "train": [
+          "2009-04",
+          "2010-08"
+        ],
+        "validation": [
+          "2010-09",
+          "2011-01"
+        ],
+        "holdout": [
+          "2011-02",
+          "2011-08"
+        ]
+      },
+      "references": {
+        "H": {
+          "selected": "constant",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 5,
+                "mae": 4.109134779827878,
+                "medianBias": -3.6661519489039165,
+                "mad": 0.7430731507446353,
+                "p95AbsoluteMonthlyMedian": 5.8885732503755435
+              },
+              "holdoutOwn": {
+                "n": 7,
+                "mae": 2.756177370863319,
+                "medianBias": -2.699292417323136,
+                "mad": 1.2415502538260625,
+                "p95AbsoluteMonthlyMedian": 4.794374886678974
+              },
+              "holdoutIndependent": {
+                "n": 7,
+                "mae": 2.9985719766205454,
+                "medianBias": -3.045476645217491,
+                "mad": 1.148577988401371,
+                "p95AbsoluteMonthlyMedian": 5.065276678735119
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -2.415550272434416,
+                "slope": 0
+              },
+              "validation": {
+                "n": 5,
+                "mae": 1.6935845073934614,
+                "medianBias": -1.2506016764695005,
+                "mad": 0.7430731507446353,
+                "p95AbsoluteMonthlyMedian": 3.4730229779411275
+              },
+              "holdoutOwn": {
+                "n": 7,
+                "mae": 1.131358777507265,
+                "medianBias": -0.28374214488871985,
+                "mad": 1.2415502538260625,
+                "p95AbsoluteMonthlyMedian": 2.378824614244558
+              },
+              "holdoutIndependent": {
+                "n": 7,
+                "mae": 1.2026404774217423,
+                "medianBias": -0.6299263727830748,
+                "mad": 1.148577988401371,
+                "p95AbsoluteMonthlyMedian": 2.6497264063007027
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": -3.985443886375664,
+                "slope": 0.013533565637424552
+              },
+              "validation": {
+                "n": 5,
+                "mae": 1.8830544263174054,
+                "medianBias": -1.4400715953934444,
+                "mad": 0.7701402820194847,
+                "p95AbsoluteMonthlyMedian": 3.686853315012435
+              },
+              "holdoutOwn": {
+                "n": 7,
+                "mae": 1.1584259087821143,
+                "medianBias": -0.5950141545494843,
+                "mad": 1.2550838194634868,
+                "p95AbsoluteMonthlyMedian": 2.6129552997720022
+              },
+              "holdoutIndependent": {
+                "n": 7,
+                "mae": 1.2297076086965915,
+                "medianBias": -0.8870641198941414,
+                "mad": 1.1350444227639462,
+                "p95AbsoluteMonthlyMedian": 2.883857091828147
+              }
+            }
+          }
+        },
+        "M": {
+          "selected": "trend",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 5,
+                "mae": 4.201398670651566,
+                "medianBias": -3.9779761684332016,
+                "mad": 0.674079401919812,
+                "p95AbsoluteMonthlyMedian": 5.62681090606934
+              },
+              "holdoutOwn": {
+                "n": 7,
+                "mae": 2.9985719766205454,
+                "medianBias": -3.045476645217491,
+                "mad": 1.148577988401371,
+                "p95AbsoluteMonthlyMedian": 5.065276678735119
+              },
+              "holdoutIndependent": {
+                "n": 7,
+                "mae": 2.756177370863319,
+                "medianBias": -2.699292417323136,
+                "mad": 1.2415502538260625,
+                "p95AbsoluteMonthlyMedian": 4.794374886678974
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -2.1132422233482657,
+                "slope": 0
+              },
+              "validation": {
+                "n": 5,
+                "mae": 2.0881564473032994,
+                "medianBias": -1.8647339450849358,
+                "mad": 0.674079401919812,
+                "p95AbsoluteMonthlyMedian": 3.5135686827210746
+              },
+              "holdoutOwn": {
+                "n": 7,
+                "mae": 1.2458273415769068,
+                "medianBias": -0.9322344218692251,
+                "mad": 1.148577988401371,
+                "p95AbsoluteMonthlyMedian": 2.952034455386853
+              },
+              "holdoutIndependent": {
+                "n": 7,
+                "mae": 1.1745456416624296,
+                "medianBias": -0.5860501939748701,
+                "mad": 1.2415502538260625,
+                "p95AbsoluteMonthlyMedian": 2.6811326633307084
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": 3.781365256383954,
+                "slope": -0.050381260510531795
+              },
+              "validation": {
+                "n": 5,
+                "mae": 1.4332000606663862,
+                "medianBias": -1.1593962979374908,
+                "mad": 0.7087636108874227,
+                "p95AbsoluteMonthlyMedian": 2.7880785313694165
+              },
+              "holdoutOwn": {
+                "n": 7,
+                "mae": 1.1522621434859188,
+                "medianBias": -0.02537173267965276,
+                "mad": 1.198959248911903,
+                "p95AbsoluteMonthlyMedian": 2.298302837957133
+              },
+              "holdoutIndependent": {
+                "n": 7,
+                "mae": 1.245350794481722,
+                "medianBias": 0.5223375372568295,
+                "mad": 1.1911689933155305,
+                "p95AbsoluteMonthlyMedian": 2.1170522797913676
+              }
+            }
+          }
+        }
+      },
+      "status": "COARSE_CONTEXT_ONLY"
+    },
+    {
+      "id": "D2",
+      "tag": "2012 až před skokem 2013",
+      "type": "daily",
+      "start": "2012-03",
+      "end": "2013-07",
+      "months": 17,
+      "field": "height-adjusted pressure − ČHMÚ daily P (coarse)",
+      "splits": {
+        "train": [
+          "2012-03",
+          "2012-12"
+        ],
+        "validation": [
+          "2013-01",
+          "2013-03"
+        ],
+        "holdout": [
+          "2013-04",
+          "2013-07"
+        ]
+      },
+      "references": {
+        "H": {
+          "selected": "trend",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 3,
+                "mae": 17.530355761485755,
+                "medianBias": -18.88991258816236,
+                "mad": 1.2154778276150182,
+                "p95AbsoluteMonthlyMedian": 19.983842633015875
+              },
+              "holdoutOwn": {
+                "n": 4,
+                "mae": 16.210576964216074,
+                "medianBias": -16.15382996118643,
+                "mad": 0.1688832825781219,
+                "p95AbsoluteMonthlyMedian": 16.61398490780639
+              },
+              "holdoutIndependent": {
+                "n": 4,
+                "mae": 16.487754858708968,
+                "medianBias": -16.36728471454228,
+                "mad": 0.16719466622822665,
+                "p95AbsoluteMonthlyMedian": 16.964182501658563
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -15.547776667031599,
+                "slope": 0
+              },
+              "validation": {
+                "n": 3,
+                "mae": 3.283920685463537,
+                "medianBias": -3.3421359211307617,
+                "mad": 1.2154778276150182,
+                "p95AbsoluteMonthlyMedian": 4.4360659659842785
+              },
+              "holdoutOwn": {
+                "n": 4,
+                "mae": 0.6628002971844751,
+                "medianBias": -0.6060532941548331,
+                "mad": 0.1688832825781219,
+                "p95AbsoluteMonthlyMedian": 1.0662082407747902
+              },
+              "holdoutIndependent": {
+                "n": 4,
+                "mae": 0.9399781916773691,
+                "medianBias": -0.8195080475106806,
+                "mad": 0.16719466622822665,
+                "p95AbsoluteMonthlyMedian": 1.4164058346269655
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": 19.542353317312177,
+                "slope": -0.23622997352276798
+              },
+              "validation": {
+                "n": 3,
+                "mae": 2.617928732553272,
+                "medianBias": -1.1079300888771968,
+                "mad": 1.6879377746605542,
+                "p95AbsoluteMonthlyMedian": 3.8345762070741554
+              },
+              "holdoutOwn": {
+                "n": 4,
+                "mae": 2.16198046887601,
+                "medianBias": 2.122971575155816,
+                "mad": 0.06850640512618611,
+                "p95AbsoluteMonthlyMedian": 2.336524895447275
+              },
+              "holdoutIndependent": {
+                "n": 4,
+                "mae": 1.8848025743831158,
+                "medianBias": 1.79776364605749,
+                "mad": 0.08251089530790523,
+                "p95AbsoluteMonthlyMedian": 2.1996087487612668
+              }
+            }
+          }
+        },
+        "M": {
+          "selected": "trend",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 3,
+                "mae": 17.77953152102187,
+                "medianBias": -19.2601773383102,
+                "mad": 0.0728984816838647,
+                "p95AbsoluteMonthlyMedian": 19.325785971825677
+              },
+              "holdoutOwn": {
+                "n": 4,
+                "mae": 16.487754858708968,
+                "medianBias": -16.36728471454228,
+                "mad": 0.16719466622822665,
+                "p95AbsoluteMonthlyMedian": 16.964182501658563
+              },
+              "holdoutIndependent": {
+                "n": 4,
+                "mae": 16.210576964216074,
+                "medianBias": -16.15382996118643,
+                "mad": 0.1688832825781219,
+                "p95AbsoluteMonthlyMedian": 16.61398490780639
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -15.717312225098112,
+                "slope": 0
+              },
+              "validation": {
+                "n": 3,
+                "mae": 2.710199842814935,
+                "medianBias": -3.5428651132120876,
+                "mad": 0.0728984816838647,
+                "p95AbsoluteMonthlyMedian": 3.608473746727566
+              },
+              "holdoutOwn": {
+                "n": 4,
+                "mae": 0.7704426336108554,
+                "medianBias": -0.649972489444167,
+                "mad": 0.16719466622822665,
+                "p95AbsoluteMonthlyMedian": 1.2468702765604518
+              },
+              "holdoutIndependent": {
+                "n": 4,
+                "mae": 0.4932647391179614,
+                "medianBias": -0.43651773608831945,
+                "mad": 0.1688832825781219,
+                "p95AbsoluteMonthlyMedian": 0.8966726827082765
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": 18.394653618906837,
+                "slope": -0.2276686135783393
+              },
+              "validation": {
+                "n": 3,
+                "mae": 2.1661976802168277,
+                "medianBias": -1.6831900118394287,
+                "mad": 0.5282357088405405,
+                "p95AbsoluteMonthlyMedian": 2.564722149385974
+              },
+              "holdoutOwn": {
+                "n": 4,
+                "mae": 1.6584040017076553,
+                "medianBias": 1.5799264333264595,
+                "mad": 0.09535293522455035,
+                "p95AbsoluteMonthlyMedian": 1.9714979040969203
+              },
+              "holdoutIndependent": {
+                "n": 4,
+                "mae": 1.9355818962005493,
+                "medianBias": 1.9051343624247856,
+                "mad": 0.08134844504283123,
+                "p95AbsoluteMonthlyMedian": 2.1084140507829283
+              }
+            }
+          }
+        }
+      },
+      "status": "COARSE_CONTEXT_ONLY"
+    },
+    {
+      "id": "D3",
+      "tag": "po skoku 2013 až 2015",
+      "type": "daily",
+      "start": "2013-09",
+      "end": "2015-12",
+      "months": 28,
+      "field": "height-adjusted pressure − ČHMÚ daily P (coarse)",
+      "splits": {
+        "train": [
+          "2013-09",
+          "2014-12"
+        ],
+        "validation": [
+          "2015-01",
+          "2015-05"
+        ],
+        "holdout": [
+          "2015-06",
+          "2015-12"
+        ]
+      },
+      "references": {
+        "H": {
+          "selected": "trend",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 5,
+                "mae": 9.745000200590107,
+                "medianBias": -9.727261805851299,
+                "mad": 0.4480421823866436,
+                "p95AbsoluteMonthlyMedian": 10.70695345183392
+              },
+              "holdoutOwn": {
+                "n": 7,
+                "mae": 10.842409223592247,
+                "medianBias": -11.36291549398834,
+                "mad": 0.5774796934565529,
+                "p95AbsoluteMonthlyMedian": 11.91686073303855
+              },
+              "holdoutIndependent": {
+                "n": 7,
+                "mae": 11.157454167835681,
+                "medianBias": -11.46431840866012,
+                "mad": 0.5373462381539866,
+                "p95AbsoluteMonthlyMedian": 12.045648646136248
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -6.351691597892,
+                "slope": 0
+              },
+              "validation": {
+                "n": 5,
+                "mae": 3.393308602698107,
+                "medianBias": -3.3755702079592993,
+                "mad": 0.4480421823866436,
+                "p95AbsoluteMonthlyMedian": 4.3552618539419194
+              },
+              "holdoutOwn": {
+                "n": 7,
+                "mae": 4.490717625700248,
+                "medianBias": -5.01122389609634,
+                "mad": 0.5774796934565529,
+                "p95AbsoluteMonthlyMedian": 5.56516913514655
+              },
+              "holdoutIndependent": {
+                "n": 7,
+                "mae": 4.805762569943681,
+                "medianBias": -5.11262681076812,
+                "mad": 0.5373462381539866,
+                "p95AbsoluteMonthlyMedian": 5.693957048244249
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": 49.32713769964481,
+                "slope": -0.3199252136987619
+              },
+              "validation": {
+                "n": 5,
+                "mae": 0.845749007060246,
+                "medianBias": -0.6998936436335583,
+                "mad": 0.37277098245998275,
+                "p95AbsoluteMonthlyMedian": 1.5517620873450482
+              },
+              "holdoutOwn": {
+                "n": 7,
+                "mae": 0.5545277830481682,
+                "medianBias": -0.23654774025103364,
+                "mad": 0.3075652780148701,
+                "p95AbsoluteMonthlyMedian": 0.9369479869738605
+              },
+              "holdoutIndependent": {
+                "n": 7,
+                "mae": 0.7081307104571327,
+                "medianBias": -0.005665505540164872,
+                "mad": 0.8572714518527462,
+                "p95AbsoluteMonthlyMedian": 1.4583165799092426
+              }
+            }
+          }
+        },
+        "M": {
+          "selected": "trend",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 5,
+                "mae": 10.502178175763357,
+                "medianBias": -11.078927064282766,
+                "mad": 0.3121488697595396,
+                "p95AbsoluteMonthlyMedian": 11.389259152243607
+              },
+              "holdoutOwn": {
+                "n": 7,
+                "mae": 11.157454167835681,
+                "medianBias": -11.46431840866012,
+                "mad": 0.5373462381539866,
+                "p95AbsoluteMonthlyMedian": 12.045648646136248
+              },
+              "holdoutIndependent": {
+                "n": 7,
+                "mae": 10.842409223592247,
+                "medianBias": -11.36291549398834,
+                "mad": 0.5774796934565529,
+                "p95AbsoluteMonthlyMedian": 11.91686073303855
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -6.623949367220291,
+                "slope": 0
+              },
+              "validation": {
+                "n": 5,
+                "mae": 3.878228808543065,
+                "medianBias": -4.454977697062475,
+                "mad": 0.3121488697595396,
+                "p95AbsoluteMonthlyMedian": 4.765309785023317
+              },
+              "holdoutOwn": {
+                "n": 7,
+                "mae": 4.53350480061539,
+                "medianBias": -4.840369041439828,
+                "mad": 0.5373462381539866,
+                "p95AbsoluteMonthlyMedian": 5.421699278915957
+              },
+              "holdoutIndependent": {
+                "n": 7,
+                "mae": 4.218459856371957,
+                "medianBias": -4.738966126768048,
+                "mad": 0.5774796934565529,
+                "p95AbsoluteMonthlyMedian": 5.2929113658182585
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": 49.950967387056195,
+                "slope": -0.3265211194718885
+              },
+              "validation": {
+                "n": 5,
+                "mae": 1.1184052523940964,
+                "medianBias": -1.2621573382710167,
+                "mad": 0.3408933691842364,
+                "p95AbsoluteMonthlyMedian": 1.5983594757140864
+              },
+              "holdoutOwn": {
+                "n": 7,
+                "mae": 0.7983097404497883,
+                "medianBias": 0.6237269039424973,
+                "mad": 0.8638673576258711,
+                "p95AbsoluteMonthlyMedian": 1.5047850143478856
+              },
+              "holdoutIndependent": {
+                "n": 7,
+                "mae": 0.61581843449012,
+                "medianBias": 0.3862487634585037,
+                "mad": 0.31416118378800206,
+                "p95AbsoluteMonthlyMedian": 1.5445739074052085
+              }
+            }
+          }
+        }
+      },
+      "status": "COARSE_CONTEXT_ONLY"
+    },
+    {
+      "id": "D4",
+      "tag": "2016–2017",
+      "type": "daily",
+      "start": "2016-01",
+      "end": "2017-12",
+      "months": 24,
+      "field": "height-adjusted pressure − ČHMÚ daily P (coarse)",
+      "splits": {
+        "train": [
+          "2016-01",
+          "2017-02"
+        ],
+        "validation": [
+          "2017-03",
+          "2017-06"
+        ],
+        "holdout": [
+          "2017-07",
+          "2017-12"
+        ]
+      },
+      "references": {
+        "H": {
+          "selected": "trend",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 4,
+                "mae": 18.072902670917443,
+                "medianBias": -18.377493327957893,
+                "mad": 0.15333884836297784,
+                "p95AbsoluteMonthlyMedian": 18.55058474696844
+              },
+              "holdoutOwn": {
+                "n": 6,
+                "mae": 17.85131037348403,
+                "medianBias": -17.777852936778572,
+                "mad": 0.43031653582158924,
+                "p95AbsoluteMonthlyMedian": 18.46069615576417
+              },
+              "holdoutIndependent": {
+                "n": 6,
+                "mae": 17.037413153419795,
+                "medianBias": -16.98674108193063,
+                "mad": 0.3698728320960072,
+                "p95AbsoluteMonthlyMedian": 17.89776548858009
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -13.879393493861016,
+                "slope": 0
+              },
+              "validation": {
+                "n": 4,
+                "mae": 4.193509177056427,
+                "medianBias": -4.498099834096877,
+                "mad": 0.15333884836297784,
+                "p95AbsoluteMonthlyMedian": 4.671191253107423
+              },
+              "holdoutOwn": {
+                "n": 6,
+                "mae": 3.971916879623014,
+                "medianBias": -3.898459442917556,
+                "mad": 0.43031653582158924,
+                "p95AbsoluteMonthlyMedian": 4.581302661903152
+              },
+              "holdoutIndependent": {
+                "n": 6,
+                "mae": 3.15801965955878,
+                "medianBias": -3.107347588069615,
+                "mad": 0.3698728320960072,
+                "p95AbsoluteMonthlyMedian": 4.018371994719075
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": 31.189495174131935,
+                "slope": -0.2285818385176981
+              },
+              "validation": {
+                "n": 4,
+                "mae": 1.8316663526270247,
+                "medianBias": -1.9076751711497764,
+                "mad": 0.38192068688067593,
+                "p95AbsoluteMonthlyMedian": 2.5493593591216035
+              },
+              "holdoutOwn": {
+                "n": 6,
+                "mae": 0.6748710284938019,
+                "medianBias": -0.60847432318144,
+                "mad": 0.20844196919000524,
+                "p95AbsoluteMonthlyMedian": 1.0122418987899948
+              },
+              "holdoutIndependent": {
+                "n": 6,
+                "mae": 0.7732173674645347,
+                "medianBias": 0.2831135096894286,
+                "mad": 0.6896261714118737,
+                "p95AbsoluteMonthlyMedian": 1.3582116893062448
+              }
+            }
+          }
+        },
+        "M": {
+          "selected": "trend",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 4,
+                "mae": 17.395403789909636,
+                "medianBias": -17.554664608897667,
+                "mad": 0.4282360077907015,
+                "p95AbsoluteMonthlyMedian": 18.18537878014494
+              },
+              "holdoutOwn": {
+                "n": 6,
+                "mae": 17.037413153419795,
+                "medianBias": -16.98674108193063,
+                "mad": 0.3698728320960072,
+                "p95AbsoluteMonthlyMedian": 17.89776548858009
+              },
+              "holdoutIndependent": {
+                "n": 6,
+                "mae": 17.85131037348403,
+                "medianBias": -17.777852936778572,
+                "mad": 0.43031653582158924,
+                "p95AbsoluteMonthlyMedian": 18.46069615576417
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -13.89383667839138,
+                "slope": 0
+              },
+              "validation": {
+                "n": 4,
+                "mae": 3.5015671115182556,
+                "medianBias": -3.6608279305062865,
+                "mad": 0.4282360077907015,
+                "p95AbsoluteMonthlyMedian": 4.291542101753561
+              },
+              "holdoutOwn": {
+                "n": 6,
+                "mae": 3.1435764750284156,
+                "medianBias": -3.092904403539251,
+                "mad": 0.3698728320960072,
+                "p95AbsoluteMonthlyMedian": 4.003928810188711
+              },
+              "holdoutIndependent": {
+                "n": 6,
+                "mae": 3.95747369509265,
+                "medianBias": -3.8840162583871916,
+                "mad": 0.43031653582158924,
+                "p95AbsoluteMonthlyMedian": 4.5668594773727875
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": -6.139713429002813,
+                "slope": -0.039162238633275594
+              },
+              "validation": {
+                "n": 4,
+                "mae": 3.1295258445021377,
+                "medianBias": -3.3083677828068065,
+                "mad": 0.4086548884740644,
+                "p95AbsoluteMonthlyMedian": 3.8783804841725043
+              },
+              "holdoutOwn": {
+                "n": 6,
+                "mae": 2.5757240148459193,
+                "medianBias": -2.544633062673393,
+                "mad": 0.4481973093625591,
+                "p95AbsoluteMonthlyMedian": 3.4654480289811707
+              },
+              "holdoutIndependent": {
+                "n": 6,
+                "mae": 3.3896212349101535,
+                "medianBias": -3.3357449175213336,
+                "mad": 0.4498976551382281,
+                "p95AbsoluteMonthlyMedian": 3.9598447785570166
+              }
+            }
+          }
+        }
+      },
+      "status": "COARSE_CONTEXT_ONLY"
+    },
+    {
+      "id": "H1",
+      "tag": "2018 až před přepnutím 2019",
+      "type": "hourly",
+      "start": "2018-01",
+      "end": "2019-03",
+      "months": 15,
+      "field": "barometer − ČHMÚ P_hm",
+      "splits": {
+        "train": [
+          "2018-01",
+          "2018-09"
+        ],
+        "validation": [
+          "2018-10",
+          "2018-12"
+        ],
+        "holdout": [
+          "2019-01",
+          "2019-03"
+        ]
+      },
+      "references": {
+        "H": {
+          "selected": "trend",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 3,
+                "mae": 25.94052510488831,
+                "medianBias": -26.10886687201696,
+                "mad": 0.1412768530340145,
+                "p95AbsoluteMonthlyMedian": 26.236016039747575
+              },
+              "holdoutOwn": {
+                "n": 3,
+                "mae": 27.19675401449001,
+                "medianBias": -27.331457242649094,
+                "mad": 0.05568600748790686,
+                "p95AbsoluteMonthlyMedian": 27.38157464938821
+              },
+              "holdoutIndependent": {
+                "n": 3,
+                "mae": 26.59348047970701,
+                "medianBias": -26.72424894140147,
+                "mad": 0.1377197246185915,
+                "p95AbsoluteMonthlyMedian": 26.8481966935582
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -22.872785276756986,
+                "slope": 0
+              },
+              "validation": {
+                "n": 3,
+                "mae": 3.067739828131323,
+                "medianBias": -3.236081595259975,
+                "mad": 0.1412768530340145,
+                "p95AbsoluteMonthlyMedian": 3.363230762990588
+              },
+              "holdoutOwn": {
+                "n": 3,
+                "mae": 4.323968737733026,
+                "medianBias": -4.458671965892108,
+                "mad": 0.05568600748790686,
+                "p95AbsoluteMonthlyMedian": 4.508789372631225
+              },
+              "holdoutIndependent": {
+                "n": 3,
+                "mae": 3.7206952029500258,
+                "medianBias": -3.851463664644484,
+                "mad": 0.1377197246185915,
+                "p95AbsoluteMonthlyMedian": 3.9754114168012165
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": 87.72819634428947,
+                "slope": -0.5033563792555924
+              },
+              "validation": {
+                "n": 3,
+                "mae": 0.14216793228113525,
+                "medianBias": 0.06442427062182787,
+                "mad": 0.14294577516437812,
+                "p95AbsoluteMonthlyMedian": 0.2630543699653799
+              },
+              "holdoutOwn": {
+                "n": 3,
+                "mae": 0.34366049075117644,
+                "medianBias": 0.20895726259209368,
+                "mad": 0.04356068729043727,
+                "p95AbsoluteMonthlyMedian": 0.6118605971830107
+              },
+              "holdoutIndependent": {
+                "n": 3,
+                "mae": 0.9469340255341763,
+                "medianBias": 0.8428342942860922,
+                "mad": 0.02666873044637441,
+                "p95AbsoluteMonthlyMedian": 1.147905426057656
+              }
+            }
+          }
+        },
+        "M": {
+          "selected": "trend",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 3,
+                "mae": 25.798974871325168,
+                "medianBias": -25.574246104129998,
+                "mad": 0.09782464730051288,
+                "p95AbsoluteMonthlyMedian": 26.269055958127417
+              },
+              "holdoutOwn": {
+                "n": 3,
+                "mae": 26.59348047970701,
+                "medianBias": -26.72424894140147,
+                "mad": 0.1377197246185915,
+                "p95AbsoluteMonthlyMedian": 26.8481966935582
+              },
+              "holdoutIndependent": {
+                "n": 3,
+                "mae": 27.19675401449001,
+                "medianBias": -27.331457242649094,
+                "mad": 0.05568600748790686,
+                "p95AbsoluteMonthlyMedian": 27.38157464938821
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -23.44261006014301,
+                "slope": 0
+              },
+              "validation": {
+                "n": 3,
+                "mae": 2.356364811182156,
+                "medianBias": -2.131636043986987,
+                "mad": 0.09782464730051288,
+                "p95AbsoluteMonthlyMedian": 2.826445897984405
+              },
+              "holdoutOwn": {
+                "n": 3,
+                "mae": 3.1508704195640007,
+                "medianBias": -3.281638881258459,
+                "mad": 0.1377197246185915,
+                "p95AbsoluteMonthlyMedian": 3.4055866334151914
+              },
+              "holdoutIndependent": {
+                "n": 3,
+                "mae": 3.7541439543470005,
+                "medianBias": -3.8888471825060833,
+                "mad": 0.05568600748790686,
+                "p95AbsoluteMonthlyMedian": 3.9389645892451997
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": 108.93518129319128,
+                "slope": -0.6001854095010657
+              },
+              "validation": {
+                "n": 3,
+                "mae": 0.9077463827244022,
+                "medianBias": 0.6301143877190327,
+                "mad": 0.2696501866854817,
+                "p95AbsoluteMonthlyMedian": 1.6224059422504638
+              },
+              "holdoutOwn": {
+                "n": 3,
+                "mae": 1.9137970028457592,
+                "medianBias": 1.7830285411513103,
+                "mad": 0.07016029979911309,
+                "p95AbsoluteMonthlyMedian": 2.1992476575455244
+              },
+              "holdoutIndependent": {
+                "n": 3,
+                "mae": 1.3105234680627593,
+                "medianBias": 1.1758202399036861,
+                "mad": 0.14038971753592477,
+                "p95AbsoluteMonthlyMedian": 1.6658697017155162
+              }
+            }
+          }
+        }
+      },
+      "status": "MONTHLY_BACKTEST_UNSATISFACTORY"
+    },
+    {
+      "id": "H2",
+      "tag": "2019 po přepnutí až před GW1000",
+      "type": "hourly",
+      "start": "2019-05",
+      "end": "2022-07",
+      "months": 39,
+      "field": "barometer − ČHMÚ P_hm",
+      "splits": {
+        "train": [
+          "2019-05",
+          "2021-03"
+        ],
+        "validation": [
+          "2021-04",
+          "2021-10"
+        ],
+        "holdout": [
+          "2021-11",
+          "2022-07"
+        ]
+      },
+      "references": {
+        "H": {
+          "selected": "constant",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 7,
+                "mae": 1.518999206348594,
+                "medianBias": -1.0801999999999907,
+                "mad": 0.4275777777800158,
+                "p95AbsoluteMonthlyMedian": 3.6274166666660324
+              },
+              "holdoutOwn": {
+                "n": 9,
+                "mae": 1.35832442265309,
+                "medianBias": -0.31557528143122227,
+                "mad": 0.9324469407910101,
+                "p95AbsoluteMonthlyMedian": 3.4739027272727747
+              },
+              "holdoutIndependent": {
+                "n": 9,
+                "mae": 1.5392972385232104,
+                "medianBias": -0.2545999999999822,
+                "mad": 1.2523583380284435,
+                "p95AbsoluteMonthlyMedian": 3.511171940271765
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -2.433499999999981,
+                "slope": 0
+              },
+              "validation": {
+                "n": 7,
+                "mae": 1.4092785714285665,
+                "medianBias": 1.3532999999999902,
+                "mad": 0.4275777777800158,
+                "p95AbsoluteMonthlyMedian": 2.1144783333340054
+              },
+              "holdoutOwn": {
+                "n": 9,
+                "mae": 2.2177965933120225,
+                "medianBias": 2.1179247185687586,
+                "mad": 0.9324469407910101,
+                "p95AbsoluteMonthlyMedian": 4.259036592252164
+              },
+              "holdoutIndependent": {
+                "n": 9,
+                "mae": 2.55895978908684,
+                "medianBias": 2.1788999999999987,
+                "mad": 1.2523583380284435,
+                "p95AbsoluteMonthlyMedian": 4.916692284622536
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": 46.562700000000014,
+                "slope": -0.20223333333333357
+              },
+              "validation": {
+                "n": 7,
+                "mae": 4.094500793651454,
+                "medianBias": 4.7586444444467375,
+                "mad": 0.47792222221990244,
+                "p95AbsoluteMonthlyMedian": 5.377185000000041
+              },
+              "holdoutOwn": {
+                "n": 9,
+                "mae": 6.6237844720999375,
+                "medianBias": 7.118024718568826,
+                "mad": 0.7302136074576779,
+                "p95AbsoluteMonthlyMedian": 9.340029925585569
+              },
+              "holdoutIndependent": {
+                "n": 9,
+                "mae": 6.99498423353133,
+                "medianBias": 7.0434208962868325,
+                "mad": 0.7812374417416805,
+                "p95AbsoluteMonthlyMedian": 9.99768561795594
+              }
+            }
+          }
+        },
+        "M": {
+          "selected": "raw",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 7,
+                "mae": 1.2597603174593328,
+                "medianBias": -0.7150000000000318,
+                "mad": 0.14800000000002456,
+                "p95AbsoluteMonthlyMedian": 3.3468344444425595
+              },
+              "holdoutOwn": {
+                "n": 9,
+                "mae": 1.5392972385232104,
+                "medianBias": -0.2545999999999822,
+                "mad": 1.2523583380284435,
+                "p95AbsoluteMonthlyMedian": 3.511171940271765
+              },
+              "holdoutIndependent": {
+                "n": 9,
+                "mae": 1.35832442265309,
+                "medianBias": -0.31557528143122227,
+                "mad": 0.9324469407910101,
+                "p95AbsoluteMonthlyMedian": 3.4739027272727747
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -2.3999999999999773,
+                "slope": 0
+              },
+              "validation": {
+                "n": 7,
+                "mae": 1.591319047619241,
+                "medianBias": 1.6849999999999454,
+                "mad": 0.14800000000002456,
+                "p95AbsoluteMonthlyMedian": 2.0797888888919713
+              },
+              "holdoutOwn": {
+                "n": 9,
+                "mae": 2.5329042335312817,
+                "medianBias": 2.145399999999995,
+                "mad": 1.2523583380284435,
+                "p95AbsoluteMonthlyMedian": 4.883192284622532
+              },
+              "holdoutIndependent": {
+                "n": 9,
+                "mae": 2.1991854822009094,
+                "medianBias": 2.084424718568755,
+                "mad": 0.9324469407910101,
+                "p95AbsoluteMonthlyMedian": 4.22553659225216
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": 35.43218333333212,
+                "slope": -0.15614999999999668
+              },
+              "validation": {
+                "n": 7,
+                "mae": 3.5947563492076915,
+                "medianBias": 4.4436666666670135,
+                "mad": 0.26089999999982183,
+                "p95AbsoluteMonthlyMedian": 4.68521833333489
+              },
+              "holdoutOwn": {
+                "n": 9,
+                "mae": 5.867334233531611,
+                "medianBias": 5.915770896287114,
+                "mad": 0.8734041084083515,
+                "p95AbsoluteMonthlyMedian": 8.805518951289548
+              },
+              "holdoutIndependent": {
+                "n": 9,
+                "mae": 5.496134472100219,
+                "medianBias": 5.944291385235772,
+                "mad": 0.7762969407910134,
+                "p95AbsoluteMonthlyMedian": 8.147863258919175
+              }
+            }
+          }
+        }
+      },
+      "status": "MONTHLY_BACKTEST_UNSATISFACTORY"
+    },
+    {
+      "id": "H3",
+      "tag": "GW1000 před změnou kopie 2024",
+      "type": "hourly",
+      "start": "2022-09",
+      "end": "2024-04",
+      "months": 20,
+      "field": "barometer − ČHMÚ P_hm",
+      "splits": {
+        "train": [
+          "2022-09",
+          "2023-08"
+        ],
+        "validation": [
+          "2023-09",
+          "2023-12"
+        ],
+        "holdout": [
+          "2024-01",
+          "2024-04"
+        ]
+      },
+      "references": {
+        "H": {
+          "selected": "constant",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 4,
+                "mae": 1.9666666666666686,
+                "medianBias": 0.7216666666666072,
+                "mad": 0.5366666666666902,
+                "p95AbsoluteMonthlyMedian": 5.6075000000000115
+              },
+              "holdoutOwn": {
+                "n": 4,
+                "mae": 2.102916666666715,
+                "medianBias": 2.225833333333469,
+                "mad": 0.9441666666667174,
+                "p95AbsoluteMonthlyMedian": 3.499000000000126
+              },
+              "holdoutIndependent": {
+                "n": 4,
+                "mae": 2.5883333333333525,
+                "medianBias": 2.7033333333333758,
+                "mad": 0.7666666666666515,
+                "p95AbsoluteMonthlyMedian": 3.9110000000001035
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": 0.27333333333325527,
+                "slope": 0
+              },
+              "validation": {
+                "n": 4,
+                "mae": 1.830000000000041,
+                "medianBias": 0.4483333333333519,
+                "mad": 0.5366666666666902,
+                "p95AbsoluteMonthlyMedian": 5.334166666666756
+              },
+              "holdoutOwn": {
+                "n": 4,
+                "mae": 1.9662500000000875,
+                "medianBias": 1.9525000000002137,
+                "mad": 0.9441666666667174,
+                "p95AbsoluteMonthlyMedian": 3.2256666666668705
+              },
+              "holdoutIndependent": {
+                "n": 4,
+                "mae": 2.315000000000097,
+                "medianBias": 2.4300000000001205,
+                "mad": 0.7666666666666515,
+                "p95AbsoluteMonthlyMedian": 3.6376666666668482
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": -181.87609523812668,
+                "slope": 0.6584761904763041
+              },
+              "validation": {
+                "n": 4,
+                "mae": 4.798285714286365,
+                "medianBias": -5.39719047619154,
+                "mad": 1.1951428571429972,
+                "p95AbsoluteMonthlyMedian": 6.96163333333459
+              },
+              "holdoutOwn": {
+                "n": 4,
+                "mae": 6.809845238096564,
+                "medianBias": -6.526928571429906,
+                "mad": 0.28569047619042465,
+                "p95AbsoluteMonthlyMedian": 7.873069047620209
+              },
+              "holdoutIndependent": {
+                "n": 4,
+                "mae": 6.164428571430015,
+                "medianBias": -6.049428571429999,
+                "mad": 0.30076190476196984,
+                "p95AbsoluteMonthlyMedian": 6.816923809525274
+              }
+            }
+          }
+        },
+        "M": {
+          "selected": "constant",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 4,
+                "mae": 2.616666666666731,
+                "medianBias": 1.470000000000141,
+                "mad": 0.2899999999999068,
+                "p95AbsoluteMonthlyMedian": 5.67266666666656
+              },
+              "holdoutOwn": {
+                "n": 4,
+                "mae": 2.5883333333333525,
+                "medianBias": 2.7033333333333758,
+                "mad": 0.7666666666666515,
+                "p95AbsoluteMonthlyMedian": 3.9110000000001035
+              },
+              "holdoutIndependent": {
+                "n": 4,
+                "mae": 2.102916666666715,
+                "medianBias": 2.225833333333469,
+                "mad": 0.9441666666667174,
+                "p95AbsoluteMonthlyMedian": 3.499000000000126
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": 0.501666666666523,
+                "slope": 0
+              },
+              "validation": {
+                "n": 4,
+                "mae": 2.115000000000208,
+                "medianBias": 0.9683333333336179,
+                "mad": 0.2899999999999068,
+                "p95AbsoluteMonthlyMedian": 5.171000000000037
+              },
+              "holdoutOwn": {
+                "n": 4,
+                "mae": 2.0866666666668294,
+                "medianBias": 2.2016666666668527,
+                "mad": 0.7666666666666515,
+                "p95AbsoluteMonthlyMedian": 3.4093333333335805
+              },
+              "holdoutIndependent": {
+                "n": 4,
+                "mae": 1.8520833333334537,
+                "medianBias": 1.724166666666946,
+                "mad": 0.9441666666667174,
+                "p95AbsoluteMonthlyMedian": 2.9973333333336027
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": -163.07322306121222,
+                "slope": 0.5920406632652628
+              },
+              "validation": {
+                "n": 4,
+                "mae": 3.987890314625659,
+                "medianBias": -4.48438630102018,
+                "mad": 0.8820406632651725,
+                "p95AbsoluteMonthlyMedian": 5.587641196428302
+              },
+              "holdoutOwn": {
+                "n": 4,
+                "mae": 5.734215620748024,
+                "medianBias": -5.619215620748008,
+                "mad": 0.3339796683674905,
+                "p95AbsoluteMonthlyMedian": 6.466433491496534
+              },
+              "holdoutIndependent": {
+                "n": 4,
+                "mae": 6.379632287414573,
+                "medianBias": -6.096715620747915,
+                "mad": 0.35212600340146594,
+                "p95AbsoluteMonthlyMedian": 7.532544058673125
+              }
+            }
+          }
+        }
+      },
+      "status": "MONTHLY_BACKTEST_UNSATISFACTORY"
+    },
+    {
+      "id": "H4",
+      "tag": "přechod mezi změnami 2024",
+      "type": "hourly",
+      "start": "2024-06",
+      "end": "2024-06",
+      "months": 1,
+      "field": "barometer − ČHMÚ P_hm",
+      "status": "INSUFFICIENT_MONTHS"
+    },
+    {
+      "id": "H5",
+      "tag": "2024 změněná kopie až 2026",
+      "type": "hourly",
+      "start": "2024-08",
+      "end": "2026-01",
+      "months": 18,
+      "field": "barometer − ČHMÚ P_hm",
+      "splits": {
+        "train": [
+          "2024-08",
+          "2025-05"
+        ],
+        "validation": [
+          "2025-06",
+          "2025-08"
+        ],
+        "holdout": [
+          "2025-09",
+          "2026-01"
+        ]
+      },
+      "references": {
+        "H": {
+          "selected": "trend",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 3,
+                "mae": 6.237777777777751,
+                "medianBias": 6.386666666666656,
+                "mad": 0.14666666666653327,
+                "p95AbsoluteMonthlyMedian": 6.518666666666536
+              },
+              "holdoutOwn": {
+                "n": 5,
+                "mae": 4.163714285714309,
+                "medianBias": 3.950000000000216,
+                "mad": 0.7200000000003683,
+                "p95AbsoluteMonthlyMedian": 5.612000000000171
+              },
+              "holdoutIndependent": {
+                "n": 5,
+                "mae": 4.6394761904761594,
+                "medianBias": 4.439999999999998,
+                "mad": 0.7840476190476693,
+                "p95AbsoluteMonthlyMedian": 5.924809523809506
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": 2.7032142857142105,
+                "slope": 0
+              },
+              "validation": {
+                "n": 3,
+                "mae": 3.5345634920635405,
+                "medianBias": 3.6834523809524455,
+                "mad": 0.14666666666653327,
+                "p95AbsoluteMonthlyMedian": 3.8154523809523253
+              },
+              "holdoutOwn": {
+                "n": 5,
+                "mae": 1.4605000000000985,
+                "medianBias": 1.2467857142860055,
+                "mad": 0.7200000000003683,
+                "p95AbsoluteMonthlyMedian": 2.90878571428596
+              },
+              "holdoutIndependent": {
+                "n": 5,
+                "mae": 1.936261904761949,
+                "medianBias": 1.7367857142857872,
+                "mad": 0.7840476190476693,
+                "p95AbsoluteMonthlyMedian": 3.2215952380952952
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": -31.276377551025977,
+                "slope": 0.1147959183673655
+              },
+              "validation": {
+                "n": 3,
+                "mae": 2.386604308389886,
+                "medianBias": 2.535493197278793,
+                "mad": 0.0318707482991627,
+                "p95AbsoluteMonthlyMedian": 2.5641768707480397
+              },
+              "holdoutOwn": {
+                "n": 5,
+                "mae": 1.0201122448980549,
+                "medianBias": -0.36035714285710796,
+                "mad": 0.8347959183677389,
+                "p95AbsoluteMonthlyMedian": 1.700996598639589
+              },
+              "holdoutIndependent": {
+                "n": 5,
+                "mae": 0.9418265306122671,
+                "medianBias": 0.12964285714267376,
+                "mad": 0.8988435374150328,
+                "p95AbsoluteMonthlyMedian": 1.84737755102033
+              }
+            }
+          }
+        },
+        "M": {
+          "selected": "trend",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 3,
+                "mae": 6.426746031745893,
+                "medianBias": 6.5499999999999545,
+                "mad": 0.060238095238105416,
+                "p95AbsoluteMonthlyMedian": 6.604214285714249
+              },
+              "holdoutOwn": {
+                "n": 5,
+                "mae": 4.6394761904761594,
+                "medianBias": 4.439999999999998,
+                "mad": 0.7840476190476693,
+                "p95AbsoluteMonthlyMedian": 5.924809523809506
+              },
+              "holdoutIndependent": {
+                "n": 5,
+                "mae": 4.163714285714309,
+                "medianBias": 3.950000000000216,
+                "mad": 0.7200000000003683,
+                "p95AbsoluteMonthlyMedian": 5.612000000000171
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": 3.256666666666632,
+                "slope": 0
+              },
+              "validation": {
+                "n": 3,
+                "mae": 3.1700793650792605,
+                "medianBias": 3.2933333333333223,
+                "mad": 0.060238095238105416,
+                "p95AbsoluteMonthlyMedian": 3.347547619047617
+              },
+              "holdoutOwn": {
+                "n": 5,
+                "mae": 1.3828095238095273,
+                "medianBias": 1.1833333333333655,
+                "mad": 0.7840476190476693,
+                "p95AbsoluteMonthlyMedian": 2.6681428571428736
+              },
+              "holdoutIndependent": {
+                "n": 5,
+                "mae": 0.948952380952511,
+                "medianBias": 0.6933333333335838,
+                "mad": 0.7200000000003683,
+                "p95AbsoluteMonthlyMedian": 2.3553333333335384
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": -47.05928571427532,
+                "slope": 0.16751700680268705
+              },
+              "validation": {
+                "n": 3,
+                "mae": 2.2258276643989725,
+                "medianBias": 2.181564625850349,
+                "mad": 0.09496598639491793,
+                "p95AbsoluteMonthlyMedian": 2.386544217687059
+              },
+              "holdoutOwn": {
+                "n": 5,
+                "mae": 1.0653605442176513,
+                "medianBias": -0.43098639455767085,
+                "mad": 0.9515646258503594,
+                "p95AbsoluteMonthlyMedian": 1.773625850340062
+              },
+              "holdoutIndependent": {
+                "n": 5,
+                "mae": 1.2395578231292006,
+                "medianBias": -0.9209863945574526,
+                "mad": 0.8875170068030513,
+                "p95AbsoluteMonthlyMedian": 1.9836598639454692
+              }
+            }
+          }
+        }
+      },
+      "status": "MONTHLY_BACKTEST_PASS_NOT_APPLY"
+    },
+    {
+      "id": "H6",
+      "tag": "2026 po březnovém rozchodu",
+      "type": "hourly",
+      "start": "2026-04",
+      "end": "2026-11",
+      "months": 8,
+      "field": "barometer − ČHMÚ P_hm",
+      "splits": {
+        "train": [
+          "2026-04",
+          "2026-07"
+        ],
+        "validation": [
+          "2026-08",
+          "2026-09"
+        ],
+        "holdout": [
+          "2026-10",
+          "2026-11"
+        ]
+      },
+      "references": {
+        "H": {
+          "selected": "constant",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 2,
+                "mae": 0.28476190476192187,
+                "medianBias": -0.28476190476192187,
+                "mad": 0.05809523809500661,
+                "p95AbsoluteMonthlyMedian": 0.3370476190474278
+              },
+              "holdoutOwn": {
+                "n": 2,
+                "mae": 0.30833333333336554,
+                "medianBias": -0.30833333333336554,
+                "mad": 0.0716666666667436,
+                "p95AbsoluteMonthlyMedian": 0.37283333333343477
+              },
+              "holdoutIndependent": {
+                "n": 2,
+                "mae": 0.08333333333334281,
+                "medianBias": 0.08333333333334281,
+                "mad": 0.02333333333345422,
+                "p95AbsoluteMonthlyMedian": 0.1043333333334516
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -0.26666666666682204,
+                "slope": 0
+              },
+              "validation": {
+                "n": 2,
+                "mae": 0.05809523809500661,
+                "medianBias": -0.01809523809509983,
+                "mad": 0.05809523809500661,
+                "p95AbsoluteMonthlyMedian": 0.07438095238059644
+              },
+              "holdoutOwn": {
+                "n": 2,
+                "mae": 0.0716666666667436,
+                "medianBias": -0.041666666666543506,
+                "mad": 0.0716666666667436,
+                "p95AbsoluteMonthlyMedian": 0.10916666666663274
+              },
+              "holdoutIndependent": {
+                "n": 2,
+                "mae": 0.35000000000016485,
+                "medianBias": 0.35000000000016485,
+                "mad": 0.02333333333345422,
+                "p95AbsoluteMonthlyMedian": 0.37100000000027367
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": -10.497222222201042,
+                "slope": 0.032222222222155025
+              },
+              "validation": {
+                "n": 2,
+                "mae": 0.08253968253941046,
+                "medianBias": -0.08253968253941046,
+                "mad": 0.041984126983928505,
+                "p95AbsoluteMonthlyMedian": 0.12032539682494611
+              },
+              "holdoutOwn": {
+                "n": 2,
+                "mae": 0.17055555555516388,
+                "medianBias": -0.17055555555516388,
+                "mad": 0.08777777777782081,
+                "p95AbsoluteMonthlyMedian": 0.24955555555520262
+              },
+              "holdoutIndependent": {
+                "n": 2,
+                "mae": 0.22111111111154447,
+                "medianBias": 0.22111111111154447,
+                "mad": 0.007222222222377006,
+                "p95AbsoluteMonthlyMedian": 0.22761111111168378
+              }
+            }
+          }
+        },
+        "M": {
+          "selected": "raw",
+          "models": {
+            "raw": {
+              "parameters": {
+                "kind": "raw",
+                "intercept": 0,
+                "slope": 0
+              },
+              "validation": {
+                "n": 2,
+                "mae": 0.3316666666667061,
+                "medianBias": -0.24833333333333485,
+                "mad": 0.3316666666667061,
+                "p95AbsoluteMonthlyMedian": 0.5551666666667074
+              },
+              "holdoutOwn": {
+                "n": 2,
+                "mae": 0.08333333333334281,
+                "medianBias": 0.08333333333334281,
+                "mad": 0.02333333333345422,
+                "p95AbsoluteMonthlyMedian": 0.1043333333334516
+              },
+              "holdoutIndependent": {
+                "n": 2,
+                "mae": 0.30833333333336554,
+                "medianBias": -0.30833333333336554,
+                "mad": 0.0716666666667436,
+                "p95AbsoluteMonthlyMedian": 0.37283333333343477
+              }
+            },
+            "constant": {
+              "parameters": {
+                "kind": "constant",
+                "intercept": -0.15333333333316546,
+                "slope": 0
+              },
+              "validation": {
+                "n": 2,
+                "mae": 0.3316666666667061,
+                "medianBias": -0.0950000000001694,
+                "mad": 0.3316666666667061,
+                "p95AbsoluteMonthlyMedian": 0.41716666666685853
+              },
+              "holdoutOwn": {
+                "n": 2,
+                "mae": 0.23666666666650826,
+                "medianBias": 0.23666666666650826,
+                "mad": 0.02333333333345422,
+                "p95AbsoluteMonthlyMedian": 0.2576666666666171
+              },
+              "holdoutIndependent": {
+                "n": 2,
+                "mae": 0.1550000000002001,
+                "medianBias": -0.1550000000002001,
+                "mad": 0.0716666666667436,
+                "p95AbsoluteMonthlyMedian": 0.2195000000002693
+              }
+            },
+            "trend": {
+              "parameters": {
+                "kind": "trend",
+                "intercept": -31.860000000040262,
+                "slope": 0.10000000000012695
+              },
+              "validation": {
+                "n": 2,
+                "mae": 0.33833333333363136,
+                "medianBias": -0.33833333333363136,
+                "mad": 0.2816666666666432,
+                "p95AbsoluteMonthlyMedian": 0.5918333333336102
+              },
+              "holdoutOwn": {
+                "n": 2,
+                "mae": 0.206666666667207,
+                "medianBias": -0.206666666667207,
+                "mad": 0.026666666666606886,
+                "p95AbsoluteMonthlyMedian": 0.23066666666715321
+              },
+              "holdoutIndependent": {
+                "n": 2,
+                "mae": 0.5983333333339154,
+                "medianBias": -0.5983333333339154,
+                "mad": 0.1216666666668047,
+                "p95AbsoluteMonthlyMedian": 0.7078333333340396
+              }
+            }
+          }
+        }
+      },
+      "status": "MONTHLY_BACKTEST_UNSATISFACTORY"
+    }
+  ],
+  "inputs": {
+    "hourly_csv_blob_sha": "da6afc778e41f6925626453023c79d9375be6b15",
+    "daily_csv_blob_sha": "e47de8c37174ce0387a50ca2729516424af42a9c"
+  }
+}
