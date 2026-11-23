@@ -1,3 +1,12 @@
+> **ARCHIVNÍ / NEPOVINNÁ ALTERNATIVA (rozhodnutí vlastníka 23. 11. 2026)**
+>
+> Nová MariaDB instance se **nebude zřizovat**. Tento nástroj z PR #72
+> zůstává jako již implementovaný a synteticky otestovaný příklad obnovy,
+> **není povinnou podmínkou issue #26 a nemá se spouštět**.
+> Schválenou provozní cestou je stávající Proxmox Backup Server:
+> viz [PBS backup/recovery policy](issue26-pbs-backup-recovery-policy.md).
+> Bez reálného obnovení není dovoleno tvrdit DATABASE_RESTORE_VERIFIED.
+
 # Issue #26 — izolovaný backup/restore drill
 
 Tento postup **neopravuje meteorologické hodnoty**. Doplňuje dosavadní
