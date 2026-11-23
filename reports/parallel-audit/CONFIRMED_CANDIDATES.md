@@ -3,6 +3,8 @@
 **Verze:** 2026-10-30 · **Syntéza:** [MASTER_AUDIT.md](MASTER_AUDIT.md)  
 **Pozor:** „potvrzený kandidát“ znamená **potvrzenou anomálii/datovou nekonzistenci**, nikoli ověřenou opravenou hodnotu. Ve sloupci „náhrada“ je `UNRESOLVED`, pokud neexistuje externě podložená numerická náhrada. **ŽÁDNÝ Z NÍŽE UVEDENÝCH NOVÝCH KANDIDÁTŮ NENÍ SCHVÁLEN K UPDATE.**
 
+**Aktualizace 23. 11. 2026:** C002 již nemá 28 otevřených databázových rozdílů `GW1000.rainRate>5` proti nulové rekonstruované hodnotě. Všechny 28/28 nyní přesně odpovídají zdroji i zaznamenanému `applied` auditu dávky `rainrate-2023-2024-wet-source-review-v1`. [Read-only důkazy](C002-rainrate-resolved-readonly-20261123.md). Tato shoda neprokazuje fyzikální pravost vysokých intenzit a nic nového neschvaluje. Původní část registru je historický stav k 30. 10. 2026.
+
 ## A. Již aplikované zásahy — NEOPAKOVAT
 
 | ID | Klíč/rozsah | Aktuální DB | Rozhodnutí |
@@ -19,7 +21,7 @@
 | ID | Priorita | Veličina / identifikace | Důkazní rozsah | Jistota diagnózy | Jistota náhradní hodnoty | Dále |
 |---|---|---|---|---|---|---|
 | C001 | P0 | `dewpoint` po RH 2022-04 | 1 077 diagnostických rozdílů >2 °C z 7 068 vypočitatelných | **HIGH** pro fyzikální nekonzistenci | **UNRESOLVED** do verifikace dobové formule | Rozhodnutí per timestamp, samostatně i `heatindex`, `appTemp` |
-| C002 | P0 | `rainRate` v 2023 a 2024 | 13 + 15 zdrojových GW1000 intervalů >5 cm/h, rekonstrukce 0 | **HIGH** pro odlišnost; pravost špičky neověřena | **UNRESOLVED** | Kontrola radar/PWS, driver, auditní historie, žádný plošný restore |
+| C002 | P0 historicky; **datová divergence již odstraněna** | rainRate v letech 2023–2024 | Původně 13 + 15 GW1000 intervalů >5 cm/h s nulou v rekonstrukci; aktuálně všech 28/28 shodných se zdrojem a aplikovaných v auditu | **HIGH** pro historický rozpor | **Fyzikální správnost špiček stále UNRESOLVED** | **NEOPAKOVAT UPDATE**; viz [read-only ověření 23.11.2026](C002-rainrate-resolved-readonly-20261123.md); zvlášť lze řešit meteorologickou validitu vysokých intenzit |
 | C003 | P0 | `lightning_noise_count` a `lightning_disturber_count` | 2026: 179/179 shod noise=strike; disturber podobný UTC epoch | **HIGH** pro chybnou/nejistou sémantiku | Nejde o numerickou DB náhradu | Prověřit raw JSON, opravit mapper v odděleném code PR |
 | C004 | P1 | `pressure` chybějící 2016–2018 | 47 737 `pressure_only_review`; 28 hraničních konfliktů >2 hPa v reportu 04 | **HIGH** pro existenci jiných timestampů, MEDIUM pro tlakovou věrohodnost | **UNRESOLVED** | Srovnat `pressure` a sousedy, kalibraci ČHMÚ; nepřebírat `barometer` z vadné T |
 | C005 | P1 | WH1080 2019–2020 | 267 + 491 `needs_validation` kandidátů | **HIGH** pro prázdné target_time, kvalita po veličinách nejistá | **UNRESOLVED** | Kontrola původu, času, teploty/RH/větru a přítomných tlaků |
