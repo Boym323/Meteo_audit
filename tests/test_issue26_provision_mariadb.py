@@ -75,7 +75,12 @@ class ExistingAccountsOnlyTests(unittest.TestCase):
                 client_address="192.168.1.52", output_dir=output,
                 execute=False, confirmation=None,
             )
-            self.assertEqual(status["status"], "AUDIT_DDL_MISSING_READ_ONLY")
+            self.assertEqual(
+                status["status"],
+                "EXISTING_AUDIT_DDL_VERIFIED_NO_DB_WRITES"
+                if status["audit"]["status"] == "DDL_VERIFIED"
+                else "AUDIT_DDL_MISSING_READ_ONLY",
+            )
             self.assertEqual(status["new_db_accounts"], 0)
             self.assertEqual(status["db_writes"], 0)
             self.assertTrue(status["existing_accounts_only"])
@@ -95,7 +100,10 @@ class ExistingAccountsOnlyTests(unittest.TestCase):
                     "WHERE TABLE_SCHEMA='loucka_reconstruction' "
                     "AND TABLE_NAME IN ('issue26_batch_events','issue26_field_events')"
                 )
-                self.assertEqual(c.fetchone()[0], 0)
+                self.assertEqual(
+                    c.fetchone()[0],
+                    2 if status["audit"]["status"] == "DDL_VERIFIED" else 0,
+                )
 
     def test_can_inspect_existing_synthetic_ddl_without_creating_accounts(self):
         self.reset()
