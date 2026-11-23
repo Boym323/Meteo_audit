@@ -51,7 +51,7 @@ absolute non-symlink CNF file mode 0600, for example:
     port=3306
     user=loucka_audit
     database=loucka_reconstruction
-    password=(existing privately stored credential)
+    password=<PLACEHOLDER>
 
 This CNF must never be committed to Git.
 
