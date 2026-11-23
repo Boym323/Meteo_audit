@@ -15,6 +15,7 @@ on:
       - tests/test_issue26_provision_socket.py
       - scripts/issue26_operator.py
       - tests/test_issue26_operator_mariadb.py
+      - sql/issue26_grant_existing_webro_select_only.sql
       - .github/workflows/issue26-transactional.yml
   pull_request:
     paths:
@@ -30,6 +31,7 @@ on:
       - tests/test_issue26_provision_socket.py
       - scripts/issue26_operator.py
       - tests/test_issue26_operator_mariadb.py
+      - sql/issue26_grant_existing_webro_select_only.sql
       - .github/workflows/issue26-transactional.yml
 
 permissions:
