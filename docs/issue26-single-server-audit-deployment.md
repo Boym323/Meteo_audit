@@ -1,3 +1,13 @@
+> **PŘEKONANÝ POSTUP — NEPROVÁDĚT INSTALACI.**
+> Rozhodnutí vlastníka z 23. 11. 2026:
+> [issue26-existing-accounts-decision.md](issue26-existing-accounts-decision.md).
+> Obě auditní tabulky byly již vytvořeny přes Navicat a read-only ověřeny.
+> **Nevytváříme žádné nové SQL účty.** Níže uvedené příkazy
+> `issue26_db_provision.py --execute` jsou historický návod a
+> **nesmějí se spustit**, protože by se pokusily založit
+> `meteo_issue26_writer`. Pokračujeme jen validací existujícího
+> schématu a grantů dosavadního `loucka_audit` bez nové identity.
+>
 > **Zjednodušení správy:** Pokud je nástroj spuštěn přímo jako Linux root na
 > stávajícím databázovém hostu `lo-infra-db-mariadb01`, lze využít
 > místní MariaDB Unix socket `/run/mysqld/mysqld.sock` (pokud je na
