@@ -80,7 +80,9 @@ GROUP BY utc_year ORDER BY utc_year;
 -- H. ExtraTemp2 in 2022 can be humidity-like; its unit/meaning may be
 -- different from 2023-2025, and 14 extreme 2024 values are 822.4.
 SELECT YEAR(DATE_ADD('1970-01-01 00:00:00',INTERVAL dateTime SECOND)) utc_year,
- COUNT(extraTemp2) available,MIN(dateTime) first_time,MAX(dateTime) last_time,
+ COUNT(extraTemp2) available,
+ MIN(CASE WHEN extraTemp2 IS NOT NULL THEN dateTime END) first_time,
+ MAX(CASE WHEN extraTemp2 IS NOT NULL THEN dateTime END) last_time,
  ROUND(MIN(extraTemp2),2) min_extra2,ROUND(MAX(extraTemp2),2) max_extra2,
  SUM(extraTemp2>60) over60,SUM(extraTemp2>100) over100
 FROM `pocasi-loucka.eu`.archive
