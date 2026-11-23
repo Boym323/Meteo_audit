@@ -15,6 +15,12 @@ from pathlib import Path
 import stat
 import sys
 
+# Prefer src/meteo_audit over the same-named scripts/meteo_audit.py helper
+# when this CLI is invoked directly.
+_REPO_SRC = Path(__file__).resolve().parents[1] / "src"
+if _REPO_SRC.is_dir():
+    sys.path.insert(0, str(_REPO_SRC))
+
 from meteo_audit.approval_dryrun import CandidateBatch, FieldCorrection, PreflightError, preflight
 from meteo_audit.approval_gate import challenge_for, sign_exact_batch, verify_exact_batch, SignedApproval
 
