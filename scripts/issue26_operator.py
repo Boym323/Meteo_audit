@@ -29,6 +29,7 @@ from meteo_audit.issue26_transaction import (
 EXPECTED_HOST = "lo-infra-db-mariadb01"
 EXPECTED_SERVER_ID = 1
 EXISTING_ACCOUNT = "loucka_audit@%"
+READ_ONLY_ACCOUNT = "loucka_web_ro@192.168.0.131"
 REVIEW_SCHEMA = "loucka-issue26-readonly-review-v1"
 APPLY_CONFIRM = "APLIKUJI-DAVKU:"
 
@@ -85,7 +86,7 @@ def _review(path: str, batch: CandidateBatch) -> dict:
             or identity.get("database") != TARGET
             or identity.get("hostname") != EXPECTED_HOST
             or identity.get("server_id") != EXPECTED_SERVER_ID
-            or identity.get("current_user") != EXISTING_ACCOUNT):
+            or identity.get("current_user") not in (EXISTING_ACCOUNT, READ_ONLY_ACCOUNT)):
         raise PreflightError("source review DB/account identity differs")
     from meteo_audit.approval_gate import _check_preflight
     report = item.get("snapshot")
@@ -97,15 +98,20 @@ def _review(path: str, batch: CandidateBatch) -> dict:
 
 def live_status(connection, *, expected_hostname: str = EXPECTED_HOST,
                 expected_server_id: int = EXPECTED_SERVER_ID,
-                expected_account: str = EXISTING_ACCOUNT) -> dict:
-    """Single-connection SELECT-only status; deliberately no session writes."""
+                expected_account: str | None = None) -> dict:
+    """Read-only status; explicitly allow two PRE-EXISTING accounts only."""
+    valid_accounts = (EXISTING_ACCOUNT, READ_ONLY_ACCOUNT)
+    if expected_account is not None and expected_account not in valid_accounts:
+        raise PreflightError("unexpected SQL account is not an approved existing identity")
     cur = connection.cursor()
     try:
         cur.execute("SELECT DATABASE(),@@hostname,@@server_id,CURRENT_USER(),@@version")
         row = cur.fetchone()
         if (not row or
-                (row[0], row[1], int(row[2]), row[3]) !=
-                (TARGET, expected_hostname, expected_server_id, expected_account)):
+                (row[0], row[1], int(row[2])) !=
+                (TARGET, expected_hostname, expected_server_id)
+                or row[3] not in valid_accounts
+                or (expected_account is not None and row[3] != expected_account)):
             raise PreflightError("connected DB host, server_id or SQL account is wrong")
         _assert_target(cur)  # also strict read-only DDL/index/FK guard
         ddl = verify_audit_ddl(cur)
@@ -131,7 +137,7 @@ def operation(connection, *, mode: str, manifest_path: str, review_path: str,
               execute: bool = False, prompt=input,
               expected_hostname: str = EXPECTED_HOST,
               expected_server_id: int = EXPECTED_SERVER_ID,
-              expected_account: str = EXISTING_ACCOUNT,
+              expected_account: str | None = None,
               now: int | None = None) -> dict:
     """Operator-facing flow: inspect, apply or rollback, with pinned evidence."""
     if mode not in {"inspect", "apply", "rollback"}:
@@ -140,11 +146,19 @@ def operation(connection, *, mode: str, manifest_path: str, review_path: str,
         raise PreflightError("inspect is always read-only")
     if mode != "inspect" and not execute:
         raise PreflightError("APPLY/ROLLBACK requires --execute and fresh signed owner receipt")
+    # Critical separation: wide privilege web account cannot be used for
+    # mutations, even with a valid owner signature and --execute.
+    if mode in ("apply", "rollback") and (
+        expected_account is not None and expected_account != EXISTING_ACCOUNT
+    ):
+        raise PreflightError("APPLY/ROLLBACK requires the existing loucka_audit account")
     batch = _manifest(manifest_path)
     approved_report = _review(review_path, batch)
     status = live_status(connection, expected_hostname=expected_hostname,
                          expected_server_id=expected_server_id,
                          expected_account=expected_account)
+    if mode in ("apply", "rollback") and status["account"] != EXISTING_ACCOUNT:
+        raise PreflightError("mutations require existing loucka_audit; web_ro is read-only")
     base = {
         "batch_id": batch.batch_id,
         "payload_sha256": batch.payload_sha256,
@@ -207,7 +221,7 @@ def main() -> int:
     parser.add_argument("mode", nargs="?", default="status",
                         choices=("status","inspect","apply","rollback"))
     parser.add_argument("--client-file", required=True,
-                        help="0600 MariaDB client CNF for existing loucka_audit ONLY")
+                        help="0600 existing-account CNF: loucka_web_ro for reads; loucka_audit for writes")
     parser.add_argument("--manifest")
     parser.add_argument("--review-evidence")
     parser.add_argument("--receipt-file")
