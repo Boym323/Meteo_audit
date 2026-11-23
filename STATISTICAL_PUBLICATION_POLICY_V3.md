@@ -49,3 +49,11 @@ The readiness classifier produces an expert evidence outcome only. `publication_
 ## V3 implementation limits
 
 This policy version does not assert completion of individual expert validation for all 248 candidates. Detailed physical validation is currently limited to the January 2026 pilot; CHMI temperature comparisons cover available cache months only and are regional plausibility checks. Humidity and pressure sensor epochs remain unresolved, wind candidates have not received the requested variable-specific expert review, historical conflict epochs remain open, and current GW3000 E4 validation is not completed. These limitations keep affected records in review or blocked states.
+
+## Operational decision (2026-11-23): daily extrema belong to WeeWX
+
+The Meteo_audit reconstruction scope **does not manually repair, derive, reconcile or certify daily extrema** (`min`, `max`, `mintime`, `maxtime`) in `archive_day_*`. We correct or quality-flag individual observations in the `archive` source and retain their provenances; this is NOT permission to ignore sensor faults in raw values or to publish contaminated summary rows.
+
+Once the final archive has been separately approved, backed up, and restored to the intended WeeWX binding, **WeeWX regenerates daily summary/extrema tables from that final archive** using its documented `weectl database rebuild-daily` operation (scoped to the affected dates/fields as appropriate). The rebuild is a **separate authorized later operational step**, not an automatic side effect of updating `archive`, and it must not be triggered by audit jobs, PR merges or read-only checks. Until then, the API keeps `HISTORICAL_QC_HOLD` for affected old `archive_day_*` aggregates.
+
+Acceptance after WeeWX rebuild is limited to technical checks (completed process, source/binding selection, touched date ranges, consistency with final archive, and preserved unmodified production before cutover), **not manual per-day extreme correction**. Official utility documentation: https://www.weewx.com/docs/latest/utilities/weectl-database/
