@@ -1,4 +1,9 @@
-"""Ephemeral SQL tests of one-server issue26 provisioning and restricted grants."""
+"""Synthetic MariaDB regression: #26 must NEVER create another account.
+
+The retired installer remains strictly read-only even with --execute/--confirm.
+The CI fixture may simulate already-installed audit tables, but no user/GRANT
+changes are performed by the installer. No production connections.
+"""
 from __future__ import annotations
 
 from contextlib import ExitStack
@@ -18,168 +23,103 @@ module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 
 
-class DbProvisioningTests(unittest.TestCase):
+class ExistingAccountsOnlyTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         if os.environ.get("ISSUE26_CI_MYSQL") != "1":
-            raise unittest.SkipTest("Requires ephemeral CI MariaDB only")
+            raise unittest.SkipTest("Ephemeral CI MariaDB only")
         import pymysql
-        cls.pymysql = pymysql
-        cls.conn = pymysql.connect(host="127.0.0.1",port=3306,user="root",
-                                   password="ci",database="loucka_reconstruction",
-                                   autocommit=True)
-        with cls.conn.cursor() as cur:
-            cur.execute("SELECT @@hostname, @@server_id")
-            cls.actual_host, cls.actual_sid = cur.fetchone()
-            cur.execute(
-                "SELECT SUBSTRING_INDEX(HOST,':',1) "
-                "FROM information_schema.PROCESSLIST WHERE ID=CONNECTION_ID()"
-            )
-            cls.remote_seen_host = cur.fetchone()[0]
+        cls.conn = pymysql.connect(
+            host="127.0.0.1", port=3306, user="root",
+            password="ci", database="loucka_reconstruction", autocommit=True
+        )
+        with cls.conn.cursor() as c:
+            c.execute("SELECT @@hostname, @@server_id")
+            cls.host, cls.sid = c.fetchone()
 
     @classmethod
     def tearDownClass(cls):
         cls.conn.close()
 
-    def setup_db(self):
-        with self.conn.cursor() as cur:
-            cur.execute("DELETE FROM reconstruction_changes")
-            cur.execute("DELETE FROM archive")
-            cur.execute(
-                "INSERT INTO archive (dateTime,rain,outTemp,outHumidity) "
-                "VALUES (1625097900,4.2567,NULL,NULL),"
-                "(1540000000,NULL,1.0,40.0)"
+    def patched_host(self):
+        e = ExitStack()
+        e.enter_context(patch.object(module, "FIXED_SERVER", self.host))
+        e.enter_context(patch.object(module, "FIXED_SERVER_ID", self.sid))
+        e.enter_context(patch.object(
+            module, "ARCHIVE_FIELDS",
+            frozenset({"dateTime","rain","outTemp","outHumidity"}),
+        ))
+        e.enter_context(patch.object(module, "EXPECTED_ARCHIVE_COLUMNS", 4))
+        return e
+
+    def reset(self):
+        with self.conn.cursor() as c:
+            c.execute("DELETE FROM reconstruction_changes")
+            c.execute("DELETE FROM archive")
+            c.execute(
+                "INSERT INTO archive(dateTime,rain,outTemp,outHumidity) VALUES "
+                "(1625097900,4.2567,NULL,NULL),(1540000000,NULL,1.0,40.0)"
             )
-            self.conn.commit()
 
-    def patched_source(self):
-        contexts = ExitStack()
-        contexts.enter_context(patch.object(module, "FIXED_SERVER", self.actual_host))
-        contexts.enter_context(patch.object(module, "FIXED_SERVER_ID", self.actual_sid))
-        contexts.enter_context(patch.object(module, "ARCHIVE_FIELDS",
-                                            frozenset({"dateTime","rain","outTemp","outHumidity"})))
-        contexts.enter_context(patch.object(module, "EXPECTED_ARCHIVE_COLUMNS", 4))
-        contexts.enter_context(patch.object(module, "VALUE_FIELDS",
-                                            frozenset({"rain","outTemp","outHumidity"})))
-        return contexts
+    def count_new_accounts(self):
+        with self.conn.cursor() as c:
+            c.execute("SELECT COUNT(*) FROM mysql.user WHERE User='meteo_issue26_writer'")
+            return c.fetchone()[0]
 
-    def test_provision_exact_schema_and_restricted_account(self):
-        self.setup_db()
-        with self.patched_source(), tempfile.TemporaryDirectory() as temp:
-            private = Path(temp) / "new-owner-only"
-            before = module.install_on_existing(
-                self.conn, client_ipv4=self.remote_seen_host,
-                client_address="127.0.0.1", output_dir=private,
+    def test_inspection_only_and_execute_never_creates_account_or_ddl(self):
+        self.reset()
+        with self.patched_host(), tempfile.TemporaryDirectory() as temp:
+            output = Path(temp)/"forbidden"
+            status = module.install_on_existing(
+                self.conn, client_ipv4="192.168.0.131",
+                client_address="192.168.1.52", output_dir=output,
                 execute=False, confirmation=None,
             )
-            self.assertEqual(before["status"], "DRY_RUN_NOT_INSTALLED_NO_DB_WRITES")
-            self.assertFalse(private.exists())
-            self.assertEqual(before["audit"]["status"], "NOT_INSTALLED")
-            with self.assertRaisesRegex(PreflightError, "confirmation"):
-                module.install_on_existing(
-                    self.conn, client_ipv4=self.remote_seen_host,
-                    client_address="127.0.0.1", output_dir=private,
-                    execute=True, confirmation="WRONG",
+            self.assertEqual(status["status"], "AUDIT_DDL_MISSING_READ_ONLY")
+            self.assertEqual(status["new_db_accounts"], 0)
+            self.assertEqual(status["db_writes"], 0)
+            self.assertTrue(status["existing_accounts_only"])
+            self.assertFalse(output.exists())
+            for phrase in (None, "WRONG", module.EXACT_CONFIRM):
+                with self.assertRaisesRegex(PreflightError, "NO NEW SQL ACCOUNTS"):
+                    module.install_on_existing(
+                        self.conn, client_ipv4="192.168.0.131",
+                        client_address="192.168.1.52", output_dir=output,
+                        execute=True, confirmation=phrase,
+                    )
+            self.assertEqual(self.count_new_accounts(), 0)
+            self.assertFalse(output.exists())
+            with self.conn.cursor() as c:
+                c.execute(
+                    "SELECT COUNT(*) FROM information_schema.TABLES "
+                    "WHERE TABLE_SCHEMA='loucka_reconstruction' "
+                    "AND TABLE_NAME IN ('issue26_batch_events','issue26_field_events')"
                 )
-            self.assertFalse(private.exists())
-            applied = module.install_on_existing(
-                self.conn, client_ipv4=self.remote_seen_host,
-                client_address="127.0.0.1", output_dir=private,
-                execute=True, confirmation=module.EXACT_CONFIRM,
+                self.assertEqual(c.fetchone()[0], 0)
+
+    def test_can_inspect_existing_synthetic_ddl_without_creating_accounts(self):
+        self.reset()
+        schema_file = Path(__file__).resolve().parents[1] / "sql" / "issue26_transactional_audit_schema.sql"
+        with self.conn.cursor() as c:
+            for statement in schema_file.read_text(encoding="utf-8").split(";"):
+                if statement.strip():
+                    c.execute(statement)
+            self.assertEqual(verify_audit_ddl(c)["status"], "DDL_VERIFIED")
+        with self.patched_host():
+            result = module.install_on_existing(
+                self.conn, client_ipv4="192.168.0.131",
+                client_address="192.168.1.52",
+                output_dir=Path("/does-not-matter"), execute=False,
+                confirmation=None,
             )
-            self.assertEqual(applied["status"], "DDL_AND_ROLE_CREATED_NO_ARCHIVE_CHANGES")
-            self.assertEqual(applied["audit"]["status"], "DDL_VERIFIED")
-            self.assertEqual(private.stat().st_mode & 0o777, 0o700)
-            file = private / "writer.cnf"
-            self.assertEqual(file.stat().st_mode & 0o777, 0o600)
-            with self.conn.cursor() as cur:
-                self.assertEqual(verify_audit_ddl(cur)["status"], "DDL_VERIFIED")
-                # Structural drift must reject ALL future writer operations.
-                cur.execute(
-                    "ALTER TABLE issue26_field_events "
-                    "DROP INDEX idx_issue26_target_variable"
-                )
-                try:
-                    with self.assertRaisesRegex(PreflightError, "index"):
-                        verify_audit_ddl(cur)
-                finally:
-                    cur.execute(
-                        "ALTER TABLE issue26_field_events "
-                        "ADD INDEX idx_issue26_target_variable(target_time,variable)"
-                    )
-                cur.execute(
-                    "ALTER TABLE issue26_field_events "
-                    "DROP FOREIGN KEY fk_issue26_batch_event"
-                )
-                try:
-                    with self.assertRaisesRegex(PreflightError, "FK"):
-                        verify_audit_ddl(cur)
-                finally:
-                    cur.execute(
-                        "ALTER TABLE issue26_field_events "
-                        "ADD CONSTRAINT fk_issue26_batch_event "
-                        "FOREIGN KEY (batch_id,event_type) REFERENCES "
-                        "issue26_batch_events(batch_id,event_type)"
-                    )
-                self.assertEqual(verify_audit_ddl(cur)["status"], "DDL_VERIFIED")
-                cur.execute("SELECT outTemp FROM archive WHERE dateTime=1540000000")
-                self.assertEqual(cur.fetchone()[0], 1.0)
-                cur.execute("SELECT COUNT(*) FROM issue26_batch_events")
-                self.assertEqual(cur.fetchone()[0], 0)
-            # Prove that permissions are narrow on a real CI MariaDB account.
-            limited = self.pymysql.connect(
-                read_default_file=str(file), read_default_group="client",
-                autocommit=True,
-            )
-            try:
-                with limited.cursor() as cur:
-                    cur.execute("SELECT COUNT(*) FROM loucka_reconstruction.archive")
-                    self.assertEqual(cur.fetchone()[0], 2)
-                    with self.assertRaises(self.pymysql.MySQLError):
-                        cur.execute("DELETE FROM loucka_reconstruction.issue26_batch_events")
-                    with self.assertRaises(self.pymysql.MySQLError):
-                        cur.execute("UPDATE loucka_reconstruction.issue26_batch_events "
-                                    "SET approver='bad'")
-                    with self.assertRaises(self.pymysql.MySQLError):
-                        cur.execute("UPDATE loucka_reconstruction.archive "
-                                    "SET dateTime=999 WHERE dateTime=1540000000")
-                    with self.assertRaises(self.pymysql.MySQLError):
-                        cur.execute("DROP TABLE loucka_reconstruction.issue26_field_events")
-                # Assert the actual signed CAS writer can run using only
-                # these narrowly scoped grants, not a privileged root user.
-                from meteo_audit.approval_dryrun import CandidateBatch, FieldCorrection
-                from meteo_audit.approval_gate import challenge_for, sign_exact_batch
-                from meteo_audit.issue26_transaction import sql_preflight, apply_approved_batch
-                correction = FieldCorrection(
-                    1540000000, "outTemp", 1.0, 2.5,
-                    "raw:fixture", "unit:fixture", "rule:ci", "HIGH", "MEDIUM",
-                )
-                batch = CandidateBatch("ci-restricted-user", (correction,))
-                review = sql_preflight(limited, batch)
-                signed = sign_exact_batch(
-                    batch, review, approver="owner:ci-only",
-                    entered_challenge=challenge_for(batch, review),
-                    secret_key=bytes(range(32)), now=1795430000,
-                )
-                result = apply_approved_batch(
-                    limited, batch, review, signed,
-                    approval_key=bytes(range(32)), now=1795430001,
-                )
-                self.assertTrue(result.committed)
-                with limited.cursor() as cur:
-                    cur.execute(
-                        "SELECT outTemp FROM loucka_reconstruction.archive "
-                        "WHERE dateTime=1540000000"
-                    )
-                    self.assertEqual(cur.fetchone()[0], 2.5)
-            finally:
-                limited.close()
-            with self.assertRaisesRegex(PreflightError, "already installed"):
-                module.install_on_existing(
-                    self.conn, client_ipv4=self.remote_seen_host,
-                    client_address="127.0.0.1", output_dir=private,
-                    execute=True, confirmation=module.EXACT_CONFIRM,
-                )
+        self.assertEqual(result["status"], "EXISTING_AUDIT_DDL_VERIFIED_NO_DB_WRITES")
+        self.assertEqual(result["new_db_accounts"], 0)
+        self.assertEqual(self.count_new_accounts(), 0)
+        with self.conn.cursor() as c:
+            c.execute("SELECT COUNT(*) FROM issue26_batch_events")
+            self.assertEqual(c.fetchone()[0], 0)
+            c.execute("SELECT COUNT(*) FROM issue26_field_events")
+            self.assertEqual(c.fetchone()[0], 0)
 
 
 if __name__ == "__main__":
