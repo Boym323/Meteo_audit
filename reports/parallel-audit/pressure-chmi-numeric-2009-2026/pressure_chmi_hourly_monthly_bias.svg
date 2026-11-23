@@ -1,0 +1,426 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="78" y="30" font-size="22" font-family="sans-serif" font-weight="bold">ČHMÚ hourly pressure reference vs Loučka archive</text>
+<text x="78" y="52" font-size="13" font-family="sans-serif" fill="#444">Exact UTC timestamp pairs; unadjusted field differences. Stations 11774 / 11782. Only QUALITY=0.</text>
+<line x1="78" y1="520.0" x2="1170" y2="520.0" stroke="#ddd"/>
+<text x="68" y="524.0" text-anchor="end" font-size="12" font-family="sans-serif">-49.7</text>
+<line x1="78" y1="429.2" x2="1170" y2="429.2" stroke="#ddd"/>
+<text x="68" y="433.2" text-anchor="end" font-size="12" font-family="sans-serif">-38.4</text>
+<line x1="78" y1="338.4" x2="1170" y2="338.4" stroke="#ddd"/>
+<text x="68" y="342.4" text-anchor="end" font-size="12" font-family="sans-serif">-27.2</text>
+<line x1="78" y1="247.6" x2="1170" y2="247.6" stroke="#ddd"/>
+<text x="68" y="251.6" text-anchor="end" font-size="12" font-family="sans-serif">-15.9</text>
+<line x1="78" y1="156.8" x2="1170" y2="156.8" stroke="#ddd"/>
+<text x="68" y="160.8" text-anchor="end" font-size="12" font-family="sans-serif">-4.6</text>
+<line x1="78" y1="66.0" x2="1170" y2="66.0" stroke="#ddd"/>
+<text x="68" y="70.0" text-anchor="end" font-size="12" font-family="sans-serif">6.6</text>
+<line x1="129.5" y1="66" x2="129.5" y2="520" stroke="#eee"/>
+<text x="129.5" y="542" text-anchor="middle" font-size="12" font-family="sans-serif">2018</text>
+<line x1="253.1" y1="66" x2="253.1" y2="520" stroke="#eee"/>
+<text x="253.1" y="542" text-anchor="middle" font-size="12" font-family="sans-serif">2019</text>
+<line x1="376.8" y1="66" x2="376.8" y2="520" stroke="#eee"/>
+<text x="376.8" y="542" text-anchor="middle" font-size="12" font-family="sans-serif">2020</text>
+<line x1="500.4" y1="66" x2="500.4" y2="520" stroke="#eee"/>
+<text x="500.4" y="542" text-anchor="middle" font-size="12" font-family="sans-serif">2021</text>
+<line x1="624.0" y1="66" x2="624.0" y2="520" stroke="#eee"/>
+<text x="624.0" y="542" text-anchor="middle" font-size="12" font-family="sans-serif">2022</text>
+<line x1="747.6" y1="66" x2="747.6" y2="520" stroke="#eee"/>
+<text x="747.6" y="542" text-anchor="middle" font-size="12" font-family="sans-serif">2023</text>
+<line x1="871.2" y1="66" x2="871.2" y2="520" stroke="#eee"/>
+<text x="871.2" y="542" text-anchor="middle" font-size="12" font-family="sans-serif">2024</text>
+<line x1="994.9" y1="66" x2="994.9" y2="520" stroke="#eee"/>
+<text x="994.9" y="542" text-anchor="middle" font-size="12" font-family="sans-serif">2025</text>
+<line x1="1118.5" y1="66" x2="1118.5" y2="520" stroke="#eee"/>
+<text x="1118.5" y="542" text-anchor="middle" font-size="12" font-family="sans-serif">2026</text>
+<polyline fill="none" stroke="#1769aa" stroke-width="2" points="78.0,289.4 88.3,295.9 98.6,296.6 108.9,298.3 119.2,303.9 129.5,309.5 139.8,313.1 150.1,317.1 160.4,322.5 170.7,324.8 181.0,330.0 191.3,331.1 201.6,336.2 211.9,339.9 222.2,340.3 232.5,344.4 242.8,142.8 253.1,113.4 263.4,114.5 273.7,106.4 284.0,120.1 294.3,125.8 304.6,136.3 314.9,154.8 325.2,160.5 335.5,149.2 345.8,150.8 356.2,140.2 366.5,137.9 376.8,122.6 387.1,123.4 397.4,120.9 407.7,126.7 418.0,139.0 428.3,152.2 438.6,154.1 448.9,161.2 459.2,163.8 469.5,159.5 479.8,152.6 490.1,139.3 500.4,124.6 510.7,120.8 521.0,128.1 531.3,125.6 541.6,130.2 551.9,139.7 562.2,152.5 572.5,121.4 582.8,111.2 593.1,119.7 603.4,121.9 613.7,129.4 624.0,100.2 634.3,122.1 644.6,124.5 654.9,122.5 665.2,125.3 675.5,129.1 685.8,130.6 696.1,126.5 706.4,131.8 716.7,111.8 727.0,111.6 737.3,101.7 747.6,89.3 757.9,74.4 768.2,69.6 778.5,67.6 788.8,110.8 799.1,116.2 809.4,119.4 819.7,121.9 830.0,105.2 840.3,97.6 850.6,90.0 860.9,83.3 871.2,103.0 881.5,88.2 891.8,98.4 902.2,91.7 912.5,96.6 922.8,106.1 933.1,109.4 943.4,105.1 953.7,109.3 964.0,91.9 974.3,84.6 984.6,86.5 994.9,72.6 1005.2,67.8 1015.5,66.6 1025.8,72.0 1036.1,82.3 1046.4,87.5 1056.7,93.3 1067.0,93.7 1077.3,126.4 1087.6,122.7 1097.9,122.7 1108.2,120.9 1118.5,121.5 1128.8,121.4 1139.1,122.1 1149.4,121.2 1159.7,121.2 1170.0,122.4"/>
+<circle cx="78.0" cy="289.4" r="2.3" fill="#1769aa"><title>2018-01: median -21.08 hPa, n=477</title></circle>
+<circle cx="88.3" cy="295.9" r="2.3" fill="#1769aa"><title>2018-02: median -21.88 hPa, n=52</title></circle>
+<circle cx="98.6" cy="296.6" r="2.3" fill="#1769aa"><title>2018-03: median -21.97 hPa, n=168</title></circle>
+<circle cx="108.9" cy="298.3" r="2.3" fill="#1769aa"><title>2018-04: median -22.18 hPa, n=719</title></circle>
+<circle cx="119.2" cy="303.9" r="2.3" fill="#1769aa"><title>2018-05: median -22.87 hPa, n=727</title></circle>
+<circle cx="129.5" cy="309.5" r="2.3" fill="#1769aa"><title>2018-06: median -23.57 hPa, n=716</title></circle>
+<circle cx="139.8" cy="313.1" r="2.3" fill="#1769aa"><title>2018-07: median -24.02 hPa, n=741</title></circle>
+<circle cx="150.1" cy="317.1" r="2.3" fill="#1769aa"><title>2018-08: median -24.51 hPa, n=736</title></circle>
+<circle cx="160.4" cy="322.5" r="2.3" fill="#1769aa"><title>2018-09: median -25.19 hPa, n=719</title></circle>
+<circle cx="170.7" cy="324.8" r="2.3" fill="#1769aa"><title>2018-10: median -25.46 hPa, n=744</title></circle>
+<circle cx="181.0" cy="330.0" r="2.3" fill="#1769aa"><title>2018-11: median -26.11 hPa, n=719</title></circle>
+<circle cx="191.3" cy="331.1" r="2.3" fill="#1769aa"><title>2019-00: median -26.25 hPa, n=743</title></circle>
+<circle cx="201.6" cy="336.2" r="2.3" fill="#1769aa"><title>2019-01: median -26.87 hPa, n=736</title></circle>
+<circle cx="211.9" cy="339.9" r="2.3" fill="#1769aa"><title>2019-02: median -27.33 hPa, n=671</title></circle>
+<circle cx="222.2" cy="340.3" r="2.3" fill="#1769aa"><title>2019-03: median -27.39 hPa, n=735</title></circle>
+<circle cx="232.5" cy="344.4" r="2.3" fill="#1769aa"><title>2019-04: median -27.89 hPa, n=720</title></circle>
+<circle cx="242.8" cy="142.8" r="2.3" fill="#1769aa"><title>2019-05: median -2.91 hPa, n=713</title></circle>
+<circle cx="253.1" cy="113.4" r="2.3" fill="#1769aa"><title>2019-06: median 0.74 hPa, n=717</title></circle>
+<circle cx="263.4" cy="114.5" r="2.3" fill="#1769aa"><title>2019-07: median 0.60 hPa, n=738</title></circle>
+<circle cx="273.7" cy="106.4" r="2.3" fill="#1769aa"><title>2019-08: median 1.60 hPa, n=715</title></circle>
+<circle cx="284.0" cy="120.1" r="2.3" fill="#1769aa"><title>2019-09: median -0.10 hPa, n=719</title></circle>
+<circle cx="294.3" cy="125.8" r="2.3" fill="#1769aa"><title>2019-10: median -0.80 hPa, n=743</title></circle>
+<circle cx="304.6" cy="136.3" r="2.3" fill="#1769aa"><title>2019-11: median -2.10 hPa, n=720</title></circle>
+<circle cx="314.9" cy="154.8" r="2.3" fill="#1769aa"><title>2020-00: median -4.40 hPa, n=743</title></circle>
+<circle cx="325.2" cy="160.5" r="2.3" fill="#1769aa"><title>2020-01: median -5.10 hPa, n=722</title></circle>
+<circle cx="335.5" cy="149.2" r="2.3" fill="#1769aa"><title>2020-02: median -3.70 hPa, n=626</title></circle>
+<circle cx="345.8" cy="150.8" r="2.3" fill="#1769aa"><title>2020-03: median -3.90 hPa, n=690</title></circle>
+<circle cx="356.2" cy="140.2" r="2.3" fill="#1769aa"><title>2020-04: median -2.58 hPa, n=713</title></circle>
+<circle cx="366.5" cy="137.9" r="2.3" fill="#1769aa"><title>2020-05: median -2.30 hPa, n=667</title></circle>
+<circle cx="376.8" cy="122.6" r="2.3" fill="#1769aa"><title>2020-06: median -0.40 hPa, n=705</title></circle>
+<circle cx="387.1" cy="123.4" r="2.3" fill="#1769aa"><title>2020-07: median -0.50 hPa, n=722</title></circle>
+<circle cx="397.4" cy="120.9" r="2.3" fill="#1769aa"><title>2020-08: median -0.19 hPa, n=729</title></circle>
+<circle cx="407.7" cy="126.7" r="2.3" fill="#1769aa"><title>2020-09: median -0.92 hPa, n=662</title></circle>
+<circle cx="418.0" cy="139.0" r="2.3" fill="#1769aa"><title>2020-10: median -2.43 hPa, n=584</title></circle>
+<circle cx="428.3" cy="152.2" r="2.3" fill="#1769aa"><title>2020-11: median -4.07 hPa, n=621</title></circle>
+<circle cx="438.6" cy="154.1" r="2.3" fill="#1769aa"><title>2021-00: median -4.30 hPa, n=740</title></circle>
+<circle cx="448.9" cy="161.2" r="2.3" fill="#1769aa"><title>2021-01: median -5.19 hPa, n=685</title></circle>
+<circle cx="459.2" cy="163.8" r="2.3" fill="#1769aa"><title>2021-02: median -5.51 hPa, n=670</title></circle>
+<circle cx="469.5" cy="159.5" r="2.3" fill="#1769aa"><title>2021-03: median -4.98 hPa, n=742</title></circle>
+<circle cx="479.8" cy="152.6" r="2.3" fill="#1769aa"><title>2021-04: median -4.12 hPa, n=718</title></circle>
+<circle cx="490.1" cy="139.3" r="2.3" fill="#1769aa"><title>2021-05: median -2.48 hPa, n=727</title></circle>
+<circle cx="500.4" cy="124.6" r="2.3" fill="#1769aa"><title>2021-06: median -0.65 hPa, n=706</title></circle>
+<circle cx="510.7" cy="120.8" r="2.3" fill="#1769aa"><title>2021-07: median -0.18 hPa, n=740</title></circle>
+<circle cx="521.0" cy="128.1" r="2.3" fill="#1769aa"><title>2021-08: median -1.08 hPa, n=739</title></circle>
+<circle cx="531.3" cy="125.6" r="2.3" fill="#1769aa"><title>2021-09: median -0.78 hPa, n=691</title></circle>
+<circle cx="541.6" cy="130.2" r="2.3" fill="#1769aa"><title>2021-10: median -1.34 hPa, n=723</title></circle>
+<circle cx="551.9" cy="139.7" r="2.3" fill="#1769aa"><title>2021-11: median -2.52 hPa, n=704</title></circle>
+<circle cx="562.2" cy="152.5" r="2.3" fill="#1769aa"><title>2022-00: median -4.11 hPa, n=570</title></circle>
+<circle cx="572.5" cy="121.4" r="2.3" fill="#1769aa"><title>2022-01: median -0.26 hPa, n=689</title></circle>
+<circle cx="582.8" cy="111.2" r="2.3" fill="#1769aa"><title>2022-02: median 1.01 hPa, n=653</title></circle>
+<circle cx="593.1" cy="119.7" r="2.3" fill="#1769aa"><title>2022-03: median -0.04 hPa, n=720</title></circle>
+<circle cx="603.4" cy="121.9" r="2.3" fill="#1769aa"><title>2022-04: median -0.32 hPa, n=680</title></circle>
+<circle cx="613.7" cy="129.4" r="2.3" fill="#1769aa"><title>2022-05: median -1.25 hPa, n=698</title></circle>
+<circle cx="624.0" cy="100.2" r="2.3" fill="#1769aa"><title>2022-06: median 2.37 hPa, n=706</title></circle>
+<circle cx="634.3" cy="122.1" r="2.3" fill="#1769aa"><title>2022-07: median -0.35 hPa, n=737</title></circle>
+<circle cx="644.6" cy="124.5" r="2.3" fill="#1769aa"><title>2022-08: median -0.64 hPa, n=738</title></circle>
+<circle cx="654.9" cy="122.5" r="2.3" fill="#1769aa"><title>2022-09: median -0.39 hPa, n=718</title></circle>
+<circle cx="665.2" cy="125.3" r="2.3" fill="#1769aa"><title>2022-10: median -0.74 hPa, n=741</title></circle>
+<circle cx="675.5" cy="129.1" r="2.3" fill="#1769aa"><title>2022-11: median -1.21 hPa, n=719</title></circle>
+<circle cx="685.8" cy="130.6" r="2.3" fill="#1769aa"><title>2023-00: median -1.40 hPa, n=743</title></circle>
+<circle cx="696.1" cy="126.5" r="2.3" fill="#1769aa"><title>2023-01: median -0.89 hPa, n=743</title></circle>
+<circle cx="706.4" cy="131.8" r="2.3" fill="#1769aa"><title>2023-02: median -1.54 hPa, n=671</title></circle>
+<circle cx="716.7" cy="111.8" r="2.3" fill="#1769aa"><title>2023-03: median 0.93 hPa, n=738</title></circle>
+<circle cx="727.0" cy="111.6" r="2.3" fill="#1769aa"><title>2023-04: median 0.96 hPa, n=718</title></circle>
+<circle cx="737.3" cy="101.7" r="2.3" fill="#1769aa"><title>2023-05: median 2.19 hPa, n=727</title></circle>
+<circle cx="747.6" cy="89.3" r="2.3" fill="#1769aa"><title>2023-06: median 3.72 hPa, n=717</title></circle>
+<circle cx="757.9" cy="74.4" r="2.3" fill="#1769aa"><title>2023-07: median 5.56 hPa, n=739</title></circle>
+<circle cx="768.2" cy="69.6" r="2.3" fill="#1769aa"><title>2023-08: median 6.16 hPa, n=741</title></circle>
+<circle cx="778.5" cy="67.6" r="2.3" fill="#1769aa"><title>2023-09: median 6.41 hPa, n=718</title></circle>
+<circle cx="788.8" cy="110.8" r="2.3" fill="#1769aa"><title>2023-10: median 1.06 hPa, n=741</title></circle>
+<circle cx="799.1" cy="116.2" r="2.3" fill="#1769aa"><title>2023-11: median 0.38 hPa, n=702</title></circle>
+<circle cx="809.4" cy="119.4" r="2.3" fill="#1769aa"><title>2024-00: median -0.01 hPa, n=742</title></circle>
+<circle cx="819.7" cy="121.9" r="2.3" fill="#1769aa"><title>2024-01: median -0.32 hPa, n=727</title></circle>
+<circle cx="830.0" cy="105.2" r="2.3" fill="#1769aa"><title>2024-02: median 1.75 hPa, n=692</title></circle>
+<circle cx="840.3" cy="97.6" r="2.3" fill="#1769aa"><title>2024-03: median 2.70 hPa, n=741</title></circle>
+<circle cx="850.6" cy="90.0" r="2.3" fill="#1769aa"><title>2024-04: median 3.64 hPa, n=717</title></circle>
+<circle cx="860.9" cy="83.3" r="2.3" fill="#1769aa"><title>2024-05: median 4.46 hPa, n=739</title></circle>
+<circle cx="871.2" cy="103.0" r="2.3" fill="#1769aa"><title>2024-06: median 2.02 hPa, n=720</title></circle>
+<circle cx="881.5" cy="88.2" r="2.3" fill="#1769aa"><title>2024-07: median 3.86 hPa, n=742</title></circle>
+<circle cx="891.8" cy="98.4" r="2.3" fill="#1769aa"><title>2024-08: median 2.59 hPa, n=744</title></circle>
+<circle cx="902.2" cy="91.7" r="2.3" fill="#1769aa"><title>2024-09: median 3.42 hPa, n=711</title></circle>
+<circle cx="912.5" cy="96.6" r="2.3" fill="#1769aa"><title>2024-10: median 2.81 hPa, n=743</title></circle>
+<circle cx="922.8" cy="106.1" r="2.3" fill="#1769aa"><title>2024-11: median 1.64 hPa, n=717</title></circle>
+<circle cx="933.1" cy="109.4" r="2.3" fill="#1769aa"><title>2025-00: median 1.23 hPa, n=744</title></circle>
+<circle cx="943.4" cy="105.1" r="2.3" fill="#1769aa"><title>2025-01: median 1.77 hPa, n=734</title></circle>
+<circle cx="953.7" cy="109.3" r="2.3" fill="#1769aa"><title>2025-02: median 1.25 hPa, n=672</title></circle>
+<circle cx="964.0" cy="91.9" r="2.3" fill="#1769aa"><title>2025-03: median 3.40 hPa, n=742</title></circle>
+<circle cx="974.3" cy="84.6" r="2.3" fill="#1769aa"><title>2025-04: median 4.30 hPa, n=719</title></circle>
+<circle cx="984.6" cy="86.5" r="2.3" fill="#1769aa"><title>2025-05: median 4.07 hPa, n=742</title></circle>
+<circle cx="994.9" cy="72.6" r="2.3" fill="#1769aa"><title>2025-06: median 5.79 hPa, n=717</title></circle>
+<circle cx="1005.2" cy="67.8" r="2.3" fill="#1769aa"><title>2025-07: median 6.39 hPa, n=739</title></circle>
+<circle cx="1015.5" cy="66.6" r="2.3" fill="#1769aa"><title>2025-08: median 6.53 hPa, n=707</title></circle>
+<circle cx="1025.8" cy="72.0" r="2.3" fill="#1769aa"><title>2025-09: median 5.87 hPa, n=719</title></circle>
+<circle cx="1036.1" cy="82.3" r="2.3" fill="#1769aa"><title>2025-10: median 4.59 hPa, n=735</title></circle>
+<circle cx="1046.4" cy="87.5" r="2.3" fill="#1769aa"><title>2025-11: median 3.95 hPa, n=630</title></circle>
+<circle cx="1056.7" cy="93.3" r="2.3" fill="#1769aa"><title>2026-00: median 3.23 hPa, n=702</title></circle>
+<circle cx="1067.0" cy="93.7" r="2.3" fill="#1769aa"><title>2026-01: median 3.18 hPa, n=735</title></circle>
+<circle cx="1077.3" cy="126.4" r="2.3" fill="#1769aa"><title>2026-02: median -0.88 hPa, n=671</title></circle>
+<circle cx="1087.6" cy="122.7" r="2.3" fill="#1769aa"><title>2026-03: median -0.42 hPa, n=741</title></circle>
+<circle cx="1097.9" cy="122.7" r="2.3" fill="#1769aa"><title>2026-04: median -0.41 hPa, n=693</title></circle>
+<circle cx="1108.2" cy="120.9" r="2.3" fill="#1769aa"><title>2026-05: median -0.20 hPa, n=743</title></circle>
+<circle cx="1118.5" cy="121.5" r="2.3" fill="#1769aa"><title>2026-06: median -0.27 hPa, n=719</title></circle>
+<circle cx="1128.8" cy="121.4" r="2.3" fill="#1769aa"><title>2026-07: median -0.26 hPa, n=743</title></circle>
+<circle cx="1139.1" cy="122.1" r="2.3" fill="#1769aa"><title>2026-08: median -0.34 hPa, n=743</title></circle>
+<circle cx="1149.4" cy="121.2" r="2.3" fill="#1769aa"><title>2026-09: median -0.23 hPa, n=719</title></circle>
+<circle cx="1159.7" cy="121.2" r="2.3" fill="#1769aa"><title>2026-10: median -0.24 hPa, n=742</title></circle>
+<circle cx="1170.0" cy="122.4" r="2.3" fill="#1769aa"><title>2026-11: median -0.38 hPa, n=285</title></circle>
+<polyline fill="none" stroke="#1769aa" stroke-width="2" stroke-dasharray="6 4" points="78.0,474.4 88.3,477.7 98.6,476.9 108.9,472.9 119.2,475.5 129.5,482.5 139.8,484.0 150.1,486.6 160.4,495.0 170.7,504.5 181.0,511.1 191.3,517.6 201.6,520.0 211.9,519.6 222.2,519.1 232.5,508.4 242.8,331.0 253.1,296.1 263.4,298.2 273.7,289.9 284.0,306.9 294.3,313.4 304.6,325.4 314.9,347.9 325.2,357.4 335.5,342.3 345.8,342.5 356.2,330.2 366.5,327.1 376.8,305.2 387.1,306.6 397.4,302.4 407.7,312.5 418.0,326.4 428.3,349.4 438.6,348.4 448.9,355.8 459.2,357.3 469.5,353.5 479.8,344.1 490.1,327.8 500.4,308.6 510.7,303.3 521.0,311.3 531.3,311.9 541.6,321.7 551.9,333.2 562.2,347.5 593.1,289.2 603.4,310.0 613.7,316.2 624.0,262.1 634.3,307.5 644.6,306.2 654.9,307.1 665.2,314.0 675.5,321.1 685.8,326.1 696.1,321.5 706.4,329.6 716.7,304.0 727.0,301.4 737.3,289.7 747.6,274.7 757.9,259.0 768.2,252.7 778.5,254.3 788.8,298.8 799.1,310.2 809.4,316.1 819.7,319.6 830.0,298.3 840.3,289.6 850.6,281.2 860.9,269.9 871.2,286.2 881.5,270.1 891.8,280.4 902.2,277.6 912.5,288.9 922.8,302.8 933.1,307.0"/>
+<circle cx="78.0" cy="474.4" r="2.3" fill="#1769aa"><title>2018-01: median -44.00 hPa, n=395</title></circle>
+<circle cx="88.3" cy="477.7" r="2.3" fill="#1769aa"><title>2018-02: median -44.42 hPa, n=21</title></circle>
+<circle cx="98.6" cy="476.9" r="2.3" fill="#1769aa"><title>2018-03: median -44.31 hPa, n=84</title></circle>
+<circle cx="108.9" cy="472.9" r="2.3" fill="#1769aa"><title>2018-04: median -43.82 hPa, n=254</title></circle>
+<circle cx="119.2" cy="475.5" r="2.3" fill="#1769aa"><title>2018-05: median -44.15 hPa, n=413</title></circle>
+<circle cx="129.5" cy="482.5" r="2.3" fill="#1769aa"><title>2018-06: median -45.01 hPa, n=464</title></circle>
+<circle cx="139.8" cy="484.0" r="2.3" fill="#1769aa"><title>2018-07: median -45.19 hPa, n=367</title></circle>
+<circle cx="150.1" cy="486.6" r="2.3" fill="#1769aa"><title>2018-08: median -45.52 hPa, n=352</title></circle>
+<circle cx="160.4" cy="495.0" r="2.3" fill="#1769aa"><title>2018-09: median -46.56 hPa, n=450</title></circle>
+<circle cx="170.7" cy="504.5" r="2.3" fill="#1769aa"><title>2018-10: median -47.74 hPa, n=446</title></circle>
+<circle cx="181.0" cy="511.1" r="2.3" fill="#1769aa"><title>2018-11: median -48.56 hPa, n=404</title></circle>
+<circle cx="191.3" cy="517.6" r="2.3" fill="#1769aa"><title>2019-00: median -49.36 hPa, n=592</title></circle>
+<circle cx="201.6" cy="520.0" r="2.3" fill="#1769aa"><title>2019-01: median -49.66 hPa, n=383</title></circle>
+<circle cx="211.9" cy="519.6" r="2.3" fill="#1769aa"><title>2019-02: median -49.61 hPa, n=330</title></circle>
+<circle cx="222.2" cy="519.1" r="2.3" fill="#1769aa"><title>2019-03: median -49.54 hPa, n=344</title></circle>
+<circle cx="232.5" cy="508.4" r="2.3" fill="#1769aa"><title>2019-04: median -48.22 hPa, n=213</title></circle>
+<circle cx="242.8" cy="331.0" r="2.3" fill="#1769aa"><title>2019-05: median -26.23 hPa, n=700</title></circle>
+<circle cx="253.1" cy="296.1" r="2.3" fill="#1769aa"><title>2019-06: median -21.91 hPa, n=717</title></circle>
+<circle cx="263.4" cy="298.2" r="2.3" fill="#1769aa"><title>2019-07: median -22.17 hPa, n=738</title></circle>
+<circle cx="273.7" cy="289.9" r="2.3" fill="#1769aa"><title>2019-08: median -21.14 hPa, n=699</title></circle>
+<circle cx="284.0" cy="306.9" r="2.3" fill="#1769aa"><title>2019-09: median -23.24 hPa, n=719</title></circle>
+<circle cx="294.3" cy="313.4" r="2.3" fill="#1769aa"><title>2019-10: median -24.06 hPa, n=743</title></circle>
+<circle cx="304.6" cy="325.4" r="2.3" fill="#1769aa"><title>2019-11: median -25.54 hPa, n=720</title></circle>
+<circle cx="314.9" cy="347.9" r="2.3" fill="#1769aa"><title>2020-00: median -28.33 hPa, n=743</title></circle>
+<circle cx="325.2" cy="357.4" r="2.3" fill="#1769aa"><title>2020-01: median -29.51 hPa, n=706</title></circle>
+<circle cx="335.5" cy="342.3" r="2.3" fill="#1769aa"><title>2020-02: median -27.63 hPa, n=570</title></circle>
+<circle cx="345.8" cy="342.5" r="2.3" fill="#1769aa"><title>2020-03: median -27.66 hPa, n=665</title></circle>
+<circle cx="356.2" cy="330.2" r="2.3" fill="#1769aa"><title>2020-04: median -26.13 hPa, n=694</title></circle>
+<circle cx="366.5" cy="327.1" r="2.3" fill="#1769aa"><title>2020-05: median -25.75 hPa, n=618</title></circle>
+<circle cx="376.8" cy="305.2" r="2.3" fill="#1769aa"><title>2020-06: median -23.03 hPa, n=601</title></circle>
+<circle cx="387.1" cy="306.6" r="2.3" fill="#1769aa"><title>2020-07: median -23.21 hPa, n=699</title></circle>
+<circle cx="397.4" cy="302.4" r="2.3" fill="#1769aa"><title>2020-08: median -22.69 hPa, n=715</title></circle>
+<circle cx="407.7" cy="312.5" r="2.3" fill="#1769aa"><title>2020-09: median -23.95 hPa, n=629</title></circle>
+<circle cx="418.0" cy="326.4" r="2.3" fill="#1769aa"><title>2020-10: median -25.66 hPa, n=508</title></circle>
+<circle cx="428.3" cy="349.4" r="2.3" fill="#1769aa"><title>2020-11: median -28.51 hPa, n=553</title></circle>
+<circle cx="438.6" cy="348.4" r="2.3" fill="#1769aa"><title>2021-00: median -28.39 hPa, n=740</title></circle>
+<circle cx="448.9" cy="355.8" r="2.3" fill="#1769aa"><title>2021-01: median -29.30 hPa, n=665</title></circle>
+<circle cx="459.2" cy="357.3" r="2.3" fill="#1769aa"><title>2021-02: median -29.50 hPa, n=670</title></circle>
+<circle cx="469.5" cy="353.5" r="2.3" fill="#1769aa"><title>2021-03: median -29.02 hPa, n=742</title></circle>
+<circle cx="479.8" cy="344.1" r="2.3" fill="#1769aa"><title>2021-04: median -27.86 hPa, n=718</title></circle>
+<circle cx="490.1" cy="327.8" r="2.3" fill="#1769aa"><title>2021-05: median -25.84 hPa, n=714</title></circle>
+<circle cx="500.4" cy="308.6" r="2.3" fill="#1769aa"><title>2021-06: median -23.46 hPa, n=699</title></circle>
+<circle cx="510.7" cy="303.3" r="2.3" fill="#1769aa"><title>2021-07: median -22.80 hPa, n=737</title></circle>
+<circle cx="521.0" cy="311.3" r="2.3" fill="#1769aa"><title>2021-08: median -23.79 hPa, n=738</title></circle>
+<circle cx="531.3" cy="311.9" r="2.3" fill="#1769aa"><title>2021-09: median -23.86 hPa, n=675</title></circle>
+<circle cx="541.6" cy="321.7" r="2.3" fill="#1769aa"><title>2021-10: median -25.08 hPa, n=711</title></circle>
+<circle cx="551.9" cy="333.2" r="2.3" fill="#1769aa"><title>2021-11: median -26.51 hPa, n=702</title></circle>
+<circle cx="562.2" cy="347.5" r="2.3" fill="#1769aa"><title>2022-00: median -28.28 hPa, n=551</title></circle>
+<circle cx="593.1" cy="289.2" r="2.3" fill="#1769aa"><title>2022-03: median -21.06 hPa, n=44</title></circle>
+<circle cx="603.4" cy="310.0" r="2.3" fill="#1769aa"><title>2022-04: median -23.63 hPa, n=561</title></circle>
+<circle cx="613.7" cy="316.2" r="2.3" fill="#1769aa"><title>2022-05: median -24.40 hPa, n=4</title></circle>
+<circle cx="624.0" cy="262.1" r="2.3" fill="#1769aa"><title>2022-06: median -17.69 hPa, n=16</title></circle>
+<circle cx="634.3" cy="307.5" r="2.3" fill="#1769aa"><title>2022-07: median -23.32 hPa, n=634</title></circle>
+<circle cx="644.6" cy="306.2" r="2.3" fill="#1769aa"><title>2022-08: median -23.16 hPa, n=714</title></circle>
+<circle cx="654.9" cy="307.1" r="2.3" fill="#1769aa"><title>2022-09: median -23.27 hPa, n=695</title></circle>
+<circle cx="665.2" cy="314.0" r="2.3" fill="#1769aa"><title>2022-10: median -24.13 hPa, n=699</title></circle>
+<circle cx="675.5" cy="321.1" r="2.3" fill="#1769aa"><title>2022-11: median -25.00 hPa, n=719</title></circle>
+<circle cx="685.8" cy="326.1" r="2.3" fill="#1769aa"><title>2023-00: median -25.62 hPa, n=743</title></circle>
+<circle cx="696.1" cy="321.5" r="2.3" fill="#1769aa"><title>2023-01: median -25.06 hPa, n=743</title></circle>
+<circle cx="706.4" cy="329.6" r="2.3" fill="#1769aa"><title>2023-02: median -26.06 hPa, n=671</title></circle>
+<circle cx="716.7" cy="304.0" r="2.3" fill="#1769aa"><title>2023-03: median -22.89 hPa, n=738</title></circle>
+<circle cx="727.0" cy="301.4" r="2.3" fill="#1769aa"><title>2023-04: median -22.57 hPa, n=718</title></circle>
+<circle cx="737.3" cy="289.7" r="2.3" fill="#1769aa"><title>2023-05: median -21.12 hPa, n=715</title></circle>
+<circle cx="747.6" cy="274.7" r="2.3" fill="#1769aa"><title>2023-06: median -19.25 hPa, n=717</title></circle>
+<circle cx="757.9" cy="259.0" r="2.3" fill="#1769aa"><title>2023-07: median -17.31 hPa, n=734</title></circle>
+<circle cx="768.2" cy="252.7" r="2.3" fill="#1769aa"><title>2023-08: median -16.53 hPa, n=741</title></circle>
+<circle cx="778.5" cy="254.3" r="2.3" fill="#1769aa"><title>2023-09: median -16.73 hPa, n=715</title></circle>
+<circle cx="788.8" cy="298.8" r="2.3" fill="#1769aa"><title>2023-10: median -22.24 hPa, n=740</title></circle>
+<circle cx="799.1" cy="310.2" r="2.3" fill="#1769aa"><title>2023-11: median -23.66 hPa, n=677</title></circle>
+<circle cx="809.4" cy="316.1" r="2.3" fill="#1769aa"><title>2024-00: median -24.38 hPa, n=741</title></circle>
+<circle cx="819.7" cy="319.6" r="2.3" fill="#1769aa"><title>2024-01: median -24.82 hPa, n=716</title></circle>
+<circle cx="830.0" cy="298.3" r="2.3" fill="#1769aa"><title>2024-02: median -22.18 hPa, n=692</title></circle>
+<circle cx="840.3" cy="289.6" r="2.3" fill="#1769aa"><title>2024-03: median -21.10 hPa, n=740</title></circle>
+<circle cx="850.6" cy="281.2" r="2.3" fill="#1769aa"><title>2024-04: median -20.06 hPa, n=716</title></circle>
+<circle cx="860.9" cy="269.9" r="2.3" fill="#1769aa"><title>2024-05: median -18.66 hPa, n=739</title></circle>
+<circle cx="871.2" cy="286.2" r="2.3" fill="#1769aa"><title>2024-06: median -20.68 hPa, n=720</title></circle>
+<circle cx="881.5" cy="270.1" r="2.3" fill="#1769aa"><title>2024-07: median -18.69 hPa, n=695</title></circle>
+<circle cx="891.8" cy="280.4" r="2.3" fill="#1769aa"><title>2024-08: median -19.96 hPa, n=739</title></circle>
+<circle cx="902.2" cy="277.6" r="2.3" fill="#1769aa"><title>2024-09: median -19.61 hPa, n=668</title></circle>
+<circle cx="912.5" cy="288.9" r="2.3" fill="#1769aa"><title>2024-10: median -21.02 hPa, n=733</title></circle>
+<circle cx="922.8" cy="302.8" r="2.3" fill="#1769aa"><title>2024-11: median -22.74 hPa, n=690</title></circle>
+<circle cx="933.1" cy="307.0" r="2.3" fill="#1769aa"><title>2025-00: median -23.26 hPa, n=744</title></circle>
+<polyline fill="none" stroke="#c62828" stroke-width="2" points="78.0,284.6 88.3,292.2 98.6,296.1 108.9,298.6 119.2,308.5 129.5,312.9 139.8,315.4 150.1,320.7 160.4,323.5 170.7,324.9 181.0,331.9 191.3,325.7 201.6,330.7 211.9,335.0 222.2,336.1 232.5,349.9 242.8,142.6 253.1,115.7 263.4,116.1 273.7,109.7 284.0,119.3 294.3,122.6 304.6,135.5 314.9,146.8 325.2,150.8 335.5,143.1 345.8,150.0 356.2,143.5 366.5,138.7 376.8,123.4 387.1,125.8 397.4,122.6 407.7,128.3 418.0,134.2 428.3,148.9 438.6,149.7 448.9,159.3 459.2,158.9 469.5,154.4 479.8,151.4 490.1,134.4 500.4,126.2 510.7,121.1 521.0,123.9 531.3,125.1 541.6,124.3 551.9,133.8 562.2,152.1 572.5,111.3 582.8,101.7 593.1,120.9 603.4,123.4 613.7,128.9 624.0,97.7 634.3,121.4 644.6,127.0 654.9,118.6 665.2,117.9 675.5,126.6 685.8,124.9 696.1,118.8 706.4,124.8 716.7,106.7 727.0,112.7 737.3,104.7 747.6,88.5 757.9,72.6 768.2,68.3 778.5,68.0 788.8,105.3 799.1,109.7 809.4,110.0 819.7,112.5 830.0,98.6 840.3,96.4 850.6,86.3 860.9,84.5 871.2,101.5 881.5,88.9 891.8,101.0 902.2,92.7 912.5,93.2 922.8,99.4 933.1,100.8 943.4,92.9 953.7,109.5 964.0,91.5 974.3,83.2 984.6,84.9 994.9,70.0 1005.2,66.0 1015.5,66.5 1025.8,70.1 1036.1,77.2 1046.4,83.5 1056.7,86.6 1067.0,92.1 1077.3,122.5 1087.6,122.9 1097.9,123.0 1108.2,120.6 1118.5,120.5 1128.8,119.9 1139.1,124.0 1149.4,118.7 1159.7,118.9 1170.0,118.5"/>
+<circle cx="78.0" cy="284.6" r="2.3" fill="#c62828"><title>2018-01: median -20.48 hPa, n=477</title></circle>
+<circle cx="88.3" cy="292.2" r="2.3" fill="#c62828"><title>2018-02: median -21.42 hPa, n=52</title></circle>
+<circle cx="98.6" cy="296.1" r="2.3" fill="#c62828"><title>2018-03: median -21.91 hPa, n=168</title></circle>
+<circle cx="108.9" cy="298.6" r="2.3" fill="#c62828"><title>2018-04: median -22.21 hPa, n=718</title></circle>
+<circle cx="119.2" cy="308.5" r="2.3" fill="#c62828"><title>2018-05: median -23.44 hPa, n=728</title></circle>
+<circle cx="129.5" cy="312.9" r="2.3" fill="#c62828"><title>2018-06: median -23.99 hPa, n=716</title></circle>
+<circle cx="139.8" cy="315.4" r="2.3" fill="#c62828"><title>2018-07: median -24.30 hPa, n=742</title></circle>
+<circle cx="150.1" cy="320.7" r="2.3" fill="#c62828"><title>2018-08: median -24.95 hPa, n=733</title></circle>
+<circle cx="160.4" cy="323.5" r="2.3" fill="#c62828"><title>2018-09: median -25.30 hPa, n=719</title></circle>
+<circle cx="170.7" cy="324.9" r="2.3" fill="#c62828"><title>2018-10: median -25.48 hPa, n=744</title></circle>
+<circle cx="181.0" cy="331.9" r="2.3" fill="#c62828"><title>2018-11: median -26.35 hPa, n=720</title></circle>
+<circle cx="191.3" cy="325.7" r="2.3" fill="#c62828"><title>2019-00: median -25.57 hPa, n=741</title></circle>
+<circle cx="201.6" cy="330.7" r="2.3" fill="#c62828"><title>2019-01: median -26.19 hPa, n=736</title></circle>
+<circle cx="211.9" cy="335.0" r="2.3" fill="#c62828"><title>2019-02: median -26.72 hPa, n=670</title></circle>
+<circle cx="222.2" cy="336.1" r="2.3" fill="#c62828"><title>2019-03: median -26.86 hPa, n=736</title></circle>
+<circle cx="232.5" cy="349.9" r="2.3" fill="#c62828"><title>2019-04: median -28.58 hPa, n=719</title></circle>
+<circle cx="242.8" cy="142.6" r="2.3" fill="#c62828"><title>2019-05: median -2.89 hPa, n=712</title></circle>
+<circle cx="253.1" cy="115.7" r="2.3" fill="#c62828"><title>2019-06: median 0.45 hPa, n=717</title></circle>
+<circle cx="263.4" cy="116.1" r="2.3" fill="#c62828"><title>2019-07: median 0.40 hPa, n=742</title></circle>
+<circle cx="273.7" cy="109.7" r="2.3" fill="#c62828"><title>2019-08: median 1.20 hPa, n=715</title></circle>
+<circle cx="284.0" cy="119.3" r="2.3" fill="#c62828"><title>2019-09: median 0.00 hPa, n=720</title></circle>
+<circle cx="294.3" cy="122.6" r="2.3" fill="#c62828"><title>2019-10: median -0.40 hPa, n=742</title></circle>
+<circle cx="304.6" cy="135.5" r="2.3" fill="#c62828"><title>2019-11: median -2.00 hPa, n=719</title></circle>
+<circle cx="314.9" cy="146.8" r="2.3" fill="#c62828"><title>2020-00: median -3.40 hPa, n=744</title></circle>
+<circle cx="325.2" cy="150.8" r="2.3" fill="#c62828"><title>2020-01: median -3.90 hPa, n=722</title></circle>
+<circle cx="335.5" cy="143.1" r="2.3" fill="#c62828"><title>2020-02: median -2.95 hPa, n=624</title></circle>
+<circle cx="345.8" cy="150.0" r="2.3" fill="#c62828"><title>2020-03: median -3.80 hPa, n=690</title></circle>
+<circle cx="356.2" cy="143.5" r="2.3" fill="#c62828"><title>2020-04: median -3.00 hPa, n=712</title></circle>
+<circle cx="366.5" cy="138.7" r="2.3" fill="#c62828"><title>2020-05: median -2.40 hPa, n=665</title></circle>
+<circle cx="376.8" cy="123.4" r="2.3" fill="#c62828"><title>2020-06: median -0.50 hPa, n=703</title></circle>
+<circle cx="387.1" cy="125.8" r="2.3" fill="#c62828"><title>2020-07: median -0.80 hPa, n=722</title></circle>
+<circle cx="397.4" cy="122.6" r="2.3" fill="#c62828"><title>2020-08: median -0.40 hPa, n=730</title></circle>
+<circle cx="407.7" cy="128.3" r="2.3" fill="#c62828"><title>2020-09: median -1.11 hPa, n=662</title></circle>
+<circle cx="418.0" cy="134.2" r="2.3" fill="#c62828"><title>2020-10: median -1.84 hPa, n=584</title></circle>
+<circle cx="428.3" cy="148.9" r="2.3" fill="#c62828"><title>2020-11: median -3.67 hPa, n=621</title></circle>
+<circle cx="438.6" cy="149.7" r="2.3" fill="#c62828"><title>2021-00: median -3.76 hPa, n=739</title></circle>
+<circle cx="448.9" cy="159.3" r="2.3" fill="#c62828"><title>2021-01: median -4.96 hPa, n=685</title></circle>
+<circle cx="459.2" cy="158.9" r="2.3" fill="#c62828"><title>2021-02: median -4.90 hPa, n=670</title></circle>
+<circle cx="469.5" cy="154.4" r="2.3" fill="#c62828"><title>2021-03: median -4.34 hPa, n=742</title></circle>
+<circle cx="479.8" cy="151.4" r="2.3" fill="#c62828"><title>2021-04: median -3.98 hPa, n=718</title></circle>
+<circle cx="490.1" cy="134.4" r="2.3" fill="#c62828"><title>2021-05: median -1.87 hPa, n=728</title></circle>
+<circle cx="500.4" cy="126.2" r="2.3" fill="#c62828"><title>2021-06: median -0.85 hPa, n=706</title></circle>
+<circle cx="510.7" cy="121.1" r="2.3" fill="#c62828"><title>2021-07: median -0.21 hPa, n=739</title></circle>
+<circle cx="521.0" cy="123.9" r="2.3" fill="#c62828"><title>2021-08: median -0.57 hPa, n=739</title></circle>
+<circle cx="531.3" cy="125.1" r="2.3" fill="#c62828"><title>2021-09: median -0.72 hPa, n=691</title></circle>
+<circle cx="541.6" cy="124.3" r="2.3" fill="#c62828"><title>2021-10: median -0.62 hPa, n=723</title></circle>
+<circle cx="551.9" cy="133.8" r="2.3" fill="#c62828"><title>2021-11: median -1.80 hPa, n=704</title></circle>
+<circle cx="562.2" cy="152.1" r="2.3" fill="#c62828"><title>2022-00: median -4.06 hPa, n=570</title></circle>
+<circle cx="572.5" cy="111.3" r="2.3" fill="#c62828"><title>2022-01: median 1.00 hPa, n=690</title></circle>
+<circle cx="582.8" cy="101.7" r="2.3" fill="#c62828"><title>2022-02: median 2.18 hPa, n=653</title></circle>
+<circle cx="593.1" cy="120.9" r="2.3" fill="#c62828"><title>2022-03: median -0.19 hPa, n=719</title></circle>
+<circle cx="603.4" cy="123.4" r="2.3" fill="#c62828"><title>2022-04: median -0.50 hPa, n=680</title></circle>
+<circle cx="613.7" cy="128.9" r="2.3" fill="#c62828"><title>2022-05: median -1.19 hPa, n=698</title></circle>
+<circle cx="624.0" cy="97.7" r="2.3" fill="#c62828"><title>2022-06: median 2.69 hPa, n=708</title></circle>
+<circle cx="634.3" cy="121.4" r="2.3" fill="#c62828"><title>2022-07: median -0.25 hPa, n=737</title></circle>
+<circle cx="644.6" cy="127.0" r="2.3" fill="#c62828"><title>2022-08: median -0.95 hPa, n=738</title></circle>
+<circle cx="654.9" cy="118.6" r="2.3" fill="#c62828"><title>2022-09: median 0.09 hPa, n=718</title></circle>
+<circle cx="665.2" cy="117.9" r="2.3" fill="#c62828"><title>2022-10: median 0.18 hPa, n=742</title></circle>
+<circle cx="675.5" cy="126.6" r="2.3" fill="#c62828"><title>2022-11: median -0.90 hPa, n=719</title></circle>
+<circle cx="685.8" cy="124.9" r="2.3" fill="#c62828"><title>2023-00: median -0.69 hPa, n=743</title></circle>
+<circle cx="696.1" cy="118.8" r="2.3" fill="#c62828"><title>2023-01: median 0.06 hPa, n=743</title></circle>
+<circle cx="706.4" cy="124.8" r="2.3" fill="#c62828"><title>2023-02: median -0.68 hPa, n=671</title></circle>
+<circle cx="716.7" cy="106.7" r="2.3" fill="#c62828"><title>2023-03: median 1.56 hPa, n=737</title></circle>
+<circle cx="727.0" cy="112.7" r="2.3" fill="#c62828"><title>2023-04: median 0.83 hPa, n=718</title></circle>
+<circle cx="737.3" cy="104.7" r="2.3" fill="#c62828"><title>2023-05: median 1.82 hPa, n=727</title></circle>
+<circle cx="747.6" cy="88.5" r="2.3" fill="#c62828"><title>2023-06: median 3.82 hPa, n=717</title></circle>
+<circle cx="757.9" cy="72.6" r="2.3" fill="#c62828"><title>2023-07: median 5.79 hPa, n=739</title></circle>
+<circle cx="768.2" cy="68.3" r="2.3" fill="#c62828"><title>2023-08: median 6.32 hPa, n=741</title></circle>
+<circle cx="778.5" cy="68.0" r="2.3" fill="#c62828"><title>2023-09: median 6.37 hPa, n=719</title></circle>
+<circle cx="788.8" cy="105.3" r="2.3" fill="#c62828"><title>2023-10: median 1.74 hPa, n=739</title></circle>
+<circle cx="799.1" cy="109.7" r="2.3" fill="#c62828"><title>2023-11: median 1.20 hPa, n=703</title></circle>
+<circle cx="809.4" cy="110.0" r="2.3" fill="#c62828"><title>2024-00: median 1.16 hPa, n=743</title></circle>
+<circle cx="819.7" cy="112.5" r="2.3" fill="#c62828"><title>2024-01: median 0.85 hPa, n=728</title></circle>
+<circle cx="830.0" cy="98.6" r="2.3" fill="#c62828"><title>2024-02: median 2.57 hPa, n=693</title></circle>
+<circle cx="840.3" cy="96.4" r="2.3" fill="#c62828"><title>2024-03: median 2.84 hPa, n=741</title></circle>
+<circle cx="850.6" cy="86.3" r="2.3" fill="#c62828"><title>2024-04: median 4.10 hPa, n=718</title></circle>
+<circle cx="860.9" cy="84.5" r="2.3" fill="#c62828"><title>2024-05: median 4.31 hPa, n=739</title></circle>
+<circle cx="871.2" cy="101.5" r="2.3" fill="#c62828"><title>2024-06: median 2.21 hPa, n=718</title></circle>
+<circle cx="881.5" cy="88.9" r="2.3" fill="#c62828"><title>2024-07: median 3.77 hPa, n=741</title></circle>
+<circle cx="891.8" cy="101.0" r="2.3" fill="#c62828"><title>2024-08: median 2.27 hPa, n=744</title></circle>
+<circle cx="902.2" cy="92.7" r="2.3" fill="#c62828"><title>2024-09: median 3.30 hPa, n=710</title></circle>
+<circle cx="912.5" cy="93.2" r="2.3" fill="#c62828"><title>2024-10: median 3.23 hPa, n=744</title></circle>
+<circle cx="922.8" cy="99.4" r="2.3" fill="#c62828"><title>2024-11: median 2.47 hPa, n=718</title></circle>
+<circle cx="933.1" cy="100.8" r="2.3" fill="#c62828"><title>2025-00: median 2.29 hPa, n=744</title></circle>
+<circle cx="943.4" cy="92.9" r="2.3" fill="#c62828"><title>2025-01: median 3.28 hPa, n=736</title></circle>
+<circle cx="953.7" cy="109.5" r="2.3" fill="#c62828"><title>2025-02: median 1.22 hPa, n=672</title></circle>
+<circle cx="964.0" cy="91.5" r="2.3" fill="#c62828"><title>2025-03: median 3.45 hPa, n=743</title></circle>
+<circle cx="974.3" cy="83.2" r="2.3" fill="#c62828"><title>2025-04: median 4.47 hPa, n=716</title></circle>
+<circle cx="984.6" cy="84.9" r="2.3" fill="#c62828"><title>2025-05: median 4.26 hPa, n=739</title></circle>
+<circle cx="994.9" cy="70.0" r="2.3" fill="#c62828"><title>2025-06: median 6.12 hPa, n=717</title></circle>
+<circle cx="1005.2" cy="66.0" r="2.3" fill="#c62828"><title>2025-07: median 6.61 hPa, n=740</title></circle>
+<circle cx="1015.5" cy="66.5" r="2.3" fill="#c62828"><title>2025-08: median 6.55 hPa, n=714</title></circle>
+<circle cx="1025.8" cy="70.1" r="2.3" fill="#c62828"><title>2025-09: median 6.10 hPa, n=708</title></circle>
+<circle cx="1036.1" cy="77.2" r="2.3" fill="#c62828"><title>2025-10: median 5.22 hPa, n=738</title></circle>
+<circle cx="1046.4" cy="83.5" r="2.3" fill="#c62828"><title>2025-11: median 4.44 hPa, n=630</title></circle>
+<circle cx="1056.7" cy="86.6" r="2.3" fill="#c62828"><title>2026-00: median 4.05 hPa, n=703</title></circle>
+<circle cx="1067.0" cy="92.1" r="2.3" fill="#c62828"><title>2026-01: median 3.38 hPa, n=742</title></circle>
+<circle cx="1077.3" cy="122.5" r="2.3" fill="#c62828"><title>2026-02: median -0.40 hPa, n=670</title></circle>
+<circle cx="1087.6" cy="122.9" r="2.3" fill="#c62828"><title>2026-03: median -0.44 hPa, n=741</title></circle>
+<circle cx="1097.9" cy="123.0" r="2.3" fill="#c62828"><title>2026-04: median -0.45 hPa, n=691</title></circle>
+<circle cx="1108.2" cy="120.6" r="2.3" fill="#c62828"><title>2026-05: median -0.16 hPa, n=743</title></circle>
+<circle cx="1118.5" cy="120.5" r="2.3" fill="#c62828"><title>2026-06: median -0.15 hPa, n=720</title></circle>
+<circle cx="1128.8" cy="119.9" r="2.3" fill="#c62828"><title>2026-07: median -0.07 hPa, n=744</title></circle>
+<circle cx="1139.1" cy="124.0" r="2.3" fill="#c62828"><title>2026-08: median -0.58 hPa, n=744</title></circle>
+<circle cx="1149.4" cy="118.7" r="2.3" fill="#c62828"><title>2026-09: median 0.08 hPa, n=718</title></circle>
+<circle cx="1159.7" cy="118.9" r="2.3" fill="#c62828"><title>2026-10: median 0.06 hPa, n=742</title></circle>
+<circle cx="1170.0" cy="118.5" r="2.3" fill="#c62828"><title>2026-11: median 0.11 hPa, n=285</title></circle>
+<polyline fill="none" stroke="#c62828" stroke-width="2" stroke-dasharray="6 4" points="78.0,436.2 88.3,438.7 98.6,444.0 108.9,439.4 119.2,447.2 129.5,451.4 139.8,451.7 150.1,456.3 160.4,463.3 170.7,469.6 181.0,476.7 191.3,477.1 201.6,475.6 211.9,480.3 222.2,478.6 232.5,473.0 242.8,297.1 253.1,265.8 263.4,266.6 273.7,259.5 284.0,273.6 294.3,276.3 304.6,290.9 314.9,305.9 325.2,312.7 335.5,301.0 345.8,307.9 356.2,297.9 366.5,293.4 376.8,274.0 387.1,275.9 397.4,271.3 407.7,280.7 418.0,288.3 428.3,310.1 438.6,310.4 448.9,316.9 459.2,320.2 469.5,316.5 479.8,310.8 490.1,291.0 500.4,279.6 510.7,272.8 521.0,278.0 531.3,279.1 541.6,285.1 551.9,295.3 562.2,313.4 593.1,264.2 603.4,277.4 613.7,285.2 624.0,241.0 634.3,275.6 644.6,277.1 654.9,272.5 665.2,275.6 675.5,287.4 685.8,287.3 696.1,280.8 706.4,290.2 716.7,266.7 727.0,270.2 737.3,259.8 747.6,243.0 757.9,226.2 768.2,221.5 778.5,222.3 788.8,261.4 799.1,270.4 809.4,274.5 819.7,276.5 830.0,259.6 840.3,255.9 850.6,243.5 860.9,239.2 871.2,253.7 881.5,242.1 891.8,252.8 902.2,245.7 912.5,252.6 922.8,263.8 933.1,266.4"/>
+<circle cx="78.0" cy="436.2" r="2.3" fill="#c62828"><title>2018-01: median -39.27 hPa, n=395</title></circle>
+<circle cx="88.3" cy="438.7" r="2.3" fill="#c62828"><title>2018-02: median -39.58 hPa, n=21</title></circle>
+<circle cx="98.6" cy="444.0" r="2.3" fill="#c62828"><title>2018-03: median -40.24 hPa, n=84</title></circle>
+<circle cx="108.9" cy="439.4" r="2.3" fill="#c62828"><title>2018-04: median -39.67 hPa, n=253</title></circle>
+<circle cx="119.2" cy="447.2" r="2.3" fill="#c62828"><title>2018-05: median -40.63 hPa, n=415</title></circle>
+<circle cx="129.5" cy="451.4" r="2.3" fill="#c62828"><title>2018-06: median -41.16 hPa, n=463</title></circle>
+<circle cx="139.8" cy="451.7" r="2.3" fill="#c62828"><title>2018-07: median -41.19 hPa, n=366</title></circle>
+<circle cx="150.1" cy="456.3" r="2.3" fill="#c62828"><title>2018-08: median -41.76 hPa, n=353</title></circle>
+<circle cx="160.4" cy="463.3" r="2.3" fill="#c62828"><title>2018-09: median -42.63 hPa, n=450</title></circle>
+<circle cx="170.7" cy="469.6" r="2.3" fill="#c62828"><title>2018-10: median -43.41 hPa, n=446</title></circle>
+<circle cx="181.0" cy="476.7" r="2.3" fill="#c62828"><title>2018-11: median -44.29 hPa, n=404</title></circle>
+<circle cx="191.3" cy="477.1" r="2.3" fill="#c62828"><title>2019-00: median -44.35 hPa, n=590</title></circle>
+<circle cx="201.6" cy="475.6" r="2.3" fill="#c62828"><title>2019-01: median -44.15 hPa, n=383</title></circle>
+<circle cx="211.9" cy="480.3" r="2.3" fill="#c62828"><title>2019-02: median -44.74 hPa, n=329</title></circle>
+<circle cx="222.2" cy="478.6" r="2.3" fill="#c62828"><title>2019-03: median -44.53 hPa, n=344</title></circle>
+<circle cx="232.5" cy="473.0" r="2.3" fill="#c62828"><title>2019-04: median -43.83 hPa, n=213</title></circle>
+<circle cx="242.8" cy="297.1" r="2.3" fill="#c62828"><title>2019-05: median -22.04 hPa, n=699</title></circle>
+<circle cx="253.1" cy="265.8" r="2.3" fill="#c62828"><title>2019-06: median -18.16 hPa, n=717</title></circle>
+<circle cx="263.4" cy="266.6" r="2.3" fill="#c62828"><title>2019-07: median -18.26 hPa, n=742</title></circle>
+<circle cx="273.7" cy="259.5" r="2.3" fill="#c62828"><title>2019-08: median -17.38 hPa, n=699</title></circle>
+<circle cx="284.0" cy="273.6" r="2.3" fill="#c62828"><title>2019-09: median -19.12 hPa, n=720</title></circle>
+<circle cx="294.3" cy="276.3" r="2.3" fill="#c62828"><title>2019-10: median -19.45 hPa, n=742</title></circle>
+<circle cx="304.6" cy="290.9" r="2.3" fill="#c62828"><title>2019-11: median -21.27 hPa, n=719</title></circle>
+<circle cx="314.9" cy="305.9" r="2.3" fill="#c62828"><title>2020-00: median -23.12 hPa, n=744</title></circle>
+<circle cx="325.2" cy="312.7" r="2.3" fill="#c62828"><title>2020-01: median -23.96 hPa, n=706</title></circle>
+<circle cx="335.5" cy="301.0" r="2.3" fill="#c62828"><title>2020-02: median -22.51 hPa, n=568</title></circle>
+<circle cx="345.8" cy="307.9" r="2.3" fill="#c62828"><title>2020-03: median -23.38 hPa, n=665</title></circle>
+<circle cx="356.2" cy="297.9" r="2.3" fill="#c62828"><title>2020-04: median -22.13 hPa, n=693</title></circle>
+<circle cx="366.5" cy="293.4" r="2.3" fill="#c62828"><title>2020-05: median -21.57 hPa, n=616</title></circle>
+<circle cx="376.8" cy="274.0" r="2.3" fill="#c62828"><title>2020-06: median -19.17 hPa, n=599</title></circle>
+<circle cx="387.1" cy="275.9" r="2.3" fill="#c62828"><title>2020-07: median -19.40 hPa, n=699</title></circle>
+<circle cx="397.4" cy="271.3" r="2.3" fill="#c62828"><title>2020-08: median -18.84 hPa, n=716</title></circle>
+<circle cx="407.7" cy="280.7" r="2.3" fill="#c62828"><title>2020-09: median -19.99 hPa, n=629</title></circle>
+<circle cx="418.0" cy="288.3" r="2.3" fill="#c62828"><title>2020-10: median -20.94 hPa, n=508</title></circle>
+<circle cx="428.3" cy="310.1" r="2.3" fill="#c62828"><title>2020-11: median -23.64 hPa, n=553</title></circle>
+<circle cx="438.6" cy="310.4" r="2.3" fill="#c62828"><title>2021-00: median -23.68 hPa, n=739</title></circle>
+<circle cx="448.9" cy="316.9" r="2.3" fill="#c62828"><title>2021-01: median -24.48 hPa, n=665</title></circle>
+<circle cx="459.2" cy="320.2" r="2.3" fill="#c62828"><title>2021-02: median -24.90 hPa, n=670</title></circle>
+<circle cx="469.5" cy="316.5" r="2.3" fill="#c62828"><title>2021-03: median -24.43 hPa, n=742</title></circle>
+<circle cx="479.8" cy="310.8" r="2.3" fill="#c62828"><title>2021-04: median -23.73 hPa, n=718</title></circle>
+<circle cx="490.1" cy="291.0" r="2.3" fill="#c62828"><title>2021-05: median -21.28 hPa, n=715</title></circle>
+<circle cx="500.4" cy="279.6" r="2.3" fill="#c62828"><title>2021-06: median -19.86 hPa, n=699</title></circle>
+<circle cx="510.7" cy="272.8" r="2.3" fill="#c62828"><title>2021-07: median -19.02 hPa, n=736</title></circle>
+<circle cx="521.0" cy="278.0" r="2.3" fill="#c62828"><title>2021-08: median -19.66 hPa, n=738</title></circle>
+<circle cx="531.3" cy="279.1" r="2.3" fill="#c62828"><title>2021-09: median -19.80 hPa, n=675</title></circle>
+<circle cx="541.6" cy="285.1" r="2.3" fill="#c62828"><title>2021-10: median -20.54 hPa, n=711</title></circle>
+<circle cx="551.9" cy="295.3" r="2.3" fill="#c62828"><title>2021-11: median -21.81 hPa, n=702</title></circle>
+<circle cx="562.2" cy="313.4" r="2.3" fill="#c62828"><title>2022-00: median -24.06 hPa, n=551</title></circle>
+<circle cx="593.1" cy="264.2" r="2.3" fill="#c62828"><title>2022-03: median -17.95 hPa, n=44</title></circle>
+<circle cx="603.4" cy="277.4" r="2.3" fill="#c62828"><title>2022-04: median -19.59 hPa, n=561</title></circle>
+<circle cx="613.7" cy="285.2" r="2.3" fill="#c62828"><title>2022-05: median -20.55 hPa, n=4</title></circle>
+<circle cx="624.0" cy="241.0" r="2.3" fill="#c62828"><title>2022-06: median -15.08 hPa, n=16</title></circle>
+<circle cx="634.3" cy="275.6" r="2.3" fill="#c62828"><title>2022-07: median -19.36 hPa, n=635</title></circle>
+<circle cx="644.6" cy="277.1" r="2.3" fill="#c62828"><title>2022-08: median -19.56 hPa, n=714</title></circle>
+<circle cx="654.9" cy="272.5" r="2.3" fill="#c62828"><title>2022-09: median -18.98 hPa, n=695</title></circle>
+<circle cx="665.2" cy="275.6" r="2.3" fill="#c62828"><title>2022-10: median -19.37 hPa, n=700</title></circle>
+<circle cx="675.5" cy="287.4" r="2.3" fill="#c62828"><title>2022-11: median -20.83 hPa, n=719</title></circle>
+<circle cx="685.8" cy="287.3" r="2.3" fill="#c62828"><title>2023-00: median -20.82 hPa, n=743</title></circle>
+<circle cx="696.1" cy="280.8" r="2.3" fill="#c62828"><title>2023-01: median -20.01 hPa, n=743</title></circle>
+<circle cx="706.4" cy="290.2" r="2.3" fill="#c62828"><title>2023-02: median -21.17 hPa, n=671</title></circle>
+<circle cx="716.7" cy="266.7" r="2.3" fill="#c62828"><title>2023-03: median -18.26 hPa, n=737</title></circle>
+<circle cx="727.0" cy="270.2" r="2.3" fill="#c62828"><title>2023-04: median -18.70 hPa, n=718</title></circle>
+<circle cx="737.3" cy="259.8" r="2.3" fill="#c62828"><title>2023-05: median -17.41 hPa, n=715</title></circle>
+<circle cx="747.6" cy="243.0" r="2.3" fill="#c62828"><title>2023-06: median -15.33 hPa, n=717</title></circle>
+<circle cx="757.9" cy="226.2" r="2.3" fill="#c62828"><title>2023-07: median -13.24 hPa, n=734</title></circle>
+<circle cx="768.2" cy="221.5" r="2.3" fill="#c62828"><title>2023-08: median -12.66 hPa, n=741</title></circle>
+<circle cx="778.5" cy="222.3" r="2.3" fill="#c62828"><title>2023-09: median -12.77 hPa, n=716</title></circle>
+<circle cx="788.8" cy="261.4" r="2.3" fill="#c62828"><title>2023-10: median -17.61 hPa, n=738</title></circle>
+<circle cx="799.1" cy="270.4" r="2.3" fill="#c62828"><title>2023-11: median -18.72 hPa, n=678</title></circle>
+<circle cx="809.4" cy="274.5" r="2.3" fill="#c62828"><title>2024-00: median -19.23 hPa, n=742</title></circle>
+<circle cx="819.7" cy="276.5" r="2.3" fill="#c62828"><title>2024-01: median -19.48 hPa, n=717</title></circle>
+<circle cx="830.0" cy="259.6" r="2.3" fill="#c62828"><title>2024-02: median -17.38 hPa, n=693</title></circle>
+<circle cx="840.3" cy="255.9" r="2.3" fill="#c62828"><title>2024-03: median -16.93 hPa, n=740</title></circle>
+<circle cx="850.6" cy="243.5" r="2.3" fill="#c62828"><title>2024-04: median -15.39 hPa, n=717</title></circle>
+<circle cx="860.9" cy="239.2" r="2.3" fill="#c62828"><title>2024-05: median -14.86 hPa, n=739</title></circle>
+<circle cx="871.2" cy="253.7" r="2.3" fill="#c62828"><title>2024-06: median -16.65 hPa, n=718</title></circle>
+<circle cx="881.5" cy="242.1" r="2.3" fill="#c62828"><title>2024-07: median -15.21 hPa, n=694</title></circle>
+<circle cx="891.8" cy="252.8" r="2.3" fill="#c62828"><title>2024-08: median -16.54 hPa, n=739</title></circle>
+<circle cx="902.2" cy="245.7" r="2.3" fill="#c62828"><title>2024-09: median -15.66 hPa, n=668</title></circle>
+<circle cx="912.5" cy="252.6" r="2.3" fill="#c62828"><title>2024-10: median -16.52 hPa, n=734</title></circle>
+<circle cx="922.8" cy="263.8" r="2.3" fill="#c62828"><title>2024-11: median -17.91 hPa, n=691</title></circle>
+<circle cx="933.1" cy="266.4" r="2.3" fill="#c62828"><title>2025-00: median -18.23 hPa, n=744</title></circle>
+<line x1="78" y1="576" x2="106" y2="576" stroke="#1769aa" stroke-width="3"/>
+<text x="112" y="580" font-size="12" font-family="sans-serif">barometer − P_hm Holešov</text>
+<line x1="286" y1="576" x2="314" y2="576" stroke="#1769aa" stroke-width="3"/>
+<text x="320" y="580" font-size="12" font-family="sans-serif">pressure − P Holešov</text>
+<line x1="466" y1="576" x2="494" y2="576" stroke="#c62828" stroke-width="3"/>
+<text x="500" y="580" font-size="12" font-family="sans-serif">barometer − P_hm Mošnov</text>
+<line x1="667" y1="576" x2="695" y2="576" stroke="#c62828" stroke-width="3"/>
+<text x="701" y="580" font-size="12" font-family="sans-serif">pressure − P Mošnov</text>
+<text x="600.0" y="598" text-anchor="middle" font-size="12" font-family="sans-serif">Měsíc UTC (na ose rok)</text>
+<text transform="translate(20,300.0) rotate(-90)" text-anchor="middle" font-size="12" font-family="sans-serif">Loučka − ČHMÚ [hPa]</text></svg>
