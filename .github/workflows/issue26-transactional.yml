@@ -75,7 +75,7 @@ jobs:
           ISSUE26_CI_MYSQL: "1"
         run: |
           python3 -m unittest discover -s tests -p 'test_issue26_readonly_export_mariadb.py' -v
-      - name: Install audit DDL and least-privilege writer only on synthetic CI server
+      - name: Verify existing-accounts-only NO-GO and audit DDL read-only checks
         env:
           PYTHONPATH: src
           ISSUE26_CI_MYSQL: "1"
