@@ -18,6 +18,7 @@ from typing import Any, Mapping
 
 from .approval_dryrun import CandidateBatch, FieldCorrection, PreflightError, preflight
 from .approval_gate import SignedApproval, verify_exact_batch, verify_fresh_snapshot
+from .issue26_audit_ddl_guard import verify_audit_ddl
 
 TARGET = "loucka_reconstruction"
 ARCHIVE = "loucka_reconstruction.archive"
@@ -98,6 +99,8 @@ def _assert_target(cur: Any) -> None:
         (TARGET,))
     if len(schemas) != 4 or any(engine != "InnoDB" for _, engine in schemas):
         raise TransactionRejected("expected four transactional reconstruction tables")
+    # Never execute a write against partially installed or drifted audit DDL.
+    verify_audit_ddl(cur)
 
 
 def _check_rain(cur: Any) -> None:
