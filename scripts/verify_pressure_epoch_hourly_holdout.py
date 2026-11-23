@@ -91,9 +91,9 @@ def load_chmi_hourly(cache):
             continue
         if item.get("kind") not in ("hourly_csv", "recent_json", "recent_daily_json"):
             continue
-        # Existing cache contains recent JSON files with P_hm; historic
-        # hourly CSV is separated by ELEMENT.
-        if item.get("element") != "P_hm":
+        # Historic CSV has one ELEMENT per file; recent JSON contains multiple
+        # elements inside data.data.values and manifest.element is null.
+        if item["kind"] == "hourly_csv" and item.get("element") != "P_hm":
             continue
         sid = item.get("station_id")
         if sid not in STATIONS.values():
