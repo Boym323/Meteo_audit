@@ -1,3 +1,33 @@
+> **Zjednodušení správy:** Pokud je nástroj spuštěn přímo jako Linux root na
+> stávajícím databázovém hostu `lo-infra-db-mariadb01`, lze využít
+> místní MariaDB Unix socket `/run/mysqld/mysqld.sock` (pokud je na
+> serveru povoleno root autentizování přes socket). Není pak nutné
+> pořizovat další administrátorský CNF soubor. Výchozí režim je stále
+> read-only; živé DDL vyžaduje výslovné `--execute --confirm`.
+>
+> Dry-run bez správcovského CNF:
+>
+> ```bash
+> PYTHONPATH=src python3 scripts/issue26_db_provision.py \
+>   --local-root-socket /run/mysqld/mysqld.sock
+> ```
+>
+> Po vyhodnocení dry-runu a výslovném provozním rozhodnutí je
+> ekvivalentem DDL instalace:
+>
+> ```bash
+> PYTHONPATH=src python3 scripts/issue26_db_provision.py \
+>   --local-root-socket /run/mysqld/mysqld.sock \
+>   --execute \
+>   --confirm INSTALL-ISSUE26-AUDIT-AND-RESTRICTED-USER-ONLY
+> ```
+>
+> Ověřuje se Linux root, přesná cesta k již existujícímu místnímu
+> socketu (nikoli SSH přeposlaný soubor), hostname SQL
+> `lo-infra-db-mariadb01`, `server_id=1` a přesné cílové schéma.
+> Nelze-li použít socket auth, zůstává dále platná varianta
+> s privátním admin CNF uvedená níže.
+
 # Issue #26 — nasazení dvou auditních tabulek a SQL identity na současné MariaDB
 
 ## Závazné rozhodnutí
