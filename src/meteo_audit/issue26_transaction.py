@@ -276,15 +276,19 @@ def apply_approved_batch(connection: Any, batch: CandidateBatch,
 
 
 def _check_rollback_history(cur: Any, batch: CandidateBatch,
-                            report: Mapping) -> None:
+                            report: Mapping, receipt: SignedApproval) -> None:
     record = _fetch_one(cur,
-        "SELECT payload_sha256,before_image_sha256,operation_count "
+        "SELECT payload_sha256,before_image_sha256,operation_count,approval_mac_sha256 "
         "FROM loucka_reconstruction.issue26_batch_events "
         "WHERE batch_id=%s AND event_type='APPLY' FOR UPDATE",
         (batch.batch_id,))
-    if record != (batch.payload_sha256, report["before_image_sha256"],
-                  len(batch.operations)):
+    if record is None or record[:3] != (
+        batch.payload_sha256, report["before_image_sha256"],
+        len(batch.operations)
+    ):
         raise TransactionRejected("missing or altered persisted APPLY event")
+    if record[3] == receipt.mac_sha256:
+        raise TransactionRejected("rollback requires a DIFFERENT newly signed approval receipt")
     if _fetch_one(cur,
                   "SELECT batch_id FROM loucka_reconstruction.issue26_batch_events "
                   "WHERE batch_id=%s AND event_type='ROLLBACK' FOR UPDATE",
@@ -335,7 +339,7 @@ def rollback_approved_batch(
         try:
             _assert_target(cur)
             _check_rain(cur)
-            _check_rollback_history(cur, batch, approved_report)
+            _check_rollback_history(cur, batch, approved_report, receipt)
             # Rollback is conditional on each field still being equal to
             # the originally approved post-image, even after row locks.
             for op in sorted(batch.operations, key=lambda item: item.key):
