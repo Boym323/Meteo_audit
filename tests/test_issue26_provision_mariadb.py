@@ -31,6 +31,11 @@ class DbProvisioningTests(unittest.TestCase):
         with cls.conn.cursor() as cur:
             cur.execute("SELECT @@hostname, @@server_id")
             cls.actual_host, cls.actual_sid = cur.fetchone()
+            cur.execute(
+                "SELECT SUBSTRING_INDEX(HOST,':',1) "
+                "FROM information_schema.PROCESSLIST WHERE ID=CONNECTION_ID()"
+            )
+            cls.remote_seen_host = cur.fetchone()[0]
 
     @classmethod
     def tearDownClass(cls):
@@ -63,7 +68,7 @@ class DbProvisioningTests(unittest.TestCase):
         with self.patched_source(), tempfile.TemporaryDirectory() as temp:
             private = Path(temp) / "new-owner-only"
             before = module.install_on_existing(
-                self.conn, client_ipv4="127.0.0.1",
+                self.conn, client_ipv4=self.remote_seen_host,
                 client_address="127.0.0.1", output_dir=private,
                 execute=False, confirmation=None,
             )
@@ -72,13 +77,13 @@ class DbProvisioningTests(unittest.TestCase):
             self.assertEqual(before["audit"]["status"], "NOT_INSTALLED")
             with self.assertRaisesRegex(PreflightError, "confirmation"):
                 module.install_on_existing(
-                    self.conn, client_ipv4="127.0.0.1",
+                    self.conn, client_ipv4=self.remote_seen_host,
                     client_address="127.0.0.1", output_dir=private,
                     execute=True, confirmation="WRONG",
                 )
             self.assertFalse(private.exists())
             applied = module.install_on_existing(
-                self.conn, client_ipv4="127.0.0.1",
+                self.conn, client_ipv4=self.remote_seen_host,
                 client_address="127.0.0.1", output_dir=private,
                 execute=True, confirmation=module.EXACT_CONFIRM,
             )
@@ -112,11 +117,38 @@ class DbProvisioningTests(unittest.TestCase):
                                     "SET dateTime=999 WHERE dateTime=1540000000")
                     with self.assertRaises(self.pymysql.MySQLError):
                         cur.execute("DROP TABLE loucka_reconstruction.issue26_field_events")
+                # Assert the actual signed CAS writer can run using only
+                # these narrowly scoped grants, not a privileged root user.
+                from meteo_audit.approval_dryrun import CandidateBatch, FieldCorrection
+                from meteo_audit.approval_gate import challenge_for, sign_exact_batch
+                from meteo_audit.issue26_transaction import sql_preflight, apply_approved_batch
+                correction = FieldCorrection(
+                    1540000000, "outTemp", 1.0, 2.5,
+                    "raw:fixture", "unit:fixture", "rule:ci", "HIGH", "MEDIUM",
+                )
+                batch = CandidateBatch("ci-restricted-user", (correction,))
+                review = sql_preflight(limited, batch)
+                signed = sign_exact_batch(
+                    batch, review, approver="owner:ci-only",
+                    entered_challenge=challenge_for(batch, review),
+                    secret_key=bytes(range(32)), now=1795430000,
+                )
+                result = apply_approved_batch(
+                    limited, batch, review, signed,
+                    approval_key=bytes(range(32)), now=1795430001,
+                )
+                self.assertTrue(result.committed)
+                with limited.cursor() as cur:
+                    cur.execute(
+                        "SELECT outTemp FROM loucka_reconstruction.archive "
+                        "WHERE dateTime=1540000000"
+                    )
+                    self.assertEqual(cur.fetchone()[0], 2.5)
             finally:
                 limited.close()
             with self.assertRaisesRegex(PreflightError, "already installed"):
                 module.install_on_existing(
-                    self.conn, client_ipv4="127.0.0.1",
+                    self.conn, client_ipv4=self.remote_seen_host,
                     client_address="127.0.0.1", output_dir=private,
                     execute=True, confirmation=module.EXACT_CONFIRM,
                 )
