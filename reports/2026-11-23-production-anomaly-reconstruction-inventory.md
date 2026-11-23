@@ -20,7 +20,7 @@
 | Teoretických slotů mezi první a poslední epochou včetně | **1 856 903** |
 | Orientační nezastoupené nominální 5min sloty | **170 050** = teoretické sloty minus počet různých nejbližších slotů; nevyjadřuje 170 050 nezávisle obnovitelných měření |
 
-Ověřená produkce vs rekonstrukce na 1 686 896 překryvných timestampů k této hranici: `outTemp` **47**, `outHumidity` **20 422**, `rain` **2 201**, `rainRate` **59 595** rozdílů. Ostatních 75 neklíčových sloupců bylo v předchozím úplném 80sloupcovém auditu beze změny, včetně těch nyní nově nalezených chybných čidel. V cíli je navíc historických 10 399 řádků a žádné schválení převést je všechny do `MEASURED` neexistuje.
+Ověřená produkce vs rekonstrukce na 1 686 896 překryvných timestampů k této hranici: `outTemp` **47**, `outHumidity` **20 422**, `rain` **2 201**, `rainRate` **59 595** rozdílů. Ostatních 75 neklíčových sloupců bylo v předchozím úplném 80sloupcovém auditu beze změny, včetně těch nyní nově nalezených chybných čidel. V cíli je navíc historických 10 399 řádků. **82 265 hodnotových rozdílů + 10 399 historických vložení = 92 664 operací** podle dříve fixovaného migračního diffu, nikoliv 92 664 schválených oprav. Žádné schválení převést historické vložení do `MEASURED` neexistuje.
 
 ## 2. Matice anomálií a rozhodnutí
 
