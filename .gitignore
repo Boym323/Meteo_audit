@@ -6,6 +6,8 @@ __pycache__/
 .venv/
 reports/raw/
 /data/chmi-2018/
+/data/chmi-pressure-2009-2026/raw/
+/data/chmi-pressure-2009-2026/docs/
 
 # Local audit data packages and value-level finalization exports stay off GitHub.
 *.zip

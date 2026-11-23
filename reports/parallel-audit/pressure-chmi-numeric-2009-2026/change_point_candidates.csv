@@ -1,0 +1,6 @@
+period_utc,pair,previous_period,previous_pooled_median_hpa,pooled_median_hpa,step_hpa,interpretation
+2019-05,barometer-P_hm,2019-04,-28.233454797642537,-2.8962499999999807,25.337204797642556,candidate change point; inspect station-specific series and source epochs
+2019-05,pressure-P,2019-04,-46.025986845012255,-24.13377955775084,21.892207287261414,candidate change point; inspect station-specific series and source epochs
+2022-03,pressure-P,2021-12,-26.168444993787205,-19.504569031540598,6.663875962246607,candidate change point; inspect station-specific series and source epochs
+2022-06,pressure-P,2022-05,-22.47989345861174,-16.3851356820835,6.09475777652824,candidate change point; inspect station-specific series and source epochs
+2023-10,pressure-P,2023-09,-14.746119933461472,-19.924309852121752,-5.17818991866028,candidate change point; inspect station-specific series and source epochs
