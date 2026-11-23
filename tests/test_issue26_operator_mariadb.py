@@ -140,7 +140,9 @@ class ExistingAccountOperatorTests(unittest.TestCase):
 
     def test_webro_can_only_status_or_inspect_not_signed_apply(self):
         # Synthetic root account plays role of EXISTING web_ro, NEVER creates users.
-        with patch.object(self.runner, "READ_ONLY_ACCOUNT", self.account):
+        with patch.object(self.runner, "READ_ONLY_ACCOUNT", self.account), \
+                patch.object(self.runner, "EXPECTED_HOST", self.host), \
+                patch.object(self.runner, "EXPECTED_SERVER_ID", self.sid):
             state = self.runner.live_status(
                 self.conn, expected_hostname=self.host,
                 expected_server_id=self.sid, expected_account=self.account,
