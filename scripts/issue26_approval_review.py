@@ -84,7 +84,7 @@ def main():
             return 0
         if not args.key_file or not args.receipt_file:
             raise PreflightError("sign and verify require private key and receipt file")
-        secret = private_key(args.key_file)
+        signing_material = private_key(args.key_file)
         if args.action == "sign":
             if not args.operator:
                 raise PreflightError("operator identity missing")
@@ -92,7 +92,7 @@ def main():
             entered = input("Enter the exact challenge printed by 'challenge': ")
             receipt = sign_exact_batch(
                 batch, report, approver=args.operator,
-                entered_challenge=entered, secret_key=secret,
+                entered_challenge=entered, secret_key=signing_material,
             )
             with Path(args.receipt_file).open("x", encoding="utf-8") as output:
                 os.fchmod(output.fileno(), 0o600)
@@ -101,7 +101,7 @@ def main():
             print("APPROVAL_RECEIPT_SAVED_NOT_APPLIED")
             return 0
         receipt = SignedApproval(**read_json(args.receipt_file))
-        verify_exact_batch(batch, report, receipt, secret_key=secret)
+        verify_exact_batch(batch, report, receipt, secret_key=signing_material)
         print("VALID_SIGNED_APPROVAL_NOT_APPLIED")
         return 0
     except (PreflightError, ValueError, TypeError, KeyError, OSError, EOFError) as e:
