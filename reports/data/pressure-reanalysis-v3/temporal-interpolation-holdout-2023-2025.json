@@ -1,0 +1,54 @@
+{
+  "schema": "pressure-v3-temporal-interpolation-paired-v1",
+  "target": "existing local pressure at masked five-minute timestamp; synthetic temporally masked controls, not evidence of long-gap transfer accuracy",
+  "mask": "UTC minutes 05,15,25,35,45,55",
+  "quality": "complete 12-record hour; pressure 900..1050 hPa; all adjacent five-minute steps <=2 hPa; exact same target timestamps for both models",
+  "archive_sha256": "e6b09eaef88f10d7334988928a84334c7b729bed941774565896f7dbaba86e42",
+  "annual": {
+    "2023": {
+      "eligible_targets": 50736,
+      "ten_minute_linear": {
+        "n": 50736,
+        "mae_hpa": 0.05550743006400427,
+        "bias_hpa": -1.1368683772161603e-13,
+        "p95_abs_hpa": 0.13951222247837336
+      },
+      "hourly_linear": {
+        "n": 50736,
+        "mae_hpa": 0.0909934519056618,
+        "bias_hpa": 0.0004931324463086639,
+        "p95_abs_hpa": 0.23774993539490197
+      }
+    },
+    "2024": {
+      "eligible_targets": 50292,
+      "ten_minute_linear": {
+        "n": 50292,
+        "mae_hpa": 0.0547025454098731,
+        "bias_hpa": 1.2002841060620995e-05,
+        "p95_abs_hpa": 0.137241360810168
+      },
+      "hourly_linear": {
+        "n": 50292,
+        "mae_hpa": 0.08796841338487509,
+        "bias_hpa": 0.0003270268573487556,
+        "p95_abs_hpa": 0.23076305380116072
+      }
+    },
+    "2025": {
+      "eligible_targets": 48126,
+      "ten_minute_linear": {
+        "n": 48126,
+        "mae_hpa": 0.05305383467113094,
+        "bias_hpa": -0.00016782944106807918,
+        "p95_abs_hpa": 0.1331112730334496
+      },
+      "hourly_linear": {
+        "n": 48126,
+        "mae_hpa": 0.08457107776815978,
+        "bias_hpa": -0.0013632547897373115,
+        "p95_abs_hpa": 0.2207124570660426
+      }
+    }
+  }
+}

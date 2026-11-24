@@ -1,0 +1,23 @@
+{
+  "database": "loucka_reconstruction.archive",
+  "transaction": "START TRANSACTION READ ONLY",
+  "query": "SELECT `dateTime`,`usUnits`,`interval`,`pressure`,`barometer`,`outTemp` FROM `loucka_reconstruction`.`archive` WHERE `dateTime` >= %s AND `dateTime` < %s ORDER BY `dateTime`",
+  "utc_range": [
+    "2009-01-01T00:00:00Z",
+    "2026-11-25T00:00:00Z"
+  ],
+  "row_count": 1697621,
+  "row_count_query": 1697621,
+  "timestamp_filter": "all archive timestamp rows, no hourly-only MOD filter",
+  "units": {
+    "usUnits": 16,
+    "pressure": "hPa",
+    "barometer": "hPa",
+    "outTemp": "C"
+  },
+  "file": "loucka-pressure-archive-2009-2026.csv",
+  "bytes": 96282920,
+  "sha256": "e6b09eaef88f10d7334988928a84334c7b729bed941774565896f7dbaba86e42",
+  "provenance": "Exported from existing loucka_reconstruction.archive using verified read-only transaction; credentials and server/account identifiers omitted.",
+  "period": "2009-01-01 through 2026-11-24 UTC; final year partial"
+}
