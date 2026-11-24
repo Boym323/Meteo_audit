@@ -1,0 +1,169 @@
+{
+  "schema": "pressure-series-status-inventory-v2",
+  "state": "READ_ONLY_SNAPSHOT_ALL_MODELED_VALUES_UNAPPROVED",
+  "unified_series_sha256": "338dd3eb8128bf9ff9335f6216ab7eaff5e2edf82f9d24dde3f5ab5bed04ce4a",
+  "years": [
+    {
+      "year": 2009,
+      "archive_rows": 78105,
+      "MEASURED": 77223,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 882,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2010,
+      "archive_rows": 104090,
+      "MEASURED": 103388,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 702,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2011,
+      "archive_rows": 62843,
+      "MEASURED": 61994,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 849,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2012,
+      "archive_rows": 75346,
+      "MEASURED": 74317,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 1029,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2013,
+      "archive_rows": 95488,
+      "MEASURED": 87272,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 8216,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2014,
+      "archive_rows": 95780,
+      "MEASURED": 92591,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 3189,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2015,
+      "archive_rows": 101261,
+      "MEASURED": 94452,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 6809,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2016,
+      "archive_rows": 87902,
+      "MEASURED": 72175,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 15727,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2017,
+      "archive_rows": 76831,
+      "MEASURED": 48544,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 28287,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2018,
+      "archive_rows": 97704,
+      "MEASURED": 51162,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 46542,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2019,
+      "archive_rows": 104751,
+      "MEASURED": 84702,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 20049,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2020,
+      "archive_rows": 103047,
+      "MEASURED": 92641,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 10406,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2021,
+      "archive_rows": 103464,
+      "MEASURED": 100606,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 2858,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2022,
+      "archive_rows": 104207,
+      "MEASURED": 57902,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 16985,
+      "UNRESOLVED": 29320,
+      "candidate_rows_rejected_by_input_qc": 2
+    },
+    {
+      "year": 2023,
+      "archive_rows": 104624,
+      "MEASURED": 103843,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 781,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2024,
+      "archive_rows": 104935,
+      "MEASURED": 103168,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 1767,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2025,
+      "archive_rows": 102946,
+      "MEASURED": 99207,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 3739,
+      "candidate_rows_rejected_by_input_qc": 0
+    },
+    {
+      "year": 2026,
+      "archive_rows": 94284,
+      "MEASURED": 94246,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 38,
+      "candidate_rows_rejected_by_input_qc": 0
+    }
+  ]
+}

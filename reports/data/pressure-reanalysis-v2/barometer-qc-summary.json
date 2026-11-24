@@ -1,0 +1,301 @@
+{
+  "schema": "pressure-barometer-input-qc-v2",
+  "period_utc": {
+    "start_inclusive": 1230768000,
+    "end_exclusive": 1795564800
+  },
+  "rule": {
+    "name": "isolated reversal",
+    "barometer_abs_delta_from_both_neighbors_hpa_at_least": 3.0,
+    "neighbor_return_difference_hpa_at_most": 1.5,
+    "each_neighbor_gap_seconds_at_most": 900,
+    "time_basis": "UTC dateTime",
+    "expected_units_by_source": {
+      "pocasi-loucka.eu": 16,
+      "loucka_reconstruction": 16,
+      "weewx_WH1080": 17
+    },
+    "pressure_unit_interpretation": "usUnits=16 and 17 records are hPa for barometer; screened ranges corroborate this; no conversion applied"
+  },
+  "sources": {
+    "pocasi-loucka.eu": {
+      "counts": {
+        "rows": 1687205,
+        "nonnull_barometer": 1678864,
+        "null_barometer": 8341,
+        "unexpected_units": 0,
+        "out_of_range_800_1100": 0
+      },
+      "annual": {
+        "2009": {
+          "rows": 78105,
+          "nonnull_barometer": 78105,
+          "suspected_isolated_reversal": 1
+        },
+        "2010": {
+          "rows": 104090,
+          "nonnull_barometer": 104088,
+          "suspected_isolated_reversal": 0
+        },
+        "2011": {
+          "rows": 62843,
+          "nonnull_barometer": 62841,
+          "suspected_isolated_reversal": 1
+        },
+        "2012": {
+          "rows": 75346,
+          "nonnull_barometer": 75346,
+          "suspected_isolated_reversal": 1
+        },
+        "2013": {
+          "rows": 95485,
+          "nonnull_barometer": 95395,
+          "suspected_isolated_reversal": 0
+        },
+        "2014": {
+          "rows": 95780,
+          "nonnull_barometer": 95780,
+          "suspected_isolated_reversal": 2
+        },
+        "2015": {
+          "rows": 101261,
+          "nonnull_barometer": 101261,
+          "suspected_isolated_reversal": 2
+        },
+        "2016": {
+          "rows": 87902,
+          "nonnull_barometer": 87902,
+          "suspected_isolated_reversal": 6
+        },
+        "2017": {
+          "rows": 76831,
+          "nonnull_barometer": 76827,
+          "suspected_isolated_reversal": 11
+        },
+        "2018": {
+          "rows": 87623,
+          "nonnull_barometer": 87623,
+          "suspected_isolated_reversal": 0
+        },
+        "2019": {
+          "rows": 104750,
+          "nonnull_barometer": 104307,
+          "suspected_isolated_reversal": 0
+        },
+        "2020": {
+          "rows": 102995,
+          "nonnull_barometer": 98505,
+          "suspected_isolated_reversal": 0
+        },
+        "2021": {
+          "rows": 103457,
+          "nonnull_barometer": 101703,
+          "suspected_isolated_reversal": 0
+        },
+        "2022": {
+          "rows": 104142,
+          "nonnull_barometer": 102589,
+          "suspected_isolated_reversal": 30
+        },
+        "2023": {
+          "rows": 104434,
+          "nonnull_barometer": 104432,
+          "suspected_isolated_reversal": 0
+        },
+        "2024": {
+          "rows": 104935,
+          "nonnull_barometer": 104935,
+          "suspected_isolated_reversal": 0
+        },
+        "2025": {
+          "rows": 102946,
+          "nonnull_barometer": 102946,
+          "suspected_isolated_reversal": 0
+        },
+        "2026": {
+          "rows": 94280,
+          "nonnull_barometer": 94279,
+          "suspected_isolated_reversal": 0
+        }
+      },
+      "suspected_reversal_count": 54,
+      "suspect_csv_sha256": "1937945ac08ade240c3ea5e5f479790bd6515936ba697b98f7ab7723f8857c1c"
+    },
+    "loucka_reconstruction": {
+      "counts": {
+        "rows": 1697604,
+        "nonnull_barometer": 1678865,
+        "null_barometer": 18739,
+        "unexpected_units": 0,
+        "out_of_range_800_1100": 0
+      },
+      "annual": {
+        "2009": {
+          "rows": 78105,
+          "nonnull_barometer": 78105,
+          "suspected_isolated_reversal": 1
+        },
+        "2010": {
+          "rows": 104090,
+          "nonnull_barometer": 104088,
+          "suspected_isolated_reversal": 0
+        },
+        "2011": {
+          "rows": 62843,
+          "nonnull_barometer": 62841,
+          "suspected_isolated_reversal": 1
+        },
+        "2012": {
+          "rows": 75346,
+          "nonnull_barometer": 75346,
+          "suspected_isolated_reversal": 1
+        },
+        "2013": {
+          "rows": 95488,
+          "nonnull_barometer": 95395,
+          "suspected_isolated_reversal": 0
+        },
+        "2014": {
+          "rows": 95780,
+          "nonnull_barometer": 95780,
+          "suspected_isolated_reversal": 2
+        },
+        "2015": {
+          "rows": 101261,
+          "nonnull_barometer": 101261,
+          "suspected_isolated_reversal": 2
+        },
+        "2016": {
+          "rows": 87902,
+          "nonnull_barometer": 87902,
+          "suspected_isolated_reversal": 6
+        },
+        "2017": {
+          "rows": 76831,
+          "nonnull_barometer": 76827,
+          "suspected_isolated_reversal": 11
+        },
+        "2018": {
+          "rows": 97704,
+          "nonnull_barometer": 87624,
+          "suspected_isolated_reversal": 0
+        },
+        "2019": {
+          "rows": 104751,
+          "nonnull_barometer": 104307,
+          "suspected_isolated_reversal": 0
+        },
+        "2020": {
+          "rows": 103047,
+          "nonnull_barometer": 98505,
+          "suspected_isolated_reversal": 0
+        },
+        "2021": {
+          "rows": 103464,
+          "nonnull_barometer": 101703,
+          "suspected_isolated_reversal": 0
+        },
+        "2022": {
+          "rows": 104207,
+          "nonnull_barometer": 102589,
+          "suspected_isolated_reversal": 30
+        },
+        "2023": {
+          "rows": 104624,
+          "nonnull_barometer": 104432,
+          "suspected_isolated_reversal": 0
+        },
+        "2024": {
+          "rows": 104935,
+          "nonnull_barometer": 104935,
+          "suspected_isolated_reversal": 0
+        },
+        "2025": {
+          "rows": 102946,
+          "nonnull_barometer": 102946,
+          "suspected_isolated_reversal": 0
+        },
+        "2026": {
+          "rows": 94280,
+          "nonnull_barometer": 94279,
+          "suspected_isolated_reversal": 0
+        }
+      },
+      "suspected_reversal_count": 54,
+      "suspect_csv_sha256": "1937945ac08ade240c3ea5e5f479790bd6515936ba697b98f7ab7723f8857c1c"
+    },
+    "weewx_WH1080": {
+      "counts": {
+        "rows": 1112201,
+        "nonnull_barometer": 1106103,
+        "null_barometer": 6098,
+        "unexpected_units": 0,
+        "out_of_range_800_1100": 0
+      },
+      "annual": {
+        "2009": {
+          "rows": 78248,
+          "nonnull_barometer": 78248,
+          "suspected_isolated_reversal": 1
+        },
+        "2010": {
+          "rows": 104116,
+          "nonnull_barometer": 104114,
+          "suspected_isolated_reversal": 0
+        },
+        "2011": {
+          "rows": 67329,
+          "nonnull_barometer": 67327,
+          "suspected_isolated_reversal": 1
+        },
+        "2012": {
+          "rows": 75372,
+          "nonnull_barometer": 75372,
+          "suspected_isolated_reversal": 1
+        },
+        "2013": {
+          "rows": 95495,
+          "nonnull_barometer": 95494,
+          "suspected_isolated_reversal": 0
+        },
+        "2014": {
+          "rows": 97228,
+          "nonnull_barometer": 97228,
+          "suspected_isolated_reversal": 15
+        },
+        "2015": {
+          "rows": 104063,
+          "nonnull_barometer": 104063,
+          "suspected_isolated_reversal": 38
+        },
+        "2016": {
+          "rows": 104785,
+          "nonnull_barometer": 104785,
+          "suspected_isolated_reversal": 129
+        },
+        "2017": {
+          "rows": 104873,
+          "nonnull_barometer": 104873,
+          "suspected_isolated_reversal": 240
+        },
+        "2018": {
+          "rows": 105122,
+          "nonnull_barometer": 105122,
+          "suspected_isolated_reversal": 0
+        },
+        "2019": {
+          "rows": 105137,
+          "nonnull_barometer": 104410,
+          "suspected_isolated_reversal": 0
+        },
+        "2020": {
+          "rows": 70433,
+          "nonnull_barometer": 65067,
+          "suspected_isolated_reversal": 0
+        }
+      },
+      "suspected_reversal_count": 425,
+      "suspect_csv_sha256": "5006b9513401f87298500a4508156c4012c14a9edc396c107f2c4db3bfd2653e"
+    }
+  }
+}
