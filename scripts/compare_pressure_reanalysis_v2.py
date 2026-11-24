@@ -96,39 +96,50 @@ def v1_predict(row,model):
 
 
 def model_scores(rows,era,era_elev,v1,offset,refs,gate,flagged,month_filter=None):
-    stats=defaultdict(lambda:{"n_eligible":0,"n_common":0,"errors":defaultdict(list)})
+    # Each candidate has its own denominator.  In particular V1 and the blend
+    # can be unavailable when a local input is missing or fails QC/domain.
+    stats=defaultdict(lambda:{"n_eligible":0,"errors":defaultdict(dict),"timestamps":defaultdict(set)})
     preds=[]
     for row in rows:
         ts=int(row["dateTime"]);dt=datetime.fromtimestamp(ts,timezone.utc);ym=dt.strftime("%Y-%m")
         if month_filter is not None and ym not in month_filter:continue
         pred_era=era5_base(ts,era,era_elev)
         pred_v1=v1_predict(row,v1)
-        if pred_era is None:continue
+        s=stats[ym]
+        s["n_eligible"]+=1
         # ERA5 is its own model variant. The blend and local V1 are fixed definitions.
-        cand={"era5_surface":pred_era,"era5_bias_corrected":pred_era+offset}
-        if pred_v1 is not None and ts not in flagged:
+        cand={}
+        if pred_era is not None:
+            cand.update({"era5_surface":pred_era,"era5_bias_corrected":pred_era+offset})
+        if pred_era is not None and pred_v1 is not None and ts not in flagged:
             cand["v1_frozen_temp"]=pred_v1
             cand["blend_50"]=0.5*(pred_v1+pred_era)
-        s=stats[ym];s["n_eligible"]+=1
-        if any((ts in refs[(sid,"P")]) is False for sid in CHMI_IDS.values()):continue
-        s["n_common"]+=1
         for name,pred in cand.items():
+            if pred is None: continue
+            s["n_eligible_"+name]=s.get("n_eligible_"+name,0)+1
+            if any(ts not in refs[(sid,"P")] for sid in CHMI_IDS.values()): continue
+            s["n_common_"+name]=s.get("n_common_"+name,0)+1
+            s["timestamps"][name].add(ts)
             temp=row["outTemp"]
             if temp is None: temp=era[ts][2]
             for key,sid in CHMI_IDS.items():
                 h=STATIONS[key][1]
                 err=transport_station_pressure(pred,float(temp),h)-refs[(sid,"P")][ts]
-                s["errors"][name+key].append(err)
+                s["errors"][name+key][ts]=err
         preds.append((row,cand))
     result={}
     for ym,s in sorted(stats.items()):
-        coverage=s["n_common"]/s["n_eligible"] if s["n_eligible"] else 0
-        result[ym]={"eligible_exact_missing_hours":s["n_eligible"],"common_dual_station_hours":s["n_common"],"common_coverage":coverage,"models":{}}
+        result[ym]={"eligible_exact_missing_hours":s["n_eligible"],"models":{}}
         for name in ("era5_surface","era5_bias_corrected","v1_frozen_temp","blend_50"):
-            scores={k:metrics(s["errors"][name+k]) for k in ("H","M")}
+            scores={k:metrics(list(s["errors"][name+k].values())) for k in ("H","M")}
+            n_eligible=s.get("n_eligible_"+name,0); n_common=s.get("n_common_"+name,0)
+            coverage=n_common/n_eligible if n_eligible else 0
             # Keep the fixed PR97 gate; evidence must exist at both stations.
-            passes=(s["n_common"]>=gate["min_common_hours_per_month"] and coverage>=gate["min_common_coverage"] and all(x["mae_hpa"] is not None and x["mae_hpa"]<=gate["max_mae_hpa"] and x["p95_abs_error_hpa"]<=gate["max_p95_absolute_hpa"] and abs(x["median_bias_hpa"])<=gate["max_abs_median_bias_hpa"] for x in scores.values()))
-            result[ym]["models"][name]={"scores":scores,"gate":"PASS_DIAGNOSTIC_PREVIEW_ONLY" if passes else "FAIL_OR_INSUFFICIENT"}
+            passes=(n_common>=gate["min_common_hours_per_month"] and coverage>=gate["min_common_coverage"] and all(x["mae_hpa"] is not None and x["mae_hpa"]<=gate["max_mae_hpa"] and x["p95_abs_error_hpa"]<=gate["max_p95_absolute_hpa"] and abs(x["median_bias_hpa"])<=gate["max_abs_median_bias_hpa"] for x in scores.values()))
+            result[ym]["models"][name]={"n_eligible_predictions":n_eligible,"n_dual_station_reference":n_common,"coverage":coverage,"timestamps_utc":sorted(s["timestamps"][name]),"scores":scores,"gate":"PASS_DIAGNOSTIC_PREVIEW_ONLY" if passes else "FAIL_OR_INSUFFICIENT"}
+        common=set.intersection(*(s["timestamps"][n] for n in ("era5_surface","era5_bias_corrected","v1_frozen_temp","blend_50"))) if all(s["timestamps"][n] for n in ("era5_surface","era5_bias_corrected","v1_frozen_temp","blend_50")) else set()
+        result[ym]["paired_all_model_timestamps_utc"]=sorted(common)
+        result[ym]["paired_all_model_scores"]={name:{k:metrics([s["errors"][name+k][ts] for ts in sorted(common)]) for k in ("H","M")} for name in ("era5_surface","era5_bias_corrected","v1_frozen_temp","blend_50")}
     return result,preds
 
 
