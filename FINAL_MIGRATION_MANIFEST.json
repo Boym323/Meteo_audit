@@ -1,0 +1,75 @@
+{
+  "schema": "loucka-final-migration-manifest-v1",
+  "generated_at_utc": "2026-11-24T17:59:00Z",
+  "snapshot": {
+    "watermark_inclusive": 1795541700,
+    "timezone": "UTC",
+    "production_database": "pocasi-loucka.eu",
+    "reconstruction_database": "loucka_reconstruction",
+    "snapshot_method": "MariaDB consistent read snapshot required for final export; source is append-only WeeWX and concurrent inserts must be handled by fixed watermark"
+  },
+  "audit_baseline": {
+    "reconstruction_rows_at_watermark": 1697715,
+    "production_rows_at_watermark": 1687316,
+    "inserts": 10399,
+    "field_updates": 82325,
+    "operations_total": 92724,
+    "changed_existing_timestamps": 80237,
+    "production_timestamps_missing_from_reconstruction": 0,
+    "columns_with_differences": {
+      "outTemp": 47,
+      "outHumidity": 20422,
+      "rain": 2201,
+      "rainRate": 59595,
+      "extraTemp1": 2,
+      "extraTemp2": 14,
+      "soilTemp1": 13,
+      "soilTemp5": 10,
+      "soilTemp6": 21
+    }
+  },
+  "operation_types": [
+    "INSERT",
+    "NULL_FILL",
+    "NULL_CLEAR",
+    "VALUE_REPLACE"
+  ],
+  "audit_event_policy": "Every operation must reconcile to latest reconstruction_changes event by target_time and variable; event state is provenance and is not production approval.",
+  "known_null_clear": {
+    "count": 60,
+    "batches": [
+      "qc-extra-temp-outliers-20261123-v1",
+      "qc-soil-negative-outliers-20261123-v1"
+    ],
+    "fields": {
+      "extraTemp1": 2,
+      "extraTemp2": 14,
+      "soilTemp1": 13,
+      "soilTemp5": 10,
+      "soilTemp6": 21
+    },
+    "production_approval": "NOT APPROVED"
+  },
+  "pressure_policy": {
+    "apply_to_archive": false,
+    "include_in_official_statistics": false,
+    "retain_archive_estimates_unapproved": 150942,
+    "retain_regional_estimates_unapproved": 125298,
+    "protect_q1_2018": true,
+    "preserve_archive_pressure": true,
+    "separate_table_transfer_if_approved": "Transfer only pressure_reconstruction as a separate schema/table using a dedicated manifest, signature and destination-side row-count/hash verification; never merge estimates into archive or official daily tables."
+  },
+  "production_migration": "NO-GO pending operation-level current diff, approved isolated restore test, WeeWX daily-statistics test and whole-migration rollback test.",
+  "production_changed": false,
+  "detail_artifacts": [
+    "final_migration_package/MIGRATION_DIFF.csv (historical fixed snapshot 2026-11-17; not current)",
+    "FINAL_DATABASE_AUDIT.md",
+    "WIND_QUALITY_REPORT.md",
+    "final_migration_package/scripts/migration_preflight_guard.py",
+    "final_migration_package/MIGRATION_ROLLBACK_PLAN.md"
+  ],
+  "hashes": {
+    "current_complete_operation_diff_sha256": null,
+    "status": "Not generated: no new immutable cross-database value export was captured in this execution. Do not use the 2026-11-17 diff as current."
+  }
+}
