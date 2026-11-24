@@ -86,10 +86,10 @@ class PressureReconstructionV3Tests(unittest.TestCase):
         self.assertTrue(valid_temperature(12.5))
         self.assertFalse(valid_temperature(None))
         self.assertFalse(valid_temperature(46.0))
-        before=int(__import__('datetime').datetime.fromisoformat('2019-04-25T23:50:00+00:00').timestamp())
-        after=int(__import__('datetime').datetime.fromisoformat('2019-04-26T00:00:00+00:00').timestamp())
-        self.assertEqual(validation_epoch(before),'2019-pre-2019-04-26')
-        self.assertEqual(validation_epoch(after),'2019-post-2019-04-26')
+        before=int(__import__('datetime').datetime.fromisoformat('2019-04-26T14:40:00+00:00').timestamp())
+        after=int(__import__('datetime').datetime.fromisoformat('2019-04-26T14:45:00+00:00').timestamp())
+        self.assertEqual(validation_epoch(before),'2019-pre-2019-04-26T1445Z')
+        self.assertEqual(validation_epoch(after),'2019-post-2019-04-26T1445Z')
 
     def test_chmi_ten_minute_linear_is_not_hourly_interpolation(self):
         # Midpoint interpolation should be exact on a locally linear reference.

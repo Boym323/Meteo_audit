@@ -80,20 +80,20 @@ The newest PR #99 review found a sign error in ERA5 hypsometric transport and fo
 
 The complete corrected backtest was rerun on the read-only snapshot. After QC, frozen-model selection on 2022 still selects local V1 (MAE 0.429 hPa, P95 1.137, n=56,588). On the 2023–2025 holdout, models have **300,450 identical timestamps** out of 301,216 eligible targets. Local V1 is 0.456 / 1.234 hPa MAE/P95; corrected ERA5 is 4.741 / 7.509 and transferred ČHMÚ is 4.832 / 7.627. These local-target metrics concern the historically stored field and do not validate its absolute physical level. The gap experiment now contains 926,181 point scores in 510 model × length × year × season × regime groups. The model, comparison and gap metrics remain diagnostic and unapproved.
 
-The separate physical series is built directly from quality-zero 10-minute ČHMÚ station pressure: interpolate each station only over gaps ≤20 minutes, transport each pressure from its epoch-valid station height to 425 m, then average the two station estimates. The hypsometric column temperature uses local `outTemp` when it passes the −40..45 °C screen, otherwise interpolated ERA5 2 m temperature; estimates are withheld if neither is valid. The corrected ERA5 series and local archive pressure changes are retained as separate diagnostics; local changes are compared to CHMI changes so level drift does not become a calibration offset. Leave-one-station-out tests are computed in both directions separately for every year and separately across the 2019-04-26 source boundary. Each direction must pass the existing V2 regional limits (n≥1,000, MAE≤2 hPa, P95≤4 hPa, absolute median bias≤1.5 hPa). This validates regional station transfer only; it does not prove absolute calibration of the Loučka sensor. Per-row physical values include a conservative cross-station P95 uncertainty and remain `ESTIMATED / UNAPPROVED`.
+The separate physical series is built directly from quality-zero 10-minute ČHMÚ station pressure: interpolate each station only over gaps ≤20 minutes, transport each pressure from its epoch-valid station height to 425 m, then average the two station estimates. The hypsometric column temperature uses local `outTemp` when it passes the −40..45 °C screen, otherwise interpolated ERA5 2 m temperature; estimates are withheld if neither is valid. The corrected ERA5 series and local archive pressure changes are retained as separate diagnostics; local changes are compared to CHMI changes so level drift does not become a calibration offset. The two station directions are reported as **paired interstation disagreement**, separated by year and the 2019-04-26T14:45Z source boundary. The directions share the same timestamps and are not independent validations. Their P95 is a disagreement screen, not a calibrated prediction interval or a coverage guarantee. The physical layer records exact 10-minute references separately from linear support (up to 20 minutes), plus local-temperature versus ERA5-temperature fallback counts. This validates consistency of nearby station transfer only; it does not prove absolute calibration of the Loučka sensor. All physical values remain `ESTIMATED / UNAPPROVED`.
 
 | Period / source epoch | Physically validated regional-reference estimates | Archive-reproducing only | Unresolved | Interpretation |
 |---|---:|---:|---:|---|
-| 2009–2015 | 0 | 14,773 | 6,903 | ERA5 and daily ČHMÚ context do not support independent point-level validation. |
-| 2016–2017 | 0 | 43,549 | 465 | No 10-minute ČHMÚ point reference; ERA5 has historical level drift. |
+| 2009–2015 | 1,833 | 11,456 | 8,387 | Separate hourly ERA5 diagnostic passes daily context screen; hourly accuracy is not validated. |
+| 2016–2017 | 3,669 | 35,684 | 4,661 | Separate hourly ERA5 diagnostic passes daily context screen; hourly accuracy is not validated. |
 | 2018 (Q1 protected) | 34,007 | 0 | 0 | Bidirectional station holdout passes; Q1 remains protected and contains no candidates. |
-| 2019 through 2019-04-25 | 19,212 | 7 | 0 | Separate pre-source-change station holdout passes. |
-| 2019-04-26 onward | 830 | 0 | 0 | Separate post-source-change holdout passes. |
+| 2019 through 2019-04-25 | 19,389 | 7 | 0 | Separate pre-source-change station consistency screen passes. |
+| 2019 from 2019-04-26 14:45Z | 653 | 0 | 0 | Separate post-source-change station consistency screen passes. |
 | 2020–2022 | 59,462 | 106 | 1 | Epoch-specific regional reference support. |
 | 2023–2025 | 6,285 | 1 | 1 | Epoch-specific regional reference support. |
 | 2026 partial | 0 | 37 | 1 | No completed epoch holdout. |
 
-For the **77,556 legacy V3 candidates in 2016–2018**, this yields 43,549 archive-reproducing-only values in 2016–2017, 34,007 regionally physically supported values in 2018, and no estimate in Q1 2018. This is the key distinction: the 2016–2017 numbers reproduce the old local field and are not promoted to physical pressure; the 2018 series uses the independent CHMI references as its value source.
+The earlier **77,556-row legacy V3 catalogue for 2016–2018 is superseded**. It produced 43,549 archive-reproducing-only values in 2016–2017, but that was based on the old candidate catalogue. Final counts use the corrected QC catalogue: 38,924 corrected archive-only rows in 2016–2017, 3,669 separate hourly ERA5 regional estimates with daily-context support, and 34,007 CHMI regional estimates in 2018. Q1 2018 remains protected. Historical archive replicas are not promoted as physical pressure.
 
 The external level comparison documents the historical drift. Local stored pressure minus the transported two-station CHMI mean has median **−22.14 hPa in 2018**, **−24.43 hPa before 2019-04-26**, and **+0.23 hPa after that date**. Local short-term changes remain much closer to CHMI. Corrected ERA5 is also compared to the two-station mean, but ERA5 may assimilate CHMI and is not treated as an independent station holdout.
 
@@ -106,3 +106,47 @@ The external level comparison documents the historical drift. Local stored press
 ERA5, calibrated to the stored 2020–2021 local field for the comparison backtest, still has median errors of **+10.95 hPa in 2016** and **+15.74 hPa in 2017** against that field. Those are drift diagnostics, not ERA5 physical accuracy scores. The 2016–2017 point-level physical decision remains unresolved because the available CHMI context is daily, not timestamp-matched 10-minute pressure.
 
 The separate complete row-aligned physical series and corrected archive-reproduction shadow remain outside Git at `/opt/meteo-audit-artifacts/pressure-reanalysis-v3/corrected-physical-v1/`. Aggregate decision and validation tables, hashes, and corrected backtest are in [corrected-physical-v1 artifacts](data/pressure-reanalysis-v3/corrected-physical-v1/). The original V1, V2 and first V3 outputs are unchanged. The corrected shadow build has 150,942 estimates (all unapproved); it is explicitly a historical-field reproduction product and is not the physical series.
+
+
+## Final review reconciliation: three independent layers and epoch decisions
+
+The final release is aligned to the **corrected QC V3 catalogue (150,942 candidates)**. The older 165,173-row catalogue is kept only as superseded provenance; its values never determine corrected archive-only counts. In 2016–2017, corrected archive reproductions total **38,924** (13,636 + 25,288), rather than the superseded 43,549. The final row-aligned three-layer shadow contains 1,697,621 timestamps; its SHA-256 is `d606dcbee01491f1e393635f8a560bf96d89b2ae0de4260be18a78d2a4bbe5da`. Q1 2018 has **12,535 protected NULLs and zero proposed values**.
+
+The three output columns are kept separate: (1) original archived pressure, unchanged; (2) corrected-QC reconstruction of the historical archive field; and (3) regional physical reference estimates. The first layer is not thereby certified as calibrated; the second reproduces the historical local field and is unapproved; the third uses the exact hourly ERA5 physical transfer in 2009–2017, with no fitted offset, and the transferred CHMI 10-minute station references from 2018 onward. No silent fill/coalescing occurs. Every new value remains `ESTIMATED / UNAPPROVED`.
+
+| Epoch | Regional physical estimates | Corrected archive-only | Unresolved | Separate-layer recommendation |
+|---|---:|---:|---:|---|
+| 2009–2015 | 1,833 | 11,456 | 8,387 | **GO**, hourly ERA5 regional diagnostic only; daily context passes, but hourly accuracy is not validated. |
+| 2016–2017 | 3,669 | 35,684 | 4,661 | **GO**, hourly ERA5 regional diagnostic only. Context-screen metrics below; do not interpret as point-level hourly accuracy. |
+| 2018 (Q1 protected) | 34,007 | 0 | 0 | **GO**, CHMI regional diagnostic; Q1’s 12,535 NULLs remain protected and blank. |
+| 2019 before 2019-04-26 14:45Z | 19,389 | 7 | 0 | **GO**, CHMI diagnostic, evaluated as its own source epoch. |
+| 2019 from 2019-04-26 14:45Z | 653 | 0 | 0 | **GO**, CHMI diagnostic, evaluated as its own source epoch. |
+| 2020–2022 | 59,462 | 106 | 1 | **GO**, CHMI regional diagnostic. |
+| 2023–2025 | 6,285 | 1 | 1 | **GO**, CHMI regional diagnostic. |
+| 2026 partial | 0 | 37 | 1 | **NO-GO**, no completed CHMI 10-minute validation epoch. |
+
+CHMI reference consistency screen by epoch (paired station disagreement, hPa):
+
+| Epoch | Paired timestamps n | MAE | Signed mean bias H−M | P95 absolute disagreement | Screen |
+|---|---:|---:|---:|---:|---|
+| 2018 | 48,806 | 0.691 | +0.405 | 1.778 | Pass |
+| 2019 before 14:45Z | 16,632 | 0.949 | +0.797 | 2.087 | Pass |
+| 2019 from 14:45Z | 35,533 | 0.689 | +0.534 | 1.723 | Pass |
+| 2020 | 49,112 | 0.810 | +0.649 | 1.958 | Pass |
+| 2021 | 51,112 | 0.791 | +0.633 | 1.874 | Pass |
+| 2022 | 50,549 | 0.784 | +0.540 | 2.002 | Pass |
+| 2023 | 52,053 | 0.787 | +0.561 | 2.005 | Pass |
+| 2024 | 51,989 | 0.746 | +0.487 | 1.980 | Pass |
+| 2025 | 50,710 | 0.766 | +0.620 | 1.844 | Pass |
+
+**Database replacement is NO-GO for every epoch.** The regional GO above permits review/use only as a separate unapproved research layer; no epoch has independent local absolute calibration, and nothing is approved for APPLY. Older candidate provenance can overlap other categories and is not additive.
+
+For 2009–2017 the physical ERA5 layer has **78,888 exact hourly values**, zero duplicate timestamps, and 3,287 complete UTC-date matches against quality-zero CHMI daily `P / AVG`. Every year has 100% daily coverage and passes the unchanged context screen. Annual daily comparison MAE / median bias / P95 absolute error (hPa), with n=365/366 days: 2009 **0.527 / +0.184 / 1.332**; 2010 **0.548 / +0.218 / 1.379**; 2011 **0.477 / +0.044 / 1.172**; 2012 **0.493 / −0.046 / 1.234**; 2013 **0.518 / −0.091 / 1.317**; 2014 **0.503 / −0.161 / 1.265**; 2015 **0.536 / −0.166 / 1.203**; 2016 **0.558 / −0.027 / 1.352**; 2017 **0.562 / +0.133 / 1.440**. This compares same-date daily means, with daily CHMI transferred using mean ERA5 temperature; it cannot validate hourly extremes or point-level hour accuracy. ERA5 may assimilate CHMI. The hourly file SHA-256 is `efb1af3e4b39d129b2d40259b4c2171ca510767c1186f4049a4ee8935ee4540a`.
+
+The local-increment hybrid was tested on the withheld 2018 Q4 controls (n=7,752). Relative to ordinary CHMI interpolation, increment MAE worsened from **0.0634 to 0.0886 hPa** (+39.6%); P95 worsened from 0.1636 to 0.2299 hPa. Its absolute level still differed from the local archive by MAE 23.76 hPa. It is **NO-GO** and is not part of the three released layers.
+
+Continuity checks preserve source support and do not smooth detected jumps. In the separate regional layer, 2018 maximum adjacent 5-minute step was 1.814 hPa (zero >2); 2019 maximum was 1.194 hPa (zero >2). In 2021 eight adjacent steps exceeded 3 hPa (maximum 5.265); in 2017 ERA5 had one >3 hPa step (maximum 3.245). Across the entire hypothetical coalescing diagnostic there are 2,351 adjacent steps >3 hPa and maximum 28.124 hPa; no such coalesced series is emitted. This is a boundary/continuity warning, not a pointwise error score. Daily and monthly layer means, spread, range, and counts are included in the external catalog audit; the daily/monthly summary CSVs and million-row series remain in `/opt/meteo-audit-artifacts/pressure-reanalysis-v3/final-layers-v1/final-three-layers/`.
+
+Uncertainty semantics are intentionally limited: interstation P95 is paired station disagreement; ERA5-vs-CHMI P95 is a daily-support validation statistic; neither is a row-wise calibrated 95% interval. Archive reconstruction has its empirical backtest P95 only within tested strata. Exact versus linearly interpolated station support, temperature fallback, and the corrected QC catalogue are preserved in the final manifests.
+
+Final aggregate manifests: [three-layer release](data/pressure-reanalysis-v3/final-layers-v1/pressure-three-layer-manifest-v1.json), [physical reference and support](data/pressure-reanalysis-v3/final-layers-v1/manifest-physical-v1.json), [ERA5 daily validation](data/pressure-reanalysis-v3/final-layers-v1/era5-daily-check-2009-2017.json), and [hybrid holdout](data/pressure-reanalysis-v3/final-layers-v1/hybrid-holdout-2018-Q4.json). Original data, V1/V2 and earlier V3 artifacts are preserved. No SQL write, APPLY, production/WeeWX change, or permission change was performed.
