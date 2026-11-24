@@ -1,0 +1,446 @@
+{
+  "schema": "loucka-pressure-station-field-validation-v1",
+  "state": "READ_ONLY_DIAGNOSTIC_NO_APPROVED_REPLACEMENTS",
+  "database_identity": {
+    "host": "lo-infra-db-mariadb01",
+    "server_id": 1,
+    "account": "loucka_web_ro@192.168.0.131"
+  },
+  "local_hourly_pressure_rows": 49542,
+  "reference": {
+    "files_sha256_verified": 168,
+    "manifest_sha256": "3c935d0a134a6cd351fe1915cb0a720cf47bed4dc8fc18c0e7d88ece4b72409e",
+    "valid_station_hour_values": 122315
+  },
+  "results": [
+    {
+      "year": 2018,
+      "station": "H",
+      "reference_valid_hours": 8707,
+      "matched_pressure_hours": 4242,
+      "coverage_of_valid_reference": 0.4871942115539221,
+      "coverage_of_expected_hours": 0.48424657534246573,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 4242,
+        "mae_hpa": 46.17152234852448,
+        "median_bias_hpa": -45.73793191334147,
+        "mad_hpa": 1.6202908284165005,
+        "p95_abs_error_hpa": 49.7166394820757
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 4242,
+        "mae_hpa": 22.83070620685672,
+        "median_bias_hpa": -22.842928793661997,
+        "mad_hpa": 1.5740289291758813,
+        "p95_abs_error_hpa": 25.621602470160052
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 21.71966218600897,
+        "high_hpa": 23.798674443972903,
+        "blocks": 12,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2019,
+      "station": "H",
+      "reference_valid_hours": 8736,
+      "matched_pressure_hours": 7049,
+      "coverage_of_valid_reference": 0.8068910256410257,
+      "coverage_of_expected_hours": 0.8046803652968036,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 7049,
+        "mae_hpa": 28.314444507202023,
+        "median_bias_hpa": -24.7649681907767,
+        "mad_hpa": 2.467505465342697,
+        "p95_abs_error_hpa": 50.02740620292566
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 7049,
+        "mae_hpa": 5.699189646433598,
+        "median_bias_hpa": -0.8837543409230193,
+        "mad_hpa": 1.999198352235453,
+        "p95_abs_error_hpa": 26.074038460157727
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 2.371326655262547,
+        "high_hpa": 10.731660463963497,
+        "blocks": 12,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2020,
+      "station": "H",
+      "reference_valid_hours": 8745,
+      "matched_pressure_hours": 7698,
+      "coverage_of_valid_reference": 0.8802744425385934,
+      "coverage_of_expected_hours": 0.8763661202185792,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 7698,
+        "mae_hpa": 25.951533133934127,
+        "median_bias_hpa": -25.94864407469055,
+        "mad_hpa": 2.259760803869426,
+        "p95_abs_error_hpa": 29.897219461900242
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 7698,
+        "mae_hpa": 2.2752762261741735,
+        "median_bias_hpa": -2.019206706727232,
+        "mad_hpa": 1.6937519177417357,
+        "p95_abs_error_hpa": 4.860032806406707
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 1.5361258518641496,
+        "high_hpa": 2.9992713617070796,
+        "blocks": 12,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2021,
+      "station": "H",
+      "reference_valid_hours": 8689,
+      "matched_pressure_hours": 8322,
+      "coverage_of_valid_reference": 0.9577626884566693,
+      "coverage_of_expected_hours": 0.95,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 8322,
+        "mae_hpa": 26.12657803119761,
+        "median_bias_hpa": -25.88872737967523,
+        "mad_hpa": 2.1881507605563684,
+        "p95_abs_error_hpa": 30.521742417897446
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 8322,
+        "mae_hpa": 2.3862031148290423,
+        "median_bias_hpa": -1.873281902300164,
+        "mad_hpa": 1.6477612686360317,
+        "p95_abs_error_hpa": 5.696896639072463
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 1.5129433971013002,
+        "high_hpa": 3.328899350133116,
+        "blocks": 12,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2022,
+      "station": "H",
+      "reference_valid_hours": 8749,
+      "matched_pressure_hours": 4829,
+      "coverage_of_valid_reference": 0.5519487941479027,
+      "coverage_of_expected_hours": 0.5512557077625571,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 4829,
+        "mae_hpa": 24.005967834705647,
+        "median_bias_hpa": -24.050438136690786,
+        "mad_hpa": 1.0470236455073518,
+        "p95_abs_error_hpa": 27.145527882368352
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 4829,
+        "mae_hpa": 1.0510808686478053,
+        "median_bias_hpa": -0.25903636379791806,
+        "mad_hpa": 0.7478504448829426,
+        "p95_abs_error_hpa": 3.163096276766391
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 0.7743997378449619,
+        "high_hpa": 1.4675574267841116,
+        "blocks": 10,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2023,
+      "station": "H",
+      "reference_valid_hours": 8756,
+      "matched_pressure_hours": 8650,
+      "coverage_of_valid_reference": 0.9878940155322065,
+      "coverage_of_expected_hours": 0.9874429223744292,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 8650,
+        "mae_hpa": 21.511126603521486,
+        "median_bias_hpa": -21.949898128789926,
+        "mad_hpa": 2.7214685233087152,
+        "p95_abs_error_hpa": 26.712161017623433
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 8650,
+        "mae_hpa": 2.918177447266451,
+        "median_bias_hpa": 1.914070423808596,
+        "mad_hpa": 2.1317133589324158,
+        "p95_abs_error_hpa": 7.218827839381627
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 1.7941118028951837,
+        "high_hpa": 4.236826895912678,
+        "blocks": 12,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2024,
+      "station": "H",
+      "reference_valid_hours": 8779,
+      "matched_pressure_hours": 8592,
+      "coverage_of_valid_reference": 0.978699168470213,
+      "coverage_of_expected_hours": 0.9781420765027322,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 8592,
+        "mae_hpa": 21.079196254017834,
+        "median_bias_hpa": -20.993821304195478,
+        "mad_hpa": 1.589265220802929,
+        "p95_abs_error_hpa": 24.837466441587452
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 8592,
+        "mae_hpa": 2.9397887777800915,
+        "median_bias_hpa": 2.838007034225882,
+        "mad_hpa": 1.1572339487435102,
+        "p95_abs_error_hpa": 5.533601637649615
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 2.3676551749285704,
+        "high_hpa": 3.4866228394870267,
+        "blocks": 12,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2018,
+      "station": "M",
+      "reference_valid_hours": 8702,
+      "matched_pressure_hours": 4240,
+      "coverage_of_valid_reference": 0.48724431165249366,
+      "coverage_of_expected_hours": 0.4840182648401826,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 4240,
+        "mae_hpa": 42.06548088979514,
+        "median_bias_hpa": -41.969129785496875,
+        "mad_hpa": 1.4183844847205478,
+        "p95_abs_error_hpa": 45.55336369497822
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 4240,
+        "mae_hpa": 22.278435843057903,
+        "median_bias_hpa": -22.359340602103714,
+        "mad_hpa": 1.3064074489408881,
+        "p95_abs_error_hpa": 25.40992393511762
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 21.22069799426824,
+        "high_hpa": 23.1320413214573,
+        "blocks": 12,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2019,
+      "station": "M",
+      "reference_valid_hours": 8738,
+      "matched_pressure_hours": 7051,
+      "coverage_of_valid_reference": 0.8069352254520485,
+      "coverage_of_expected_hours": 0.8049086757990868,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 7051,
+        "mae_hpa": 24.00733744774332,
+        "median_bias_hpa": -20.413947905287387,
+        "mad_hpa": 2.284357890877004,
+        "p95_abs_error_hpa": 45.44666429590336
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 7051,
+        "mae_hpa": 5.460069214166239,
+        "median_bias_hpa": -0.21477741118656013,
+        "mad_hpa": 1.9330587360841491,
+        "p95_abs_error_hpa": 25.104573188357165
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 2.315029666953381,
+        "high_hpa": 10.186825935430125,
+        "blocks": 12,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2020,
+      "station": "M",
+      "reference_valid_hours": 8738,
+      "matched_pressure_hours": 7691,
+      "coverage_of_valid_reference": 0.8801785305561913,
+      "coverage_of_expected_hours": 0.8755692167577414,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 7691,
+        "mae_hpa": 21.608037779665437,
+        "median_bias_hpa": -21.550748669164022,
+        "mad_hpa": 1.8174741262923817,
+        "p95_abs_error_hpa": 25.332467959224687
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 7691,
+        "mae_hpa": 1.7932376452888816,
+        "median_bias_hpa": -1.2757984067731059,
+        "mad_hpa": 1.3463430861750112,
+        "p95_abs_error_hpa": 4.218518383610046
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 1.3485526448887106,
+        "high_hpa": 2.2328257606162363,
+        "blocks": 12,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2021,
+      "station": "M",
+      "reference_valid_hours": 8688,
+      "matched_pressure_hours": 8322,
+      "coverage_of_valid_reference": 0.9578729281767956,
+      "coverage_of_expected_hours": 0.95,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 8322,
+        "mae_hpa": 21.83131147885546,
+        "median_bias_hpa": -21.489890554306385,
+        "mad_hpa": 1.9196941992987036,
+        "p95_abs_error_hpa": 26.41472711018022
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 8322,
+        "mae_hpa": 1.9729564956692875,
+        "median_bias_hpa": -1.1485772483758296,
+        "mad_hpa": 1.485684775992297,
+        "p95_abs_error_hpa": 5.317448977794207
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 1.2806123609861226,
+        "high_hpa": 2.7429514295852315,
+        "blocks": 12,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2022,
+      "station": "M",
+      "reference_valid_hours": 8752,
+      "matched_pressure_hours": 4831,
+      "coverage_of_valid_reference": 0.5519881170018281,
+      "coverage_of_expected_hours": 0.5514840182648402,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 4831,
+        "mae_hpa": 19.81658002212297,
+        "median_bias_hpa": -19.75090487681541,
+        "mad_hpa": 1.1105098429501368,
+        "p95_abs_error_hpa": 23.193452066677537
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 4831,
+        "mae_hpa": 1.2539301159568208,
+        "median_bias_hpa": 0.4363146895268528,
+        "mad_hpa": 0.9681261050182002,
+        "p95_abs_error_hpa": 3.263513144075773
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 0.9837979614980078,
+        "high_hpa": 1.684756958722564,
+        "blocks": 10,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2023,
+      "station": "M",
+      "reference_valid_hours": 8756,
+      "matched_pressure_hours": 8650,
+      "coverage_of_valid_reference": 0.9878940155322065,
+      "coverage_of_expected_hours": 0.9874429223744292,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 8650,
+        "mae_hpa": 17.220653583215142,
+        "median_bias_hpa": -17.44973386741691,
+        "mad_hpa": 2.4375796740745272,
+        "p95_abs_error_hpa": 22.39891927270052
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 8650,
+        "mae_hpa": 3.3996707789669487,
+        "median_bias_hpa": 2.8288901311598806,
+        "mad_hpa": 1.987610899894662,
+        "p95_abs_error_hpa": 7.642917363517268
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 2.3234693315506574,
+        "high_hpa": 4.649492638344343,
+        "blocks": 12,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    },
+    {
+      "year": 2024,
+      "station": "M",
+      "reference_valid_hours": 8780,
+      "matched_pressure_hours": 8594,
+      "coverage_of_valid_reference": 0.9788154897494306,
+      "coverage_of_expected_hours": 0.9783697632058288,
+      "raw_pressure_minus_CHMI_P": {
+        "n": 8594,
+        "mae_hpa": 16.864364786262716,
+        "median_bias_hpa": -16.67094504665613,
+        "mad_hpa": 1.3675061499798744,
+        "p95_abs_error_hpa": 20.535542476026652
+      },
+      "hypsometric_pressure_minus_CHMI_P": {
+        "n": 8594,
+        "mae_hpa": 3.5088912778303967,
+        "median_bias_hpa": 3.480839812798422,
+        "mad_hpa": 1.1376732222254873,
+        "p95_abs_error_hpa": 6.048115169830508
+      },
+      "hypsometric_MAE_95pct_month_block_CI": {
+        "low_hpa": 3.1023784920236395,
+        "high_hpa": 3.9422189099456637,
+        "blocks": 12,
+        "replicates": 2000,
+        "block_unit": "UTC calendar month"
+      },
+      "method": "fixed dry-air hypsometric transport from 425 m using same-timestamp outTemp; diagnostic only"
+    }
+  ],
+  "limitations": [
+    "Exact UTC hour equality does not establish identical temporal support.",
+    "Loucka height 425 m is an input assumption; local sensor height/config history is not independently dated.",
+    "Temperature is a proxy for mean hydrostatic column temperature.",
+    "Station separation and reference measurement uncertainty remain in residuals.",
+    "No interpolation or 5-minute restoration accuracy is inferred.",
+    "Only the working archive was readable; this does not validate WH1080 candidates.",
+    "One read-only SQL transaction; no DML or DDL."
+  ]
+}
