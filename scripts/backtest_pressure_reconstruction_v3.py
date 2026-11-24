@@ -10,6 +10,12 @@ SITE=425.0
 H_ID='0-20000-0-11774';M_ID='0-20000-0-11782'
 HEIGHT={'H':222.25,'M':252.8}
 
+def hypsometric_transport(pressure_hpa, temperature_c, source_height_m, target_height_m):
+ """Transport station-level pressure between heights using dry-air hypsometry."""
+ if not math.isfinite(pressure_hpa) or pressure_hpa <= 0 or not math.isfinite(temperature_c) or temperature_c <= -273.15:
+  raise ValueError('invalid pressure or temperature for hypsometric transport')
+ return pressure_hpa*math.exp(G*(source_height_m-target_height_m)/(RD*(temperature_c+273.15)))
+
 def ts(s): return int(datetime.fromisoformat(s.replace('Z','+00:00')).timestamp())
 def q95(x):
  if not x:return None
@@ -29,7 +35,9 @@ def load_local(path):
  rows={};byyear=defaultdict(int)
  with path.open(newline='') as f:
   for r in csv.DictReader(f):
-   t=int(r['dateTime_utc']); row={k:(None if r[k]=='' else float(r[k])) for k in ('pressure_hpa','barometer_hpa','outTemp_c')};row['usUnits']=int(r['usUnits']);row['interval']=float(r['interval_min'] or 0);rows[t]=row;byyear[datetime.fromtimestamp(t,timezone.utc).year]+=1
+   t=int(r['dateTime_utc'])
+   if t in rows:raise ValueError(f'duplicate local timestamp {t}')
+   row={k:(None if r[k]=='' else float(r[k])) for k in ('pressure_hpa','barometer_hpa','outTemp_c')};row['usUnits']=int(r['usUnits']);row['interval']=float(r['interval_min'] or 0);rows[t]=row;byyear[datetime.fromtimestamp(t,timezone.utc).year]+=1
  return rows,dict(byyear)
 def load_chmi(root):
  # Verify each download against its response manifest.
@@ -53,23 +61,33 @@ def load_era5(root):
 def era_predict(t,era,elev):
  h=t//3600*3600;t1=h+3600;a=era['loucka_era5_nearest'].get(h);b=era['loucka_era5_nearest'].get(t1)
  if not a or not b or any(v is None for v in (*a,*b)):return None
- f=(t-h)/3600;p=a[0]+f*(b[0]-a[0]);temp=a[1]+f*(b[1]-a[1]);return p*math.exp(G*(SITE-elev['loucka_era5_nearest'])/(RD*(temp+273.15)))
+ f=(t-h)/3600;p=a[0]+f*(b[0]-a[0]);temp=a[1]+f*(b[1]-a[1]);return hypsometric_transport(p,temp,elev['loucka_era5_nearest'],SITE)
 def chmi_predict(t,temp,chmi):
  out=[]
  for k in ('H','M'):
   p=interp(chmi[k],t,1200)
   if p is None:return None
-  out.append(p*math.exp(G*(HEIGHT[k]-SITE)/(RD*(temp+273.15))))
+  out.append(hypsometric_transport(p,temp,HEIGHT[k],SITE))
  return statistics.fmean(out)
 def local_predict(row,model):
  b,t=row['barometer_hpa'],row['outTemp_c']
  if b is None or t is None:return None
  raw=b*math.exp(-G*SITE/(RD*(t+273.15)))
  return raw+model['offset_hpa']+model['temperature_slope_hpa_per_c']*(t-model['temperature_center_c'])
-def collect_predictions(rows,era,elev,chmi,v1):
+def valid_source_input(t,r,spikes=frozenset(),domain=None):
+ if t in spikes or r.get('usUnits')!=16 or r.get('interval')!=5 or t%300!=0:return False
+ b,temp=r.get('barometer_hpa'),r.get('outTemp_c')
+ if b is None or temp is None or not 930<=b<=1080 or not -40<=temp<=45:return False
+ if domain:
+  if not domain['barometer_hpa'][0]<=b<=domain['barometer_hpa'][1] or not domain['outTemp_c'][0]<=temp<=domain['outTemp_c'][1]:return False
+ return True
+def valid_control(t,r,spikes=frozenset(),domain=None):
+ p=r.get('pressure_hpa')
+ return p is not None and 900<=p<=1050 and valid_source_input(t,r,spikes,domain)
+def collect_predictions(rows,era,elev,chmi,v1,spikes=frozenset(),domain=None):
  out={}
  for t,r in rows.items():
-  if r['pressure_hpa'] is None or r['outTemp_c'] is None:continue
+  if not valid_control(t,r,spikes,domain):continue
   vals={'chmi10':chmi_predict(t,r['outTemp_c'],chmi),'era5_hourly':era_predict(t,era,elev),'local_barometer_v1':local_predict(r,v1)}
   if vals['chmi10'] is not None and vals['era5_hourly'] is not None:vals['blend_chmi_era5']=.5*(vals['chmi10']+vals['era5_hourly'])
   if vals['chmi10'] is not None and vals['era5_hourly'] is not None and vals['local_barometer_v1'] is not None:vals['blend_all']=statistics.fmean((vals['chmi10'],vals['era5_hourly'],vals['local_barometer_v1']))
@@ -133,9 +151,14 @@ def gap_backtest(rows,preds,calibration,years,seed=26024,blocks=40):
   else:summary[k]['mae_95ci_month_block_hpa']=None
  return summary,selected
 
+def load_spikes(path):
+ spikes=set()
+ with path.open(newline='') as f:
+  for r in csv.DictReader(f):spikes.add(int(r['dateTime_utc']))
+ return spikes,hashlib.sha256(path.read_bytes()).hexdigest()
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('--archive',type=Path,required=True);ap.add_argument('--chmi10',type=Path,required=True);ap.add_argument('--era5',type=Path,required=True);ap.add_argument('--model',type=Path,required=True);ap.add_argument('--out',type=Path,required=True);a=ap.parse_args()
- rows,annual=load_local(a.archive);chmi,chhash=load_chmi(a.chmi10);era,elev,ehash=load_era5(a.era5);model=json.loads(a.model.read_text());v1=model['parameters']; v1={'offset_hpa':v1['offset_hpa'],'temperature_slope_hpa_per_c':v1['temperature_slope_hpa_per_c'],'temperature_center_c':v1['temperature_center_c']}; pred=collect_predictions(rows,era,elev,chmi,v1)
+ ap=argparse.ArgumentParser();ap.add_argument('--archive',type=Path,required=True);ap.add_argument('--chmi10',type=Path,required=True);ap.add_argument('--era5',type=Path,required=True);ap.add_argument('--model',type=Path,required=True);ap.add_argument('--qc-spikes',type=Path,required=True);ap.add_argument('--out',type=Path,required=True);a=ap.parse_args()
+ rows,annual=load_local(a.archive);chmi,chhash=load_chmi(a.chmi10);era,elev,ehash=load_era5(a.era5);model=json.loads(a.model.read_text());v1=model['parameters'];domain=model['training_domain']; v1={'offset_hpa':v1['offset_hpa'],'temperature_slope_hpa_per_c':v1['temperature_slope_hpa_per_c'],'temperature_center_c':v1['temperature_center_c']};spikes,qchash=load_spikes(a.qc_spikes); pred=collect_predictions(rows,era,elev,chmi,v1,spikes,domain)
  train_lo=int(datetime(2020,1,1,tzinfo=timezone.utc).timestamp());train_hi=int(datetime(2022,1,1,tzinfo=timezone.utc).timestamp());select_hi=int(datetime(2023,1,1,tzinfo=timezone.utc).timestamp())
  names=('chmi10','era5_hourly','local_barometer_v1','blend_chmi_era5','blend_all');cal={n:fit_offset(pred,n,train_lo,train_hi) for n in names}
  val={n:metrics([pred[t][1][n]+cal[n]['offset_hpa']+cal[n]['temperature_slope_hpa_per_c']*(pred[t][2]['outTemp_c']-cal[n]['temperature_center_c'])-pred[t][0] for t in pred if train_hi<=t<select_hi and pred[t][1].get(n) is not None]) for n in names}
@@ -158,8 +181,7 @@ def main():
  year_errors=defaultdict(list); target_counts=defaultdict(int)
  for t,r in rows.items():
   y=datetime.fromtimestamp(t,timezone.utc).year
-  if r['pressure_hpa'] is None or r['barometer_hpa'] is None or r['outTemp_c'] is None:continue
-  if r['usUnits']!=16 or not 900<=r['pressure_hpa']<=1050 or not 930<=r['barometer_hpa']<=1080 or not -40<=r['outTemp_c']<=45:continue
+  if not valid_control(t,r,spikes,domain):continue
   target_counts[y]+=1
   year_errors[y].append(local_predict(r,v1)-r['pressure_hpa'])
  annual_local={str(y):metrics(year_errors[y]) for y in sorted(year_errors)}
@@ -173,6 +195,6 @@ def main():
    annual_source_errors[year][name].append(estimate-truth)
  annual_sources={str(y):{'n_all_local_pressure_controls':annual_source_targets[y],'models':{n:metrics(es) for n,es in annual_source_errors[y].items()}} for y in sorted(annual_source_targets)}
  hold_coverage={n:{'n_all_targets':sum(target_counts[y] for y in (2023,2024,2025)),'n_predictions':hold[n]['n'],'coverage':hold[n]['n']/sum(target_counts[y] for y in (2023,2024,2025)) if sum(target_counts[y] for y in (2023,2024,2025)) else 0} for n in names}
- result={'schema':'pressure-reconstruction-v3-backtest-v1','state':'READ_ONLY_DIAGNOSTIC_ESTIMATES_UNAPPROVED','archive_rows_by_year':annual,'archive_sha256':hashlib.sha256(a.archive.read_bytes()).hexdigest(),'chmi10_manifest_sha256':chhash,'era5_manifest_sha256':ehash,'mosnov_elevation_epoch':{'250.4_m':'through 2016-05-23T23:59Z','252.8_m':'from 2016-05-24T00:00Z','validation_2020_2025_used_m':252.8,'height_sensitivity_delta_2.4m_hpa_approx':0.3},'split':{'calibration':'2020-01-01..2021-12-31','model_selection':'2022 calendar year, minimum 1000 paired targets/model','untouched_holdout':'2023-01-01..2025-12-31','gap_backtest':'holdout only; synthetic contiguous masks, target is existing local pressure'},'calibration':cal,'selection_scores_2022':val,'selected_on_2022':selected,'paired_selection_scores_2022':paired_validation,'holdout_all_valid_controls':hold,'paired_holdout_scores':paired_holdout,'holdout_prediction_availability':hold_coverage,'training_fit_scores':train_scores,'frozen_local_v1_annual_masked_comparison':annual_local,'annual_competing_source_scores':annual_sources,'holdout_gap_metrics':gap,'gap_targets':len(detail),'gap_lengths_seconds':[300,1800,3600,21600,86400,259200,1209600,2419200],'quality_control':'Controls require pressure 900-1050 hPa, barometer 930-1080 hPa, outTemp -40..45 C and usUnits=16. Gap windows use contiguous five-minute records. Stable/fast_change split is based on absolute local pressure change across +/-5 minutes >0.8 hPa. Independent station/reanalysis sources are comparison references, not fully independent ground truth; ERA5 may assimilate CHMI.'}
+ result={'schema':'pressure-reconstruction-v3-backtest-v2','state':'READ_ONLY_DIAGNOSTIC_ESTIMATES_UNAPPROVED','archive_rows_by_year':annual,'archive_sha256':hashlib.sha256(a.archive.read_bytes()).hexdigest(),'model_sha256':hashlib.sha256(a.model.read_bytes()).hexdigest(),'qc_spikes_sha256':qchash,'qc_spike_rows_excluded':len(spikes),'chmi10_manifest_sha256':chhash,'era5_manifest_sha256':ehash,'era5_height_transport':'surface pressure transported from ERA5 grid elevation to Loucka 425m; pressure rises on descent','control_filter':'same fail-closed predicate applied before predictions, calibration, selection, holdout and annual QC metrics','valid_control_rows':len(pred),'mosnov_elevation_epoch':{'250.4_m':'through 2016-05-23T23:59Z','252.8_m':'from 2016-05-24T00:00Z','validation_2020_2025_used_m':252.8,'height_sensitivity_delta_2.4m_hpa_approx':0.3},'split':{'calibration':'2020-01-01..2021-12-31','model_selection':'2022 calendar year, minimum 1000 paired targets/model','untouched_holdout':'2023-01-01..2025-12-31','gap_backtest':'holdout only; synthetic contiguous masks, target is existing local pressure'},'calibration':cal,'selection_scores_2022':val,'selected_on_2022':selected,'paired_selection_scores_2022':paired_validation,'holdout_all_valid_controls':hold,'paired_holdout_scores':paired_holdout,'holdout_prediction_availability':hold_coverage,'training_fit_scores':train_scores,'frozen_local_v1_annual_masked_comparison':annual_local,'annual_competing_source_scores':annual_sources,'holdout_gap_metrics':gap,'gap_targets':len(detail),'gap_lengths_seconds':[300,1800,3600,21600,86400,259200,1209600,2419200],'quality_control':'Controls require usUnits=16, interval_min=5, timestamps on UTC five-minute boundaries, pressure 900-1050 hPa, barometer 930-1080 hPa, outTemp -40..45 C, V1 training domain, and exclusion of every hashed suspected isolated barometer spike. Same filter applied before fit/select/holdout.'}
  a.out.parent.mkdir(parents=True,exist_ok=True);a.out.write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n');print(json.dumps({'status':'BACKTEST_DONE','selected':selected,'holdout_n':{k:v['n'] for k,v in hold.items()},'gap_targets':len(detail),'gap_groups':len(gap),'report':str(a.out)}))
 if __name__=='__main__':main()

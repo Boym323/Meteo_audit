@@ -7,10 +7,11 @@ from collections import defaultdict
 from pathlib import Path
 
 from scripts.audit_pressure_input_qc_v2 import isolated_reversal
-from scripts.backtest_pressure_reconstruction_v3 import chmi_predict, load_era5
+from scripts.backtest_pressure_reconstruction_v3 import chmi_predict, load_era5, era_predict, hypsometric_transport, valid_control
 from scripts.build_pressure_reconstruction_v2 import Q1_START, Q1_END
 from scripts.compare_pressure_reanalysis_v2 import model_scores
 from scripts.validate_pressure_station_field import transport_station_pressure
+from scripts.build_physical_pressure_series_v1 import valid_temperature, validation_epoch
 
 
 class PressureReconstructionV3Tests(unittest.TestCase):
@@ -57,6 +58,38 @@ class PressureReconstructionV3Tests(unittest.TestCase):
             self.assertEqual(len(values['loucka_era5_nearest']),2)
             items[0]['sha256']='0'*64;(d/'manifest.json').write_text(json.dumps({"responses":items}))
             with self.assertRaisesRegex(ValueError,'SHA mismatch'):load_era5(d)
+
+    def test_hypsometric_transport_zero_ascent_descent_and_round_trip(self):
+        self.assertAlmostEqual(hypsometric_transport(950,10,480,480),950,places=12)
+        down=hypsometric_transport(950,10,480,425)
+        up=hypsometric_transport(950,10,425,480)
+        self.assertGreater(down,950)
+        self.assertLess(up,950)
+        self.assertAlmostEqual(hypsometric_transport(down,10,425,480),950,places=10)
+        self.assertAlmostEqual(down,956.3,delta=.2)
+
+    def test_era5_prediction_transports_pressure_downward_to_loucka(self):
+        era={'loucka_era5_nearest':{0:(950.0,10.0),3600:(950.0,10.0)}}
+        self.assertGreater(era_predict(1800,era,{'loucka_era5_nearest':480.0}),950)
+
+    def test_backtest_control_filter_fails_closed_on_qc_units_cadence_domain_and_spikes(self):
+        row={'pressure_hpa':1000.0,'barometer_hpa':1000.0,'outTemp_c':10.0,'usUnits':16,'interval':5}
+        domain={'barometer_hpa':[990,1010],'outTemp_c':[0,20]}
+        self.assertTrue(valid_control(300,row,set(),domain))
+        for field,value in [('usUnits',17),('interval',10),('pressure_hpa',None),('pressure_hpa',899),('barometer_hpa',989),('outTemp_c',21)]:
+            bad=dict(row);bad[field]=value
+            self.assertFalse(valid_control(300,bad,set(),domain),field)
+        self.assertFalse(valid_control(300,row,{300},domain))
+        self.assertFalse(valid_control(301,row,set(),domain))
+
+    def test_physical_series_temperature_screen_and_2019_source_boundary(self):
+        self.assertTrue(valid_temperature(12.5))
+        self.assertFalse(valid_temperature(None))
+        self.assertFalse(valid_temperature(46.0))
+        before=int(__import__('datetime').datetime.fromisoformat('2019-04-25T23:50:00+00:00').timestamp())
+        after=int(__import__('datetime').datetime.fromisoformat('2019-04-26T00:00:00+00:00').timestamp())
+        self.assertEqual(validation_epoch(before),'2019-pre-2019-04-26')
+        self.assertEqual(validation_epoch(after),'2019-post-2019-04-26')
 
     def test_chmi_ten_minute_linear_is_not_hourly_interpolation(self):
         # Midpoint interpolation should be exact on a locally linear reference.

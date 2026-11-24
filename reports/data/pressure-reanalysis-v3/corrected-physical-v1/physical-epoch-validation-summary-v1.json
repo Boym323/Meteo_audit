@@ -1,0 +1,469 @@
+{
+  "schema": "pressure-physical-calibrated-shadow-v1",
+  "state": "ESTIMATES_UNAPPROVED_NO_APPLY",
+  "rows": 1697621,
+  "archive_sha256": "e6b09eaef88f10d7334988928a84334c7b729bed941774565896f7dbaba86e42",
+  "chmi10_manifest_sha256": "fe21d23d8123ecf153d7e43fd6c1495eaacfa896dbbb22b8fc8b5d5669c4caca",
+  "era5_manifest_sha256": "f5a2daa2ad903183614b9f1dbc091b33c08d6e37df323da55c6b834c0302798c",
+  "legacy_v3_candidate_sha256": "e2aa5f9f1007974f85f1ff69f3ebaabea652842d9d2a1d1a30f66682151b53c2",
+  "series_sha256": "e02797e9addf2b42562d2968ea8fbbfe51803778bb834eb76ba7601aead96d50",
+  "mosnov_height_epoch": {
+    "250.4_m": "through 2016-05-23",
+    "252.8_m": "from 2016-05-24"
+  },
+  "era5_transport": "corrected: p_target=p_source*exp(g*(z_source-z_target)/(Rd*T))",
+  "chmi_method": "quality-0 10-minute station pressure linearly interpolated only across spans <=20 minutes; each station pressure transported separately to 425m then station estimates averaged",
+  "era5_and_local_change_role": "corrected ERA5 and archive local pressure changes are independent diagnostics; neither silently calibrates the absolute candidate level",
+  "epoch_validation": {
+    "2018": {
+      "independent_leave_one_station_out": {
+        "H_input_predicts_M": {
+          "n": 48806,
+          "mae_hpa": 0.6913691464668787,
+          "bias_hpa": 0.4053966465274925,
+          "p95_abs_hpa": 1.7777884291286057
+        },
+        "M_input_predicts_H": {
+          "n": 48806,
+          "mae_hpa": 0.6913691464668787,
+          "bias_hpa": -0.4053966465274925,
+          "p95_abs_hpa": 1.7777884291286057
+        }
+      },
+      "matched_10min_targets": 48806,
+      "local_pressure_level_minus_CHMI_transferred_mean": {
+        "n": 25601,
+        "mae_hpa": 22.04200068107202,
+        "bias_hpa": -22.137533489104726,
+        "p95_abs_hpa": 24.807470116589343
+      },
+      "local_pressure_change_vs_CHMI_delta": {
+        "n": 25102,
+        "mae_hpa": 0.11698471191024527,
+        "bias_hpa": -0.0031154784783780087,
+        "p95_abs_hpa": 0.31037492191381355
+      },
+      "corrected_ERA5_vs_two_station_mean": {
+        "n": 48806,
+        "mae_hpa": 0.6519859371545678,
+        "bias_hpa": 0.4928791585388126,
+        "p95_abs_hpa": 1.5899884000507143
+      },
+      "regional_transfer_gate": {
+        "minimum_pairs": 1000,
+        "maximum_mae_hpa": 2.0,
+        "maximum_p95_abs_hpa": 4.0,
+        "maximum_abs_median_bias_hpa": 1.5
+      },
+      "regional_transfer_gate_pass": true,
+      "scope": "both directional station transfers must pass; regional cross-station check does not validate local absolute sensor/field"
+    },
+    "2019-post-2019-04-26": {
+      "independent_leave_one_station_out": {
+        "H_input_predicts_M": {
+          "n": 35621,
+          "mae_hpa": 0.6885016851027197,
+          "bias_hpa": 0.5339169852039731,
+          "p95_abs_hpa": 1.7216316628549748
+        },
+        "M_input_predicts_H": {
+          "n": 35621,
+          "mae_hpa": 0.6885016851027197,
+          "bias_hpa": -0.5339169852039731,
+          "p95_abs_hpa": 1.7216316628549748
+        }
+      },
+      "matched_10min_targets": 35621,
+      "local_pressure_level_minus_CHMI_transferred_mean": {
+        "n": 35349,
+        "mae_hpa": 1.6529835165262512,
+        "bias_hpa": 0.22850298752962317,
+        "p95_abs_hpa": 3.5621141341566496
+      },
+      "local_pressure_change_vs_CHMI_delta": {
+        "n": 35308,
+        "mae_hpa": 0.10493027503020416,
+        "bias_hpa": 0.00027048806293805683,
+        "p95_abs_hpa": 0.28580129597208953
+      },
+      "corrected_ERA5_vs_two_station_mean": {
+        "n": 35621,
+        "mae_hpa": 0.7583388263836905,
+        "bias_hpa": 0.6778189987890073,
+        "p95_abs_hpa": 1.789107783086024
+      },
+      "regional_transfer_gate": {
+        "minimum_pairs": 1000,
+        "maximum_mae_hpa": 2.0,
+        "maximum_p95_abs_hpa": 4.0,
+        "maximum_abs_median_bias_hpa": 1.5
+      },
+      "regional_transfer_gate_pass": true,
+      "scope": "both directional station transfers must pass; regional cross-station check does not validate local absolute sensor/field"
+    },
+    "2019-pre-2019-04-26": {
+      "independent_leave_one_station_out": {
+        "H_input_predicts_M": {
+          "n": 16544,
+          "mae_hpa": 0.9513560837047669,
+          "bias_hpa": 0.8003179228780937,
+          "p95_abs_hpa": 2.0876026143407547
+        },
+        "M_input_predicts_H": {
+          "n": 16544,
+          "mae_hpa": 0.9513560837047669,
+          "bias_hpa": -0.8003179228780937,
+          "p95_abs_hpa": 2.0876026143407547
+        }
+      },
+      "matched_10min_targets": 16544,
+      "local_pressure_level_minus_CHMI_transferred_mean": {
+        "n": 6946,
+        "mae_hpa": 24.510299699263168,
+        "bias_hpa": -24.434383998624867,
+        "p95_abs_hpa": 26.44490789824323
+      },
+      "local_pressure_change_vs_CHMI_delta": {
+        "n": 6784,
+        "mae_hpa": 0.117940658559246,
+        "bias_hpa": -0.0055668670142381416,
+        "p95_abs_hpa": 0.32189474190235484
+      },
+      "corrected_ERA5_vs_two_station_mean": {
+        "n": 16544,
+        "mae_hpa": 0.6625510450880777,
+        "bias_hpa": 0.2983313972069368,
+        "p95_abs_hpa": 1.7322569739557245
+      },
+      "regional_transfer_gate": {
+        "minimum_pairs": 1000,
+        "maximum_mae_hpa": 2.0,
+        "maximum_p95_abs_hpa": 4.0,
+        "maximum_abs_median_bias_hpa": 1.5
+      },
+      "regional_transfer_gate_pass": true,
+      "scope": "both directional station transfers must pass; regional cross-station check does not validate local absolute sensor/field"
+    },
+    "2020": {
+      "independent_leave_one_station_out": {
+        "H_input_predicts_M": {
+          "n": 49112,
+          "mae_hpa": 0.809565658279396,
+          "bias_hpa": 0.6491131999885056,
+          "p95_abs_hpa": 1.957561981084336
+        },
+        "M_input_predicts_H": {
+          "n": 49112,
+          "mae_hpa": 0.809565658279396,
+          "bias_hpa": -0.6491131999885056,
+          "p95_abs_hpa": 1.957561981084336
+        }
+      },
+      "matched_10min_targets": 49112,
+      "local_pressure_level_minus_CHMI_transferred_mean": {
+        "n": 46254,
+        "mae_hpa": 1.9670030842435782,
+        "bias_hpa": -1.6146148603056076,
+        "p95_abs_hpa": 4.357070362704121
+      },
+      "local_pressure_change_vs_CHMI_delta": {
+        "n": 45743,
+        "mae_hpa": 0.10249739051097596,
+        "bias_hpa": 0.00032612149880151264,
+        "p95_abs_hpa": 0.2808628012461327
+      },
+      "corrected_ERA5_vs_two_station_mean": {
+        "n": 49112,
+        "mae_hpa": 0.7590981092104926,
+        "bias_hpa": 0.6557608277123563,
+        "p95_abs_hpa": 1.6965903963177764
+      },
+      "regional_transfer_gate": {
+        "minimum_pairs": 1000,
+        "maximum_mae_hpa": 2.0,
+        "maximum_p95_abs_hpa": 4.0,
+        "maximum_abs_median_bias_hpa": 1.5
+      },
+      "regional_transfer_gate_pass": true,
+      "scope": "both directional station transfers must pass; regional cross-station check does not validate local absolute sensor/field"
+    },
+    "2021": {
+      "independent_leave_one_station_out": {
+        "H_input_predicts_M": {
+          "n": 51112,
+          "mae_hpa": 0.791103721468502,
+          "bias_hpa": 0.6332547694998993,
+          "p95_abs_hpa": 1.8741653414312507
+        },
+        "M_input_predicts_H": {
+          "n": 51112,
+          "mae_hpa": 0.791103721468502,
+          "bias_hpa": -0.6332547694998993,
+          "p95_abs_hpa": 1.8741653414312507
+        }
+      },
+      "matched_10min_targets": 51112,
+      "local_pressure_level_minus_CHMI_transferred_mean": {
+        "n": 50165,
+        "mae_hpa": 2.0969347962140543,
+        "bias_hpa": -1.4678686726125534,
+        "p95_abs_hpa": 5.342161224958772
+      },
+      "local_pressure_change_vs_CHMI_delta": {
+        "n": 49972,
+        "mae_hpa": 0.09029723655522535,
+        "bias_hpa": 6.887958880952283e-05,
+        "p95_abs_hpa": 0.23694922909955948
+      },
+      "corrected_ERA5_vs_two_station_mean": {
+        "n": 51112,
+        "mae_hpa": 0.6466617907271883,
+        "bias_hpa": 0.48028963152756887,
+        "p95_abs_hpa": 1.593266298534597
+      },
+      "regional_transfer_gate": {
+        "minimum_pairs": 1000,
+        "maximum_mae_hpa": 2.0,
+        "maximum_p95_abs_hpa": 4.0,
+        "maximum_abs_median_bias_hpa": 1.5
+      },
+      "regional_transfer_gate_pass": true,
+      "scope": "both directional station transfers must pass; regional cross-station check does not validate local absolute sensor/field"
+    },
+    "2022": {
+      "independent_leave_one_station_out": {
+        "H_input_predicts_M": {
+          "n": 50549,
+          "mae_hpa": 0.7837875240575348,
+          "bias_hpa": 0.5399518661987486,
+          "p95_abs_hpa": 2.0024144636840213
+        },
+        "M_input_predicts_H": {
+          "n": 50549,
+          "mae_hpa": 0.7837875240575348,
+          "bias_hpa": -0.5399518661987486,
+          "p95_abs_hpa": 2.0024144636840213
+        }
+      },
+      "matched_10min_targets": 50549,
+      "local_pressure_level_minus_CHMI_transferred_mean": {
+        "n": 28888,
+        "mae_hpa": 1.061457389164714,
+        "bias_hpa": 0.07997233386180369,
+        "p95_abs_hpa": 3.038496817573712
+      },
+      "local_pressure_change_vs_CHMI_delta": {
+        "n": 28680,
+        "mae_hpa": 0.10893980724969517,
+        "bias_hpa": 0.00014532268397715598,
+        "p95_abs_hpa": 0.28153778482651426
+      },
+      "corrected_ERA5_vs_two_station_mean": {
+        "n": 50549,
+        "mae_hpa": 0.6257213384115566,
+        "bias_hpa": 0.39253872582366967,
+        "p95_abs_hpa": 1.5699454660854366
+      },
+      "regional_transfer_gate": {
+        "minimum_pairs": 1000,
+        "maximum_mae_hpa": 2.0,
+        "maximum_p95_abs_hpa": 4.0,
+        "maximum_abs_median_bias_hpa": 1.5
+      },
+      "regional_transfer_gate_pass": true,
+      "scope": "both directional station transfers must pass; regional cross-station check does not validate local absolute sensor/field"
+    },
+    "2023": {
+      "independent_leave_one_station_out": {
+        "H_input_predicts_M": {
+          "n": 52053,
+          "mae_hpa": 0.7869869706837559,
+          "bias_hpa": 0.5609639996318947,
+          "p95_abs_hpa": 2.00487498182315
+        },
+        "M_input_predicts_H": {
+          "n": 52053,
+          "mae_hpa": 0.7869869706837559,
+          "bias_hpa": -0.5609639996318947,
+          "p95_abs_hpa": 2.00487498182315
+        }
+      },
+      "matched_10min_targets": 52053,
+      "local_pressure_level_minus_CHMI_transferred_mean": {
+        "n": 51744,
+        "mae_hpa": 3.057234616575133,
+        "bias_hpa": 2.29354461102929,
+        "p95_abs_hpa": 7.2452683427459235
+      },
+      "local_pressure_change_vs_CHMI_delta": {
+        "n": 51561,
+        "mae_hpa": 0.10514947370814128,
+        "bias_hpa": -0.00013071381511053914,
+        "p95_abs_hpa": 0.2717415267895831
+      },
+      "corrected_ERA5_vs_two_station_mean": {
+        "n": 52053,
+        "mae_hpa": 0.7786466556673152,
+        "bias_hpa": 0.6622352243383602,
+        "p95_abs_hpa": 1.7653271033131646
+      },
+      "regional_transfer_gate": {
+        "minimum_pairs": 1000,
+        "maximum_mae_hpa": 2.0,
+        "maximum_p95_abs_hpa": 4.0,
+        "maximum_abs_median_bias_hpa": 1.5
+      },
+      "regional_transfer_gate_pass": true,
+      "scope": "both directional station transfers must pass; regional cross-station check does not validate local absolute sensor/field"
+    },
+    "2024": {
+      "independent_leave_one_station_out": {
+        "H_input_predicts_M": {
+          "n": 51989,
+          "mae_hpa": 0.7458984013717377,
+          "bias_hpa": 0.48713959816745955,
+          "p95_abs_hpa": 1.9801263368411808
+        },
+        "M_input_predicts_H": {
+          "n": 51989,
+          "mae_hpa": 0.7458984013717377,
+          "bias_hpa": -0.48713959816745955,
+          "p95_abs_hpa": 1.9801263368411808
+        }
+      },
+      "matched_10min_targets": 51989,
+      "local_pressure_level_minus_CHMI_transferred_mean": {
+        "n": 51418,
+        "mae_hpa": 3.1496731393129194,
+        "bias_hpa": 3.13481972895039,
+        "p95_abs_hpa": 5.600919595677032
+      },
+      "local_pressure_change_vs_CHMI_delta": {
+        "n": 51157,
+        "mae_hpa": 0.10273725728860195,
+        "bias_hpa": 0.0010089811424904838,
+        "p95_abs_hpa": 0.26569626166458415
+      },
+      "corrected_ERA5_vs_two_station_mean": {
+        "n": 51989,
+        "mae_hpa": 0.7980798527852919,
+        "bias_hpa": 0.6881592131592242,
+        "p95_abs_hpa": 1.7897352951053789
+      },
+      "regional_transfer_gate": {
+        "minimum_pairs": 1000,
+        "maximum_mae_hpa": 2.0,
+        "maximum_p95_abs_hpa": 4.0,
+        "maximum_abs_median_bias_hpa": 1.5
+      },
+      "regional_transfer_gate_pass": true,
+      "scope": "both directional station transfers must pass; regional cross-station check does not validate local absolute sensor/field"
+    },
+    "2025": {
+      "independent_leave_one_station_out": {
+        "H_input_predicts_M": {
+          "n": 50710,
+          "mae_hpa": 0.7664400633637879,
+          "bias_hpa": 0.6200370819499881,
+          "p95_abs_hpa": 1.8441256365633754
+        },
+        "M_input_predicts_H": {
+          "n": 50710,
+          "mae_hpa": 0.7664400633637879,
+          "bias_hpa": -0.6200370819499881,
+          "p95_abs_hpa": 1.8441256365633754
+        }
+      },
+      "matched_10min_targets": 50710,
+      "local_pressure_level_minus_CHMI_transferred_mean": {
+        "n": 49504,
+        "mae_hpa": 4.808777003690748,
+        "bias_hpa": 4.902625485918634,
+        "p95_abs_hpa": 7.495343405325241
+      },
+      "local_pressure_change_vs_CHMI_delta": {
+        "n": 49242,
+        "mae_hpa": 0.10010345805687619,
+        "bias_hpa": 0.001055465637477937,
+        "p95_abs_hpa": 0.26037726528559796
+      },
+      "corrected_ERA5_vs_two_station_mean": {
+        "n": 50710,
+        "mae_hpa": 0.6895718389023483,
+        "bias_hpa": 0.5608323564345596,
+        "p95_abs_hpa": 1.599753062234662
+      },
+      "regional_transfer_gate": {
+        "minimum_pairs": 1000,
+        "maximum_mae_hpa": 2.0,
+        "maximum_p95_abs_hpa": 4.0,
+        "maximum_abs_median_bias_hpa": 1.5
+      },
+      "regional_transfer_gate_pass": true,
+      "scope": "both directional station transfers must pass; regional cross-station check does not validate local absolute sensor/field"
+    }
+  },
+  "decision_table": [
+    {
+      "period": "2009-2015",
+      "physically_validated_estimates": 0,
+      "archive_reproducing_only": 14773,
+      "unresolved": 6903,
+      "basis": "epoch-specific independent leave-one-station-out regional transfer gate; counts exclude measured rows and protected Q1 2018"
+    },
+    {
+      "period": "2016-2017",
+      "physically_validated_estimates": 0,
+      "archive_reproducing_only": 43549,
+      "unresolved": 465,
+      "basis": "epoch-specific independent leave-one-station-out regional transfer gate; counts exclude measured rows and protected Q1 2018"
+    },
+    {
+      "period": "2018 (Q1 protected)",
+      "physically_validated_estimates": 34007,
+      "archive_reproducing_only": 0,
+      "unresolved": 0,
+      "basis": "epoch-specific independent leave-one-station-out regional transfer gate; counts exclude measured rows and protected Q1 2018"
+    },
+    {
+      "period": "2019-post-2019-04-26",
+      "physically_validated_estimates": 830,
+      "archive_reproducing_only": 0,
+      "unresolved": 0,
+      "basis": "epoch-specific independent leave-one-station-out regional transfer gate; counts exclude measured rows and protected Q1 2018"
+    },
+    {
+      "period": "2019-pre-2019-04-26",
+      "physically_validated_estimates": 19212,
+      "archive_reproducing_only": 7,
+      "unresolved": 0,
+      "basis": "epoch-specific independent leave-one-station-out regional transfer gate; counts exclude measured rows and protected Q1 2018"
+    },
+    {
+      "period": "2020-2022",
+      "physically_validated_estimates": 59462,
+      "archive_reproducing_only": 106,
+      "unresolved": 1,
+      "basis": "epoch-specific independent leave-one-station-out regional transfer gate; counts exclude measured rows and protected Q1 2018"
+    },
+    {
+      "period": "2023-2025",
+      "physically_validated_estimates": 6285,
+      "archive_reproducing_only": 1,
+      "unresolved": 1,
+      "basis": "epoch-specific independent leave-one-station-out regional transfer gate; counts exclude measured rows and protected Q1 2018"
+    },
+    {
+      "period": "2026 partial",
+      "physically_validated_estimates": 0,
+      "archive_reproducing_only": 37,
+      "unresolved": 1,
+      "basis": "epoch-specific independent leave-one-station-out regional transfer gate; counts exclude measured rows and protected Q1 2018"
+    }
+  ],
+  "limitations": [
+    "Regional leave-one-station-out skill does not prove Loucka sensor absolute calibration.",
+    "2016-2017 has no 10-minute CHMI pressure reference; daily CHMI context cannot validate individual timestamps, so physical point estimates are withheld.",
+    "All numeric estimates remain unapproved; Q1 2018 is protected."
+  ]
+}
