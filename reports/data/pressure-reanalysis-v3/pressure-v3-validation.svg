@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:Arial,sans-serif;fill:#202124}.title{font-size:22px;font-weight:bold}.sub{font-size:14px}.axis{stroke:#777;stroke-width:1}.grid{stroke:#ddd;stroke-width:1}.line{fill:none;stroke-width:3}.legend{font-size:13px}</style>
+<text x="35" y="32" class="title">Pressure reconstruction V3 — masked controls</text>
+<text x="75" y="65" class="sub">Annual masked-control MAE against stored Loučka pressure (hPa)</text>
+<line x1="75" y1="287.0" x2="925" y2="287.0" class="grid"/>
+<text x="42" y="291.0" font-size="11">0</text>
+<line x1="75" y1="257.7" x2="925" y2="257.7" class="grid"/>
+<text x="42" y="261.7" font-size="11">1</text>
+<line x1="75" y1="228.4" x2="925" y2="228.4" class="grid"/>
+<text x="42" y="232.4" font-size="11">2</text>
+<line x1="75" y1="199.1" x2="925" y2="199.1" class="grid"/>
+<text x="42" y="203.1" font-size="11">3</text>
+<line x1="75" y1="169.9" x2="925" y2="169.9" class="grid"/>
+<text x="42" y="173.9" font-size="11">4</text>
+<line x1="75" y1="140.6" x2="925" y2="140.6" class="grid"/>
+<text x="42" y="144.6" font-size="11">5</text>
+<line x1="75" y1="111.3" x2="925" y2="111.3" class="grid"/>
+<text x="42" y="115.3" font-size="11">6</text>
+<line x1="75" y1="82.0" x2="925" y2="82.0" class="grid"/>
+<text x="42" y="86.0" font-size="11">7</text>
+<text x="63.0" y="305" font-size="10">2009</text>
+<text x="113.0" y="305" font-size="10">2010</text>
+<text x="163.0" y="305" font-size="10">2011</text>
+<text x="213.0" y="305" font-size="10">2012</text>
+<text x="263.0" y="305" font-size="10">2013</text>
+<text x="313.0" y="305" font-size="10">2014</text>
+<text x="363.0" y="305" font-size="10">2015</text>
+<text x="413.0" y="305" font-size="10">2016</text>
+<text x="463.0" y="305" font-size="10">2017</text>
+<text x="513.0" y="305" font-size="10">2018</text>
+<text x="563.0" y="305" font-size="10">2019</text>
+<text x="613.0" y="305" font-size="10">2020</text>
+<text x="663.0" y="305" font-size="10">2021</text>
+<text x="713.0" y="305" font-size="10">2022</text>
+<text x="763.0" y="305" font-size="10">2023</text>
+<text x="813.0" y="305" font-size="10">2024</text>
+<text x="863.0" y="305" font-size="10">2025</text>
+<text x="913.0" y="305" font-size="10">2026</text>
+<polyline points="75.0,272.7 125.0,274.4 175.0,272.0 225.0,272.3 275.0,274.5 325.0,275.1 375.0,274.3 425.0,274.5 475.0,275.8 525.0,273.3 575.0,274.8 625.0,274.9 675.0,274.1 725.0,274.4 775.0,272.6 825.0,273.9 875.0,274.4 925.0,272.6" stroke="#167d3f" class="line"/>
+<circle cx="75.0" cy="272.7" r="3.5" fill="#167d3f"/>
+<circle cx="125.0" cy="274.4" r="3.5" fill="#167d3f"/>
+<circle cx="175.0" cy="272.0" r="3.5" fill="#167d3f"/>
+<circle cx="225.0" cy="272.3" r="3.5" fill="#167d3f"/>
+<circle cx="275.0" cy="274.5" r="3.5" fill="#167d3f"/>
+<circle cx="325.0" cy="275.1" r="3.5" fill="#167d3f"/>
+<circle cx="375.0" cy="274.3" r="3.5" fill="#167d3f"/>
+<circle cx="425.0" cy="274.5" r="3.5" fill="#167d3f"/>
+<circle cx="475.0" cy="275.8" r="3.5" fill="#167d3f"/>
+<circle cx="525.0" cy="273.3" r="3.5" fill="#167d3f"/>
+<circle cx="575.0" cy="274.8" r="3.5" fill="#167d3f"/>
+<circle cx="625.0" cy="274.9" r="3.5" fill="#167d3f"/>
+<circle cx="675.0" cy="274.1" r="3.5" fill="#167d3f"/>
+<circle cx="725.0" cy="274.4" r="3.5" fill="#167d3f"/>
+<circle cx="775.0" cy="272.6" r="3.5" fill="#167d3f"/>
+<circle cx="825.0" cy="273.9" r="3.5" fill="#167d3f"/>
+<circle cx="875.0" cy="274.4" r="3.5" fill="#167d3f"/>
+<circle cx="925.0" cy="272.6" r="3.5" fill="#167d3f"/>
+<polyline points="75.0,234.9 125.0,248.8 175.0,241.1 225.0,82.0 275.0,82.0 325.0,155.7 375.0,82.0 425.0,82.0 475.0,82.0 525.0,82.0 575.0,182.3 625.0,264.3 675.0,259.3 725.0,234.0 775.0,172.1 825.0,165.6 875.0,105.5 925.0,218.3" stroke="#3867c8" class="line"/>
+<circle cx="75.0" cy="234.9" r="3.5" fill="#3867c8"/>
+<circle cx="125.0" cy="248.8" r="3.5" fill="#3867c8"/>
+<circle cx="175.0" cy="241.1" r="3.5" fill="#3867c8"/>
+<circle cx="225.0" cy="82.0" r="3.5" fill="#3867c8"/>
+<circle cx="275.0" cy="82.0" r="3.5" fill="#3867c8"/>
+<circle cx="325.0" cy="155.7" r="3.5" fill="#3867c8"/>
+<circle cx="375.0" cy="82.0" r="3.5" fill="#3867c8"/>
+<circle cx="425.0" cy="82.0" r="3.5" fill="#3867c8"/>
+<circle cx="475.0" cy="82.0" r="3.5" fill="#3867c8"/>
+<circle cx="525.0" cy="82.0" r="3.5" fill="#3867c8"/>
+<circle cx="575.0" cy="182.3" r="3.5" fill="#3867c8"/>
+<circle cx="625.0" cy="264.3" r="3.5" fill="#3867c8"/>
+<circle cx="675.0" cy="259.3" r="3.5" fill="#3867c8"/>
+<circle cx="725.0" cy="234.0" r="3.5" fill="#3867c8"/>
+<circle cx="775.0" cy="172.1" r="3.5" fill="#3867c8"/>
+<circle cx="825.0" cy="165.6" r="3.5" fill="#3867c8"/>
+<circle cx="875.0" cy="105.5" r="3.5" fill="#3867c8"/>
+<circle cx="925.0" cy="218.3" r="3.5" fill="#3867c8"/>
+<polyline points="525.0,82.0 575.0,179.6 625.0,264.3 675.0,258.7 725.0,232.9 775.0,168.7 825.0,162.0 875.0,104.6" stroke="#bb5511" class="line"/>
+<circle cx="525.0" cy="82.0" r="3.5" fill="#bb5511"/>
+<circle cx="575.0" cy="179.6" r="3.5" fill="#bb5511"/>
+<circle cx="625.0" cy="264.3" r="3.5" fill="#bb5511"/>
+<circle cx="675.0" cy="258.7" r="3.5" fill="#bb5511"/>
+<circle cx="725.0" cy="232.9" r="3.5" fill="#bb5511"/>
+<circle cx="775.0" cy="168.7" r="3.5" fill="#bb5511"/>
+<circle cx="825.0" cy="162.0" r="3.5" fill="#bb5511"/>
+<circle cx="875.0" cy="104.6" r="3.5" fill="#bb5511"/>
+<text x="75" y="343" class="sub">Holdout synthetic-gap MAE by gap length (all seasons, years 2023–2025)</text>
+<line x1="75" y1="545.0" x2="925" y2="545.0" class="grid"/>
+<text x="43" y="549.0" font-size="11">0</text>
+<line x1="75" y1="515.8" x2="925" y2="515.8" class="grid"/>
+<text x="43" y="519.8" font-size="11">1</text>
+<line x1="75" y1="486.7" x2="925" y2="486.7" class="grid"/>
+<text x="43" y="490.7" font-size="11">2</text>
+<line x1="75" y1="457.5" x2="925" y2="457.5" class="grid"/>
+<text x="43" y="461.5" font-size="11">3</text>
+<line x1="75" y1="428.3" x2="925" y2="428.3" class="grid"/>
+<text x="43" y="432.3" font-size="11">4</text>
+<line x1="75" y1="399.2" x2="925" y2="399.2" class="grid"/>
+<text x="43" y="403.2" font-size="11">5</text>
+<line x1="75" y1="370.0" x2="925" y2="370.0" class="grid"/>
+<text x="43" y="374.0" font-size="11">6</text>
+<text x="63.0" y="563" font-size="11">5m</text>
+<text x="184.4" y="563" font-size="11">30m</text>
+<text x="305.9" y="563" font-size="11">1h</text>
+<text x="427.3" y="563" font-size="11">6h</text>
+<text x="548.7" y="563" font-size="11">1d</text>
+<text x="670.1" y="563" font-size="11">3d</text>
+<text x="791.6" y="563" font-size="11">14d</text>
+<text x="913.0" y="563" font-size="11">28d</text>
+<polyline points="75.0,530.1 196.4,530.6 317.9,529.1 439.3,530.0 560.7,531.7 682.1,532.5 803.6,533.8" stroke="#167d3f" class="line"/>
+<polyline points="75.0,416.0 196.4,416.5 317.9,416.7 439.3,400.7 560.7,397.2 682.1,406.2 803.6,400.3" stroke="#3867c8" class="line"/>
+<polyline points="75.0,414.3 196.4,415.2 317.9,416.5 439.3,396.4 560.7,398.1 682.1,405.3 803.6,397.0" stroke="#bb5511" class="line"/>
+<line x1="90" y1="580" x2="118" y2="580" stroke="#167d3f" class="line"/>
+<text x="126" y="585" class="legend">Local barometer V1</text>
+<line x1="340" y1="580" x2="368" y2="580" stroke="#3867c8" class="line"/>
+<text x="376" y="585" class="legend">ERA5 hourly</text>
+<line x1="590" y1="580" x2="618" y2="580" stroke="#bb5511" class="line"/>
+<text x="626" y="585" class="legend">ČHMÚ 10min transferred</text>
+<text x="75" y="605" font-size="12">Separate temporal-only paired test: 10-minute local anchors MAE 0.053–0.056 hPa vs hourly anchors 0.085–0.091 hPa; this is not long-gap transfer accuracy.</text>
+</svg>

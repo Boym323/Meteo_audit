@@ -1,0 +1,35 @@
+{
+  "schema": "pressure-reconstruction-v2-artifact-manifest",
+  "state": "UNAPPROVED_ONLY",
+  "candidate_rows": 16987,
+  "candidate_catalog_sha256": "53db52470e8271b288bada8205ea3ec91c11b96423869b22f6c9d8513f0a126e",
+  "unified_series_rows": 1697608,
+  "unified_series_counts": {
+    "UNRESOLVED": 181190,
+    "MEASURED": 1499433,
+    "ESTIMATED_UNAPPROVED": 16985
+  },
+  "unified_series_sha256": "338dd3eb8128bf9ff9335f6216ab7eaff5e2edf82f9d24dde3f5ab5bed04ce4a",
+  "counts_by_method_class_precision": [
+    {
+      "method": "era5_surface",
+      "classification": "ESTIMATED",
+      "precision_class": "DUAL_STATION_HELDOUT_GATE_PASS; HOURLY_ONLY",
+      "count": 3082
+    },
+    {
+      "method": "none",
+      "classification": "UNRESOLVED",
+      "precision_class": "REJECTED_INPUT_QC",
+      "count": 2
+    },
+    {
+      "method": "pressure-shadow-2022-v1 barometer+outTemp",
+      "classification": "ESTIMATED",
+      "precision_class": "DUAL_STATION_MONTHLY_GATE_PASS; 5-MINUTE_ACCURACY_UNVERIFIED",
+      "count": 13903
+    }
+  ],
+  "q1_2018_estimate_rows": 0,
+  "local_artifact_directory": "/opt/meteo-audit-artifacts/pressure-reanalysis-v2/final-v3/"
+}

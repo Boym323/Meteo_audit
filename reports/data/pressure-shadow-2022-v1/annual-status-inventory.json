@@ -1,0 +1,194 @@
+{
+  "schema": "loucka-pressure-unified-status-inventory-v1",
+  "snapshot_utc": "2026-11-24",
+  "status": "PROPOSAL_ONLY_NO_SQL_WRITE",
+  "classifications": {
+    "MEASURED": "existing non-null archive value, retained unchanged",
+    "CALIBRATED": "0; no candidate approved as calibrated",
+    "ESTIMATED": "15,166 row estimates in 2022-03/05 only; UNAPPROVED",
+    "UNRESOLVED": "NULL target pressure slots excluding those estimate rows; no values emitted"
+  },
+  "annual_counts": [
+    {
+      "year": 2009,
+      "target_rows": 78093,
+      "MEASURED": 77211,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 882,
+      "pressure_null_total": 882,
+      "null_with_barometer_and_outTemp": 815
+    },
+    {
+      "year": 2010,
+      "target_rows": 104090,
+      "MEASURED": 103388,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 702,
+      "pressure_null_total": 702,
+      "null_with_barometer_and_outTemp": 603
+    },
+    {
+      "year": 2011,
+      "target_rows": 62855,
+      "MEASURED": 62006,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 849,
+      "pressure_null_total": 849,
+      "null_with_barometer_and_outTemp": 675
+    },
+    {
+      "year": 2012,
+      "target_rows": 75334,
+      "MEASURED": 74305,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 1029,
+      "pressure_null_total": 1029,
+      "null_with_barometer_and_outTemp": 781
+    },
+    {
+      "year": 2013,
+      "target_rows": 95494,
+      "MEASURED": 87278,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 8216,
+      "pressure_null_total": 8216,
+      "null_with_barometer_and_outTemp": 2554
+    },
+    {
+      "year": 2014,
+      "target_rows": 95774,
+      "MEASURED": 92585,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 3189,
+      "pressure_null_total": 3189,
+      "null_with_barometer_and_outTemp": 2540
+    },
+    {
+      "year": 2015,
+      "target_rows": 101261,
+      "MEASURED": 94464,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 6797,
+      "pressure_null_total": 6797,
+      "null_with_barometer_and_outTemp": 6795
+    },
+    {
+      "year": 2016,
+      "target_rows": 87914,
+      "MEASURED": 72175,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 15739,
+      "pressure_null_total": 15739,
+      "null_with_barometer_and_outTemp": 15551
+    },
+    {
+      "year": 2017,
+      "target_rows": 76819,
+      "MEASURED": 48532,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 28287,
+      "pressure_null_total": 28287,
+      "null_with_barometer_and_outTemp": 28016
+    },
+    {
+      "year": 2018,
+      "target_rows": 97704,
+      "MEASURED": 51163,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 46541,
+      "pressure_null_total": 46541,
+      "null_with_barometer_and_outTemp": 36453
+    },
+    {
+      "year": 2019,
+      "target_rows": 104751,
+      "MEASURED": 84701,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 20050,
+      "pressure_null_total": 20050,
+      "null_with_barometer_and_outTemp": 19605
+    },
+    {
+      "year": 2020,
+      "target_rows": 103047,
+      "MEASURED": 92641,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 10406,
+      "pressure_null_total": 10406,
+      "null_with_barometer_and_outTemp": 5622
+    },
+    {
+      "year": 2021,
+      "target_rows": 103466,
+      "MEASURED": 100618,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 2848,
+      "pressure_null_total": 2848,
+      "null_with_barometer_and_outTemp": 1095
+    },
+    {
+      "year": 2022,
+      "target_rows": 104205,
+      "MEASURED": 57890,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 15166,
+      "UNRESOLVED": 31149,
+      "pressure_null_total": 46315,
+      "null_with_barometer_and_outTemp": 42484
+    },
+    {
+      "year": 2023,
+      "target_rows": 104624,
+      "MEASURED": 103843,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 781,
+      "pressure_null_total": 781,
+      "null_with_barometer_and_outTemp": 435
+    },
+    {
+      "year": 2024,
+      "target_rows": 104935,
+      "MEASURED": 103168,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 1767,
+      "pressure_null_total": 1767,
+      "null_with_barometer_and_outTemp": 1142
+    },
+    {
+      "year": 2025,
+      "target_rows": 102946,
+      "MEASURED": 99207,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 3739,
+      "pressure_null_total": 3739,
+      "null_with_barometer_and_outTemp": 2427
+    },
+    {
+      "year": 2026,
+      "target_rows": 94276,
+      "MEASURED": 94238,
+      "CALIBRATED": 0,
+      "ESTIMATED_UNAPPROVED": 0,
+      "UNRESOLVED": 38,
+      "pressure_null_total": 38,
+      "null_with_barometer_and_outTemp": 37
+    }
+  ],
+  "caveat": "ESTIMATED entries are a separate proposal CSV; annual unresolved count subtracts preview candidates only. CALIBRATED is not inferred from the estimate."
+}

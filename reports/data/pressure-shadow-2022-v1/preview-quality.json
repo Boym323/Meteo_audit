@@ -1,0 +1,50 @@
+{
+  "schema": "pressure-shadow-preview-quality-v1",
+  "state": "READ_ONLY_DIAGNOSTIC",
+  "source_snapshot_rows": 1084674,
+  "candidate_rows": 15166,
+  "candidate_months": {
+    "2022-03": {
+      "n": 6880,
+      "first_utc": "2022-03-01T00:00:00+00:00",
+      "last_utc": "2022-03-30T08:50:00+00:00",
+      "max_gap_between_estimates_s": 77400,
+      "gaps_over_5m": 93,
+      "five_minute_pairs": 6786,
+      "max_five_minute_estimate_step_hpa": 5.248199999999997,
+      "range_hpa": [
+        953.5508,
+        991.3134
+      ],
+      "neighbor_measured_within_1h": 54,
+      "nearest_measured_neighbor_abs_difference_hpa": {
+        "n": 54,
+        "median": 0.5721334422826203,
+        "p95": 1.00837286652461,
+        "max": 1.162383165140227
+      },
+      "outside_physical_screen_900_1050": 0
+    },
+    "2022-05": {
+      "n": 8286,
+      "first_utc": "2022-05-01T00:00:00+00:00",
+      "last_utc": "2022-05-31T23:55:00+00:00",
+      "max_gap_between_estimates_s": 17400,
+      "gaps_over_5m": 82,
+      "five_minute_pairs": 8203,
+      "max_five_minute_estimate_step_hpa": 1.5255000000000791,
+      "range_hpa": [
+        956.4849,
+        977.839
+      ],
+      "neighbor_measured_within_1h": 38,
+      "nearest_measured_neighbor_abs_difference_hpa": {
+        "n": 38,
+        "median": 0.6715241324687327,
+        "p95": 1.1523148341365186,
+        "max": 1.3074609809110598
+      },
+      "outside_physical_screen_900_1050": 0
+    }
+  }
+}

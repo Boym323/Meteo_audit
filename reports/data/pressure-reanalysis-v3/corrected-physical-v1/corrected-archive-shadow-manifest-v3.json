@@ -1,0 +1,281 @@
+{
+  "schema": "pressure-reconstruction-v3-unified-manifest",
+  "state": "ESTIMATES_UNAPPROVED_NO_APPLY",
+  "rows": 1697621,
+  "candidate_rows": 150942,
+  "annual": [
+    {
+      "year": 2009,
+      "archive_rows": 78105,
+      "measured": 77223,
+      "estimated_unapproved": 791,
+      "unresolved": 91,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 75421,
+        "mae_hpa": 0.4892562185820367,
+        "bias_hpa": -0.09279507346263927,
+        "p95_abs_hpa": 1.211339688264502
+      }
+    },
+    {
+      "year": 2010,
+      "archive_rows": 104090,
+      "measured": 103388,
+      "estimated_unapproved": 598,
+      "unresolved": 104,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 96092,
+        "mae_hpa": 0.4307466736625911,
+        "bias_hpa": -0.039188325988448014,
+        "p95_abs_hpa": 1.157947708176914
+      }
+    },
+    {
+      "year": 2011,
+      "archive_rows": 62843,
+      "measured": 61994,
+      "estimated_unapproved": 675,
+      "unresolved": 174,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 59390,
+        "mae_hpa": 0.511076391729969,
+        "bias_hpa": -0.0403273993377411,
+        "p95_abs_hpa": 1.2414124345796436
+      }
+    },
+    {
+      "year": 2012,
+      "archive_rows": 75346,
+      "measured": 74317,
+      "estimated_unapproved": 771,
+      "unresolved": 258,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 70625,
+        "mae_hpa": 0.503362591532904,
+        "bias_hpa": -0.08704875244734467,
+        "p95_abs_hpa": 1.2697901471268098
+      }
+    },
+    {
+      "year": 2013,
+      "archive_rows": 95488,
+      "measured": 87272,
+      "estimated_unapproved": 2495,
+      "unresolved": 5721,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 82355,
+        "mae_hpa": 0.4275031975952476,
+        "bias_hpa": -0.014011715553920112,
+        "p95_abs_hpa": 1.1609694832680704
+      }
+    },
+    {
+      "year": 2014,
+      "archive_rows": 95780,
+      "measured": 92591,
+      "estimated_unapproved": 2536,
+      "unresolved": 653,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 90891,
+        "mae_hpa": 0.4072863557656834,
+        "bias_hpa": -0.04942175925145875,
+        "p95_abs_hpa": 1.0929786970099258
+      }
+    },
+    {
+      "year": 2015,
+      "archive_rows": 101261,
+      "measured": 94452,
+      "estimated_unapproved": 4617,
+      "unresolved": 2192,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 92447,
+        "mae_hpa": 0.43216534252099764,
+        "bias_hpa": 0.0072860530522120825,
+        "p95_abs_hpa": 1.1312272755935167
+      }
+    },
+    {
+      "year": 2016,
+      "archive_rows": 87902,
+      "measured": 72175,
+      "estimated_unapproved": 13636,
+      "unresolved": 2091,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 70450,
+        "mae_hpa": 0.42852038879538545,
+        "bias_hpa": 0.005133452634481728,
+        "p95_abs_hpa": 1.0983653697857336
+      }
+    },
+    {
+      "year": 2017,
+      "archive_rows": 76831,
+      "measured": 48544,
+      "estimated_unapproved": 25288,
+      "unresolved": 2999,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 47166,
+        "mae_hpa": 0.38413344911917646,
+        "bias_hpa": -0.02764543449171697,
+        "p95_abs_hpa": 1.021300722265238
+      }
+    },
+    {
+      "year": 2018,
+      "archive_rows": 97704,
+      "measured": 51162,
+      "estimated_unapproved": 31726,
+      "unresolved": 2281,
+      "protected_q1_2018": 12535,
+      "measured_control_v1_metrics": {
+        "n": 48372,
+        "mae_hpa": 0.4694431348743944,
+        "bias_hpa": -0.20238332267632586,
+        "p95_abs_hpa": 1.1898215905831817
+      }
+    },
+    {
+      "year": 2019,
+      "archive_rows": 104751,
+      "measured": 84702,
+      "estimated_unapproved": 15237,
+      "unresolved": 4812,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 80550,
+        "mae_hpa": 0.4169734912126011,
+        "bias_hpa": -0.08338663965395199,
+        "p95_abs_hpa": 1.097042044342277
+      }
+    },
+    {
+      "year": 2020,
+      "archive_rows": 103047,
+      "measured": 92641,
+      "estimated_unapproved": 5622,
+      "unresolved": 4784,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 92641,
+        "mae_hpa": 0.41171690495590235,
+        "bias_hpa": -0.021104313917589934,
+        "p95_abs_hpa": 1.1043145385257276
+      }
+    },
+    {
+      "year": 2021,
+      "archive_rows": 103464,
+      "measured": 100606,
+      "estimated_unapproved": 1095,
+      "unresolved": 1763,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 98619,
+        "mae_hpa": 0.44030380978176864,
+        "bias_hpa": 0.010610112001927519,
+        "p95_abs_hpa": 1.1112630275457718
+      }
+    },
+    {
+      "year": 2022,
+      "archive_rows": 104207,
+      "measured": 57902,
+      "estimated_unapproved": 41999,
+      "unresolved": 4306,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 56588,
+        "mae_hpa": 0.42920093411205096,
+        "bias_hpa": -0.056293883183002436,
+        "p95_abs_hpa": 1.1367120317909098
+      }
+    },
+    {
+      "year": 2023,
+      "archive_rows": 104624,
+      "measured": 103843,
+      "estimated_unapproved": 435,
+      "unresolved": 346,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 102090,
+        "mae_hpa": 0.4904134925483783,
+        "bias_hpa": -0.0067619549029700465,
+        "p95_abs_hpa": 1.297240222519724
+      }
+    },
+    {
+      "year": 2024,
+      "archive_rows": 104935,
+      "measured": 103168,
+      "estimated_unapproved": 1141,
+      "unresolved": 626,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 100545,
+        "mae_hpa": 0.4461775845790723,
+        "bias_hpa": -0.0490662912860671,
+        "p95_abs_hpa": 1.2305604420450877
+      }
+    },
+    {
+      "year": 2025,
+      "archive_rows": 102946,
+      "measured": 99207,
+      "estimated_unapproved": 2243,
+      "unresolved": 1496,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 98581,
+        "mae_hpa": 0.43074786546162736,
+        "bias_hpa": -0.019180760860535884,
+        "p95_abs_hpa": 1.1522153789273943
+      }
+    },
+    {
+      "year": 2026,
+      "archive_rows": 94297,
+      "measured": 94259,
+      "estimated_unapproved": 37,
+      "unresolved": 1,
+      "protected_q1_2018": 0,
+      "measured_control_v1_metrics": {
+        "n": 91042,
+        "mae_hpa": 0.4933152131440774,
+        "bias_hpa": -0.05757856903312586,
+        "p95_abs_hpa": 1.4028312039748072
+      }
+    }
+  ],
+  "source_archive_sha256": "e6b09eaef88f10d7334988928a84334c7b729bed941774565896f7dbaba86e42",
+  "model_sha256": "656f6f7fee1cdc5ed8668fc6b9e053ba7d345c8326c2a2fa33e8198b35b81a50",
+  "residual_calibration_2020_2021": {
+    "offset_hpa": -0.07993311255376057,
+    "temperature_slope_hpa_per_c": 0.002369548849218967,
+    "temperature_center_c": 9.317261134023093,
+    "n": 191260
+  },
+  "backtest_sha256": "3aaf325f0bbe537112c0252f6a67fa6b783b89d3d21bb6c49f9525e5f23038bf",
+  "candidate_csv_sha256": "ce8634a40e5b4cffca70a5b42b586dcd8d6f5941cee451e18a8baf7ff29f51e9",
+  "candidate_csv_bytes": 62499082,
+  "unified_series_sha256": "cc19a842d62ac25936c0851e1febc2217acb2da29c7e205d988f39bf9707c0b0",
+  "unified_series_bytes": 20490301,
+  "protected_q1_2018": "no estimates created",
+  "v1_v2": "immutable source artifacts; not modified",
+  "period": "2009-01-01 through 2026-11-24 UTC; 2026 is an incomplete year",
+  "limitations": [
+    "V1 is a derived local pressure/barometer-temperature relation; holdout is a masked test against original archive pressure, not an independently calibrated reference sensor.",
+    "CHMI and ERA5 pressure transfers showed epoch-dependent large biases and are excluded from automatic V3 candidates.",
+    "All candidate values remain ESTIMATED/UNAPPROVED."
+  ]
+}
