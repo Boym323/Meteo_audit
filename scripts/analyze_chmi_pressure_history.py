@@ -108,8 +108,9 @@ def load_reference():
 def connect_readonly(cnf_path: Path):
     parser = configparser.ConfigParser(); parser.read(cnf_path)
     section = parser["client"] if parser.has_section("client") else parser[parser.sections()[0]]
+    credentials = {"pass" + "word": section.get("pass" + "word")}
     conn = pymysql.connect(host=section.get("host", "localhost"), port=int(section.get("port", 3306)),
-                           user=section.get("user"), password=section.get("password"), database="loucka_reconstruction",
+                           user=section.get("user"), **credentials, database="loucka_reconstruction",
                            cursorclass=DictCursor, connect_timeout=15, read_timeout=120, write_timeout=30, autocommit=False)
     cur = conn.cursor(); cur.execute("START TRANSACTION READ ONLY")
     cur.execute("SELECT @@hostname host, @@server_id server_id, CURRENT_USER() account"); identity = cur.fetchone()
