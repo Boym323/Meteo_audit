@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="520" viewBox="0 0 920 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="460" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">2022 missing-hour holdout: monthly MAE vs CHMI P</text>
+<line x1="80" y1="55.0" x2="840" y2="55.0" stroke="#ddd"/>
+<text x="70" y="59.0" text-anchor="end" font-family="sans-serif" font-size="11">4.5</text>
+<line x1="80" y1="95.0" x2="840" y2="95.0" stroke="#ddd"/>
+<text x="70" y="99.0" text-anchor="end" font-family="sans-serif" font-size="11">4.0</text>
+<line x1="80" y1="135.0" x2="840" y2="135.0" stroke="#ddd"/>
+<text x="70" y="139.0" text-anchor="end" font-family="sans-serif" font-size="11">3.5</text>
+<line x1="80" y1="175.0" x2="840" y2="175.0" stroke="#ddd"/>
+<text x="70" y="179.0" text-anchor="end" font-family="sans-serif" font-size="11">3.0</text>
+<line x1="80" y1="215.0" x2="840" y2="215.0" stroke="#ddd"/>
+<text x="70" y="219.0" text-anchor="end" font-family="sans-serif" font-size="11">2.5</text>
+<line x1="80" y1="255.0" x2="840" y2="255.0" stroke="#ddd"/>
+<text x="70" y="259.0" text-anchor="end" font-family="sans-serif" font-size="11">2.0</text>
+<line x1="80" y1="295.0" x2="840" y2="295.0" stroke="#ddd"/>
+<text x="70" y="299.0" text-anchor="end" font-family="sans-serif" font-size="11">1.5</text>
+<line x1="80" y1="335.0" x2="840" y2="335.0" stroke="#ddd"/>
+<text x="70" y="339.0" text-anchor="end" font-family="sans-serif" font-size="11">1.0</text>
+<line x1="80" y1="375.0" x2="840" y2="375.0" stroke="#ddd"/>
+<text x="70" y="379.0" text-anchor="end" font-family="sans-serif" font-size="11">0.5</text>
+<line x1="80" y1="415.0" x2="840" y2="415.0" stroke="#ddd"/>
+<text x="70" y="419.0" text-anchor="end" font-family="sans-serif" font-size="11">0.0</text>
+<line x1="80.0" y1="415" x2="80.0" y2="420" stroke="#333"/>
+<text x="80.0" y="437" text-anchor="middle" font-family="sans-serif" font-size="12">01</text>
+<line x1="206.66666666666669" y1="415" x2="206.66666666666669" y2="420" stroke="#333"/>
+<text x="206.66666666666669" y="437" text-anchor="middle" font-family="sans-serif" font-size="12">02</text>
+<line x1="333.33333333333337" y1="415" x2="333.33333333333337" y2="420" stroke="#333"/>
+<text x="333.33333333333337" y="437" text-anchor="middle" font-family="sans-serif" font-size="12">03</text>
+<line x1="460.0" y1="415" x2="460.0" y2="420" stroke="#333"/>
+<text x="460.0" y="437" text-anchor="middle" font-family="sans-serif" font-size="12">04</text>
+<line x1="586.6666666666667" y1="415" x2="586.6666666666667" y2="420" stroke="#333"/>
+<text x="586.6666666666667" y="437" text-anchor="middle" font-family="sans-serif" font-size="12">05</text>
+<line x1="713.3333333333334" y1="415" x2="713.3333333333334" y2="420" stroke="#333"/>
+<text x="713.3333333333334" y="437" text-anchor="middle" font-family="sans-serif" font-size="12">06</text>
+<line x1="840.0" y1="415" x2="840.0" y2="420" stroke="#333"/>
+<text x="840.0" y="437" text-anchor="middle" font-family="sans-serif" font-size="12">07</text>
+<polyline fill="none" stroke="#2563eb" stroke-width="2" points="72.0,340.6 198.7,315.8 325.3,345.2 452.0,220.5 578.7,318.3 705.3,225.3 832.0,135.7"/>
+<circle cx="72.0" cy="340.6" r="3" fill="#2563eb"/>
+<circle cx="198.7" cy="315.8" r="3" fill="#2563eb"/>
+<circle cx="325.3" cy="345.2" r="3" fill="#2563eb"/>
+<circle cx="452.0" cy="220.5" r="3" fill="#2563eb"/>
+<circle cx="578.7" cy="318.3" r="3" fill="#2563eb"/>
+<circle cx="705.3" cy="225.3" r="3" fill="#2563eb"/>
+<circle cx="832.0" cy="135.7" r="3" fill="#2563eb"/>
+<polyline fill="none" stroke="#db2777" stroke-width="2" points="72.0,338.0 198.7,291.2 325.3,341.1 452.0,254.1 578.7,340.7 705.3,212.9 832.0,101.7"/>
+<circle cx="72.0" cy="338.0" r="3" fill="#db2777"/>
+<circle cx="198.7" cy="291.2" r="3" fill="#db2777"/>
+<circle cx="325.3" cy="341.1" r="3" fill="#db2777"/>
+<circle cx="452.0" cy="254.1" r="3" fill="#db2777"/>
+<circle cx="578.7" cy="340.7" r="3" fill="#db2777"/>
+<circle cx="705.3" cy="212.9" r="3" fill="#db2777"/>
+<circle cx="832.0" cy="101.7" r="3" fill="#db2777"/>
+<polyline fill="none" stroke="#059669" stroke-width="2" points="72.0,335.2 198.7,284.2 325.3,342.8 452.0,251.6 578.7,338.8 705.3,222.7 832.0,121.7"/>
+<circle cx="72.0" cy="335.2" r="3" fill="#059669"/>
+<circle cx="198.7" cy="284.2" r="3" fill="#059669"/>
+<circle cx="325.3" cy="342.8" r="3" fill="#059669"/>
+<circle cx="452.0" cy="251.6" r="3" fill="#059669"/>
+<circle cx="578.7" cy="338.8" r="3" fill="#059669"/>
+<circle cx="705.3" cy="222.7" r="3" fill="#059669"/>
+<circle cx="832.0" cy="121.7" r="3" fill="#059669"/>
+<polyline fill="none" stroke="#2563eb" stroke-width="2" points="88.0,277.6 214.7,211.1 341.3,335.0 468.0,223.8 594.7,324.6 721.3,211.6 848.0,115.4"/>
+<circle cx="88.0" cy="277.6" r="3" fill="#2563eb"/>
+<circle cx="214.7" cy="211.1" r="3" fill="#2563eb"/>
+<circle cx="341.3" cy="335.0" r="3" fill="#2563eb"/>
+<circle cx="468.0" cy="223.8" r="3" fill="#2563eb"/>
+<circle cx="594.7" cy="324.6" r="3" fill="#2563eb"/>
+<circle cx="721.3" cy="211.6" r="3" fill="#2563eb"/>
+<circle cx="848.0" cy="115.4" r="3" fill="#2563eb"/>
+<polyline fill="none" stroke="#db2777" stroke-width="2" points="88.0,255.1 214.7,183.3 341.3,325.0 468.0,257.3 594.7,336.5 721.3,194.0 848.0,81.4"/>
+<circle cx="88.0" cy="255.1" r="3" fill="#db2777"/>
+<circle cx="214.7" cy="183.3" r="3" fill="#db2777"/>
+<circle cx="341.3" cy="325.0" r="3" fill="#db2777"/>
+<circle cx="468.0" cy="257.3" r="3" fill="#db2777"/>
+<circle cx="594.7" cy="336.5" r="3" fill="#db2777"/>
+<circle cx="721.3" cy="194.0" r="3" fill="#db2777"/>
+<circle cx="848.0" cy="81.4" r="3" fill="#db2777"/>
+<polyline fill="none" stroke="#059669" stroke-width="2" points="88.0,245.0 214.7,175.7 341.3,323.6 468.0,254.8 594.7,338.5 721.3,205.9 848.0,101.4"/>
+<circle cx="88.0" cy="245.0" r="3" fill="#059669"/>
+<circle cx="214.7" cy="175.7" r="3" fill="#059669"/>
+<circle cx="341.3" cy="323.6" r="3" fill="#059669"/>
+<circle cx="468.0" cy="254.8" r="3" fill="#059669"/>
+<circle cx="594.7" cy="338.5" r="3" fill="#059669"/>
+<circle cx="721.3" cy="205.9" r="3" fill="#059669"/>
+<circle cx="848.0" cy="101.4" r="3" fill="#059669"/>
+<line x1="80" y1="255.0" x2="840" y2="255.0" stroke="#111" stroke-dasharray="5,4"/>
+<text x="838" y="250.0" text-anchor="end" font-family="sans-serif" font-size="11">MAE gate 2 hPa</text>
+<line x1="120" y1="480" x2="144" y2="480" stroke="#2563eb" stroke-width="3"/><text x="150" y="484" font-family="sans-serif" font-size="12">physical</text>
+<line x1="330" y1="480" x2="354" y2="480" stroke="#db2777" stroke-width="3"/><text x="360" y="484" font-family="sans-serif" font-size="12">constant</text>
+<line x1="540" y1="480" x2="564" y2="480" stroke="#059669" stroke-width="3"/><text x="570" y="484" font-family="sans-serif" font-size="12">frozen_temp</text>
+<text x="440" y="450" text-anchor="middle" font-family="sans-serif" font-size="12">UTC month (paired station points: H offset left, M offset right)</text>
+<text x="20" y="240" transform="rotate(-90 20 240)" text-anchor="middle" font-family="sans-serif" font-size="12">MAE (hPa)</text>
+</svg>
