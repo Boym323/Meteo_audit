@@ -1,0 +1,641 @@
+{
+  "schema": "pressure-reanalysis-source-provenance-v2",
+  "era5": {
+    "provider": "Open-Meteo Historical Weather API",
+    "source_url": "https://archive-api.open-meteo.com/v1/archive",
+    "model": "era5",
+    "hourly_variables": [
+      "pressure_msl",
+      "surface_pressure",
+      "temperature_2m"
+    ],
+    "units": {
+      "pressure": "hPa",
+      "temperature": "°C"
+    },
+    "timezone": "GMT",
+    "temporal_support": "hourly model values; not 5-minute observations",
+    "points": {
+      "loucka_era5_nearest": {
+        "latitude": 49.165277777777774,
+        "longitude": 17.8775,
+        "meaning": "Loucka nominal ERA5 nearest cell; sensitivity point at 49.25N 18.00E"
+      },
+      "loucka_era5_adjacent": {
+        "latitude": 49.165277777777774,
+        "longitude": 17.75,
+        "meaning": "Loucka adjacent ERA5 longitude sensitivity; 49.25N 17.75E"
+      },
+      "holesov_era5": {
+        "latitude": 49.3206,
+        "longitude": 17.57,
+        "meaning": "CHMI WSI 0-20000-0-11774 station location"
+      },
+      "mosnov_era5": {
+        "latitude": 49.6918,
+        "longitude": 18.1126,
+        "meaning": "CHMI WSI 0-20000-0-11782 station location"
+      }
+    },
+    "manifest_sha256": "f5a2daa2ad903183614b9f1dbc091b33c08d6e37df323da55c6b834c0302798c",
+    "response_count": 72,
+    "responses": [
+      {
+        "file": "holesov_era5-2009.json",
+        "sha256": "d89fb8daf131e2bbd7035a0e38da64910f3148a072a459d1dfac22fd94e16a9c",
+        "bytes": 321172,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2010.json",
+        "sha256": "4d15f96fbf2c80b2bc07ceba120a146bade038e1421316578ba0a310c25dfcbc",
+        "bytes": 321765,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2011.json",
+        "sha256": "557753495cd60a5958dba8c2d71202ed8b66ed03e2ce737fcc664d42e9a2ce69",
+        "bytes": 321769,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2012.json",
+        "sha256": "c8b7aacbd606dadc0d67656efa6c04e36267c27e333e0cc1c41df2a2beb41630",
+        "bytes": 322345,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "holesov_era5-2013.json",
+        "sha256": "afbe87a5b31f1783c6cb8142c9089c5cdd4e80b29e4c4dda1e475e31d6d95d56",
+        "bytes": 321365,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2014.json",
+        "sha256": "df9d5b50ac9e2b5ad2288b09c4bbadd420e06a71e2362284628240b08316ab0a",
+        "bytes": 321163,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2015.json",
+        "sha256": "06902443e091102890b010704415de12bcb73e7d0d4675f3ace15aacaaed46d4",
+        "bytes": 320950,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2016.json",
+        "sha256": "825741c9bbb53664d02a0f39fd34fbaca808b3de30dd3c389a7b96acfd45f38e",
+        "bytes": 321950,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "holesov_era5-2017.json",
+        "sha256": "ff12b1c123190c1a287bbd8607c894639f3a0495c91599d5a402da893b269edf",
+        "bytes": 321303,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2018.json",
+        "sha256": "aa2b0155c33d5c328f07bb0489e4bd924bd1471aac43bcb883a59498e8d164ef",
+        "bytes": 321876,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2019.json",
+        "sha256": "5b061ad66b060ccb681020e1b50f8455fbf8e4634b1258974079a37553a8b4eb",
+        "bytes": 321214,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2020.json",
+        "sha256": "1dfa2be721efe3a9f6e05c9f87b40193e7bddbe5be434b34ac09b06e465f63f6",
+        "bytes": 321642,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "holesov_era5-2021.json",
+        "sha256": "911fc353d5462889306eb081bbde9a6cfc5e732da279b4fa189d70afc0086147",
+        "bytes": 320982,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2022.json",
+        "sha256": "28763bf9cb6dd4b4903c7f28baa1a0914aa13261139f061d9b7e1e7cb997c673",
+        "bytes": 321377,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2023.json",
+        "sha256": "688b789b342bd0dd55eb730b2eb5029889611e9bf032352058cf57c8ec674890",
+        "bytes": 321077,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2024.json",
+        "sha256": "ca97beec188e7eb4d16773ef196e96c22b310efbcfc5b99fb22782f985871063",
+        "bytes": 322010,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "holesov_era5-2025.json",
+        "sha256": "daf228a8541080e4e6286b68f75dd02034c04cb8bef152afdb98e57ee4871255",
+        "bytes": 321243,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "holesov_era5-2026.json",
+        "sha256": "5e2ff670bcc5abc52dd95c408a205349121f19d561ae1e786117956f15fdd57e",
+        "bytes": 288400,
+        "hours_returned": 7872,
+        "non_null_surface_pressure": 7728,
+        "non_null_mslp": 7728
+      },
+      {
+        "file": "loucka_era5_adjacent-2009.json",
+        "sha256": "87a70a1beec80eadef5de3e140afa3c9c23053b09cd43dceeb1f7b63f6661454",
+        "bytes": 321115,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2010.json",
+        "sha256": "1d8c276195e8baebd9610c9d92b5cca1ba9a23701d68f793abd9a88aeb9da7af",
+        "bytes": 321655,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2011.json",
+        "sha256": "ad6681f009c4849fd1c4300934d4c9a3b56640aaee9fe8654f82b8f7964f7cc6",
+        "bytes": 321505,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2012.json",
+        "sha256": "d98ed9392a6ff69cf7215f70da0f36230ed585f11398e21d080507cd2c72a281",
+        "bytes": 322290,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "loucka_era5_adjacent-2013.json",
+        "sha256": "62adf3b6837dcf7ebdd455d18fce68537bfe6b1b93f76290f90379bf974d456a",
+        "bytes": 321366,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2014.json",
+        "sha256": "a5d906211f7633e2e1c2510c3b16e1183d9fa627d168f81cda808b6febd506f1",
+        "bytes": 320934,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2015.json",
+        "sha256": "9163a699380da0358709ede5f0ebb32499635b9bc97170fb53bad740e59794b3",
+        "bytes": 320647,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2016.json",
+        "sha256": "e359e5863f0b8294a0873f8f347d2694eec4909981ecaa7e537c4dfdf722f272",
+        "bytes": 321557,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "loucka_era5_adjacent-2017.json",
+        "sha256": "5a17f94e09a83295274534b38b78e9e2cbeb6493cc6697779309f04ac8246be4",
+        "bytes": 321140,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2018.json",
+        "sha256": "9955b60c565329eabc503634a278f2ea693751d5457cf313dcb6c825644b8bfc",
+        "bytes": 321914,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2019.json",
+        "sha256": "2dce274ed06623e10b5b025ccf97fe540c37a12948c744601148142d4dc0ccbf",
+        "bytes": 320906,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2020.json",
+        "sha256": "e91722fb872012d13c1c09e048c7a11ab219bb4357685e4c6d11084a789aa07f",
+        "bytes": 321347,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "loucka_era5_adjacent-2021.json",
+        "sha256": "750fc315c14ec463ed1df74a6793ee15d74290e729e3f54ddf9093a8f4e7ba88",
+        "bytes": 320842,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2022.json",
+        "sha256": "117c86442a33d2d9d2e581fff423268f0fe34fad0fcd9e3cab2a1a6a4153836b",
+        "bytes": 320972,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2023.json",
+        "sha256": "feb67b86a8b1164642b48b11fefa4e3a3d3af085cf1cd1709954218ac503f8ff",
+        "bytes": 320720,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2024.json",
+        "sha256": "c3108777d8f03648491540aba2f0185322c7ba74296555f417d2b0a96448b98a",
+        "bytes": 321727,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "loucka_era5_adjacent-2025.json",
+        "sha256": "5b00873b9c78515ba56f01537dff1dbf1def6990fd2c7c36c163ffa69a4a1edb",
+        "bytes": 321029,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_adjacent-2026.json",
+        "sha256": "8d51fff29ad2785a5edc5fc641bb64122dcec888d5489642701347594c691736",
+        "bytes": 288222,
+        "hours_returned": 7872,
+        "non_null_surface_pressure": 7728,
+        "non_null_mslp": 7728
+      },
+      {
+        "file": "loucka_era5_nearest-2009.json",
+        "sha256": "d748b7b787ceaf76768fe566d6880c02df47cec84003fcb50954257e6d3e1d45",
+        "bytes": 321121,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2010.json",
+        "sha256": "dc87e085ac473c6770b3138124713d5613447d2ece0d9c10abecc1cdcfbee592",
+        "bytes": 321576,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2011.json",
+        "sha256": "761447f4d90ad5f19022741e06615c3fab450f9f067217eb892eef1daf1df9ae",
+        "bytes": 321521,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2012.json",
+        "sha256": "4c70529b93e14c3ea47a45b0acfa1c962c84b0139a5506d391d556df2b9d14df",
+        "bytes": 322354,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "loucka_era5_nearest-2013.json",
+        "sha256": "bf5bb2a93791ed63cb3a3e2f3116eff852a808cc3326b809455317de3f40bb3a",
+        "bytes": 321440,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2014.json",
+        "sha256": "8c4fe2e185bacabf752bb2dbb6704bd4b9e1bee2b93094f9cb3be132542c4a88",
+        "bytes": 320804,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2015.json",
+        "sha256": "b0e34a55835201f30e5e88caaceb6e19f4bd5300468496e8ebef41c5562c579f",
+        "bytes": 320631,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2016.json",
+        "sha256": "6d6e9845b7aaa3b849fe79cf5fe5f8b94c231ebeebade6c266faa2866b59056a",
+        "bytes": 321580,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "loucka_era5_nearest-2017.json",
+        "sha256": "1dee9630d35795b92956fb3f6eebd9e9025d2e6328eacd423bc42845bbf4b580",
+        "bytes": 321120,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2018.json",
+        "sha256": "e153fa81353e4c0d2a9defe0ad0802e10cfefecee8b647cb708a5a192174b4cd",
+        "bytes": 321917,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2019.json",
+        "sha256": "fe47f0f6662c940b99e05febe750fd5343730db22d081967cf1e5582b004a4e1",
+        "bytes": 320874,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2020.json",
+        "sha256": "134937c65e4204bfe354b7fe252da6d07f3f1db672048f2c9b3318b992358108",
+        "bytes": 321389,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "loucka_era5_nearest-2021.json",
+        "sha256": "fb0d8452590ede3fae4780df477ff44cc29bd54a5e83ec26a973479a3e0d23d4",
+        "bytes": 320886,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2022.json",
+        "sha256": "cce17266b565aadc2d117c96341e9c4d384a7438faa3141e0f504722b2631a91",
+        "bytes": 320924,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2023.json",
+        "sha256": "cd61dfcf5f08a088ab0cbdff8881c8972fca9fed44028061aa1e16b823fcdbf3",
+        "bytes": 320708,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2024.json",
+        "sha256": "2492596bbb474d533fc43b1736c1a73823239e652f16ea49b39e5966a9ffb49b",
+        "bytes": 321776,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "loucka_era5_nearest-2025.json",
+        "sha256": "5bff2f62297929ea2d73453ed3d55ea7caf0610eea03840904cbd1287324e57d",
+        "bytes": 320968,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "loucka_era5_nearest-2026.json",
+        "sha256": "314f86a6071958f448c5ed21039d78937a2189f21cba8b0143f1e93d5dc28193",
+        "bytes": 288157,
+        "hours_returned": 7872,
+        "non_null_surface_pressure": 7728,
+        "non_null_mslp": 7728
+      },
+      {
+        "file": "mosnov_era5-2009.json",
+        "sha256": "367d5ac9fac4946fb1d2e2913eeddb96880fe42f6e391183e42713ecace937cd",
+        "bytes": 320971,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2010.json",
+        "sha256": "48d9651a7d0035d7916d3acbcd527352fb90f48971aa63091cc1ad01d1e93649",
+        "bytes": 321639,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2011.json",
+        "sha256": "a054a9f98628bf9eb3a7ab3891d31952b275c212d7780dca5f847235d1aa3dd0",
+        "bytes": 321320,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2012.json",
+        "sha256": "d552d1dfaa834c72f40a7404e3dfc4de96ce2bc35b61df010c8adeb648dd3023",
+        "bytes": 322065,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "mosnov_era5-2013.json",
+        "sha256": "20167aadd533bfbc299b45dd4f164504ccc3ed9edbc28f4c642588fbf855611a",
+        "bytes": 321458,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2014.json",
+        "sha256": "3959509c04a5ef77aaca5031ed0fae1987f93baa65a84b6108aedb0f872b902d",
+        "bytes": 320940,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2015.json",
+        "sha256": "1c9cf48eb1073fc9b1ae76861707514ea4c7abde314a4cb83636e19dfd6001c4",
+        "bytes": 320562,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2016.json",
+        "sha256": "0d77a64ff57a344bcbc5e0b6342d29c2639d172f14b95370eadd3d66bb58021e",
+        "bytes": 321464,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "mosnov_era5-2017.json",
+        "sha256": "b30f4d0e6534e01e09366cb452cdf53aa2b5060c6094281aa2c1da3be2fd6a21",
+        "bytes": 320964,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2018.json",
+        "sha256": "46b4418ef46c5f0edadbc0d80a7b3d44362a9225a9757c7ffd9dc3ebdc1e37ee",
+        "bytes": 321894,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2019.json",
+        "sha256": "37da72562ec15ebd3e7acc47d56f707e73cf124f3cca756b8db79327abfeb8e3",
+        "bytes": 320757,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2020.json",
+        "sha256": "1eb22a317daaa7d4196adf4308b334f628aab51518dc13120466e32483a74fe6",
+        "bytes": 321204,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "mosnov_era5-2021.json",
+        "sha256": "d59f5c532988e5cf8b0a4728f40b0453b7bebdd32249ef4c6edcc3e926f38bef",
+        "bytes": 320876,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2022.json",
+        "sha256": "0f5b739720d70e67d842ffa510746c70629f802f831e29047f8a4762eedcd4ca",
+        "bytes": 320972,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2023.json",
+        "sha256": "9b55e0622fbefb2a0a13acb0185c8f1a57373e80f6040e8ada3fe5e9b0eaf79b",
+        "bytes": 320592,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2024.json",
+        "sha256": "d5d21aa928f6b0c6ecedecf8c724eaf149bf434d4f25f93ed637fdddf61850d0",
+        "bytes": 321653,
+        "hours_returned": 8784,
+        "non_null_surface_pressure": 8784,
+        "non_null_mslp": 8784
+      },
+      {
+        "file": "mosnov_era5-2025.json",
+        "sha256": "9a2cb5825e3624c5bc50dc55c7933040846f23ac46c4082473237ee431c375ee",
+        "bytes": 320913,
+        "hours_returned": 8760,
+        "non_null_surface_pressure": 8760,
+        "non_null_mslp": 8760
+      },
+      {
+        "file": "mosnov_era5-2026.json",
+        "sha256": "259aa6168eaaf1adcf0bc43a3904c04d2a6ad116e7f5d294fa021b47aa1c1c68",
+        "bytes": 288254,
+        "hours_returned": 7872,
+        "non_null_surface_pressure": 7728,
+        "non_null_mslp": 7728
+      }
+    ]
+  },
+  "chmi": {
+    "provider": "ČHMÚ open data hourly reference cache",
+    "manifest_sha256": "3c935d0a134a6cd351fe1915cb0a720cf47bed4dc8fc18c0e7d88ece4b72409e",
+    "verified_quality_files": 360,
+    "stations": [
+      "0-20000-0-11774",
+      "0-20000-0-11782"
+    ],
+    "elements": [
+      "P",
+      "P_hm"
+    ],
+    "quality_used": "0 / 0.0 only"
+  },
+  "era5_land": {
+    "catalog_url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-timeseries?tab=download",
+    "product_variable": "surface pressure, Pa; no MSLP",
+    "public_api_pressure_status": "null for checked years 2020 and 2022",
+    "direct_cds_status": "not retrieved; CDS token unavailable"
+  }
+}
