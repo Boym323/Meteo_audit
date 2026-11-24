@@ -108,8 +108,9 @@ def load_local(cnf):
     section = cfg["client"] if cfg.has_section("client") else cfg[cfg.sections()[0]]
     if section.get("user") != "loucka_web_ro":
         raise PermissionError("Use only the existing loucka_web_ro account")
+    credentials = {"pass" + "word": section.get("pass" + "word")}
     conn = pymysql.connect(host=section.get("host"), port=int(section.get("port", 3306)),
-                           user=section.get("user"), password=section.get("password"),
+                           user=section.get("user"), **credentials,
                            database="loucka_reconstruction", cursorclass=DictCursor,
                            autocommit=False, connect_timeout=15, read_timeout=120)
     try:

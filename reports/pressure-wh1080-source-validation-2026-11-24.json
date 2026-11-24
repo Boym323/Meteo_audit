@@ -1,0 +1,43 @@
+{
+  "schema": "loucka-pressure-wh1080-source-validation-2026-11-24",
+  "mode": "READ_ONLY_AGGREGATES_NO_APPROVED_REPLACEMENTS",
+  "source_lineage": {
+    "target_null_slots_with_wh_pressure": 75074,
+    "wh1080_exactly_matches_old_weewx": 75074,
+    "independent_physical_lineages": 1,
+    "by_utc_year": [
+      {"year": 2016, "candidate_values": 3764, "pressure_min_hpa": 935.0, "pressure_max_hpa": 973.5833, "outside_900_1050": 0, "adjacent_five_minute_jumps_over_3_hpa": 0, "adjacent_identical_values": 432, "mean_barometer_minus_pressure_hpa": 51.954, "sd_barometer_minus_pressure_hpa": 2.414},
+      {"year": 2017, "candidate_values": 25189, "pressure_min_hpa": 921.15, "pressure_max_hpa": 968.7333, "outside_900_1050": 0, "adjacent_five_minute_jumps_over_3_hpa": 0, "adjacent_identical_values": 2933, "mean_barometer_minus_pressure_hpa": 50.271, "sd_barometer_minus_pressure_hpa": 2.507},
+      {"year": 2018, "candidate_values": 46121, "pressure_min_hpa": 921.85, "pressure_max_hpa": 964.1, "outside_900_1050": 0, "adjacent_five_minute_jumps_over_3_hpa": 0, "adjacent_identical_values": 5193, "mean_barometer_minus_pressure_hpa": 49.112, "sd_barometer_minus_pressure_hpa": 2.072}
+    ]
+  },
+  "hourly_chmi_2018": {
+    "source_rows": 8055,
+    "target_pressure_missing_source_rows": 3835,
+    "target_pressure_present_controls": 4220,
+    "source_rows_without_local_outTemp": 2,
+    "chmi_reference_manifest_sha256": "3c935d0a134a6cd351fe1915cb0a720cf47bed4dc8fc18c0e7d88ece4b72409e",
+    "chmi_element": "P station pressure, quality=0",
+    "height_transport": "dry hypsometric from 425 m to CHMI station height using same-timestamp local outTemp",
+    "results": {
+      "hole_sov_missing_target_pressure": {"n": 3817, "mae_hpa": 22.9695, "median_bias_hpa": -23.0635, "mad_hpa": 1.4368, "p95_abs_error_hpa": 25.6271},
+      "mosnov_missing_target_pressure": {"n": 3816, "mae_hpa": 22.4506, "median_bias_hpa": -22.8091, "mad_hpa": 1.3326, "p95_abs_error_hpa": 25.4301},
+      "hole_sov_target_pressure_present_control": {"n": 4187, "mae_hpa": 23.4572, "median_bias_hpa": -23.6356, "mad_hpa": 1.3125, "p95_abs_error_hpa": 25.8756},
+      "mosnov_target_pressure_present_control": {"n": 4185, "mae_hpa": 22.9034, "median_bias_hpa": -23.0531, "mad_hpa": 1.1180, "p95_abs_error_hpa": 25.7278}
+    },
+    "interpretation": "Missing-target WH readings have essentially the same ~23 hPa epoch residual as already-filled target controls. Copying them would not repair the 2018 drift. This rejects direct restoration under current criteria, but does not establish that original sensor readings were physically false."
+  },
+  "source_sql": [
+    "sql/readonly/pressure_wh1080_candidates_2016_2018.sql",
+    "sql/readonly/pressure_wh1080_hourly_chmi_2018.sql"
+  ],
+  "row_level_export_committed": false,
+  "candidate_values_approved": 0,
+  "limitations": [
+    "WH1080 and old_weewx are one duplicated lineage.",
+    "Equal UTC timestamps do not establish identical averaging/support windows.",
+    "The elevation and temperature inputs are diagnostic assumptions, not a traceable calibration chain.",
+    "Hourly test applies to exact hours only, not all 75,074 five-minute candidates.",
+    "No hourly CHMI pressure exists for 2016–2017; daily records remain coarse monthly context only."
+  ]
+}

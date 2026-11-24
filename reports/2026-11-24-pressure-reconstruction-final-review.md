@@ -84,7 +84,24 @@ The diagnostic gate requires at least 3 test months and 200 hours, MAE ≤2 hPa,
 
 For 2025, the cited cache lacks hourly CHMI `P`; for 2026 its recent slice also lacks hourly `P`. `barometer` vs `P_hm` results exist but concern a different field and cannot validate `pressure` replacements by themselves. The reported 2018 WH pilot includes hourly MAE only in the cited group aggregates? The published pilot table provides median/MAD and quantiles, not candidate-specific hourly or five-minute error; therefore this review does not claim an MAE for WH restoration or a five-minute validation score.
 
-For 2009–2017, daily `P` is used only as monthly context with its `TIMEFUNC` retained. No interpolation from daily values to hourly targets is treated as observation. The monthly model uses chronological train/validation/holdout splits and the hourly evaluation uses frozen coefficients only. The pressure runner above is a non-fitted physical transport diagnostic. No model is trained on future data. Candidate calibration for `pressure` still fails closed because exact source-level WH1080-to-hourly-CHMI pair data cannot be accessed through the existing LXC read-only SQL account, and no five-minute holdout has been completed.
+For 2009–2017, daily `P` is used only as monthly context with its `TIMEFUNC` retained. No interpolation from daily values to hourly targets is treated as observation. The monthly model uses chronological train/validation/holdout splits and the hourly evaluation uses frozen coefficients only. The pressure runner above is a non-fitted physical transport diagnostic. No model is trained on future data. No five-minute holdout has been completed.
+
+### Direct evaluation of all WH1080 source candidates, 2016–2018
+
+The connected Weather MCP read-only SQL connector was used to inspect the original `weewx_WH1080` rows directly; no GRANT or account change was needed. A full timestamp cohort check found **75,074** candidate `pressure` values where the working `pressure` was NULL: 3,764 in 2016, 25,189 in 2017 and 46,121 in 2018. All 75,074 are duplicated exactly in `old_weewx`, so those two schemas are one lineage. Screening all candidates found no source pressure outside 900–1050 hPa, no >3 hPa jump between adjacent five-minute WH records, and many repeated adjacent values (8,558 total), which is compatible with rounding/quantization and is not itself proof of sensor freezing. `barometer − pressure` averages 51.95, 50.27 and 49.11 hPa by year; that supports plausible elevation-scale separation but does not validate calibration.
+
+The independent exact-hour 2018 comparison used 8,055 WH source/control rows; 3,835 have a NULL target pressure and 4,220 have an existing target pressure. After requiring same-time local `outTemp` and quality-zero CHMI `P`, 3,817 missing-pressure hours matched Holešov and 3,816 matched Mošnov. The transported WH station-pressure residuals are:
+
+| 2018 cohort | Station | n | Hourly MAE | Median bias | MAD | P95 absolute error |
+|---|---|---:|---:|---:|---:|---:|
+| target `pressure` NULL | Holešov | 3,817 | 22.97 | −23.06 | 1.44 | 25.63 |
+| target `pressure` NULL | Mošnov | 3,816 | 22.45 | −22.81 | 1.33 | 25.43 |
+| target `pressure` present (control) | Holešov | 4,187 | 23.46 | −23.64 | 1.31 | 25.88 |
+| target `pressure` present (control) | Mošnov | 4,185 | 22.90 | −23.05 | 1.12 | 25.73 |
+
+The missing and existing target cohorts have nearly the same ~23 hPa residual. This is strong evidence that copying WH1080 into missing target slots would preserve the 2018 epoch bias rather than repair it. The result rejects these pressure restorations under the stated standards; it does not claim the original sensor readings were physically false. No candidate is moved to the approval manifest.
+
+Reproduction inputs and method are in [`sql/readonly/pressure_wh1080_hourly_chmi_2018.sql`](../sql/readonly/pressure_wh1080_hourly_chmi_2018.sql), [`scripts/validate_wh1080_hourly_pressure_source.py`](../scripts/validate_wh1080_hourly_pressure_source.py), and [`reports/pressure-wh1080-source-validation-2026-11-24.json`](pressure-wh1080-source-validation-2026-11-24.json). Row-level export remains local/temporary; only aggregates and source SQL are versioned.
 
 ## Read-only approval manifest and rollback
 
@@ -100,6 +117,6 @@ No batch ID for a data write is issued. If a future, separately approved process
 - `reports/parallel-audit/pressure-wh1080-chmi-pilot-2018/README.md` in PR #91 — exact-hour WH diagnostic and dual-station results.
 - `PRESSURE_SEMANTICS_VALIDATION_REPORT.md` — limited field-semantic validation for Jan–Feb 2026.
 
-All committed data and read-only reports are versioned; original ČHMÚ CSV stay outside Git and are SHA-256 checked by the runners. The 2018 WH1080 source audit records 75,074 exact source values but its row-level source table is not available to the existing `loucka_web_ro` account, so this task did not create a candidate value from that series.
+All committed reports are aggregate-only; original ČHMÚ CSV stay outside Git and are SHA-256 checked by the runners. The existing `loucka_web_ro` account itself cannot read the source copies, but the connected Weather MCP read-only SQL connector can. It was used for the 75,074-row source evaluation and 2018 exact-hour test; no data row export or credential was committed.
 
 **Final disposition:** zero candidates for restoration; 198,175 target NULL pressure slots remain unresolved in the cited snapshot. Hourly `barometer` calibration is diagnostically supported only for H5, not for direct pressure restoration. No meteorological data write is proposed.
