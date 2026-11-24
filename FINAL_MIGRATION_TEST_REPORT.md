@@ -2,9 +2,11 @@
 
 ## Výsledek
 
-**Testovací migrace nebyla spuštěna.** Schválený oddělený target `lo-infra-db-mariadb01:3306/loucka_migration_test` je popsán v `final_migration_package/MIGRATION_TEST_MANIFEST_SAME_SERVER_v2.json`, ale dostupné routování/DNS ani jeho target-only přihlašovací údaje nebyly v této relaci k dispozici. Nelze bezpečně nahradit tento target lokální instancí bez jejího výslovného schválení a ověřené izolace.
+**Testovací migrace nebyla spuštěna.** `final_migration_package/MIGRATION_TEST_MANIFEST_SAME_SERVER_v2.json` popisuje jiné databázové schéma (`loucka_migration_test`) na stejném serveru se `server_id=1`; není to izolovaná MariaDB instance. Tento host je sám LXC a nemá Proxmox `pct`/`pvesh`, `/etc/pve` ani `/dev/pve`; nelze z něj vytvořit ověřenou instanci.
 
 Vytvořena je konzistentní záloha celé `loucka_reconstruction`; viz `FINAL_BACKUP_RECEIPT.json`. Záloha má SHA-256 `2ca58ceac5729d1411f8515509aa980b8a783e2d9d34fdd57b6b86cb5277c806`, 26 tabulek a gzip integrity test prošel. Skutečná obnova, porovnání obnovených řádků/schématu/obsahu a rollback celé migrace proto zůstávají neprovedené.
+
+Aktuální operation-level diff je hotový: 92 724 operací z konzistentní read-only transakce. Nezávislý validator potvrdil všech 60 nových teplotních `NULL_CLEAR`; 1 497 starších audit/current-state neshod zůstává k review. Detail: `final_migration_package/FINAL_MIGRATION_OPERATIONS.jsonl.gz`; souhrn: `final_migration_package/FINAL_MIGRATION_DIFF_SUMMARY.json`.
 
 ## WeeWX denní statistiky
 

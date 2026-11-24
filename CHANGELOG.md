@@ -4,8 +4,11 @@
 
 - Ověřen read-only SQL časový řez `dateTime <= 1795541700`; shrnutí rozdílů a 60 auditovaných `NULL_CLEAR` událostí je v `FINAL_DATABASE_AUDIT.md`.
 - Přímý screening větru potvrdil 318 případů `windGust < windSpeed`, 29 rozdílů nad 1 km/h, 77 988 nenulových rychlostí bez směru a 6 nulových nárazů.
+- Vytvořen živý konzistentní operation-level diff 92 724 řádků. Validátor prošel; všech 60 nových teplotních NULL_CLEAR událostí přesně navazuje na audit; 1 497 audit/current-state neshod zůstává označeno k review. Žádná operace není schválena pro produkci.
+- Odděleno databázové schema od izolované MariaDB instance. Aktuální test schema je na server_id=1; tento LXC nemá Proxmox přístup. Přidán fail-closed provisioning postup pro Debian 13 / MariaDB 11.8.6 / server_id 99.
+- V dostupném WH1080 archive nalezeno 6 659 platných exact-time směrových kandidátů, včetně 526 prioritních; bez aplikace, protože archivní kopie nejsou nezávislým potvrzením. Dlouhé konstantní běhy klasifikovány jako podezřelé, nikoli automaticky opravované.
 - Vytvořena komprimovaná konzistentní MariaDB záloha všech 26 tabulek v `/opt/meteo-audit-artifacts/final-database-backups/`; SHA-256 a oprávnění jsou v `FINAL_BACKUP_RECEIPT.json`.
-- Produkce zůstala beze změn. Obnova na izolované instanci, aktualizovaný operation-level diff, WeeWX přepočet a celo-migrační rollback zůstávají NO-GO kvůli nedostupnému schválenému klonu.
+- Produkce zůstala beze změn. Obnova na skutečně izolované instanci, WeeWX přepočet a celo-migrační rollback zůstávají NO-GO, dokud infrastruktura nezpřístupní samostatný test server.
 
 ## 2026-11-24 — import tří vrstev historického tlaku
 

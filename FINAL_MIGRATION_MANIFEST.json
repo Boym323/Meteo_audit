@@ -1,46 +1,78 @@
 {
-  "schema": "loucka-final-migration-manifest-v1",
-  "generated_at_utc": "2026-11-24T17:59:00Z",
-  "snapshot": {
-    "watermark_inclusive": 1795541700,
-    "timezone": "UTC",
-    "production_database": "pocasi-loucka.eu",
-    "reconstruction_database": "loucka_reconstruction",
-    "snapshot_method": "MariaDB consistent read snapshot required for final export; source is append-only WeeWX and concurrent inserts must be handled by fixed watermark"
+  "artifact_availability": {
+    "checked_at_utc": "2026-11-24T19:45:00Z",
+    "referenced_migration_artifacts": "ALL_CHECKED_PRESENT",
+    "scope": "current final diff, historical baseline diff/manifest, validation, rollback, test policy/manifests, preflight scripts, stream-copy receipt"
   },
   "audit_baseline": {
-    "reconstruction_rows_at_watermark": 1697715,
-    "production_rows_at_watermark": 1687316,
-    "inserts": 10399,
-    "field_updates": 82325,
-    "operations_total": 92724,
     "changed_existing_timestamps": 80237,
-    "production_timestamps_missing_from_reconstruction": 0,
     "columns_with_differences": {
-      "outTemp": 47,
-      "outHumidity": 20422,
-      "rain": 2201,
-      "rainRate": 59595,
       "extraTemp1": 2,
       "extraTemp2": 14,
+      "outHumidity": 20422,
+      "outTemp": 47,
+      "rain": 2201,
+      "rainRate": 59595,
       "soilTemp1": 13,
       "soilTemp5": 10,
       "soilTemp6": 21
-    }
+    },
+    "field_updates": 82325,
+    "inserts": 10399,
+    "operations_total": 92724,
+    "production_rows_at_watermark": 1687316,
+    "production_timestamps_missing_from_reconstruction": 0,
+    "reconstruction_rows_at_watermark": 1697715
   },
-  "operation_types": [
-    "INSERT",
-    "NULL_FILL",
-    "NULL_CLEAR",
-    "VALUE_REPLACE"
+  "audit_event_policy": "Field operations link the latest reconstruction_changes event, with historical state. INSERT rows carry all related timestamp events and source claims; an INSERT is not falsely represented as a single field event. Reconstruction audit states are never production approval.",
+  "audit_reconciliation": {
+    "field_operation_audit_states": {
+      "applied": 80974,
+      "reverted": 1351
+    },
+    "field_operations_latest_audit_state_mismatch": 1497,
+    "field_operations_missing_audit_event": 0,
+    "field_operations_missing_source_claim": 0,
+    "note": "Latest event state mismatch is preserved as an explicit review risk; it does not override the current archive value."
+  },
+  "detail_artifacts": [
+    "final_migration_package/FINAL_MIGRATION_OPERATIONS.jsonl.gz",
+    "final_migration_package/FINAL_MIGRATION_DIFF_SUMMARY.json",
+    "final_migration_package/scripts/capture_final_migration_diff.py",
+    "final_migration_package/scripts/validate_final_migration_diff.py",
+    "FINAL_DATABASE_AUDIT.md",
+    "WIND_QUALITY_REPORT.md",
+    "final_migration_package/MIGRATION_ROLLBACK_PLAN.md",
+    "final_migration_package/ISOLATION_STATUS_2026-11-24.md",
+    "final_migration_package/ISOLATED_TEST_PROVISIONING_2026-11-24.md"
   ],
-  "audit_event_policy": "Every operation must reconcile to latest reconstruction_changes event by target_time and variable; event state is provenance and is not production approval.",
+  "generated_at_utc": "2026-11-24T19:45:00Z",
+  "hashes": {
+    "all_operations_digest_status": "PASS",
+    "capture_script_sha256": "c37c1476402e7f7bddf66f78c02b45bd51c4e409ac05e4849eca7602d0cf8567",
+    "operations_sha256": "b3f05c815ba05afd5e107b42306a68bb3916a186f0408d660ab4a81700c1ef29",
+    "operations_size_bytes": 4568685,
+    "summary_sha256": "d4e263e68bba5d22092c6565c61aa02180daa2346d4fe44f9d1559b70ffecb97",
+    "validation_script_sha256": "546ef10135fc46f5dc535c64e95c5d985eb38385e5adb3e9997373ed2fcc326e"
+  },
+  "insert_provenance": {
+    "insert_rows": 10399,
+    "rows_with_related_audit_events": 10399,
+    "rows_with_source_claim": 10399,
+    "source_status": "related audit/source claim only; no claim of direct source row re-query"
+  },
+  "isolated_test_instance": {
+    "existing_same_server_test_schema_isolation": "FALSE",
+    "provisioning_runbook": "final_migration_package/ISOLATED_TEST_PROVISIONING_2026-11-24.md",
+    "required_server_id": 99,
+    "status": "NOT_AVAILABLE_FROM_CURRENT_LXC"
+  },
   "known_null_clear": {
-    "count": 60,
     "batches": [
       "qc-extra-temp-outliers-20261123-v1",
       "qc-soil-negative-outliers-20261123-v1"
     ],
+    "count": 60,
     "fields": {
       "extraTemp1": 2,
       "extraTemp2": 14,
@@ -50,26 +82,62 @@
     },
     "production_approval": "NOT APPROVED"
   },
+  "null_clear_audit": {
+    "all_null_clear_operations_in_diff": 895,
+    "all_null_clears_linked_to_applied_null_audit_event": 895,
+    "new_temperature_null_clear_audit_errors": [],
+    "new_temperature_null_clear_exact_audit_matches": 60,
+    "new_temperature_null_clear_operations": 60,
+    "prior_rain_and_humidity_invalidations_are_separate_from_the_60_new_temperature_clears": true
+  },
+  "operation_approval": {
+    "operation_count": 92724,
+    "production_approved_operations": 0,
+    "status_for_all_operations": "NOT_APPROVED"
+  },
+  "operation_types": [
+    "INSERT",
+    "NULL_FILL",
+    "NULL_CLEAR",
+    "VALUE_REPLACE"
+  ],
   "pressure_policy": {
     "apply_to_archive": false,
     "include_in_official_statistics": false,
+    "preserve_archive_pressure": true,
+    "protect_q1_2018": true,
     "retain_archive_estimates_unapproved": 150942,
     "retain_regional_estimates_unapproved": 125298,
-    "protect_q1_2018": true,
-    "preserve_archive_pressure": true,
     "separate_table_transfer_if_approved": "Transfer only pressure_reconstruction as a separate schema/table using a dedicated manifest, signature and destination-side row-count/hash verification; never merge estimates into archive or official daily tables."
   },
-  "production_migration": "NO-GO pending operation-level current diff, approved isolated restore test, WeeWX daily-statistics test and whole-migration rollback test.",
+  "production_approval": "NOT_APPROVED_FOR_EVERY_OPERATION; reconstruction audit state is not production approval.",
   "production_changed": false,
-  "detail_artifacts": [
-    "final_migration_package/MIGRATION_DIFF.csv (historical fixed snapshot 2026-11-17; not current)",
-    "FINAL_DATABASE_AUDIT.md",
-    "WIND_QUALITY_REPORT.md",
-    "final_migration_package/scripts/migration_preflight_guard.py",
-    "final_migration_package/MIGRATION_ROLLBACK_PLAN.md"
-  ],
-  "hashes": {
-    "current_complete_operation_diff_sha256": null,
-    "status": "Not generated: no new immutable cross-database value export was captured in this execution. Do not use the 2026-11-17 diff as current."
+  "production_migration": "NO-GO pending isolated-instance restore, test migration, WeeWX daily-statistics test and whole-migration rollback.",
+  "schema": "loucka-final-migration-manifest-v1",
+  "snapshot": {
+    "isolation_level": "REPEATABLE READ; START TRANSACTION WITH CONSISTENT SNAPSHOT, READ ONLY; all source tables are InnoDB",
+    "production_database": "pocasi-loucka.eu",
+    "reconstruction_database": "loucka_reconstruction",
+    "snapshot_method": "MariaDB consistent read snapshot required for final export; source is append-only WeeWX and concurrent inserts must be handled by fixed watermark",
+    "source_identity": {
+      "current_user": "loucka_web_ro@192.168.0.131",
+      "database": "loucka_reconstruction",
+      "host": "lo-infra-db-mariadb01",
+      "server_id": 1,
+      "user": "loucka_web_ro@192.168.0.131",
+      "version": "11.8.6-MariaDB-0+deb13u1 from Debian"
+    },
+    "timezone": "UTC",
+    "watermark_inclusive": 1795541700,
+    "watermark_utc": "2026-11-24T17:35:00+00:00"
+  },
+  "units": {
+    "archive_rows_in_diff": 92724,
+    "unit_contract": {
+      "16": "WeeWX METRIC: wind speed/gust km/h; rain cm; rainRate cm/h"
+    },
+    "usUnits_counts": {
+      "16": 92724
+    }
   }
 }

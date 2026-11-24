@@ -1,0 +1,89 @@
+{
+  "archive_rows": {
+    "production": 1687316,
+    "reconstruction": 1697715
+  },
+  "changed_existing_timestamps": 80237,
+  "expected_baseline": {
+    "changed_timestamps": 80237,
+    "field_counts": {
+      "extraTemp1": 2,
+      "extraTemp2": 14,
+      "outHumidity": 20422,
+      "outTemp": 47,
+      "rain": 2201,
+      "rainRate": 59595,
+      "soilTemp1": 13,
+      "soilTemp5": 10,
+      "soilTemp6": 21
+    },
+    "field_operations": 82325,
+    "inserts": 10399,
+    "new_temperature_null_clear": 60,
+    "null_clear_total_including_prior_invalidations": 895,
+    "production_rows": 1687316,
+    "reconstruction_rows": 1697715,
+    "total": 92724
+  },
+  "field_counts": {
+    "extraTemp1": 2,
+    "extraTemp2": 14,
+    "outHumidity": 20422,
+    "outTemp": 47,
+    "rain": 2201,
+    "rainRate": 59595,
+    "soilTemp1": 13,
+    "soilTemp5": 10,
+    "soilTemp6": 21
+  },
+  "field_operation_audit_states": {
+    "applied": 80974,
+    "reverted": 1351
+  },
+  "field_operations": 82325,
+  "field_operations_latest_audit_state_mismatch": 1497,
+  "field_operations_missing_audit_event": 0,
+  "field_operations_missing_source_claim": 0,
+  "insert_rows_with_related_audit_events": 10399,
+  "insert_rows_with_source_claim": 10399,
+  "new_temperature_null_clear_audit_errors": [],
+  "new_temperature_null_clear_audit_matches": 60,
+  "new_temperature_null_clear_count": 60,
+  "null_clear_applied_event_count": 895,
+  "null_clear_count": 895,
+  "operation_counts": {
+    "INSERT": 10399,
+    "NULL_CLEAR": 895,
+    "NULL_FILL": 12671,
+    "VALUE_REPLACE": 68759
+  },
+  "operations_file": "FINAL_MIGRATION_OPERATIONS.jsonl.gz",
+  "operations_sha256": "b3f05c815ba05afd5e107b42306a68bb3916a186f0408d660ab4a81700c1ef29",
+  "operations_size_bytes": 4568685,
+  "operations_total": 92724,
+  "production_approval": "No production approval exists in reconstruction audit state; every operation is explicitly NOT_APPROVED.",
+  "production_only_timestamps": 0,
+  "reconstruction_only_timestamps": 10399,
+  "schema": "loucka-final-live-diff-summary-v1",
+  "schema_columns": 80,
+  "snapshot_started_utc": "2026-11-24T18:20:57.480446+00:00",
+  "source_identity": {
+    "current_user": "loucka_web_ro@192.168.0.131",
+    "database": "loucka_reconstruction",
+    "host": "lo-infra-db-mariadb01",
+    "server_id": 1,
+    "user": "loucka_web_ro@192.168.0.131",
+    "version": "11.8.6-MariaDB-0+deb13u1 from Debian"
+  },
+  "transaction": "REPEATABLE READ; START TRANSACTION WITH CONSISTENT SNAPSHOT, READ ONLY; all source tables are InnoDB",
+  "unit_contract": {
+    "16": "WeeWX METRIC: wind speed/gust km/h; rain cm; rainRate cm/h"
+  },
+  "usUnits_counts": {
+    "16": 92724
+  },
+  "validation": "PASS",
+  "validation_script": "scripts/validate_final_migration_diff.py",
+  "watermark_inclusive": 1795541700,
+  "watermark_utc": "2026-11-24T17:35:00+00:00"
+}

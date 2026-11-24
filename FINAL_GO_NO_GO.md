@@ -8,9 +8,9 @@
 
 ## NO-GO
 
-- Obnova zálohy: schválená izolovaná instance není dostupná/provisionovaná z tohoto hostu.
+- Obnova zálohy: skutečně izolovaná instance není dostupná/provisionovaná z tohoto hostu. `loucka_migration_test` je jen schema na serveru se `server_id=1`.
 - Testovací migrace, přepočet WeeWX a celý rollback: závisí na obnoveném klonu a jeho WeeWX konfiguraci.
 - Produkční zápis: vyžaduje samostatné schválení, jak požaduje zadání.
 - Tlakové odhady do `archive.pressure` nebo oficiálních statistik: zakázáno rozhodnutím pro tlak.
 
-Současný `final_migration_package/MIGRATION_DIFF.csv` je snapshot z 2026-11-17 a není aktuální. Manifest pro tento běh záměrně nevydává jeho hash jako nový diff. Před testem je nutné vytvořit nový konzistentní operation-level export nad oběma archivy při stejném řezu `1795541700`, doplnit before/after hodnoty a poslední auditní událost pro každou operaci, zdroj a stav schválení. Produkce zůstala nezměněna.
+Aktuální operation-level diff byl vytvořen při řezu `1795541700` (2026-11-24 17:35 UTC) v konzistentní read-only transakci. `final_migration_package/MIGRATION_DIFF.csv` z 2026-11-17 zůstává archivním artefaktem. Aktuální diff je `final_migration_package/FINAL_MIGRATION_OPERATIONS.jsonl.gz`; hash a validace jsou v `FINAL_MIGRATION_MANIFEST.json`. Produkce zůstala nezměněna.

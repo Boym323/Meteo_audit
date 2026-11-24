@@ -2,9 +2,11 @@
 
 ## Rozsah a výsledek
 
-Časový řez pro porovnání archivů je `dateTime <= 1795541700` (2026-11-24 15:15 UTC). Přímý read-only dotaz na MariaDB 11.8.6 potvrdil 1 697 715 řádků v `loucka_reconstruction.archive` v tomto řezu; celá tabulka nyní obsahuje 1 697 717 řádků, z toho 2 jsou za řezem. Uživatelský SQL audit uvádí 1 687 316 produkčních řádků a 0 produkčních timestampů chybějících v rekonstrukci.
+Časový řez pro porovnání archivů je `dateTime <= 1795541700`, tedy 2026-11-24 17:35 UTC. Přímý konzistentní read-only snapshot na MariaDB 11.8.6 potvrdil 1 697 715 řádků v `loucka_reconstruction.archive` a 1 687 316 řádků v produkčním `archive`; v řezu je 0 produkčních timestampů chybějících v rekonstrukci.
 
-Rozdíl představuje 10 399 vložení a 82 325 změn jednotlivých polí (92 724 operací na 80 237 společných timestampech). Počty změn podle polí: `outTemp` 47, `outHumidity` 20 422, `rain` 2 201, `rainRate` 59 595, `extraTemp1` 2, `extraTemp2` 14, `soilTemp1` 13, `soilTemp5` 10, `soilTemp6` 21. Ostatní sloupce jsou dle zadaného SQL auditu na společných timestampech shodné.
+Zdrojový účet má `SELECT` na produkčním schematu a dostupném `weewx_WH1080.archive`. Na `loucka_reconstruction` má účet také širší oprávnění, proto všechny exportní dotazy výslovně běžely v `START TRANSACTION ... READ ONLY`; během diffu nebyl proveden databázový zápis.
+
+Rozdíl představuje 10 399 vložení a 82 325 změn jednotlivých polí (92 724 operací na 80 237 společných timestampech). Počty změn podle polí: `outTemp` 47, `outHumidity` 20 422, `rain` 2 201, `rainRate` 59 595, `extraTemp1` 2, `extraTemp2` 14, `soilTemp1` 13, `soilTemp5` 10, `soilTemp6` 21. Zbytek z 80 sloupců je na společných timestampech shodný. Detail je v `final_migration_package/FINAL_MIGRATION_OPERATIONS.jsonl.gz`; transakční snímek a hash v `FINAL_MIGRATION_MANIFEST.json`.
 
 ## Auditní události a typy operací
 
@@ -15,7 +17,11 @@ Každý návrh migrace musí být spojen s poslední událostí `reconstruction_
 - `NULL_CLEAR`: produkční hodnota je neprázdná a rekonstrukční je NULL. Jde o invalidaci podezřelé hodnoty, vyžaduje výslovný souhlas.
 - `VALUE_REPLACE`: obě hodnoty jsou neprázdné a liší se.
 
-Přímý audit potvrdil 60 aplikovaných NULL_CLEAR událostí v dávkách `qc-extra-temp-outliers-20261123-v1` a `qc-soil-negative-outliers-20261123-v1`: 2 `extraTemp1`, 14 `extraTemp2`, 13 `soilTemp1`, 10 `soilTemp5`, 21 `soilTemp6`. Pro finální diff musí být u všech 60 ověřena shoda auditního `old_value` s produkční předchozí hodnotou a `new_value IS NULL` s rekonstrukcí; samotná událost není schválením produkčního zápisu.
+V úplném diffu je 895 `NULL_CLEAR`: 835 starších invalidací a 60 nových teplotních odstranění v dávkách `qc-extra-temp-outliers-20261123-v1` a `qc-soil-negative-outliers-20261123-v1`. Poslední aplikovaný event, jeho `old_value` proti produkční hodnotě a NULL after-value proti rekonstrukci se přesně shodují u všech 60: 2 `extraTemp1`, 14 `extraTemp2`, 13 `soilTemp1`, 10 `soilTemp5`, 21 `soilTemp6`. Starších 835 invalidací je odděleno.
+
+Všech 82 325 změn polí má auditní event i zdrojový claim; všechny operace jsou `NOT_APPROVED` pro produkci. U 1 497 změn nejnovější auditní událost neodpovídá aktuálnímu stavu rekonstrukce; jsou zachovány jako `REVIEW_REQUIRED`. Všech 10 399 INSERT řádků je propojeno s událostmi pro timestamp (nikoliv s jedním řádkovým eventem); související eventy, zdroje a stav schválení jsou v detailním JSONL.
+
+Každý diff řádek nese `usUnits`. Kód `16` (WeeWX METRIC) znamená rychlost větru v km/h a srážky v cm (`rainRate` v cm/h). `usUnits=17` je METRICWX; historické wind archivy však mají epochy, kde raw hodnoty neodpovídají jednoduchému převodu. Kódy jsou metadata, nikoli důvod k automatické konverzi.
 
 ## Úplnost auditu 80 sloupců
 
@@ -29,4 +35,4 @@ Přímo ověřené počty v řezu: 1 513 řádků `rain>0 AND rainRate=0`, 4 `ra
 
 ## Závěr
 
-Auditní diff lze připravit k review, ale produkční migrace je NO-GO do obnovení na schválené oddělené instanci, úplného operation-level diffu proti aktuálnímu produkčnímu snapshotu, testu dávkového přepočtu WeeWX a úspěšného testu rollbacku celé migrace. Produkce nebyla měněna.
+Diff je připraven k review a ověřen proti původním počtům. Produkční migrace je NO-GO do obnovení na skutečně oddělené MariaDB instanci, testu přepočtu WeeWX a rollbacku celé migrace. Schéma `loucka_migration_test` na stejném serveru (`server_id=1`) není izolovaná instance. Produkce nebyla měněna.
