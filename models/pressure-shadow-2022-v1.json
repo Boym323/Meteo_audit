@@ -1,0 +1,96 @@
+{
+  "schema": "loucka-pressure-shadow-model-2022-v1",
+  "mode": "FROZEN_DIAGNOSTIC_ESTIMATES_NO_APPLY",
+  "training": {
+    "start_utc": "2020-01-01T00:00:00Z",
+    "end_exclusive_utc": "2021-01-01T00:00:00Z",
+    "n": 92641,
+    "source": "loucka_reconstruction.archive",
+    "units": 16,
+    "site_height_m": 425,
+    "pressure_range_hpa": [
+      900,
+      1050
+    ],
+    "barometer_screen_hpa": [
+      930,
+      1080
+    ],
+    "temperature_screen_c": [
+      -40,
+      45
+    ]
+  },
+  "parameters": {
+    "offset_hpa": 0.4167213203943744,
+    "temperature_center_c": 9.429312079930027,
+    "temperature_slope_hpa_per_c": -0.01941207276210084
+  },
+  "training_domain": {
+    "outTemp_c": [
+      -7.25,
+      31.3
+    ],
+    "barometer_hpa": [
+      981.88875,
+      1043.1
+    ]
+  },
+  "local_validation": {
+    "selection_2021": {
+      "n": 100606,
+      "physical_mae": 0.5714,
+      "constant_mae": 0.4536,
+      "temperature_mae": 0.4449
+    },
+    "test_2022_before_aug20": {
+      "n": 20321,
+      "physical_mae": 0.7066,
+      "constant_mae": 0.611,
+      "temperature_mae": 0.5637
+    },
+    "domain_2021": {
+      "n": 98619,
+      "mae": 0.4472,
+      "mean_prediction_minus_observed": 0.009,
+      "p95_absolute": 1.068,
+      "max_absolute": 1.7255
+    },
+    "domain_2022_jan_jul": {
+      "n": 14502,
+      "mae": 0.5393,
+      "mean_prediction_minus_observed": -0.1271,
+      "p95_absolute": 1.235,
+      "max_absolute": 1.7155
+    }
+  },
+  "preview": {
+    "period_start_utc": "2022-01-01T00:00:00Z",
+    "period_end_exclusive_utc": "2022-08-01T00:00:00Z",
+    "eligible_missing_counts_by_month": {
+      "2022-01": 8247,
+      "2022-02": 7819,
+      "2022-03": 6880,
+      "2022-04": 1442,
+      "2022-05": 8286,
+      "2022-06": 7754,
+      "2022-07": 1009
+    },
+    "total_eligible_missing": 41437,
+    "gate": {
+      "min_common_hours_per_month": 100,
+      "min_common_coverage": 0.8,
+      "max_mae_hpa": 2,
+      "max_p95_absolute_hpa": 4,
+      "max_abs_median_bias_hpa": 1.5
+    },
+    "status": "EXTERNAL_VALIDATION_NOT_RUN"
+  },
+  "limitations": [
+    "Local pressure reproduction is not independent validation and may invert a derived field.",
+    "Station height 425 m and local air temperature as column proxy are assumptions.",
+    "Only 2022 January-July; no extension across sensor epochs.",
+    "Hourly regional validation does not establish five-minute accuracy or original measurement.",
+    "No SQL writes or approved replacement values."
+  ]
+}
